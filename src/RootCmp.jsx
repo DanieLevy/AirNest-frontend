@@ -6,16 +6,16 @@ import { AppFooter } from './cmps/AppFooter'
 
 export function RootCmp() {
   return (
-    <div className='App'>
+    <div className='app'>
       <AppHeader />
-      <main>
+      <main className='app-main'>
         <Routes>
           {routes.map((route) => (
             <Route key={route.path} exact={true} element={route.component} path={route.path} />
           ))}
         </Routes>
       </main>
-      <AppFooter />
+      {/* <AppFooter /> */}
     </div>
   )
 }
