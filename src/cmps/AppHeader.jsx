@@ -4,7 +4,7 @@ import routes from '../routes'
 import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
 import { login, logout, signup } from '../store/actions/user.actions.js'
 import { LoginSignup } from './LoginSignup.jsx'
-import { FilterBy } from './FilterBy'
+import { ExploreBy } from './ExploreBy'
 import { UserMsg } from './UserMsg'
 
 export function AppHeader() {
@@ -38,7 +38,7 @@ export function AppHeader() {
   return (
     <header className='app-header flex' style={{ justifyContent: 'space-between' }}>
       <h1>AirNest</h1>
-      <FilterBy />
+      <ExploreBy />
       <div>
         {user && (
           <span className='user-info'>
