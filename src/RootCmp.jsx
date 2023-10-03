@@ -5,18 +5,17 @@ import { AppHeader } from './cmps/AppHeader'
 import { AppFooter } from './cmps/AppFooter'
 
 export function RootCmp() {
-
-    return (
-        <div className='App'>
-            <AppHeader />
-            <main>
-                <Routes>
-                    {routes.map(route => <Route key={route.path} exact={true} element={route.component} path={route.path} />)}
-                </Routes>
-            </main>
-            <AppFooter />
-        </div>
-    )
+  return (
+    <div className='App'>
+      <AppHeader />
+      <main>
+        <Routes>
+          {routes.map((route) => (
+            <Route key={route.path} exact={true} element={route.component} path={route.path} />
+          ))}
+        </Routes>
+      </main>
+      <AppFooter />
+    </div>
+  )
 }
-
-
