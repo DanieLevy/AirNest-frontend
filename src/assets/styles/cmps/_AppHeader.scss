@@ -1,13 +1,21 @@
+.header-container {
+  position: sticky;
+  top: 0;
+  background-color: white;
+}
+
+.main-header.expanded {
+    background-color: yellowgreen;
+    height: 160px;
+}
+
 .main-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  position: sticky;
-  top: 0;
   color: #222222;
   height: 80px;
-  padding-inline: 80px;
-//   background-color: rgb(219, 68, 68);
+  //   background-color: rgb(219, 68, 68);
   border-bottom: 1px solid #e4e4e4;
 
   img {
@@ -17,16 +25,20 @@
     object-fit: cover;
   }
 
-    .logo {
-        display: flex;
-        align-items: center;
-        color: $clr1;
-        font-size: 2.25rem;
-        font-weight: 600;
-        letter-spacing: 0.1rem;
-        // padding: 0.5rem;
-        
-    }
+  .logo {
+    display: flex;
+    align-items: center;
+    color: $clr1;
+    font-size: 2.25rem;
+    font-weight: 600;
+    letter-spacing: 0.1rem;
+    // padding: 0.5rem;
+  }
+}
+
+.explore-bar {
+    translate: translateY(-100%);
+    // translate: translateY(-50%);
 }
 
 // .user-info .btn-link {

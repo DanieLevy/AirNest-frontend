@@ -3,6 +3,17 @@
     justify-content: center;
     align-items: center;
 
+    position: absolute;
+    top: 80px;
+    left: 0;
+    right: 0;
+    margin: auto;
+// translte down with animation
+    transform: translateY(-10%);
+    transition: transform 250ms ease;
+    z-index: 1;
+
+
     .bar {
         width: 650px;
         background: white;
