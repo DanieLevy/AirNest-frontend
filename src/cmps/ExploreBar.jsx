@@ -18,15 +18,15 @@ export function ExploreBar() {
         <button type="button" className="location-btn">
           Anywhere
         </button>
-        <span class="splitter"></span>
-        <button type="button" class="dates-btn">
+        <span className="splitter"></span>
+        <button type="button" className="dates-btn">
           Anyweek
         </button>
-        <span class="splitter"></span>
-        <button type="button" class="guests-btn">
+        <span className="splitter"></span>
+        <button type="button" className="guests-btn">
           Add guests
         </button>
-        <button type="button" class="search-btn">
+        <button type="button" className="search-btn">
           <IoIosSearch />
         </button>
       </div>
