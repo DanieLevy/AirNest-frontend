@@ -43,12 +43,13 @@ export async function loadStays(filterBy) {
 export async function loadStay(stayId) {
   console.log('loading stays')
   try {
-    const stays = await stayService.getById(stayId)
+    const stay = await stayService.getById(stayId)
     console.log('Stays from DB:', stayId)
-    store.dispatch({
-      type: SET_STAYS,
-      stays,
-    })
+    // store.dispatch({
+    //   type: SET_STAYS,
+    //   stay,
+    // })
+    return stay
   } catch (err) {
     console.log('Cannot load stays', err)
     throw err
