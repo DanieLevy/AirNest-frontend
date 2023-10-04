@@ -1,38 +1,48 @@
 import { orderService } from '../../services/order.service'
 import { store } from '../store.js'
 import { ADD_ORDER, REMOVE_ORDER, SET_ORDERS } from '../reducer/order.reducer'
-import { SET_SCORE, SET_WATCHED_USER } from '../reducer/user.reducer'
+import { LOADING_DONE, LOADING_START } from '../reducer/system.reducer'
 
-// Action Creators
+// Synchronous Action Creators
 export function getActionRemoveOrder(orderId) {
   return { type: REMOVE_ORDER, orderId }
 }
+
 export function getActionAddOrder(order) {
   return { type: ADD_ORDER, order }
 }
-export function getActionSetWatchedUser(user) {
-  return { type: SET_WATCHED_USER, user }
+
+export function setOrdersAction(orders) {
+  return { type: SET_ORDERS, orders }
 }
 
+// Asynchronous Functions
 export async function loadOrders() {
+  store.dispatch({ type: LOADING_START })
   try {
     const orders = await orderService.query()
-    store.dispatch({ type: SET_ORDERS, orders })
+
+    console.log('🚀 ~ file: order.actions.js:25 ~ loadOrders ~ orders:', orders)
+
+    store.dispatch(setOrdersAction(orders))
   } catch (err) {
     console.log('OrderActions: err in loadOrders', err)
     throw err
+  } finally {
+    store.dispatch({ type: LOADING_DONE })
   }
 }
 
 export async function addOrder(order) {
+  store.dispatch({ type: LOADING_START })
   try {
     const addedOrder = await orderService.add(order)
     store.dispatch(getActionAddOrder(addedOrder))
-    const { score } = addedOrder.byUser
-    store.dispatch({ type: SET_SCORE, score })
   } catch (err) {
     console.log('OrderActions: err in addOrder', err)
     throw err
+  } finally {
+    store.dispatch({ type: LOADING_DONE })
   }
 }
 
