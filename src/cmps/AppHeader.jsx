@@ -77,7 +77,8 @@ export function AppHeader() {
           </section>
         )}
       </div>
-      <UserMsg /> */}
+       */}
+      <UserMsg />
     </header>
   )
 }
