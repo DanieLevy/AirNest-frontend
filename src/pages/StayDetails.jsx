@@ -55,7 +55,7 @@ export function StayDetails() {
 
   return (
     <section className='stay-details'>
-      <StayHeader name={name} imgUrls={imgUrls} reviews={reviews} price={price} host={host} />
+      <StayHeader name={name} imgUrls={imgUrls} reviews={reviews} price={price} host={host} loc={loc} />
       <StayDescription summary={summary} />
       {/* 
       <StayAmenities data={currStay.amenities} />

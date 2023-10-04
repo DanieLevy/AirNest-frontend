@@ -11,6 +11,7 @@ export const stayService = {
   remove,
   getEmptyStay,
   addStayMsg,
+  calculateAverageRating,
 }
 window.cs = stayService
 
