@@ -8,6 +8,17 @@ html {
   color: $clr1;
 }
 
+.divider-both {
+  border-top: 1px solid $clr2;
+  border-bottom: 1px solid $clr2;
+  padding: em(24px) 0;
+}
+
+.divider-bottom {
+  border-bottom: 1px solid $clr2;
+  padding-block-end: em(24px);
+}
+
 body {
   height: 100vh;
   font-size: rem(18px);

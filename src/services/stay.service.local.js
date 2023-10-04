@@ -11,7 +11,6 @@ export const stayService = {
   remove,
   getEmptyStay,
   addStayMsg,
-  calculateAverageRating,
 }
 window.cs = stayService
 
@@ -69,9 +68,13 @@ function getEmptyStay() {
     _id: '',
     name: '',
     type: '',
+    bedrooms: 0,
+    beds: 0,
+    bathrooms: 0,
     imgUrls: [''],
     price: 0,
     summary: '',
+    room_type: '',
     capacity: 0,
     amenities: [''],
     labels: [''],
