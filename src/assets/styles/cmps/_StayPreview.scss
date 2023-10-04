@@ -1,34 +1,126 @@
 .stay-preview {
-    width: max-content;
+  background-color: transparent;
+  color: #000;
+  border: none;
+  display: block;
+  height: 100%;
+  width: 100%;
+  cursor: pointer;
+  box-sizing: border-box;
+  font-size: 0.9375rem;
+  margin: 0;
 
-    .stay-card {
-        width: 400px;
+  .preview-img {
+    position: relative;
+
+    .heart-icon {
+        position: absolute;
+        width: 24px;
+        height: 24px;
+        top: 10px;
+        right: 10px;
+        z-index: 1;
+        stroke: white;
+        font-size: 1.5rem;
+        cursor: pointer;
+        fill: rgba(58, 58, 58, 0.434);
+        & .liked {
+          fill: #ff385c;
+        }
+    }
+  }
+
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .stay-card {
+    width: 400px;
+  }
+
+  img {
+    object-fit: cover;
+    width: 100%;
+    aspect-ratio: 1.053/1;
+    height: auto;
+    vertical-align: bottom;
+    box-sizing: border-box;
+    border-radius: 5%;
+  }
+
+  .stay-card-details {
+    margin-top: 12px;
+    display: grid;
+    gap: 2px 8px;
+
+    .preview-header {
+      justify-content: space-between;
+      align-items: center;
     }
 
-    img {
-        border-radius: 10px;
+    .preview-header,
+    .preview-rating,
+    .preview-location,
+    .preview-summary,
+    .preview-dates,
+    .preview-price {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      line-height: 19px;
+      font-size: 0.9375rem;
     }
 
-    .stay-card-details {
-        color: black;
-
-        .title {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        h1 {
-            padding: 0;
-            margin: 0;
-        }
-
-        p {
-            padding: 0;
-            margin: 0;
-            color: gray;
-        }
-
-        .stay-price {}
+    .preview-rating {
+      display: flex;
+      gap: 2px;
     }
+
+    .preview-price,
+    .preview-location {
+      margin-top: 6px;
+    }
+
+    .preview-summary,
+    .preview-dates {
+      color: $clr4;
+    }
+
+    .preview-price .price-span {
+      font-weight: 600;
+      color: $clr5;
+    }
+  }
+}
+
+// Image Gallery Styles //
+.image-gallery-svg {
+  width: 25px !important;
+  height: 25px !important;
+  cursor: pointer;
+  object-fit: cover !important;
+  border-radius: 50%;
+  background-color: #e9e9e948;
+
+  &:hover {
+    color: $clr3 !important;
+    background-color: #e9e9e999;
+  }
+}
+
+.image-gallery-content .image-gallery-slide .image-gallery-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 5%;
+}
+
+.image-gallery-icon:hover {
+  color: $clr3 !important;
+}
+
+.image-gallery-bullets .image-gallery-bullet {
+  padding: 2px;
+  box-shadow: none;
 }

@@ -1,3 +1,4 @@
+import { OrderPage } from './pages/OrderPage.jsx'
 import { StayDetails } from './pages/StayDetails.jsx'
 import { StayEdit } from './pages/StayEdit.jsx'
 import { StayIndex } from './pages/StayIndex.jsx'
@@ -23,6 +24,11 @@ const routes = [
     path: '/list/',
     component: <StayEdit />,
     label: 'list',
+  },
+  {
+    path: '/order',
+    component: <OrderPage />,
+    label: 'order',
   },
 ]
 

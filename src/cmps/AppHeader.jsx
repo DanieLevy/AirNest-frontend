@@ -138,7 +138,8 @@ export function AppHeader() {
       >
         {labels.map((label, idx) => {
           return (
-              <div className="label">
+
+              <div className="label" key={idx}>
                 <img src={eval(label)} alt="" />
                 <span>{label}</span>
               </div>

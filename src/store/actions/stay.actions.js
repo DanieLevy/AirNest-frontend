@@ -45,10 +45,6 @@ export async function loadStay(stayId) {
   try {
     const stay = await stayService.getById(stayId)
     console.log('Stays from DB:', stayId)
-    // store.dispatch({
-    //   type: SET_STAYS,
-    //   stay,
-    // })
     return stay
   } catch (err) {
     console.log('Cannot load stays', err)
