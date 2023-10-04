@@ -5,9 +5,11 @@ import { AppHeader } from './cmps/AppHeader'
 import { AppFooter } from './cmps/AppFooter'
 import { StayDetails } from './pages/StayDetails'
 
+
 export function RootCmp() {
+
   return (
-    <div className='main-container'>
+    <div className='main-layout'>
       <AppHeader />
       {/* <main className=''> */}
       <Routes>
