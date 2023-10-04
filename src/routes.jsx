@@ -1,3 +1,4 @@
+import { OrderPage } from './pages/OrderPage.jsx'
 import { StayDetails } from './pages/StayDetails.jsx'
 import { StayIndex } from './pages/StayIndex.jsx'
 
@@ -17,6 +18,11 @@ const routes = [
     path: '/stay/:stayId',
     component: <StayDetails />,
     label: 'Details',
+  },
+  {
+    path: '/order',
+    component: <OrderPage />,
+    label: 'order',
   },
 ]
 

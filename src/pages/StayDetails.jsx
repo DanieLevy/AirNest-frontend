@@ -10,6 +10,7 @@ import { StayHeader } from '../cmps/StayDetails/StayHeader.jsx'
 import { StayAmenities } from '../cmps/StayDetails/StayAmenities.jsx'
 import { StayReviews } from '../cmps/StayDetails/StayReviews.jsx'
 import { showErrorMsg } from '../services/event-bus.service.js'
+import { CheckoutForm } from '../cmps/StayDetails/CheckoutForm.jsx'
 
 export function StayDetails() {
   const { stayId } = useParams()
@@ -33,6 +34,11 @@ export function StayDetails() {
       navigate('/')
     }
   }
+
+  const handleCheckoutSubmit = (formData) => {
+    navigate('/order', { state: { formData } })
+  }
+
   if (!currStay) return <div>Loading...</div>
 
   const {
@@ -74,6 +80,7 @@ export function StayDetails() {
       {/* 
       <StayAmenities data={currStay.amenities} />
       <StayReviews data={currStay.reviews} /> */}
+      <CheckoutForm onSubmit={handleCheckoutSubmit} />
     </section>
   )
 }
