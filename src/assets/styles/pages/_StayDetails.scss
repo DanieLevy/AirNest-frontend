@@ -1,1 +1,7 @@
-.stay-details {}
+.stay-details {
+  .stay-image-container {
+    img {
+      max-width: 300px;
+    }
+  }
+}
