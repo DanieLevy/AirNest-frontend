@@ -65,8 +65,41 @@ async function addStayMsg(stayId, txt) {
 
 function getEmptyStay() {
   return {
-    vendor: 'Susita-' + (Date.now() % 1000),
-    price: utilService.getRandomIntInclusive(1000, 9000),
+    _id: '',
+    name: '',
+    type: '',
+    imgUrls: [''],
+    price: 0,
+    summary: '',
+    capacity: 0,
+    amenities: [''],
+    labels: [''],
+    host: {
+      _id: '',
+      fullname: '',
+      imgUrl: '',
+    },
+    loc: {
+      country: '',
+      countryCode: '',
+      city: '',
+      address: '',
+      lat: 0,
+      lng: 0,
+    },
+    reviews: [
+      {
+        id: '',
+        txt: '',
+        rate: 0,
+        by: {
+          _id: '',
+          fullname: '',
+          imgUrl: '',
+        },
+      },
+    ],
+    likedByUsers: [''],
   }
 }
 
