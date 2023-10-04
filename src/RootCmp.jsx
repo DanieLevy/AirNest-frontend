@@ -4,7 +4,9 @@ import routes from './routes'
 import { AppHeader } from './cmps/AppHeader'
 import { AppFooter } from './cmps/AppFooter'
 
+
 export function RootCmp() {
+
   return (
     <div className='main-layout'>
       <AppHeader />
