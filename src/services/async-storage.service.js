@@ -79,6 +79,10 @@ const stays = [
     price: 80.0,
     summary: 'Fantastic duplex apartment...',
     capacity: 8,
+    room_type: 'Entire home',
+    bedrooms: 3,
+    beds: 4,
+    bathrooms: 3,
     amenities: ['TV', 'Wifi', 'Kitchen', 'Smoking allowed', 'Pets allowed', 'Cooking basics'],
     labels: ['Top of the world', 'Trending', 'Play', 'Tropical'],
     host: {
