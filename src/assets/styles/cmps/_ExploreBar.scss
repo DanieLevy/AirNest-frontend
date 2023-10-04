@@ -112,7 +112,6 @@
         background-color: transparent;
         color: inherit;
         font-size: .875rem;
-        font-family: cereal-medium;
         line-height: 18px;
         text-overflow: ellipsis;
         white-space: nowrap;
@@ -123,11 +122,11 @@
 
     .guests-btn {
         color: #717171;
-        font-family: cereal-medium;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
         max-width: 100px;
+        font-family: cereal-medium;
     }
 
     .search-btn {
