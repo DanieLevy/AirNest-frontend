@@ -15,8 +15,6 @@ export function EditForm({ stay, setStay, handleInputChange, handleSubmit }) {
                     />
                 </div>
 
-                <EditImg setStay={setStay} />
-
                 <div className="flex">
                     Country:
                     <input
@@ -58,21 +56,53 @@ export function EditForm({ stay, setStay, handleInputChange, handleSubmit }) {
                 </div>
 
                 <div className="flex">
-                    Price:
-                    <input
-                        type="number"
-                        name="price"
-                        value={stay.price}
-                        onChange={handleInputChange}
-                    />
-                </div>
-
-                <div className="flex">
                     Capacity:
                     <input
                         type="number"
                         name="capacity"
                         value={stay.capacity}
+                        onChange={handleInputChange}
+                    />
+                </div>
+
+                <div className="flex" style={{ gap: 10 }}>
+                    <div className="flex">
+                        bedrooms:
+                        <input
+                            type="number"
+                            name="bedrooms"
+                            value={stay.bedrooms}
+                            onChange={handleInputChange}
+                        />
+                    </div>
+                    <div className="flex">
+                        beds:
+                        <input
+                            type="number"
+                            name="beds"
+                            value={stay.beds}
+                            onChange={handleInputChange}
+                        />
+                    </div>
+                    <div className="flex">
+                        bathrooms:
+                        <input
+                            type="number"
+                            name="bathrooms"
+                            value={stay.bathrooms}
+                            onChange={handleInputChange}
+                        />
+                    </div>
+                </div>
+
+                <EditImg stay={stay} setStay={setStay} />
+
+                <div className="flex">
+                    Price:
+                    <input
+                        type="number"
+                        name="price"
+                        value={stay.price}
                         onChange={handleInputChange}
                     />
                 </div>

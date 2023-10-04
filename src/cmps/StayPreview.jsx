@@ -3,9 +3,10 @@ import ImageGallery from "react-image-gallery"
 import "react-image-gallery/styles/css/image-gallery.css"
 
 export function StayPreview({ stay }) {
+  console.log('stay:', stay)
   const stayLink = `/stay/${stay._id}`
 
-  const images = [
+  const images = stay.imgUrls.length ? stay.imgUrls.map(imgUrl => ({ original: imgUrl })) : [
     {
       original:
         "https://media.gettyimages.com/id/1322234491/photo/wide-angle-real-estate-interior-shot-of-a-beautiful-trendy-a-frame-tiny-home-in-western.jpg?s=170667a&w=gi&k=20&c=dHb27VRb6GMS3360Y1JJ7EH90WN61i6jgKBUXAW3e_k=",
@@ -39,7 +40,7 @@ export function StayPreview({ stay }) {
           showFullscreenButton={false}
           // showNav={false}
           showBullets={true}
-          // showThumbnails={true}
+        // showThumbnails={true}
         />
       </div>
       <a
@@ -58,19 +59,19 @@ export function StayPreview({ stay }) {
             </div>
           </div>
 
-<div className="preview-summary">
-          <p>{stay.summary}</p>
-</div>
-<div className="preview-dates">
-          <p>Nov 10 - 15</p>
-</div>
+          <div className="preview-summary">
+            <p>{stay.summary}</p>
+          </div>
+          <div className="preview-dates">
+            <p>Nov 10 - 15</p>
+          </div>
 
           <div className="preview-price">
             <span className="price-span">₪{stay.price}</span>
 
             <span> / night</span>
 
-            </div>
+          </div>
         </div>
       </a>
     </article>
