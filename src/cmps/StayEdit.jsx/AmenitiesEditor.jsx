@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { stayService } from "../../services/stay.service.local";
 
 
-export function EditAmenities({ stay, setStay }) {
+export function AmenitiesEditor({ stay, setStay }) {
 
     const [selectedAmenities, setSelectedAmenities] = useState([])
     const [amenities, setAmenities] = useState(null)
