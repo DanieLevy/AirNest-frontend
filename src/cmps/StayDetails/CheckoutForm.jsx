@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import DatePicker from 'react-datepicker'
 
 export function CheckoutForm({ onSubmit }) {
-  const [startDate, setStartDate] = useState(Date.now())
-  const [endDate, setEndDate] = useState(Date.now())
+  const [startDate, setStartDate] = useState(new Date())
+  const [endDate, setEndDate] = useState(new Date())
   const [adults, setAdults] = useState(1)
   const [children, setChildren] = useState(0)
 
@@ -19,7 +19,7 @@ export function CheckoutForm({ onSubmit }) {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className='checkout-form' onSubmit={handleSubmit}>
       <div>
         <label>
           Start Date:

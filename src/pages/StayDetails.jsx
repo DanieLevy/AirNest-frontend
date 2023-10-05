@@ -18,17 +18,15 @@ export function StayDetails() {
   const dispatch = useDispatch()
 
   const isLoading = useSelector((state) => state.systemModule.isLoading)
-  const loggedUser = useSelector((state) => state.userModule.user)
+  // const loggedUser = useSelector((state) => state.userModule.user)
 
   const [currStay, setCurrStay] = useState(null)
+  const loggedUser = userService.getLoggedinUser()
 
   useEffect(() => {
     loadStay()
-    loadLoggedinUser()
+    // loadLoggedinUser()
   }, [stayId])
-
-  // useEffect(() => {
-  // }, [])
 
   async function loadStay() {
     try {
@@ -63,7 +61,7 @@ export function StayDetails() {
 
   if (isLoading) return <div>Loading...</div>
   if (!currStay) return <div>no stay or user</div>
-  // if (!currStay || !loggedUser) return <div>no stay or user</div>
+  if (!currStay || !loggedUser) return <div>no stay or user</div>
 
   const {
     name,
