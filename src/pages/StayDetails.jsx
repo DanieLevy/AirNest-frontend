@@ -15,7 +15,7 @@ import { LOADING_DONE, LOADING_START } from '../store/reducer/system.reducer.js'
 export function StayDetails() {
   const { stayId } = useParams()
 
-  const [currStay, setStay] = useState(null)
+  const [currStay, setCurrStay] = useState(null)
   const [loggedUser, setLoggedUser] = useState(null)
 
   const navigate = useNavigate()
@@ -25,29 +25,25 @@ export function StayDetails() {
   useEffect(() => {
     loadStay()
     loadUser()
-    console.log('useEffect')
   }, [stayId])
   console.log('🚀 ~ file: StayDetails.jsx:20 ~ StayDetails ~ loggedUser:', loggedUser)
 
   async function loadStay() {
     try {
-      dispatch({ type: LOADING_START })
       const stay = await stayService.getById(stayId)
-      setStay(stay)
-      dispatch({ type: LOADING_DONE })
+      setCurrStay(stay)
     } catch (err) {
       console.log('Had issues in stay details', err)
       showErrorMsg('Cannot load stay')
-      dispatch({ type: LOADING_DONE })
       navigate('/')
     }
   }
 
   function loadUser() {
-    dispatch({ type: LOADING_START })
+    // dispatch({ type: LOADING_START })
     const loggedUser = userService.getLoggedinUser()
     setLoggedUser(loggedUser)
-    dispatch({ type: LOADING_DONE })
+    // dispatch({ type: LOADING_DONE })
   }
 
   function handleCheckoutSubmit(formData) {

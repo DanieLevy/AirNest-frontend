@@ -9,6 +9,8 @@ export function getActionRemoveOrder(orderId) {
 }
 
 export function getActionAddOrder(order) {
+  console.log('🚀 ~ file: order.actions.js:13 ~ getActionAddOrder ~ order:', order)
+
   return { type: ADD_ORDER, order }
 }
 
@@ -24,7 +26,7 @@ export async function loadOrders() {
 
     console.log('🚀 ~ file: order.actions.js:25 ~ loadOrders ~ orders:', orders)
 
-    store.dispatch(setOrdersAction(orders))
+    store.dispatch({ type: SET_ORDERS, orders })
   } catch (err) {
     console.log('OrderActions: err in loadOrders', err)
     throw err

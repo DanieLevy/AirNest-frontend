@@ -5,6 +5,7 @@ import { addOrder, loadOrders } from '../store/actions/order.actions'
 
 export function OrderPage() {
   const orderData = useSelector((state) => state.orderModule.orders)
+  // const dispatch = useDispatch()
 
   console.log('🚀 ~ file: OrderPage.jsx:9 ~ OrderPage ~ orderData:', orderData)
 
@@ -12,17 +13,18 @@ export function OrderPage() {
 
   const [isConfirmed, setIsConfirmed] = useState(false)
 
-  useEffect(function () {
+  useEffect(() => {
     loadOrders()
   }, [])
+  const singleOrder = orderData[orderData.length - 1]
 
   const handleConfirmOrder = function () {
     addOrder({
-      stayId: orderData.stayId,
-      startDate: orderData.startDate,
-      endDate: orderData.endDate,
-      adults: orderData.adults,
-      children: orderData.children,
+      stayId: singleOrder.stayId,
+      startDate: singleOrder.startDate,
+      endDate: singleOrder.endDate,
+      adults: singleOrder.adults,
+      children: singleOrder.children,
     })
     setIsConfirmed(true)
   }
@@ -35,10 +37,10 @@ export function OrderPage() {
   return (
     <div>
       <h2>Confirm Your Order</h2>
-      <p>Start Date: {new Date(orderData.startDate).toLocaleDateString()}</p>
-      <p>End Date: {new Date(orderData.endDate).toLocaleDateString()}</p>
-      <p>Adults: {orderData.adults}</p>
-      <p>Children: {orderData.children}</p>
+      <p>Start Date: {new Date(singleOrder.startDate).toLocaleDateString()}</p>
+      <p>End Date: {new Date(singleOrder.endDate).toLocaleDateString()}</p>
+      <p>Adults: {singleOrder.adults}</p>
+      <p>Children: {singleOrder.children}</p>
 
       {!isConfirmed ? <button onClick={handleConfirmOrder}>Confirm Order</button> : <div>Order Confirmed!</div>}
     </div>

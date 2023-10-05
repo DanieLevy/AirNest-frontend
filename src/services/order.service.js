@@ -12,6 +12,8 @@ async function query(filterBy) {
   try {
     const orders = await storageService.query('order')
 
+    console.log('🚀 ~ file: order.service.js:15 ~ query ~ orders:', orders)
+
     return orders
   } catch (error) {
     console.error('Error:', error)
