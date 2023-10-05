@@ -19,13 +19,15 @@ export function OrderPage() {
   }, [])
   const singleOrder = orderData[orderData.length - 1]
 
+  console.log('🚀 ~ file: OrderPage.jsx:22 ~ OrderPage ~ singleOrder:', singleOrder)
+
   async function handleConfirmOrder() {
     try {
       await orderService.add({
-        startDate: formData.startDate,
-        endDate: formData.endDate,
-        adults: formData.adults,
-        children: formData.children,
+        startDate: singleOrder.startDate,
+        endDate: singleOrder.endDate,
+        adults: singleOrder.adults,
+        children: singleOrder.children,
       })
 
       setIsConfirmed(true)
