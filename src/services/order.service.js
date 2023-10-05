@@ -37,9 +37,13 @@ async function add(orderDetails) {
     adults,
     children,
   }
-  const addedOrder = await storageService.post('order', orderToAdd)
-
-  return addedOrder
+  try {
+    const addedOrder = await storageService.post('order', orderToAdd)
+    return addedOrder
+  } catch (err) {
+    console.log('problem adding order!', err)
+    throw err
+  }
 
   /*
   TODO: add user (byuser)

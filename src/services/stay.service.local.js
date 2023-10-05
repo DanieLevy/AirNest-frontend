@@ -11,7 +11,10 @@ export const stayService = {
   remove,
   getEmptyStay,
   addStayMsg,
+  getLabels,
+  getAmenities,
 }
+
 window.cs = stayService
 async function query(filterBy = { txt: '', price: 0 }) {
   let stays = await storageService.query(STORAGE_KEY)
@@ -39,8 +42,7 @@ async function save(stay) {
   if (stay._id) {
     savedStay = await storageService.put(STORAGE_KEY, stay)
   } else {
-    // Later, owner is set by the backend
-    stay.owner = userService.getLoggedinUser()
+    stay._id = utilService.makeId()
     savedStay = await storageService.post(STORAGE_KEY, stay)
   }
   return savedStay
@@ -64,17 +66,16 @@ async function addStayMsg(stayId, txt) {
 
 function getEmptyStay() {
   return {
-    _id: '',
     name: '',
     type: '',
-    bedrooms: 0,
-    beds: 0,
-    bathrooms: 0,
+    bedrooms: '',
+    beds: '',
+    bathrooms: '',
     imgUrls: [''],
-    price: 0,
+    price: '',
     summary: '',
     room_type: '',
-    capacity: 0,
+    capacity: '',
     amenities: [''],
     labels: [''],
     host: {
@@ -104,6 +105,26 @@ function getEmptyStay() {
     ],
     likedByUsers: [''],
   }
+}
+
+function getLabels() {
+  return [
+    "Top of the world",
+    "Trending",
+    "Play",
+    "Tropical"
+  ]
+}
+
+function getAmenities() {
+  return [
+    "TV",
+    "Wifi",
+    "Kitchen",
+    "Smoking allowed",
+    "Pets allowed",
+    "Cooking basics"
+  ]
 }
 
 async function _createDemoData() {
@@ -162,7 +183,7 @@ const stays = [
     _id: 's102',
     name: 'Ribeira Charming Duplex',
     type: 'House',
-    imgUrls: ['https://e26e9b.jpg', 'otherImg.jpg'],
+    imgUrls: ['/img/img1.jpg', '/img/img2.jpg'],
     price: 80.0,
     summary: 'Fantastic duplex apartment...',
     capacity: 8,
@@ -199,7 +220,7 @@ const stays = [
     _id: 's103',
     name: 'Ribeira Charming Duplex',
     type: 'House',
-    imgUrls: ['https://e26e9b.jpg', 'otherImg.jpg'],
+    imgUrls: ['/img/img1.jpg', '/img/img2.jpg'],
     price: 80.0,
     summary: 'Fantastic duplex apartment...',
     capacity: 8,
@@ -236,7 +257,7 @@ const stays = [
     _id: 's104',
     name: 'Ribeira Charming Duplex',
     type: 'House',
-    imgUrls: ['https://e26e9b.jpg', 'otherImg.jpg'],
+    imgUrls: ['/img/img1.jpg', '/img/img2.jpg'],
     price: 80.0,
     summary: 'Fantastic duplex apartment...',
     capacity: 8,
@@ -273,7 +294,7 @@ const stays = [
     _id: 's105',
     name: 'Ribeira Charming Duplex',
     type: 'House',
-    imgUrls: ['https://e26e9b.jpg', 'otherImg.jpg'],
+    imgUrls: ['/img/img1.jpg', '/img/img2.jpg'],
     price: 80.0,
     summary: 'Fantastic duplex apartment...',
     capacity: 8,
@@ -310,7 +331,7 @@ const stays = [
     _id: 's106',
     name: 'Ribeira Charming Duplex',
     type: 'House',
-    imgUrls: ['https://e26e9b.jpg', 'otherImg.jpg'],
+    imgUrls: ['/img/img1.jpg', '/img/img2.jpg'],
     price: 80.0,
     summary: 'Fantastic duplex apartment...',
     capacity: 8,
@@ -347,7 +368,7 @@ const stays = [
     _id: 's107',
     name: 'Ribeira Charming Duplex',
     type: 'House',
-    imgUrls: ['https://e26e9b.jpg', 'otherImg.jpg'],
+    imgUrls: ['/img/img1.jpg', '/img/img2.jpg'],
     price: 80.0,
     summary: 'Fantastic duplex apartment...',
     capacity: 8,
@@ -384,7 +405,7 @@ const stays = [
     _id: 's108',
     name: 'Ribeira Charming Duplex',
     type: 'House',
-    imgUrls: ['https://e26e9b.jpg', 'otherImg.jpg'],
+    imgUrls: ['/img/img1.jpg', '/img/img2.jpg'],
     price: 80.0,
     summary: 'Fantastic duplex apartment...',
     capacity: 8,
@@ -421,7 +442,7 @@ const stays = [
     _id: 's109',
     name: 'Ribeira Charming Duplex',
     type: 'House',
-    imgUrls: ['https://e26e9b.jpg', 'otherImg.jpg'],
+    imgUrls: ['/img/img1.jpg', '/img/img2.jpg'],
     price: 80.0,
     summary: 'Fantastic duplex apartment...',
     capacity: 8,
