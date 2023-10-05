@@ -1,8 +1,7 @@
-import { EditAmenities } from "./EditAmenities";
-import { EditImg } from "./EditImg";
+import { AmenitiesEditor } from "./AmenitiesEditor";
+import { ImagesEditor } from "./ImagesEditor";
 
-export function EditForm({ stay, setStay, handleInputChange, handleSubmit }) {
-    console.log('stay:', stay)
+export function FormEditor({ stay, handleInputChange, handleSubmit, urls, onUrlsChange }) {
 
     return (
         <section>
@@ -16,6 +15,8 @@ export function EditForm({ stay, setStay, handleInputChange, handleSubmit }) {
                         onChange={handleInputChange}
                     />
                 </div>
+
+                <ImagesEditor urls={urls} onUrlsChange={onUrlsChange} className="main" />
 
                 <div className="flex">
                     Country:
@@ -57,7 +58,7 @@ export function EditForm({ stay, setStay, handleInputChange, handleSubmit }) {
                     </select>
                 </div>
 
-                <EditAmenities stay={stay} setStay={setStay} />
+                <AmenitiesEditor stay={stay} />
 
                 <div className="flex">
                     Capacity:
@@ -98,8 +99,6 @@ export function EditForm({ stay, setStay, handleInputChange, handleSubmit }) {
                         />
                     </div>
                 </div>
-
-                <EditImg stay={stay} setStay={setStay} />
 
                 <div className="flex">
                     Price:
