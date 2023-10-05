@@ -1,3 +1,4 @@
+import { EditAmenities } from "./EditAmenities";
 import { EditImg } from "./EditImg";
 
 export function EditForm({ stay, setStay, handleInputChange, handleSubmit }) {
@@ -54,6 +55,8 @@ export function EditForm({ stay, setStay, handleInputChange, handleSubmit }) {
                         <option value="off-grid">off-grid</option>
                     </select>
                 </div>
+
+                <EditAmenities setStay={setStay} />
 
                 <div className="flex">
                     Capacity:
