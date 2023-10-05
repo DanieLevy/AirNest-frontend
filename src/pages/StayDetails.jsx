@@ -103,11 +103,12 @@ export function StayDetails() {
         capacity={capacity}
         room_type={room_type}
       />
-      <StayDescription summary={summary} />
-      {/* 
+      <div className='mid-section'>
+        <StayDescription summary={summary} />
+        <CheckoutForm onSubmit={handleCheckoutSubmit} />
+      </div>
       <StayAmenities data={currStay.amenities} />
-      <StayReviews data={currStay.reviews} /> */}
-      <CheckoutForm onSubmit={handleCheckoutSubmit} />
+      <StayReviews data={currStay.reviews} />
     </section>
   )
 }
