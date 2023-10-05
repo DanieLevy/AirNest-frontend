@@ -10,6 +10,7 @@ import { StayHeader } from '../cmps/StayDetails/StayHeader.jsx'
 import { StayAmenities } from '../cmps/StayDetails/StayAmenities.jsx'
 import { StayReviews } from '../cmps/StayDetails/StayReviews.jsx'
 import { showErrorMsg } from '../services/event-bus.service.js'
+import { CheckoutForm } from '../cmps/StayDetails/CheckoutForm.jsx'
 
 export function StayDetails() {
   const { stayId } = useParams()
@@ -33,14 +34,20 @@ export function StayDetails() {
       navigate('/')
     }
   }
+
+  const handleCheckoutSubmit = (formData) => {
+    navigate('/order', { state: { formData } })
+  }
+
   if (!currStay) return <div>Loading...</div>
 
-  const { name, type, imgUrls, price, summary, capacity, amenities, labels, host, loc, reviews, likedByUsers } = currStay
-
-  console.log(
-    '🚀 ~ file: StayDetails.jsx:36 ~ StayDetails ~ name, type, imgUrls, price, summary, capacity, amenities, labels, host, loc, reviews, likedByUsers:',
+  const {
     name,
     type,
+    bedrooms,
+    beds,
+    bathrooms,
+    room_type,
     imgUrls,
     price,
     summary,
@@ -50,16 +57,30 @@ export function StayDetails() {
     host,
     loc,
     reviews,
-    likedByUsers
-  )
+    likedByUsers,
+  } = currStay
 
   return (
     <section className='stay-details'>
-      <StayHeader name={name} imgUrls={imgUrls} reviews={reviews} price={price} host={host} />
+      <StayHeader
+        name={name}
+        imgUrls={imgUrls}
+        type={type}
+        reviews={reviews}
+        price={price}
+        host={host}
+        loc={loc}
+        bedrooms={bedrooms}
+        beds={beds}
+        bathrooms={bathrooms}
+        capacity={capacity}
+        room_type={room_type}
+      />
       <StayDescription summary={summary} />
       {/* 
       <StayAmenities data={currStay.amenities} />
       <StayReviews data={currStay.reviews} /> */}
+      <CheckoutForm onSubmit={handleCheckoutSubmit} />
     </section>
   )
 }
