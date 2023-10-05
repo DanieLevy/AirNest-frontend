@@ -2,6 +2,7 @@ import { EditAmenities } from "./EditAmenities";
 import { EditImg } from "./EditImg";
 
 export function EditForm({ stay, setStay, handleInputChange, handleSubmit }) {
+    console.log('stay:', stay)
 
     return (
         <section>
@@ -56,7 +57,7 @@ export function EditForm({ stay, setStay, handleInputChange, handleSubmit }) {
                     </select>
                 </div>
 
-                <EditAmenities setStay={setStay} />
+                <EditAmenities stay={stay} setStay={setStay} />
 
                 <div className="flex">
                     Capacity:

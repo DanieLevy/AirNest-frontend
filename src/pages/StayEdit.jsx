@@ -1,18 +1,33 @@
 import { useEffect, useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 
 import { stayService } from "../services/stay.service.local"
 import { EditForm } from "../cmps/StayEdit.jsx/EditForm"
 
 export function StayEdit() {
   const [stay, setStay] = useState(null)
+  const { stayId } = useParams()
   const navigate = useNavigate()
 
   useEffect(() => {
-    const emptyStay = stayService.getEmptyStay()
-    console.log('emptyStay:', emptyStay)
-    setStay(emptyStay)
-  }, [])
+    if (!stayId) {
+      const emptyStay = stayService.getEmptyStay()
+      setStay(emptyStay)
+      console.log('!stayId:', stayId)
+    } else {
+      loadStay()
+      console.log('stayId:', stayId)
+    }
+  }, [stayId])
+
+  async function loadStay() {
+    try {
+      const stay = await stayService.getById(stayId)
+      setStay(stay)
+    } catch (error) {
+      console.log('loadToy err:', err)
+    }
+  }
 
   async function handleSubmit(e) {
     e.preventDefault()

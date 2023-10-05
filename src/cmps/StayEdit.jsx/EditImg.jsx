@@ -1,8 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { uploadService } from "../../services/upload.service";
 
 export function EditImg({ stay, setStay }) {
     const [imgs, setImgs] = useState([])
+
+    useEffect(() => {
+        if (stay._id) {
+            setImgs(stay.imgUrls)
+        }
+    }, [])
 
     return (
         <section>
