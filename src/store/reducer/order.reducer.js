@@ -18,7 +18,7 @@ export const SET_ORDER_STATUS = 'SET_ORDER_STATUS'
 
 const initialState = {
   orders: [],
-  draftOrder: null,
+  stagedOrder: null,
 }
 
 export function orderReducer(state = initialState, action = {}) {

@@ -27,16 +27,25 @@ async function remove(orderId) {
 }
 
 async function add(orderDetails) {
-  const { startDate, endDate, adults, children } = orderDetails
-
-  console.log('🚀 ~ file: order.service.js:25 ~ add ~ orderDetails:', orderDetails)
+  const { startDate, endDate, adults, children, stay, buyer, hostId } = orderDetails
 
   const orderToAdd = {
     startDate,
     endDate,
     adults,
     children,
+    stay: {
+      _id: stay._id,
+      name: stay.name,
+      price: stay.price,
+    },
+    buyer: {
+      _id: buyer._id,
+      fullname: buyer.fullname,
+    },
+    hostId,
   }
+
   try {
     const addedOrder = await storageService.post('order', orderToAdd)
     return addedOrder

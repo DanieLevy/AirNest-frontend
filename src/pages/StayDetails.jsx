@@ -9,22 +9,21 @@ import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service.js'
 import { CheckoutForm } from '../cmps/StayDetails/CheckoutForm.jsx'
 import { useDispatch, useSelector } from 'react-redux'
 import { userService } from '../services/user.service.js'
-import { getActionAddOrder } from '../store/actions/order.actions.js'
+import { getActionAddOrder, getActionStageOrder } from '../store/actions/order.actions.js'
 import { LOADING_DONE, LOADING_START } from '../store/reducer/system.reducer.js'
 
 export function StayDetails() {
   const { stayId } = useParams()
-
-  const [currStay, setCurrStay] = useState(null)
-  const [loggedUser, setLoggedUser] = useState(null)
-
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
   const isLoading = useSelector((state) => state.systemModule.isLoading)
+  const loggedUser = useSelector((state) => state.userModule.user)
+
+  const [currStay, setCurrStay] = useState(null)
+
   useEffect(() => {
     loadStay()
-    loadUser()
   }, [stayId])
   console.log('🚀 ~ file: StayDetails.jsx:20 ~ StayDetails ~ loggedUser:', loggedUser)
 
@@ -39,12 +38,12 @@ export function StayDetails() {
     }
   }
 
-  function loadUser() {
-    // dispatch({ type: LOADING_START })
-    const loggedUser = userService.getLoggedinUser()
-    setLoggedUser(loggedUser)
-    // dispatch({ type: LOADING_DONE })
-  }
+  // function loadUser() {
+  //   dispatch({ type: LOADING_START })
+  //   const loggedUser = userService.getLoggedinUser()
+  //   setLoggedUser(loggedUser)
+  //   dispatch({ type: LOADING_DONE })
+  // }
 
   function handleCheckoutSubmit(formData) {
     const orderDetails = {
@@ -54,15 +53,15 @@ export function StayDetails() {
         name: currStay.name,
         price: currStay.price,
       },
-
       buyer: {
         _id: loggedUser._id,
         fullname: loggedUser.fullname,
       },
       hostId: currStay.host._id,
     }
-    dispatch(getActionAddOrder(orderDetails))
-    showSuccessMsg('Test')
+
+    dispatch(getActionStageOrder(orderDetails))
+    showSuccessMsg('Order staged for confirmation.')
     navigate('/order')
   }
 

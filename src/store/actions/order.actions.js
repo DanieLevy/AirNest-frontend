@@ -1,6 +1,14 @@
 import { orderService } from '../../services/order.service'
 import { store } from '../store.js'
-import { ADD_ORDER, REMOVE_ORDER, SET_ORDERS, UPDATE_ORDER_STATUS } from '../reducer/order.reducer'
+import {
+  ADD_ORDER,
+  CLEAR_STAGED_ORDER,
+  CONFIRM_STAGED_ORDER,
+  REMOVE_ORDER,
+  SET_ORDERS,
+  STAGE_ORDER,
+  UPDATE_ORDER_STATUS,
+} from '../reducer/order.reducer'
 import { LOADING_DONE, LOADING_START } from '../reducer/system.reducer'
 
 // Synchronous Action Creators
@@ -28,7 +36,7 @@ export function getActionClearStagedOrder() {
 }
 
 export function getActionConfirmOrder() {
-  return { type: CONFIRM_ORDER }
+  return { type: CONFIRM_STAGED_ORDER }
 }
 
 // Asynchronous Functions
