@@ -26,6 +26,11 @@ const routes = [
     label: 'list',
   },
   {
+    path: '/list/:stayId',
+    component: <StayEdit />,
+    label: 'list',
+  },
+  {
     path: '/order',
     component: <OrderPage />,
     label: 'order',

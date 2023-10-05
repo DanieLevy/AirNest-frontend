@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { stayService } from "../../services/stay.service.local";
 
 
-export function EditAmenities({ setStay }) {
+export function EditAmenities({ stay, setStay }) {
 
     const [selectedAmenities, setSelectedAmenities] = useState([])
     const [amenities, setAmenities] = useState(null)
@@ -10,7 +10,10 @@ export function EditAmenities({ setStay }) {
     useEffect(() => {
         const services = stayService.getAmenities()
         setAmenities(services)
-        setSelectedAmenities(services.map(() => false))
+        if (stay._id) {
+        } else {
+            setSelectedAmenities(services.map(() => false))
+        }
     }, [])
 
     const handleInputChange = (index) => {

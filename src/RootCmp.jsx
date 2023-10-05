@@ -4,10 +4,9 @@ import routes from './routes'
 import { AppHeader } from './cmps/AppHeader'
 import { AppFooter } from './cmps/AppFooter'
 import { StayDetails } from './pages/StayDetails'
-
+import { UserMsg } from './cmps/UserMsg'
 
 export function RootCmp() {
-
   return (
     <div className='main-layout'>
       <AppHeader />
@@ -19,6 +18,7 @@ export function RootCmp() {
       </Routes>
       {/* </main> */}
       {/* <AppFooter /> */}
+      <UserMsg />
     </div>
   )
 }
