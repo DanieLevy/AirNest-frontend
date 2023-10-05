@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import DatePicker from 'react-datepicker'
+import { BarndedBtn } from '../barnded-btn'
 
 export function CheckoutForm({ onSubmit }) {
   const [startDate, setStartDate] = useState(Date.now())
@@ -64,7 +65,7 @@ export function CheckoutForm({ onSubmit }) {
         </label>
       </div>
       <div>
-        <button type='submit'>Checkout</button>
+        <BarndedBtn txt={'Checkout'} />
       </div>
     </form>
   )
