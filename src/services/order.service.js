@@ -8,10 +8,17 @@ export const orderService = {
   remove,
 }
 
-function query(filterBy) {
-  var queryStr = !filterBy ? '' : `?name=${filterBy.name}&sort=anaAref`
-  // return httpService.get(`order${queryStr}`)
-  return storageService.query('order')
+async function query(filterBy) {
+  try {
+    const orders = await storageService.query('order')
+
+    console.log('🚀 ~ file: order.service.js:15 ~ query ~ orders:', orders)
+
+    return orders
+  } catch (error) {
+    console.error('Error:', error)
+    throw error
+  }
 }
 
 async function remove(orderId) {
@@ -21,6 +28,9 @@ async function remove(orderId) {
 
 async function add(orderDetails) {
   const { startDate, endDate, adults, children } = orderDetails
+
+  console.log('🚀 ~ file: order.service.js:25 ~ add ~ orderDetails:', orderDetails)
+
   const orderToAdd = {
     startDate,
     endDate,

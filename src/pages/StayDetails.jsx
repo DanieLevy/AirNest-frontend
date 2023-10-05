@@ -5,25 +5,33 @@ import { StayDescription } from '../cmps/StayDetails/StayDescription.jsx'
 import { StayHeader } from '../cmps/StayDetails/StayHeader.jsx'
 import { StayAmenities } from '../cmps/StayDetails/StayAmenities.jsx'
 import { StayReviews } from '../cmps/StayDetails/StayReviews.jsx'
-import { showErrorMsg } from '../services/event-bus.service.js'
+import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service.js'
 import { CheckoutForm } from '../cmps/StayDetails/CheckoutForm.jsx'
+import { useDispatch, useSelector } from 'react-redux'
+import { userService } from '../services/user.service.js'
+import { getActionAddOrder } from '../store/actions/order.actions.js'
+import { LOADING_DONE, LOADING_START } from '../store/reducer/system.reducer.js'
 
 export function StayDetails() {
   const { stayId } = useParams()
 
-  console.log('🚀 ~ file: StayDetails.jsx:17 ~ StayDetails ~ stayId:', stayId)
+  const [currStay, setCurrStay] = useState(null)
+  const [loggedUser, setLoggedUser] = useState(null)
 
-  const [currStay, setStay] = useState(null)
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
+  const isLoading = useSelector((state) => state.systemModule.isLoading)
   useEffect(() => {
     loadStay()
+    loadUser()
   }, [stayId])
+  console.log('🚀 ~ file: StayDetails.jsx:20 ~ StayDetails ~ loggedUser:', loggedUser)
 
   async function loadStay() {
     try {
       const stay = await stayService.getById(stayId)
-      setStay(stay)
+      setCurrStay(stay)
     } catch (err) {
       console.log('Had issues in stay details', err)
       showErrorMsg('Cannot load stay')
@@ -31,11 +39,35 @@ export function StayDetails() {
     }
   }
 
-  const handleCheckoutSubmit = (formData) => {
-    navigate('/order', { state: { formData } })
+  function loadUser() {
+    // dispatch({ type: LOADING_START })
+    const loggedUser = userService.getLoggedinUser()
+    setLoggedUser(loggedUser)
+    // dispatch({ type: LOADING_DONE })
   }
 
-  if (!currStay) return <div>Loading...</div>
+  function handleCheckoutSubmit(formData) {
+    const orderDetails = {
+      ...formData,
+      stay: {
+        _id: currStay._id,
+        name: currStay.name,
+        price: currStay.price,
+      },
+
+      buyer: {
+        _id: loggedUser._id,
+        fullname: loggedUser.fullname,
+      },
+      hostId: currStay.host._id,
+    }
+    dispatch(getActionAddOrder(orderDetails))
+    showSuccessMsg('Test')
+    navigate('/order')
+  }
+
+  if (isLoading) return <div>Loading...</div>
+  if (!currStay || !loggedUser) return <div>no stay or user</div>
 
   const {
     name,
