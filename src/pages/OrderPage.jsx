@@ -1,35 +1,28 @@
 import React, { useEffect, useState } from 'react'
 import { orderService } from '../services/order.service'
-import { useSelector } from 'react-redux'
-import { addOrder, loadOrders } from '../store/actions/order.actions'
+import { useDispatch, useSelector } from 'react-redux'
+import { addOrder, getActionAddOrder, getActionClearStagedOrder, loadOrders } from '../store/actions/order.actions'
 import { showErrorMsg } from '../services/event-bus.service'
 
 export function OrderPage() {
-  const orderData = useSelector((state) => state.orderModule.orders)
-  // const dispatch = useDispatch()
-
-  console.log('🚀 ~ file: OrderPage.jsx:9 ~ OrderPage ~ orderData:', orderData)
-
+  const stagedOrder = useSelector((state) => state.orderModule.stagedOrder)
   const isLoading = useSelector((state) => state.systemModule.isLoading)
 
   const [isConfirmed, setIsConfirmed] = useState(false)
 
+  const dispatch = useDispatch()
   useEffect(() => {
     loadOrders()
+    return () => {
+      dispatch(getActionClearStagedOrder())
+    }
   }, [])
-  const singleOrder = orderData[orderData.length - 1]
-
-  console.log('🚀 ~ file: OrderPage.jsx:22 ~ OrderPage ~ singleOrder:', singleOrder)
 
   async function handleConfirmOrder() {
     try {
-      await orderService.add({
-        startDate: singleOrder.startDate,
-        endDate: singleOrder.endDate,
-        adults: singleOrder.adults,
-        children: singleOrder.children,
-      })
+      const confirmedOrder = await orderService.add(stagedOrder)
 
+      dispatch(getActionAddOrder(confirmedOrder))
       setIsConfirmed(true)
     } catch (err) {
       console.error('Failed to confirm order:', err)
@@ -37,18 +30,16 @@ export function OrderPage() {
     }
   }
 
-  console.log('🚀 ~ file: OrderPage.jsx:32 ~ OrderPage ~ orderData:', orderData)
-
   if (isLoading) return <div>Loading...</div>
-  if (!orderData) return <div>Error: No order data provided!</div>
+  if (!stagedOrder && !isConfirmed) return <div>No staged order found!</div>
 
   return (
     <div>
       <h2>Confirm Your Order</h2>
-      <p>Start Date: {new Date(singleOrder.startDate).toLocaleDateString()}</p>
-      <p>End Date: {new Date(singleOrder.endDate).toLocaleDateString()}</p>
-      <p>Adults: {singleOrder.adults}</p>
-      <p>Children: {singleOrder.children}</p>
+      <p>Start Date: {new Date(stagedOrder.startDate).toLocaleDateString()}</p>
+      <p>End Date: {new Date(stagedOrder.endDate).toLocaleDateString()}</p>
+      <p>Adults: {stagedOrder.adults}</p>
+      <p>Children: {stagedOrder.children}</p>
 
       {!isConfirmed ? <button onClick={handleConfirmOrder}>Confirm Order</button> : <div>Order Confirmed!</div>}
     </div>
