@@ -2,21 +2,18 @@ import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 
 import { stayService } from "../services/stay.service.local"
-import { EditForm } from "../cmps/StayEdit.jsx/EditForm"
+import { FormEditor } from "../cmps/StayEdit.jsx/FormEditor"
 
 export function StayEdit() {
   const [stay, setStay] = useState(null)
   const { stayId } = useParams()
   const navigate = useNavigate()
-
   useEffect(() => {
     if (!stayId) {
       const emptyStay = stayService.getEmptyStay()
       setStay(emptyStay)
-      console.log('!stayId:', stayId)
     } else {
       loadStay()
-      console.log('stayId:', stayId)
     }
   }, [stayId])
 
@@ -40,6 +37,12 @@ export function StayEdit() {
     }
   }
 
+  function setImgUrl(urls) {
+    setStay(prev => ({
+      ...prev, imgUrls: urls
+    }))
+  }
+
   function handleInputChange(e) {
     let { name, value } = e.target;
 
@@ -60,7 +63,7 @@ export function StayEdit() {
   if (!stay) return <div>loading...</div>
   return (
     <main>
-      <EditForm stay={stay} setStay={setStay} handleInputChange={handleInputChange} handleSubmit={handleSubmit} />
+      <FormEditor stay={stay} handleInputChange={handleInputChange} handleSubmit={handleSubmit} urls={stay.imgUrls} onUrlsChange={setImgUrl} />
     </main>
   )
 }
