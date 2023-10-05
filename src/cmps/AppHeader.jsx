@@ -63,27 +63,6 @@ export function AppHeader() {
     "castles",
     "countryside",
     "cycladichomes",
-    "amazingpools",
-    "amazingviews",
-    "amazingpools",
-    "cabins",
-    "castles",
-    "countryside",
-    "cycladichomes",
-    "amazingpools",
-    "amazingviews",
-    "amazingpools",
-    "cabins",
-    "castles",
-    "countryside",
-    "cycladichomes",
-    "amazingpools",
-    "amazingviews",
-    "amazingpools",
-    "cabins",
-    "castles",
-    "countryside",
-    "cycladichomes",
   ]
 
   return (
@@ -98,10 +77,10 @@ export function AppHeader() {
           </svg>
         </Link>
         <ExploreBar />
-        <span className='nav-text'>Airbnb your home</span>
+        <span className="nav-text">Airbnb your home</span>
 
         <div
-          className='user-nav flex'
+          className="user-nav flex"
           onClick={(ev) => {
             ev.stopPropagation()
             setUserModal(!userModal)
@@ -135,9 +114,11 @@ export function AppHeader() {
             onToggleLogin={setLoginModal}
           />
         )}
+        
       </header>
+      {/* <ExploreBar /> */}
 
-      <Carousel
+      {/* <Carousel
         show={13}
         slide={5}
         swiping={true}
@@ -163,7 +144,7 @@ export function AppHeader() {
             </div>
           )
         })}
-      </Carousel>
+      </Carousel> */}
     </section>
   )
 }
