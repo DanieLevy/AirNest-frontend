@@ -38,7 +38,7 @@ async function remove(stayId) {
 }
 
 async function save(stay) {
-  var savedStay
+  let savedStay
   if (stay._id) {
     savedStay = await storageService.put(STORAGE_KEY, stay)
   } else {
@@ -108,23 +108,11 @@ function getEmptyStay() {
 }
 
 function getLabels() {
-  return [
-    "Top of the world",
-    "Trending",
-    "Play",
-    "Tropical"
-  ]
+  return ['Top of the world', 'Trending', 'Play', 'Tropical']
 }
 
 function getAmenities() {
-  return [
-    "TV",
-    "Wifi",
-    "Kitchen",
-    "Smoking allowed",
-    "Pets allowed",
-    "Cooking basics"
-  ]
+  return ['TV', 'Wifi', 'Kitchen', 'Smoking allowed', 'Pets allowed', 'Cooking basics']
 }
 
 async function _createDemoData() {

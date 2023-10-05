@@ -12,8 +12,6 @@ async function query(filterBy) {
   try {
     const orders = await storageService.query('order')
 
-    console.log('🚀 ~ file: order.service.js:15 ~ query ~ orders:', orders)
-
     return orders
   } catch (error) {
     console.error('Error:', error)
@@ -22,8 +20,8 @@ async function query(filterBy) {
 }
 
 async function remove(orderId) {
-  await httpService.delete(`order/${orderId}`)
-  // await storageService.remove('order', orderId)
+  // await httpService.delete(`order/${orderId}`)
+  await storageService.remove('order', orderId)
 }
 
 async function add(orderDetails) {
@@ -53,12 +51,4 @@ async function add(orderDetails) {
     console.log('problem adding order!', err)
     throw err
   }
-
-  /*
-  TODO: add user (byuser)
-  const aboutUser = await userService.getById(aboutUserId)
-  const loggedInUser = userService.getLoggedinUser()
-  const addedOrder = await httpService.post(`order`, { txt, aboutUserId })
-  return addedOrder
-*/
 }
