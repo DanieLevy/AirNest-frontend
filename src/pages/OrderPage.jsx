@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { orderService } from '../services/order.service'
 import { useSelector } from 'react-redux'
 import { addOrder, loadOrders } from '../store/actions/order.actions'
+import { showErrorMsg } from '../services/event-bus.service'
 
 export function OrderPage() {
   const orderData = useSelector((state) => state.orderModule.orders)
@@ -18,15 +19,20 @@ export function OrderPage() {
   }, [])
   const singleOrder = orderData[orderData.length - 1]
 
-  const handleConfirmOrder = function () {
-    addOrder({
-      stayId: singleOrder.stayId,
-      startDate: singleOrder.startDate,
-      endDate: singleOrder.endDate,
-      adults: singleOrder.adults,
-      children: singleOrder.children,
-    })
-    setIsConfirmed(true)
+  async function handleConfirmOrder() {
+    try {
+      await orderService.add({
+        startDate: formData.startDate,
+        endDate: formData.endDate,
+        adults: formData.adults,
+        children: formData.children,
+      })
+
+      setIsConfirmed(true)
+    } catch (err) {
+      console.error('Failed to confirm order:', err)
+      showErrorMsg('problem saving order', err)
+    }
   }
 
   console.log('🚀 ~ file: OrderPage.jsx:32 ~ OrderPage ~ orderData:', orderData)
