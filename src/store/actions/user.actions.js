@@ -72,11 +72,32 @@ export async function logout() {
 }
 
 export async function loadUser(userId) {
+  store.dispatch({ type: LOADING_START })
+
   try {
     const user = await userService.getById(userId)
-    store.dispatch({ type: SET_WATCHED_USER, user })
+    // store.dispatch({ type: SET_WATCHED_USER, user })
   } catch (err) {
     showErrorMsg('Cannot load user')
     console.log('Cannot load user', err)
+  } finally {
+    store.dispatch({ type: LOADING_DONE })
+  }
+}
+export async function loadLoggedinUser() {
+  store.dispatch({ type: LOADING_START })
+
+  try {
+    const user = userService.getLoggedinUser()
+    if (user) {
+      store.dispatch({ type: SET_USER, user })
+    } else {
+      console.log('No user in session')
+    }
+  } catch (err) {
+    showErrorMsg('Cannot load user')
+    console.log('Cannot load user', err)
+  } finally {
+    store.dispatch({ type: LOADING_DONE })
   }
 }

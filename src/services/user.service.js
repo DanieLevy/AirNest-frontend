@@ -83,7 +83,11 @@ function saveLocalUser(user) {
 }
 
 function getLoggedinUser() {
-  return JSON.parse(sessionStorage.getItem(STORAGE_KEY_LOGGEDIN_USER))
+  const user = JSON.parse(sessionStorage.getItem(STORAGE_KEY_LOGGEDIN_USER))
+
+  console.log('🚀 ~ file: user.service.js:88 ~ getLoggedinUser ~ user:', user)
+
+  return user
 }
 
 async function _createLocalUser() {

@@ -9,8 +9,8 @@ import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service.js'
 import { CheckoutForm } from '../cmps/StayDetails/CheckoutForm.jsx'
 import { useDispatch, useSelector } from 'react-redux'
 import { userService } from '../services/user.service.js'
-import { getActionAddOrder, getActionStageOrder } from '../store/actions/order.actions.js'
-import { LOADING_DONE, LOADING_START } from '../store/reducer/system.reducer.js'
+import { getActionStageOrder } from '../store/actions/order.actions.js'
+import { loadLoggedinUser } from '../store/actions/user.actions.js'
 
 export function StayDetails() {
   const { stayId } = useParams()
@@ -24,8 +24,11 @@ export function StayDetails() {
 
   useEffect(() => {
     loadStay()
+    loadLoggedinUser()
   }, [stayId])
-  console.log('🚀 ~ file: StayDetails.jsx:20 ~ StayDetails ~ loggedUser:', loggedUser)
+
+  // useEffect(() => {
+  // }, [])
 
   async function loadStay() {
     try {
@@ -37,13 +40,6 @@ export function StayDetails() {
       navigate('/')
     }
   }
-
-  // function loadUser() {
-  //   dispatch({ type: LOADING_START })
-  //   const loggedUser = userService.getLoggedinUser()
-  //   setLoggedUser(loggedUser)
-  //   dispatch({ type: LOADING_DONE })
-  // }
 
   function handleCheckoutSubmit(formData) {
     const orderDetails = {
@@ -66,7 +62,8 @@ export function StayDetails() {
   }
 
   if (isLoading) return <div>Loading...</div>
-  if (!currStay || !loggedUser) return <div>no stay or user</div>
+  if (!currStay) return <div>no stay or user</div>
+  // if (!currStay || !loggedUser) return <div>no stay or user</div>
 
   const {
     name,

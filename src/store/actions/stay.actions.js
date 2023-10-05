@@ -29,7 +29,7 @@ export async function loadStays(filterBy) {
   console.log('loading stays')
   try {
     const stays = await stayService.query(filterBy)
-    console.log('Stays from DB:', stays)
+    // console.log('Stays from DB:', stays)
     store.dispatch({
       type: SET_STAYS,
       stays,
