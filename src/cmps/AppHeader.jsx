@@ -1,15 +1,15 @@
-import React from 'react'
-import { Link, NavLink } from 'react-router-dom'
-import { useSelector } from 'react-redux'
-import routes from '../routes'
-import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
-import { login, logout, signup } from '../store/actions/user.actions.js'
-import { LoginSignup } from './LoginSignup.jsx'
-import { ExploreBar } from './ExploreBar'
-import { UserMsg } from './UserMsg'
-import { useState } from 'react'
-import Carousel from 'react-multi-carousel'
-import 'react-multi-carousel/lib/styles.css'
+import React, { useEffect } from "react"
+import { Link, NavLink } from "react-router-dom"
+import { useSelector } from "react-redux"
+import routes from "../routes"
+import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service"
+import { login, logout, signup } from "../store/actions/user.actions.js"
+import { LoginSignup } from "./LoginSignup.jsx"
+import { ExploreBar } from "./ExploreBar"
+import { UserMsg } from "./UserMsg"
+import { useState } from "react"
+import { Carousel, ScrollingCarousel } from "@trendyol-js/react-carousel"
+import "react-multi-carousel/lib/styles.css"
 
 import amazingpools from '../assets/img/labels/amazingpools.jpg'
 import amazingviews from '../assets/img/labels/amazingviews.jpg'
@@ -18,14 +18,17 @@ import castles from '../assets/img/labels/castles.jpg'
 import countryside from '../assets/img/labels/countryside.jpg'
 import cycladichomes from '../assets/img/labels/cycladichomes.jpg'
 
-import { FaAirbnb } from 'react-icons/fa6'
-import { IoIosMenu } from 'react-icons/io'
-import { IoIosSearch } from 'react-icons/io'
-import { FaCircleUser } from 'react-icons/fa6'
+import { FaAirbnb } from "react-icons/fa6"
+import { IoIosMenu } from "react-icons/io"
+import { FaCircleUser } from "react-icons/fa6"
+import { GoChevronRight } from "react-icons/go"
+import { GoChevronLeft } from "react-icons/go"
 
 export function AppHeader() {
   const user = useSelector((storeState) => storeState.userModule.user)
   const [isExpanded, setIsExpanded] = useState(true)
+  const [userModal, setUserModal] = useState(false)
+  const [loginModal, setLoginModal] = useState(false)
 
   async function onLogin(credentials) {
     try {
@@ -52,7 +55,36 @@ export function AppHeader() {
     }
   }
 
-  const labels = ['amazingpools', 'amazingviews', 'amazingpools', 'cabins', 'castles', 'countryside', 'cycladichomes']
+  const labels = [
+    "amazingpools",
+    "amazingviews",
+    "amazingpools",
+    "cabins",
+    "castles",
+    "countryside",
+    "cycladichomes",
+    "amazingpools",
+    "amazingviews",
+    "amazingpools",
+    "cabins",
+    "castles",
+    "countryside",
+    "cycladichomes",
+    "amazingpools",
+    "amazingviews",
+    "amazingpools",
+    "cabins",
+    "castles",
+    "countryside",
+    "cycladichomes",
+    "amazingpools",
+    "amazingviews",
+    "amazingpools",
+    "cabins",
+    "castles",
+    "countryside",
+    "cycladichomes",
+  ]
 
   return (
     <section className={` full main-layout header-container ${isExpanded ? 'expanded' : ''}`}>
@@ -67,61 +99,66 @@ export function AppHeader() {
         </Link>
         <ExploreBar />
         <span className='nav-text'>Airbnb your home</span>
-        <div className='user-nav flex'>
+
+        <div
+          className='user-nav flex'
+          onClick={(ev) => {
+            ev.stopPropagation()
+            setUserModal(!userModal)
+          }}
+        >
           <IoIosMenu />
           <FaCircleUser className='user-icon' />
         </div>
+
+        {userModal && (
+          <section className="user-modal">
+            <ul className="user-modal-nav">
+              <li
+                onClick={(ev) => {
+                  ev.stopPropagation()
+                  setUserModal(false)
+                  setLoginModal(true)
+                }}
+              >
+                Login
+              </li>
+              <li>Signup</li>
+            </ul>
+          </section>
+        )}
+
+        {loginModal && (
+          <LoginSignup
+            onLogin={onLogin}
+            onSignup={onSignup}
+            onToggleLogin={setLoginModal}
+          />
+        )}
       </header>
+
       <Carousel
-        additionalTransfrom={0}
-        arrows
-        autoPlaySpeed={3000}
-        centerMode={false}
-        className='carousel'
-        containerClass='container'
-        dotListClass=''
-        draggable
-        focusOnSelect={false}
-        infinite={true} // Set infinite to true
-        itemClass=''
-        keyBoardControl
-        minimumTouchDrag={80}
-        renderButtonGroupOutside={false}
-        responsive={{
-          desktop: {
-            breakpoint: {
-              max: 3000,
-              min: 1024,
-            },
-            items: 7, // Number of items to show on desktop
-            partialVisibilityGutter: 0, // Set partialVisibilityGutter to 0
-          },
-          mobile: {
-            breakpoint: {
-              max: 464,
-              min: 0,
-            },
-            items: 1, // Number of items to show on mobile
-            partialVisibilityGutter: 0, // Set partialVisibilityGutter to 0
-          },
-          tablet: {
-            breakpoint: {
-              max: 1024,
-              min: 464,
-            },
-            items: 3, // Number of items to show on tablet
-            partialVisibilityGutter: 0, // Set partialVisibilityGutter to 0
-          },
-        }}
-        // showDots={false}
-        sliderClass='slider'
-        slidesToSlide={3}
-        swipeable
+        show={13}
+        slide={5}
+        swiping={true}
+        useArrowKeys={true}
+        rightArrow={
+          <div className="arrow right">
+            <GoChevronRight />
+          </div>
+        }
+        leftArrow={
+          <div className="arrow left">
+            <GoChevronLeft />
+          </div>
+        }
+        className="labels-carousel"
+        responsive={true}
       >
         {labels.map((label, idx) => {
           return (
-            <div className='label' key={idx}>
-              <img src={eval(label)} alt='' />
+            <div className="label" key={idx}>
+              <img src={eval(label)} alt="" />
               <span>{label}</span>
             </div>
           )
