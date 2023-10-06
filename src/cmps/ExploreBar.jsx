@@ -47,7 +47,7 @@ export function ExploreBar() {
       {!isExpanded && (
         <div
           className={`explore-bar-preview ${
-            !isExpanded ? "animate__animated animate__fadeInUp" : ""
+            !isExpanded ? "animate__animated animate__fadeIn" : ""
           }`}
           onClick={isExpanded ? null : handleClick}
         >
