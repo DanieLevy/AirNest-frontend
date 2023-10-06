@@ -95,8 +95,8 @@ export function StayDetails() {
         <StayDescription summary={summary} />
         <CheckoutForm onSubmit={handleCheckoutSubmit} />
       </div>
-      <StayAmenities data={currStay.amenities} />
-      <StayReviews data={currStay.reviews} />
+      <StayAmenities data={amenities} />
+      <StayReviews data={reviews} />
     </section>
   )
 }
