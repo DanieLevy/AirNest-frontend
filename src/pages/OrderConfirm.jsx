@@ -51,7 +51,7 @@ export function OrderConfirm() {
       <p>Children: {stagedOrder.children}</p>
 
       {!isConfirmed ? <button onClick={handleConfirmOrder}>Confirm Order</button> : <div>Order Confirmed!</div>}
-      {/* {isConfirmed ? <Link to={`/order/${}`}} */}
+      {/* {isConfirmed ? <Link to={`/order/${loggedUser._id}`} } */}
     </div>
   )
 }

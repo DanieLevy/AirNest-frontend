@@ -18,7 +18,6 @@ export function StayDetails() {
   const dispatch = useDispatch()
 
   const isLoading = useSelector((state) => state.systemModule.isLoading)
-  const loggedUser = useSelector((state) => state.userModule.user)
 
   const [currStay, setCurrStay] = useState(null)
 
