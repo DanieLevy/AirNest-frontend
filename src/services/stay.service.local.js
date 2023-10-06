@@ -112,7 +112,7 @@ function getLabels() {
 }
 
 function getAmenities() {
-  return ['TV', 'Wifi', 'Kitchen', 'Smoking allowed', 'Pets allowed', 'Cooking basics']
+  return ['TV', 'Wifi', 'Kitchen', 'Smoking allowed', 'Pets allowed', 'Cooking basics', 'Chair']
 }
 
 async function _createDemoData() {

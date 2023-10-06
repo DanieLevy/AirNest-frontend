@@ -77,7 +77,7 @@ export function AppHeader() {
           </svg>
         </Link>
         <ExploreBar />
-        <span className="nav-text">Airbnb your home</span>
+        <Link to='/list' className="nav-text"> <span >Airbnb your home</span></Link>
 
         <div
           className="user-nav flex"
@@ -114,7 +114,7 @@ export function AppHeader() {
             onToggleLogin={setLoginModal}
           />
         )}
-        
+
       </header>
       {/* <ExploreBar /> */}
 
