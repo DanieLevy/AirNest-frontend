@@ -1,4 +1,5 @@
 import { ImagesEditor } from '../StayEdit.jsx/ImagesEditor'
+import { DetailsImages } from './DetailsImages'
 
 export function StayHeader({ name, type, imgUrls, price, labels, host, loc, reviews, bedrooms, beds, bathrooms, room_type, capacity }) {
   function calculateAverageRating(reviews) {
@@ -25,7 +26,7 @@ export function StayHeader({ name, type, imgUrls, price, labels, host, loc, revi
           <img key={index} src={image} alt={name} />
         ))}
       </div> */}
-      <ImagesEditor urls={imgUrls} />
+      <DetailsImages urls={imgUrls} />
       <div className='stay-info'>
         <h1>{`${room_type} in ${loc.city}, ${loc.country}`}</h1>
         <div className='stay-info-list'>
