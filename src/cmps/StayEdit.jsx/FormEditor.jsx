@@ -1,7 +1,8 @@
 import { AmenitiesEditor } from "./AmenitiesEditor";
 import { ImagesEditor } from "./ImagesEditor";
+import MultiSelectLabels from "./MultiSelectLabels";
 
-export function FormEditor({ stay, handleInputChange, handleSubmit, urls, onUrlsChange, onAmenitiesChange }) {
+export function FormEditor({ stay, handleInputChange, handleSubmit, urls, onUrlsChange, onAmenitiesChange, setLabels }) {
 
     return (
         <section>
@@ -58,6 +59,7 @@ export function FormEditor({ stay, handleInputChange, handleSubmit, urls, onUrls
                     </select>
                 </div>
 
+                <MultiSelectLabels selectedLabels={stay.labels} onLabelsChange={setLabels} />
                 <AmenitiesEditor stay={stay} onAmenitiesChange={onAmenitiesChange} />
 
                 <div className="flex">

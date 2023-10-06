@@ -71,13 +71,13 @@ function getEmptyStay() {
     bedrooms: '',
     beds: '',
     bathrooms: '',
-    imgUrls: [''],
+    imgUrls: [],
     price: '',
     summary: '',
     room_type: '',
     capacity: '',
-    amenities: [''],
-    labels: [''],
+    amenities: [],
+    labels: [],
     host: {
       _id: '',
       fullname: '',
@@ -108,7 +108,13 @@ function getEmptyStay() {
 }
 
 function getLabels() {
-  return ['Top of the world', 'Trending', 'Play', 'Tropical']
+  // return ['Top of the world', 'Trending', 'Play', 'Tropical']
+  return [
+    { value: 'Top of the world', label: 'Top of the world' },
+    { value: 'Trending', label: 'Trending' },
+    { value: 'Play', label: 'Play' },
+    { value: 'Tropical', label: 'Tropical' },
+  ]
 }
 
 function getAmenities() {
