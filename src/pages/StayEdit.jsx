@@ -43,6 +43,12 @@ export function StayEdit() {
     }))
   }
 
+  function setAmenities(amenities) {
+    setStay(prev => ({
+      ...prev, amenities: amenities
+    }))
+  }
+
   function handleInputChange(e) {
     let { name, value } = e.target;
 
@@ -63,7 +69,7 @@ export function StayEdit() {
   if (!stay) return <div>loading...</div>
   return (
     <main>
-      <FormEditor stay={stay} handleInputChange={handleInputChange} handleSubmit={handleSubmit} urls={stay.imgUrls} onUrlsChange={setImgUrl} />
+      <FormEditor stay={stay} handleInputChange={handleInputChange} handleSubmit={handleSubmit} urls={stay.imgUrls} onUrlsChange={setImgUrl} onAmenitiesChange={setAmenities} />
     </main>
   )
 }
