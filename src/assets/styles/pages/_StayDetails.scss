@@ -4,56 +4,30 @@
       max-width: 300px;
     }
   }
+  .review-username {
+    color: #000;
+    font-weight: 800;
+    font-size: 1.2em;
+  }
   .stay-title {
     justify-content: space-between;
     align-items: center;
   }
-  // ol.horizontal-list {
-  //   list-style-type: disc;
-  //   padding-left: 0;
-  //   display: flex;
-  //   gap: 20px;
-
-  //   li {
-  //     margin: 0;
-  //     line-height: em(20px);
-  //     font-size: 1em;
-  //     font-weight: 400;
-
-  //     &:first-child {
-  //       list-style-type: none; // This hides the dot for the first item
-  //     }
-  //   }
+  .mid-section {
+    display: flex;
+    justify-content: space-between;
+  }
+  // .review-username {
+  //   font-weight: bold;
+  //   color: #000;
+  //   font-size: 1em;
   // }
+  .avg-rating {
+    .fa-star {
+      color: black;
+    }
+  }
 
-  // ol.horizontal-list {
-  //   list-style-type: none;
-  //   padding: 0;
-  //   display: flex;
-  //   align-items: center;
-
-  //   li {
-  //     position: relative;
-  //     padding-inline-end: 13px;
-  //     margin-inline-end: 10px;
-  //     line-height: em(20px);
-  //     font-size: 1em;
-  //     font-weight: 400;
-
-  //     &::before {
-  //       content: '.';
-  //       position: absolute;
-  //       vertical-align: middle;
-  //       // top: 35%;
-  //       // right: 0;
-  //       // transform: translateY(-50%);
-  //     }
-
-  //     &:last-child::before {
-  //       content: '';
-  //     }
-  //   }
-  // }
   ol.horizontal-list {
     list-style-type: none;
     padding-left: 0;
@@ -67,11 +41,4 @@
       user-select: none;
     }
   }
-
-  //     padding: 0 16px;
-  //     &:first-child::marker {
-  //       content: '';
-  //     }
-  //   }
-  // }
 }

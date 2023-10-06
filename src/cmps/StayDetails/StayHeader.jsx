@@ -21,12 +21,8 @@ export function StayHeader({ name, type, imgUrls, price, labels, host, loc, revi
         </div>
       </div>
 
-      {/* <div className='stay-image-container'>
-        {imgUrls.map((image, index) => (
-          <img key={index} src={image} alt={name} />
-        ))}
-      </div> */}
-      <DetailsImages urls={imgUrls} />
+      <ImagesEditor urls={imgUrls} />
+      
       <div className='stay-info'>
         <h1>{`${room_type} in ${loc.city}, ${loc.country}`}</h1>
         <div className='stay-info-list'>
@@ -41,7 +37,11 @@ export function StayHeader({ name, type, imgUrls, price, labels, host, loc, revi
           </ol>
         </div>
 
-        <span className='avg-rating'>{avgRate}</span>
+        <span className='avg-rating'>
+          {' '}
+          <i className='fa-solid fa-star'></i>
+          {avgRate}
+        </span>
         <span>.</span>
 
         {reviews.length === 0 ? 'No Reviews' : `${reviews.length} Review${reviews.length > 1 ? 's' : ''}`}
