@@ -11,10 +11,10 @@
     img {
         transition: all 100ms;
         cursor: pointer;
-    }
 
-    img:hover {
-        opacity: 0.9;
+        &:hover {
+            opacity: 0.9;
+        }
     }
 
     .main {

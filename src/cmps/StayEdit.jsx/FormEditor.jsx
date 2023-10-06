@@ -1,7 +1,7 @@
 import { AmenitiesEditor } from "./AmenitiesEditor";
 import { ImagesEditor } from "./ImagesEditor";
 
-export function FormEditor({ stay, handleInputChange, handleSubmit, urls, onUrlsChange }) {
+export function FormEditor({ stay, handleInputChange, handleSubmit, urls, onUrlsChange, onAmenitiesChange }) {
 
     return (
         <section>
@@ -58,7 +58,7 @@ export function FormEditor({ stay, handleInputChange, handleSubmit, urls, onUrls
                     </select>
                 </div>
 
-                <AmenitiesEditor stay={stay} />
+                <AmenitiesEditor stay={stay} onAmenitiesChange={onAmenitiesChange} />
 
                 <div className="flex">
                     Capacity:
