@@ -1,4 +1,5 @@
 import { OrderConfirm } from './pages/OrderConfirm.jsx'
+import { OrderIndex } from './pages/OrderIndex.jsx'
 import { StayDetails } from './pages/StayDetails.jsx'
 import { StayEdit } from './pages/StayEdit.jsx'
 import { StayIndex } from './pages/StayIndex.jsx'
@@ -35,11 +36,11 @@ const routes = [
     component: <OrderConfirm />,
     label: 'order',
   },
-  // {
-  //   path: '/order/list',
-  //   component: <OrderList />,
-  //   label: 'Order List',
-  // },
+  {
+    path: '/order/',
+    component: <OrderIndex />,
+    label: 'Order Index',
+  },
 ]
 
 export default routes

@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { loadOrders } from '../store/actions/order.actions'
+import { OrderList } from '../cmps/Order/OrderList'
 
 export function OrderIndex() {
   const orders = useSelector((storeState) => storeState.orderModule.orders)
@@ -15,7 +16,8 @@ export function OrderIndex() {
     <main className='order-index'>
       <section>
         {isLoading && <div>Loading...</div>}
-        {/* {!isLoading && <OrderList orders={orders} />} */}
+
+        {!isLoading && <OrderList orders={orders} />}
       </section>
     </main>
   )
