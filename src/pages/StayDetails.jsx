@@ -66,7 +66,7 @@ export function StayDetails() {
   }
 
   if (isLoading) return <div>Loading...</div>
-  if (!currStay || !loggedUser) return <div>no stay or user</div>
+  if (!currStay) return <div>no stay or user</div>
 
   const {
     name,
