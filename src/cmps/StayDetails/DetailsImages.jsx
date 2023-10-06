@@ -30,7 +30,11 @@ export function DetailsImages({ urls }) {
     const images = fillUpTo5(urls)
 
     return (
-        <div className='images-editor-container'>
+        <div className='images-editor-container'
+        style={{
+            paddingTop: '24px',
+        }}
+        >
             {imageHtml(urls[0], 'main')}
             <div className='rest'>
                 {images.slice(1).map((url) => {
