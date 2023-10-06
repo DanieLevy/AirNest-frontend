@@ -20,6 +20,7 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    width: 260px;
   }
 
   .bar {
@@ -44,7 +45,7 @@
   }
 
   .location {
-    width: 34%;
+    width: 240px;
   }
 
   .check-in,
@@ -127,9 +128,9 @@
   &.expanded {
     top: 80px;
     z-index: 102;
-    width: 100%;
+    width: max-content;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
     align-items: center;
     height: 66px;
     margin: 0;
@@ -216,6 +217,8 @@
   justify-content: center;
   align-items: flex-start;
   padding-inline: 15vw;
+  animation-duration: .5s; /* don't forget to set a duration! */
+
 }
 
 .explore-bar-backdrop {
@@ -242,4 +245,24 @@
   vertical-align: top;
   color: #fff;
   font-size: 1.5rem;
+}
+
+.fade-enter {
+  background-color: red;
+  opacity: 0;
+  animation: fadeInDown 300ms;
+}
+
+.fade-enter-active {
+  opacity: 1;
+  animation: fadeInDown 300ms;
+}
+
+.fade-exit {
+  opacity: 1;  
+}
+
+.fade-exit-active {
+  opacity: 0;
+  animation: fadeOutUp 300ms;
 }
