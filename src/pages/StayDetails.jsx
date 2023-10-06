@@ -25,7 +25,6 @@ export function StayDetails() {
   useEffect(() => {
     loadStay()
   }, [stayId])
-  console.log('🚀 ~ file: StayDetails.jsx:20 ~ StayDetails ~ loggedUser:', loggedUser)
 
   async function loadStay() {
     try {
@@ -38,13 +37,6 @@ export function StayDetails() {
     }
   }
 
-  // function loadUser() {
-  //   dispatch({ type: LOADING_START })
-  //   const loggedUser = userService.getLoggedinUser()
-  //   setLoggedUser(loggedUser)
-  //   dispatch({ type: LOADING_DONE })
-  // }
-
   function handleCheckoutSubmit(formData) {
     const orderDetails = {
       ...formData,
@@ -53,11 +45,8 @@ export function StayDetails() {
         name: currStay.name,
         price: currStay.price,
       },
-      buyer: {
-        _id: loggedUser._id,
-        fullname: loggedUser.fullname,
-      },
       hostId: currStay.host._id,
+      hostName: currStay.host.fullname,
     }
 
     dispatch(getActionStageOrder(orderDetails))
