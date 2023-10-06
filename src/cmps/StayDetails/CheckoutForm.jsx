@@ -65,9 +65,7 @@ export function CheckoutForm({ onSubmit }) {
             </select>
           </label>
         </div>
-        <div className='checkout-btn-wrapper'>
-          <BarndedBtn txt={'Checkout'} />
-        </div>
+        <div className='checkout-btn-wrapper'>{/* <BarndedBtn txt={'Checkout'} /> */}</div>
       </form>
     </div>
   )
