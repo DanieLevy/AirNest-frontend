@@ -101,7 +101,7 @@ export function BarndedBtn({ txt, borderRadius, width, icon = '' }) {
       <div className='cell'></div>
       <div className='cell'></div>
       <div className='cell'></div>
-      <div className='content' style={{ borderRadius: borderRadius, width: width }}>
+      <div className='content'>
         <button className='action-btn'>
           <span className='branded-btn-txt'>{icon}{txt}</span>
         </button>
