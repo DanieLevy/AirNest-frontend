@@ -1,4 +1,3 @@
-import { ImagesEditor } from '../StayEdit.jsx/ImagesEditor'
 import { DetailsImages } from './DetailsImages'
 
 export function StayHeader({ name, type, imgUrls, price, labels, host, loc, reviews, bedrooms, beds, bathrooms, room_type, capacity }) {
@@ -21,8 +20,8 @@ export function StayHeader({ name, type, imgUrls, price, labels, host, loc, revi
         </div>
       </div>
 
-      <ImagesEditor urls={imgUrls} />
-      
+      <DetailsImages urls={imgUrls} />
+
       <div className='stay-info'>
         <h1>{`${room_type} in ${loc.city}, ${loc.country}`}</h1>
         <div className='stay-info-list'>
