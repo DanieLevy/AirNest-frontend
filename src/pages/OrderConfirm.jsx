@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { addOrder, getActionAddOrder, getActionClearStagedOrder, loadOrders } from '../store/actions/order.actions'
 import { showErrorMsg } from '../services/event-bus.service'
 
-export function OrderPage() {
+export function OrderConfirm() {
   const stagedOrder = useSelector((state) => state.orderModule.stagedOrder)
   const isLoading = useSelector((state) => state.systemModule.isLoading)
 

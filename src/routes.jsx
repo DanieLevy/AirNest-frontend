@@ -1,4 +1,4 @@
-import { OrderPage } from './pages/OrderPage.jsx'
+import { OrderConfirm } from './pages/OrderConfirm.jsx'
 import { StayDetails } from './pages/StayDetails.jsx'
 import { StayEdit } from './pages/StayEdit.jsx'
 import { StayIndex } from './pages/StayIndex.jsx'
@@ -21,20 +21,25 @@ const routes = [
     label: 'Details',
   },
   {
-    path: '/list/',
+    path: '/edit/',
     component: <StayEdit />,
-    label: 'list',
+    label: 'Edit',
   },
   {
-    path: '/list/:stayId',
+    path: '/edit/:stayId',
     component: <StayEdit />,
-    label: 'list',
+    label: 'edit',
   },
   {
-    path: '/order',
-    component: <OrderPage />,
+    path: '/order/confirm',
+    component: <OrderConfirm />,
     label: 'order',
   },
+  // {
+  //   path: '/order/list',
+  //   component: <OrderList />,
+  //   label: 'Order List',
+  // },
 ]
 
 export default routes
