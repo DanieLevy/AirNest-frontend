@@ -20,51 +20,53 @@ export function CheckoutForm({ onSubmit }) {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label>
-          Start Date:
-          <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} selectsStart startDate={startDate} endDate={endDate} />
-        </label>
-      </div>
-      <div>
-        <label>
-          End Date:
-          <DatePicker
-            selected={endDate}
-            onChange={(date) => setEndDate(date)}
-            selectsEnd
-            startDate={startDate}
-            endDate={endDate}
-            minDate={startDate}
-          />
-        </label>
-      </div>
-      <div>
-        <label>
-          Adults:
-          <select value={adults} onChange={(e) => setAdults(e.target.value)}>
-            {[...Array(10)].map((_, i) => (
-              <option key={i} value={i + 1}>
-                {i + 1}
-              </option>
-            ))}
-          </select>
-        </label>
-      </div>
-      <div>
-        <label>
-          Children:
-          <select value={children} onChange={(e) => setChildren(e.target.value)}>
-            {[...Array(10)].map((_, i) => (
-              <option key={i} value={i}>
-                {i}
-              </option>
-            ))}
-          </select>
-        </label>
-      </div>
-      <div>{/* <BarndedBtn txt={'Checkout'} /> */}</div>
-    </form>
+    <div className='form-container'>
+      <form onSubmit={handleSubmit}>
+        <div className='start-date-wrapper'>
+          <label>
+            Start Date:
+            <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} selectsStart startDate={startDate} endDate={endDate} />
+          </label>
+          {/* </div> */}
+          {/* <div className='end-date-wrapper'> */}
+          <label>
+            End Date:
+            <DatePicker
+              selected={endDate}
+              onChange={(date) => setEndDate(date)}
+              selectsEnd
+              startDate={startDate}
+              endDate={endDate}
+              minDate={startDate}
+            />
+          </label>
+        </div>
+        <div className='adults-wrapper'>
+          <label>
+            Adults:
+            <select value={adults} onChange={(e) => setAdults(e.target.value)}>
+              {[...Array(10)].map((_, i) => (
+                <option key={i} value={i + 1}>
+                  {i + 1}
+                </option>
+              ))}
+            </select>
+          </label>
+        </div>
+        <div className='children-wrapper'>
+          <label>
+            Children:
+            <select value={children} onChange={(e) => setChildren(e.target.value)}>
+              {[...Array(10)].map((_, i) => (
+                <option key={i} value={i}>
+                  {i}
+                </option>
+              ))}
+            </select>
+          </label>
+        </div>
+        <div className='checkout-btn-wrapper'>{/* <BarndedBtn txt={'Checkout'} /> */}</div>
+      </form>
+    </div>
   )
 }
