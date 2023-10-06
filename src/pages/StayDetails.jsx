@@ -104,9 +104,9 @@ export function StayDetails() {
         room_type={room_type}
       />
       <StayDescription summary={summary} />
-      {/* 
+
       <StayAmenities data={currStay.amenities} />
-      <StayReviews data={currStay.reviews} /> */}
+      <StayReviews data={currStay.reviews} />
       <CheckoutForm onSubmit={handleCheckoutSubmit} />
     </section>
   )
