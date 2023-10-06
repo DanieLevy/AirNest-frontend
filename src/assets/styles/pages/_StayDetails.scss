@@ -13,14 +13,19 @@
     justify-content: space-between;
     align-items: center;
   }
+  .mid-section {
+    display: flex;
+    justify-content: space-between;
+  }
   // .review-username {
   //   font-weight: bold;
   //   color: #000;
   //   font-size: 1em;
   // }
-  .min-section {
-    display: flex;
-    justify-content: space-between;
+  .avg-rating {
+    .fa-star {
+      color: black;
+    }
   }
 
   ol.horizontal-list {

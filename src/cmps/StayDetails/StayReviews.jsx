@@ -1,3 +1,5 @@
+// import { SvgIcon } from '../SvgIcon'
+
 export function StayReviews({ data }) {
   return (
     <div className='stay-reviews'>
