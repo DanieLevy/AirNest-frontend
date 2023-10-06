@@ -1,4 +1,4 @@
-export function BarndedBtn(props) {
+export function BarndedBtn({ txt, borderRadius, width, icon = '' }) {
   return (
     <div className='btn-container'>
       <div className='cell'></div>
@@ -103,7 +103,7 @@ export function BarndedBtn(props) {
       <div className='cell'></div>
       <div className='content' style={{ borderRadius: borderRadius, width: width }}>
         <button className='action-btn'>
-          <span className='branded-btn-txt'>{txt}</span>
+          <span className='branded-btn-txt'>{icon}{txt}</span>
         </button>
       </div>
     </div>
