@@ -14,6 +14,8 @@ export const userService = {
   remove,
   update,
   changeScore,
+  getEmptyCredentials,
+  demoUser,
 }
 
 window.userService = userService
@@ -48,19 +50,25 @@ async function update({ _id, score }) {
 
 async function login(userCred) {
   const users = await storageService.query('user')
-  // const user = users.find(user => user.username === userCred.username)
+  const user = users.find(user => user.username === userCred.username)
   // const user = await httpService.post('auth/login', userCred)
-  // if (user) {
-  // return saveLocalUser(user)
-  // }
+  if (user) {
+    return saveLocalUser(user)
+  }
 }
 
 async function signup(userCred) {
-  //   if (!userCred.imgUrl) userCred.imgUrl = 'https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_1280.png'
-  // userCred.score = 10000
-  const user = await storageService.post('user', userCred)
-  //   const user = await httpService.post('auth/signup', userCred)
-  return saveLocalUser(user)
+  const users = await storageService.query('user')
+  const userExist = users.find(user => user.username === userCred.username)
+
+  if (userExist) {
+    console.log('user name already exist');
+    return
+  } else {
+    const user = await storageService.post('user', userCred)
+    //   const user = await httpService.post('auth/signup', userCred)
+    return saveLocalUser(user)
+  }
 }
 
 async function logout() {
@@ -77,7 +85,7 @@ async function changeScore(by) {
 }
 
 function saveLocalUser(user) {
-  user = { _id: user._id, fullname: user.fullname, imgUrl: user.imgUrl, score: user.score }
+  user = { _id: user._id, fullname: user.fullname, imgUrl: user.imgUrl }
   sessionStorage.setItem(STORAGE_KEY_LOGGEDIN_USER, JSON.stringify(user))
   return user
 }
@@ -89,10 +97,26 @@ function getLoggedinUser() {
 async function _createLocalUser() {
   const user = getLoggedinUser()
   if (!user) {
-    await userService.signup({ fullname: 'Puki Norma', username: 'puki', password: '123', score: 10000, isAdmin: false })
+    await userService.signup({ fullname: 'Puki Norma', username: 'puki', password: '123', isAdmin: false })
   }
 }
 
+function getEmptyCredentials() {
+  return {
+    username: '',
+    password: '',
+    fullname: '',
+    imgUrl: ''
+  }
+}
+
+
+async function demoUser() {
+  return {
+    username: 'puki',
+    password: '111',
+  }
+}
 // ;(async () => {
 //   await userService.signup({ fullname: 'Puki Norma', username: 'puki', password: '123', score: 10000, isAdmin: false })
 //   await userService.signup({ fullname: 'Master Adminov', username: 'admin', password: '123', score: 10000, isAdmin: true })

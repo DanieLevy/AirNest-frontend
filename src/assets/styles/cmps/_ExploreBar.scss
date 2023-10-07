@@ -61,8 +61,7 @@
 
   .check-in,
   .check-out,
-  .guests {
-  }
+  .guests {}
 
   input[type="text"] {
     background: none;
@@ -94,11 +93,11 @@
     border-radius: 50%;
   }
 
-  .bar > div {
+  .bar>div {
     position: relative;
   }
 
-  .bar > div::before {
+  .bar>div::before {
     position: absolute;
     content: "";
     left: 0;
@@ -109,11 +108,11 @@
     background: hsl(0 0% 90%);
   }
 
-  .bar > div:nth-of-type(1)::before {
+  .bar>div:nth-of-type(1)::before {
     background: transparent;
   }
 
-  .bar > div:hover::before {
+  .bar>div:hover::before {
     background: transparent;
   }
 }
@@ -133,11 +132,12 @@
   max-width: 100%;
   vertical-align: middle;
   cursor: pointer;
-  animation-duration: 1s; /* don't forget to set a duration! */
+  animation-duration: 1s;
+  /* don't forget to set a duration! */
 
   &.expanded {
     top: 80px;
-    z-index: 102;
+    // z-index: 102;
     width: max-content;
     display: flex;
     justify-content: space-between;
@@ -151,6 +151,7 @@
     background-color: #ebebeb;
 
     article {
+
       .check-in-text,
       .check-out-text {
         flex-direction: column;
@@ -164,6 +165,7 @@
       color: #717171;
       font-family: cereal-light;
       margin-bottom: 4px;
+
       &.branded-btn-txt {
         color: white;
       }
@@ -222,7 +224,7 @@
 .white-space {
   position: fixed;
   background-color: white;
-  z-index: 101;
+  // z-index: 101;
   width: 100%;
   top: 80px;
   height: 80px;
@@ -231,7 +233,8 @@
   justify-content: center;
   align-items: flex-start;
   padding-inline: 10vw;
-  animation-duration: 1s; /* don't forget to set a duration! */
+  animation-duration: 1s;
+  /* don't forget to set a duration! */
 }
 
 .explore-bar-backdrop {
@@ -239,7 +242,7 @@
   position: fixed;
   top: 80px;
   left: 0;
-  z-index: 99;
+  z-index: -1;
   height: 100vh;
   width: 100%;
 }
@@ -273,7 +276,7 @@
   cursor: auto;
   min-width: 100%;
   min-height: 400px;
-  z-index: 10;
+  // z-index: 10;
 
   display: flex;
   width: max-content;
@@ -335,7 +338,7 @@
     column-gap: 5px;
     display: grid;
     // flex-wrap: wrap;
-    grid-template-columns: repeat(3,min-content);
+    grid-template-columns: repeat(3, min-content);
     row-gap: 24px;
 
     .location-region-item {
@@ -355,8 +358,8 @@
         object-fit: cover;
 
         &:hover {
-          color: #000!important;
-          border-color: #000!important;
+          color: #000 !important;
+          border-color: #000 !important;
         }
       }
     }
@@ -375,8 +378,8 @@
   width: 406px;
 
   .guests-modal-btn {
-    width: 32px!important;
-    height: 32px!important;
+    width: 32px !important;
+    height: 32px !important;
     // cursor: pointer;
     display: inline-flex;
     margin: 0;
@@ -384,22 +387,22 @@
     text-align: center;
     border: 1px solid #b0b0b0;
     color: #717171;
-    font-family: inherit!important;
-    outline: none!important;
-    touch-action: manipulation!important;
-    align-items: center!important;
-    justify-content: center!important;
-    background: rgb(255,255,255)!important;
-    border-radius: 50%!important;
+    font-family: inherit !important;
+    outline: none !important;
+    touch-action: manipulation !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: rgb(255, 255, 255) !important;
+    border-radius: 50% !important;
   }
 
   .guests-options {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-top: 24px!important;
-    padding-bottom: 24px!important;
-    padding-right: 4px!important;
+    padding-top: 24px !important;
+    padding-bottom: 24px !important;
+    padding-right: 4px !important;
 
     .guests-modal-title {
       font-family: cereal-medium;
@@ -426,10 +429,10 @@
       gap: 15px;
 
       button:disabled {
-        cursor: not-allowed!important;
-        color: #ebebeb!important;
-        border-color: #ebebeb!important;
-        background: rgb(255,255,255)!important;
+        cursor: not-allowed !important;
+        color: #ebebeb !important;
+        border-color: #ebebeb !important;
+        background: rgb(255, 255, 255) !important;
       }
 
       span {
@@ -444,7 +447,7 @@
 }
 
 .location-list::-webkit-scrollbar-track {
-  background: #fff; 
+  background: #fff;
 }
 
 .location-list::-webkit-scrollbar-thumb {

@@ -46,9 +46,8 @@ export function ExploreBar() {
     <React.Fragment>
       {!isExpanded && (
         <div
-          className={`explore-bar-preview ${
-            !isExpanded ? "animate__animated animate__fadeIn" : ""
-          }`}
+          className={`explore-bar-preview ${!isExpanded ? "animate__animated animate__fadeIn" : ""
+            }`}
           onClick={isExpanded ? null : handleClick}
         >
           <button
@@ -84,16 +83,15 @@ export function ExploreBar() {
         <React.Fragment>
           <div
             className="white-space animate__animated animate__fadeInDown"
-            // onClick={handleClick}
+          // onClick={handleClick}
           >
             <form
               className="explore-bar-preview expanded"
               onSubmit={handleSubmit}
             >
               <article
-                className={`explore-bar location flex ${
-                  isActive === "location" ? "active" : ""
-                }`}
+                className={`explore-bar location flex ${isActive === "location" ? "active" : ""
+                  }`}
                 onClick={() => setIsActive("location")}
               >
                 <label htmlFor="location">Where</label>
@@ -205,9 +203,8 @@ export function ExploreBar() {
               <span className="splitter"></span>
 
               <article
-                className={`explore-bar check-in ${
-                  isActive === "check-in" ? "active" : ""
-                }`}
+                className={`explore-bar check-in ${isActive === "check-in" ? "active" : ""
+                  }`}
                 onClick={() => setIsActive("check-in")}
               >
                 <div className="check-in-text flex">
@@ -219,9 +216,8 @@ export function ExploreBar() {
               <span className="splitter"></span>
 
               <article
-                className={`explore-bar check-out ${
-                  isActive === "check-out" ? "active" : ""
-                }`}
+                className={`explore-bar check-out ${isActive === "check-out" ? "active" : ""
+                  }`}
                 onClick={() => setIsActive("check-out")}
               >
                 <div className="check-out-text flex">
@@ -236,9 +232,8 @@ export function ExploreBar() {
               <span className="splitter"></span>
 
               <article
-                className={`explore-bar guests ${
-                  isActive === "guests" ? "active" : ""
-                }`}
+                className={`explore-bar guests ${isActive === "guests" ? "active" : ""
+                  }`}
                 onClick={() => setIsActive("guests")}
               >
                 <div className="guests-text flex">
@@ -349,7 +344,7 @@ export function ExploreBar() {
               </article>
             </form>
           </div>
-          <div className="explore-bar-backdrop"></div>
+          <div className="explore-bar-backdrop" onClick={() => setIsExpanded(false)}></div>
         </React.Fragment>
       )}
     </React.Fragment>

@@ -1,28 +1,18 @@
 import { useState, useEffect } from "react"
 import { userService } from "../services/user.service"
+
 import { ImgUploader } from "./ImgUploader"
 import { BarndedBtn } from "./barnded-btn"
 import UploadButtonComponent from "./NewImgUploader"
 
-export function LoginSignup({ onLoginm, onSignup, onToggleLogin }) {
-  const [isSignup, setIsSignup] = useState(false)
-  const [users, setUsers] = useState([])
-  const [imgUrl, setImgUrl] = useState("")
+export function LoginSignup({ login, signup, onToggleLogin, isSignup, setSignupModal, closeModal }) {
 
-  useEffect(() => {
-    // loadUsers()
-  }, [])
+  const [credentials, setCredentials] = useState(userService.getEmptyCredentials())
 
   function handleUploadComplete(img_Url) {
     const currectUrl = RegExp(/http/).test(img_Url)
     if (!currectUrl) return
-    setImgUrl(img_Url)
-    console.log("imgUrl", imgUrl)
-  }
-
-  async function loadUsers() {
-    const users = await userService.getUsers()
-    setUsers(users)
+    setCredentials({ ...credentials, imgUrl: img_Url[0] })
   }
 
   function clearState() {
@@ -34,36 +24,32 @@ export function LoginSignup({ onLoginm, onSignup, onToggleLogin }) {
     const field = ev.target.name
     const value = ev.target.value
     setCredentials({ ...credentials, [field]: value })
+    console.log('credentials:', credentials)
   }
 
-  function onLogin(ev = null) {
-    if (ev) {
-      ev.preventDefault()
+  function onSubmit(ev) {
+    ev.preventDefault()
+
+    if (isSignup) {
+      if (!credentials.username || !credentials.password || !credentials.fullname) return
+      signup(credentials)
+    } else {
+      login(credentials)
     }
-
-    if (!credentials.username) return
-    props.onLogin(credentials)
-    clearState()
-  }
-
-  function onSignup(ev = null) {
-    if (ev) ev.preventDefault()
-    if (!credentials.username || !credentials.password || !credentials.fullname)
-      return
-    props.onSignup(credentials)
     clearState()
   }
 
   function toggleSignup() {
-    setIsSignup(!isSignup)
+    setSignupModal(prev => !prev)
   }
 
-  function onUploaded(imgUrl) {
-    setCredentials({ ...credentials, imgUrl })
-  }
+  // function onUploaded(imgUrl) {
+  //   setCredentials({ ...credentials, imgUrl })
+  // }
 
   return (
-    <div className="modal-backdrop">
+    <>
+      <div className="modal-backdrop" onClick={() => closeModal()}></div>
       <div className="login-modal">
         <div className="login-modal-header">
           <span className="close-btn" onClick={() => onToggleLogin(false)}>
@@ -71,7 +57,8 @@ export function LoginSignup({ onLoginm, onSignup, onToggleLogin }) {
           </span>
           <div>{isSignup ? "Sign Up" : "Log in"}</div>
         </div>
-        <form onSubmit={isSignup ? onSignup : onLogin} className="login-form">
+        {/* <form onSubmit={isSignup ? onSignup : onLogin} className="login-form"> */}
+        <form onSubmit={onSubmit} className="login-form">
           {isSignup && (
             <label htmlFor="fullname">
               <span className="red-dot">*</span> Full Name:
@@ -108,7 +95,7 @@ export function LoginSignup({ onLoginm, onSignup, onToggleLogin }) {
             required
           />
           {/* {isSignup && <ImgUploader onUploaded={onUploaded} />} */}
-          {imgUrl && isSignup && (
+          {credentials.imgUrl && isSignup && (
             <div>
               <div className="img-container flex align-center">
                 <h1>
@@ -116,7 +103,7 @@ export function LoginSignup({ onLoginm, onSignup, onToggleLogin }) {
                   Avatar:{" "}
                 </h1>
                 <img
-                  src={imgUrl}
+                  src={credentials.imgUrl}
                   className="uploaded-img"
                   style={{ marginInlineStart: ".5rem" }}
                 />
@@ -130,7 +117,7 @@ export function LoginSignup({ onLoginm, onSignup, onToggleLogin }) {
             </div>
           )}
 
-          {!imgUrl && isSignup && (
+          {!credentials.imgUrl && isSignup && (
             <UploadButtonComponent onComplete={handleUploadComplete} />
           )}
 
@@ -139,18 +126,28 @@ export function LoginSignup({ onLoginm, onSignup, onToggleLogin }) {
           </button>
         </form>
 
-          <div className="divider-container">
-            <div className="divider-line"></div>
-            <div className="divider-text">or</div>
-            <div className="divider-line"></div>
-          </div>
-          <div className="footer-btn flex align-center justify-center">
-          <button className="btn">Demo Login (As Guest)</button>
+        <div className="divider-container">
+          <div className="divider-line"></div>
+          <div className="divider-text">or</div>
+          <div className="divider-line"></div>
+        </div>
+        <div className="footer-btn flex align-center justify-center">
+
+          <button className="btn" onClick={() => {
+            userService.demoUser()
+              .then((user) => {
+                setCredentials(user)
+                return user
+              }).then(login)
+          }}>
+            Demo Login (As Guest)
+          </button>
+
           <button className="btn btn-secondary" onClick={toggleSignup}>
             {isSignup ? "Login" : "Sign Up"}
           </button>
-          </div>
+        </div>
       </div>
-    </div>
+    </>
   )
 }
