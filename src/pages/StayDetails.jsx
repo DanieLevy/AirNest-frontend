@@ -1,19 +1,16 @@
-import React, { useEffect, useState } from "react"
-import { useNavigate, useParams } from "react-router-dom"
-import { stayService } from "../services/stay.service.local.js"
-import { StayDescription } from "../cmps/StayDetails/StayDescription.jsx"
-import { StayHeader } from "../cmps/StayDetails/StayHeader.jsx"
-import { StayAmenities } from "../cmps/StayDetails/StayAmenities.jsx"
-import { StayReviews } from "../cmps/StayDetails/StayReviews.jsx"
-import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service.js"
-import { CheckoutForm } from "../cmps/StayDetails/CheckoutForm.jsx"
-import { useDispatch, useSelector } from "react-redux"
-import { userService } from "../services/user.service.js"
-import {
-  getActionAddOrder,
-  getActionStageOrder,
-} from "../store/actions/order.actions.js"
-import { LOADING_DONE, LOADING_START } from "../store/reducer/system.reducer.js"
+import React, { useEffect, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
+import { stayService } from '../services/stay.service.local.js'
+import { StayDescription } from '../cmps/StayDetails/StayDescription.jsx'
+import { StayHeader } from '../cmps/StayDetails/StayHeader.jsx'
+import { StayAmenities } from '../cmps/StayDetails/StayAmenities.jsx'
+import { StayReviews } from '../cmps/StayDetails/StayReviews.jsx'
+import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service.js'
+import { CheckoutForm } from '../cmps/StayDetails/CheckoutForm.jsx'
+import { useDispatch, useSelector } from 'react-redux'
+import { userService } from '../services/user.service.js'
+import { getActionAddOrder, getActionStageOrder } from '../store/actions/order.actions.js'
+import { LOADING_DONE, LOADING_START } from '../store/reducer/system.reducer.js'
 
 export function StayDetails() {
   const { stayId } = useParams()
@@ -21,39 +18,24 @@ export function StayDetails() {
   const dispatch = useDispatch()
 
   const isLoading = useSelector((state) => state.systemModule.isLoading)
-  const loggedUser = useSelector((state) => state.userModule.user)
 
   const [currStay, setCurrStay] = useState(null)
 
   useEffect(() => {
     loadStay()
   }, [stayId])
-  console.log(
-    "🚀 ~ file: StayDetails.jsx:20 ~ StayDetails ~ loggedUser:",
-    loggedUser
-  )
-  console.log(
-    "🚀 ~ file: StayDetails.jsx:20 ~ StayDetails ~ currStay:",
-    currStay
-  )
+  console.log('🚀 ~ file: StayDetails.jsx:20 ~ StayDetails ~ currStay:', currStay)
 
   async function loadStay() {
     try {
       const stay = await stayService.getById(stayId)
       setCurrStay(stay)
     } catch (err) {
-      console.log("Had issues in stay details", err)
-      showErrorMsg("Cannot load stay")
-      navigate("/")
+      console.log('Had issues in stay details', err)
+      showErrorMsg('Cannot load stay')
+      navigate('/')
     }
   }
-
-  // function loadUser() {
-  //   dispatch({ type: LOADING_START })
-  //   const loggedUser = userService.getLoggedinUser()
-  //   setLoggedUser(loggedUser)
-  //   dispatch({ type: LOADING_DONE })
-  // }
 
   function handleCheckoutSubmit(formData) {
     const orderDetails = {
@@ -63,16 +45,13 @@ export function StayDetails() {
         name: currStay.name,
         price: currStay.price,
       },
-      buyer: {
-        _id: loggedUser._id,
-        fullname: loggedUser.fullname,
-      },
       hostId: currStay.host._id,
+      hostName: currStay.host.fullname,
     }
 
     dispatch(getActionStageOrder(orderDetails))
-    showSuccessMsg("Order staged for confirmation.")
-    navigate("/order")
+    showSuccessMsg('Order staged for confirmation.')
+    navigate('/order/confirm')
   }
 
   if (isLoading) return <div>Loading...</div>
@@ -98,9 +77,9 @@ export function StayDetails() {
   } = currStay
 
   return (
-    <section className="stay-details">
+    <section className='stay-details'>
       <StayHeader name={name} imgUrls={imgUrls} />
-      <div className="stay-details-desc">
+      <div className='stay-details-desc'>
         <StayDescription
           type={type}
           summary={summary}
@@ -116,9 +95,8 @@ export function StayDetails() {
           name={name}
           amenities={amenities}
         />
-
       </div>
-        {/* <CheckoutForm onSubmit={handleCheckoutSubmit} />
+      {/* <CheckoutForm onSubmit={handleCheckoutSubmit} />
       <StayAmenities data={currStay.amenities} />
       <StayReviews data={currStay.reviews} /> */}
     </section>
