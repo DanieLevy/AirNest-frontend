@@ -7,7 +7,9 @@ import { FormEditor } from "../cmps/StayEdit.jsx/FormEditor"
 export function StayEdit() {
   const [stay, setStay] = useState(null)
   const { stayId } = useParams()
+
   const navigate = useNavigate()
+
   useEffect(() => {
     if (!stayId) {
       const emptyStay = stayService.getEmptyStay()
@@ -37,15 +39,24 @@ export function StayEdit() {
     }
   }
 
-  function setImgUrl(urls) {
+  function setImgUrl(imgUrls) {
     setStay(prev => ({
-      ...prev, imgUrls: urls
+      ...prev,
+      imgUrls
+    }))
+  }
+
+  function setLabels(labels) {
+    setStay(prev => ({
+      ...prev,
+      labels
     }))
   }
 
   function setAmenities(amenities) {
     setStay(prev => ({
-      ...prev, amenities: amenities
+      ...prev,
+      amenities
     }))
   }
 
@@ -69,7 +80,7 @@ export function StayEdit() {
   if (!stay) return <div>loading...</div>
   return (
     <main>
-      <FormEditor stay={stay} handleInputChange={handleInputChange} handleSubmit={handleSubmit} urls={stay.imgUrls} onUrlsChange={setImgUrl} onAmenitiesChange={setAmenities} />
+      <FormEditor stay={stay} setLabels={setLabels} handleInputChange={handleInputChange} handleSubmit={handleSubmit} onUrlsChange={setImgUrl} onAmenitiesChange={setAmenities} />
     </main>
   )
 }

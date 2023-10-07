@@ -24,6 +24,7 @@ export function StayDetails() {
   useEffect(() => {
     loadStay()
   }, [stayId])
+  console.log('🚀 ~ file: StayDetails.jsx:20 ~ StayDetails ~ currStay:', currStay)
 
   async function loadStay() {
     try {
@@ -77,26 +78,27 @@ export function StayDetails() {
 
   return (
     <section className='stay-details'>
-      <StayHeader
-        name={name}
-        imgUrls={imgUrls}
-        type={type}
-        reviews={reviews}
-        price={price}
-        host={host}
-        loc={loc}
-        bedrooms={bedrooms}
-        beds={beds}
-        bathrooms={bathrooms}
-        capacity={capacity}
-        room_type={room_type}
-      />
-      <div className='mid-section'>
-        <StayDescription summary={summary} />
-        <CheckoutForm onSubmit={handleCheckoutSubmit} />
+      <StayHeader name={name} imgUrls={imgUrls} />
+      <div className='stay-details-desc'>
+        <StayDescription
+          type={type}
+          summary={summary}
+          reviews={reviews}
+          price={price}
+          host={host}
+          loc={loc}
+          bedrooms={bedrooms}
+          beds={beds}
+          bathrooms={bathrooms}
+          capacity={capacity}
+          room_type={room_type}
+          name={name}
+          amenities={amenities}
+        />
       </div>
-      <StayAmenities data={amenities} />
-      <StayReviews data={reviews} />
+      {/* <CheckoutForm onSubmit={handleCheckoutSubmit} />
+      <StayAmenities data={currStay.amenities} />
+      <StayReviews data={currStay.reviews} /> */}
     </section>
   )
 }

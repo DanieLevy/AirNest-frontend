@@ -16,6 +16,9 @@ import { DatesModal } from './DatesModal'
 export function ExploreBar() {
   const [isExpanded, setIsExpanded] = useState(false)
   const [isActive, setIsActive] = useState(null)
+  const [formData, setFormData] = useState({
+    location: '',
+  })
   const expandedBarRef = useRef(null)
   useEffect(() => {
     if (isExpanded) {
@@ -49,10 +52,41 @@ export function ExploreBar() {
       setIsActive(null)
     }
   }
+  function handleLocationClick(e) {
+    e.stopPropagation()
+
+    let locationText
+    if (e.target.tagName === 'IMG') {
+      locationText = e.target.nextSibling.innerText
+    } else {
+      locationText = e.target.innerText
+    }
+
+    setFormData((prevState) => ({
+      ...prevState,
+      location: locationText,
+    }))
+    setIsActive('check-in')
+  }
+
+  const handleChange = (event) => {
+    const { name, type, value } = event.target
+
+    switch (name) {
+      case 'location':
+        setFormData((prevState) => ({ ...prevState, location: value }))
+        break
+      default:
+        break
+    }
+  }
 
   function handleSubmit(ev) {
     ev.preventDefault()
     console.log(ev)
+    console.log(ev.target.location.value)
+    console.log(ev.target.name)
+    console.log(ev.target)
     console.log('submitted')
   }
 
@@ -93,47 +127,54 @@ export function ExploreBar() {
                 onClick={() => setIsActive('location')}
               >
                 <label htmlFor='location'>Where</label>
-                <input type='text' name='location' id='location' placeholder='Search destination' />
+                <input
+                  type='text'
+                  name='location'
+                  id='location'
+                  placeholder='Search destination'
+                  value={formData.location}
+                  onChange={handleChange}
+                />
                 {isActive === 'location' && (
                   <div className='location-modal'>
                     <ul className='location-list'>
-                      <li className='location-list-item'>
+                      <li className='location-list-item' onClick={handleLocationClick}>
                         <div className='location-list-icon'>
                           <CiLocationArrow1 />
                         </div>
                         <span className='location-list-text'>Barcelona, Spain</span>
                       </li>
-                      <li className='location-list-item'>
+                      <li className='location-list-item' onClick={handleLocationClick}>
                         <div className='location-list-icon'>
                           <CiLocationArrow1 />
                         </div>
                         <span className='location-list-text'>Mauntain View, CA</span>
                       </li>
-                      <li className='location-list-item'>
+                      <li className='location-list-item' onClick={handleLocationClick}>
                         <div className='location-list-icon'>
                           <CiLocationArrow1 />
                         </div>
                         <span className='location-list-text'>New York, United States</span>
                       </li>
-                      <li className='location-list-item'>
+                      <li className='location-list-item' onClick={handleLocationClick}>
                         <div className='location-list-icon'>
                           <CiLocationArrow1 />
                         </div>
                         <span className='location-list-text'>London, United Kingdom</span>
                       </li>
-                      <li className='location-list-item'>
+                      <li className='location-list-item' onClick={handleLocationClick}>
                         <div className='location-list-icon'>
                           <CiLocationArrow1 />
                         </div>
                         <span className='location-list-text'>Paris, France</span>
                       </li>
-                      <li className='location-list-item'>
+                      <li className='location-list-item' onClick={handleLocationClick}>
                         <div className='location-list-icon'>
                           <CiLocationArrow1 />
                         </div>
                         <span className='location-list-text'>Rome, Italy</span>
                       </li>
-                      <li className='location-list-item'>
+                      <li className='location-list-item' onClick={handleLocationClick}>
                         <div className='location-list-icon'>
                           <CiLocationArrow1 />
                         </div>
@@ -147,23 +188,23 @@ export function ExploreBar() {
                           <img src='https://a0.muscache.com/pictures/f9ec8a23-ed44-420b-83e5-10ff1f071a13.jpg' />
                           <span className='location-region-text'>I'm flexible</span>
                         </div>
-                        <div className='location-region-item'>
+                        <div className='location-region-item' onClick={handleLocationClick}>
                           <img src='https://a0.muscache.com/im/pictures/66355b01-4695-4db9-b292-c149c46fb1ca.jpg?im_w=320' />
                           <span className='location-region-text'>Middle East</span>
                         </div>
-                        <div className='location-region-item'>
+                        <div className='location-region-item' onClick={handleLocationClick}>
                           <img src='https://a0.muscache.com/im/pictures/66355b01-4695-4db9-b292-c149c46fb1ca.jpg?im_w=320' />
                           <span className='location-region-text'>Africa</span>
                         </div>
-                        <div className='location-region-item'>
+                        <div className='location-region-item' onClick={handleLocationClick}>
                           <img src='https://a0.muscache.com/im/pictures/66355b01-4695-4db9-b292-c149c46fb1ca.jpg?im_w=320' />
                           <span className='location-region-text'>Asia Pacific</span>
                         </div>
-                        <div className='location-region-item'>
+                        <div className='location-region-item' onClick={handleLocationClick}>
                           <img src='https://a0.muscache.com/im/pictures/66355b01-4695-4db9-b292-c149c46fb1ca.jpg?im_w=320' />
                           <span className='location-region-text'>Europe</span>
                         </div>
-                        <div className='location-region-item'>
+                        <div className='location-region-item' onClick={handleLocationClick}>
                           <img src='https://a0.muscache.com/im/pictures/66355b01-4695-4db9-b292-c149c46fb1ca.jpg?im_w=320' />
                           <span className='location-region-text'>North America</span>
                         </div>

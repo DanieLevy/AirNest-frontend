@@ -39,10 +39,18 @@ async function remove(stayId) {
 
 async function save(stay) {
   let savedStay
+  const { _id, fullname, imgUrl } = userService.getLoggedinUser()
+  stay.imgUrls = stay.imgUrls.filter(url => url)
   if (stay._id) {
     savedStay = await storageService.put(STORAGE_KEY, stay)
   } else {
     stay._id = utilService.makeId()
+    stay.host = {
+      _id: _id || '',
+      fullname: fullname || '',
+      imgUrl: imgUrl || '',
+    }
+
     savedStay = await storageService.post(STORAGE_KEY, stay)
   }
   return savedStay
@@ -71,18 +79,13 @@ function getEmptyStay() {
     bedrooms: '',
     beds: '',
     bathrooms: '',
-    imgUrls: [''],
+    imgUrls: [],
     price: '',
     summary: '',
     room_type: '',
     capacity: '',
-    amenities: [''],
-    labels: [''],
-    host: {
-      _id: '',
-      fullname: '',
-      imgUrl: '',
-    },
+    amenities: [],
+    labels: [],
     loc: {
       country: '',
       countryCode: '',
@@ -108,7 +111,13 @@ function getEmptyStay() {
 }
 
 function getLabels() {
-  return ['Top of the world', 'Trending', 'Play', 'Tropical']
+  // return ['Top of the world', 'Trending', 'Play', 'Tropical']
+  return [
+    { value: 'Top of the world', label: 'Top of the world' },
+    { value: 'Trending', label: 'Trending' },
+    { value: 'Play', label: 'Play' },
+    { value: 'Tropical', label: 'Tropical' },
+  ]
 }
 
 function getAmenities() {

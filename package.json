@@ -26,6 +26,7 @@
     "react-redux": "^8.1.2",
     "react-router": "^6.16.0",
     "react-router-dom": "^6.16.0",
+    "react-select": "^5.7.7",
     "react-slide-fade-in": "^1.0.9",
     "react-svg": "^16.1.27",
     "react-table": "^7.8.0",

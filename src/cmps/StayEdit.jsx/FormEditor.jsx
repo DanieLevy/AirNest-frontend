@@ -1,7 +1,8 @@
 import { AmenitiesEditor } from "./AmenitiesEditor";
 import { ImagesEditor } from "./ImagesEditor";
+import MultiSelectLabels from "./MultiSelectLabels";
 
-export function FormEditor({ stay, handleInputChange, handleSubmit, urls, onUrlsChange, onAmenitiesChange }) {
+export function FormEditor({ stay, handleInputChange, handleSubmit, onUrlsChange, onAmenitiesChange, setLabels }) {
 
     return (
         <section>
@@ -13,10 +14,11 @@ export function FormEditor({ stay, handleInputChange, handleSubmit, urls, onUrls
                         name="name"
                         value={stay.name}
                         onChange={handleInputChange}
+                        required
                     />
                 </div>
 
-                <ImagesEditor urls={urls} onUrlsChange={onUrlsChange} className="main" />
+                <ImagesEditor urls={stay.imgUrls} onUrlsChange={onUrlsChange} className="main" />
 
                 <div className="flex">
                     Country:
@@ -25,6 +27,7 @@ export function FormEditor({ stay, handleInputChange, handleSubmit, urls, onUrls
                         name="country"
                         value={stay.loc.country}
                         onChange={handleInputChange}
+                        required
                     />
                 </div>
 
@@ -35,6 +38,7 @@ export function FormEditor({ stay, handleInputChange, handleSubmit, urls, onUrls
                         name="city"
                         value={stay.loc.city}
                         onChange={handleInputChange}
+                        required
                     />
                 </div>
 
@@ -45,12 +49,13 @@ export function FormEditor({ stay, handleInputChange, handleSubmit, urls, onUrls
                         name="address"
                         value={stay.loc.address}
                         onChange={handleInputChange}
+                        required
                     />
                 </div>
 
                 <div style={{ display: 'flex', gap: 10 }}>
                     <label>Property type:</label>
-                    <select onChange={handleInputChange} name="type">
+                    <select onChange={handleInputChange} name="type" required>
                         <option value="house">house</option>
                         <option value="boat">boat</option>
                         <option value="farm">farm</option>
@@ -58,6 +63,7 @@ export function FormEditor({ stay, handleInputChange, handleSubmit, urls, onUrls
                     </select>
                 </div>
 
+                <MultiSelectLabels selectedLabels={stay.labels} onLabelsChange={setLabels} />
                 <AmenitiesEditor stay={stay} onAmenitiesChange={onAmenitiesChange} />
 
                 <div className="flex">
@@ -67,6 +73,7 @@ export function FormEditor({ stay, handleInputChange, handleSubmit, urls, onUrls
                         name="capacity"
                         value={stay.capacity}
                         onChange={handleInputChange}
+                        required
                     />
                 </div>
 
@@ -78,6 +85,7 @@ export function FormEditor({ stay, handleInputChange, handleSubmit, urls, onUrls
                             name="bedrooms"
                             value={stay.bedrooms}
                             onChange={handleInputChange}
+                            required
                         />
                     </div>
                     <div className="flex">
@@ -87,6 +95,7 @@ export function FormEditor({ stay, handleInputChange, handleSubmit, urls, onUrls
                             name="beds"
                             value={stay.beds}
                             onChange={handleInputChange}
+                            required
                         />
                     </div>
                     <div className="flex">
@@ -96,6 +105,7 @@ export function FormEditor({ stay, handleInputChange, handleSubmit, urls, onUrls
                             name="bathrooms"
                             value={stay.bathrooms}
                             onChange={handleInputChange}
+                            required
                         />
                     </div>
                 </div>
@@ -107,6 +117,7 @@ export function FormEditor({ stay, handleInputChange, handleSubmit, urls, onUrls
                         name="price"
                         value={stay.price}
                         onChange={handleInputChange}
+                        required
                     />
                 </div>
 
@@ -116,6 +127,7 @@ export function FormEditor({ stay, handleInputChange, handleSubmit, urls, onUrls
                         name="summary"
                         value={stay.summary}
                         onChange={handleInputChange}
+                        required
                     />
                 </div>
 

@@ -12,6 +12,7 @@ function imageHtml(url, className) {
                 background: '#E4E4E4',
                 overflow: 'hidden',
             }}
+            key={url}
         >
             <img
                 src={url}
@@ -30,7 +31,12 @@ export function DetailsImages({ urls }) {
     const images = fillUpTo5(urls)
 
     return (
-        <div className='images-editor-container'>
+        <div className='images-editor-container'
+        style={{
+            paddingTop: '24px',
+        }}
+
+        >
             {imageHtml(urls[0], 'main')}
             <div className='rest'>
                 {images.slice(1).map((url) => {

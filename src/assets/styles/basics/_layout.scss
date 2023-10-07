@@ -24,13 +24,13 @@
   }
   @include for-wide-layout {
     grid-template-columns:
-      minmax(80px, 1fr)
+      minmax(40px, 1fr)
       minmax(auto, $normal-breakpoint)
-      minmax(80px, 1fr);
+      minmax(40px, 1fr);
   }
-  & .stay-details {
-    grid-template-columns: 80px 1fr 80px;
-  }
+  // & .stay-details {
+  //   grid-template-columns: 80px 1fr 80px;
+  // }
 }
 
 //   @include for-narrow-layout {

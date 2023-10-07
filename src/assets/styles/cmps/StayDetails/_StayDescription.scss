@@ -1,0 +1,150 @@
+.stay-description {
+  display: grid;
+  grid-template-columns: 1.45fr 1fr;
+  border-bottom: 1px solid rgb(221, 221, 221);
+
+  .stay-details-preview {
+    padding: 32px 0;
+    border-bottom: 1px solid rgb(221, 221, 221);
+    h1 {
+      font-size: 22px;
+      line-height: 26px;
+      color: rgb(34, 34, 34);
+      margin: 0;
+      font-weight: 600;
+    }
+
+    span {
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 20px;
+      color: rgb(34, 34, 34);
+    }
+
+    .stay-details-rating {
+      margin-top: 8px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      color: rgb(34, 34, 34);
+      line-height: 20px;
+
+      .avg-rate {
+        font-size: 17px;
+        font-weight: 600;
+      }
+
+      svg {
+        width: 16px;
+        height: 16px;
+      }
+
+      a {
+        // font-family: cereal-light;
+        text-decoration: underline;
+        font-size: 16px;
+        color: rgb(34, 34, 34);
+        font-weight: 600;
+        line-height: 20px;
+      }
+    }
+  }
+}
+
+.stay-details-host {
+  padding: 24px 0;
+  border-bottom: 1px solid rgb(221, 221, 221);
+
+  .host-info {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+
+    .host-img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: rgb(221, 221, 221);
+    }
+    .host-name {
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 20px;
+      color: rgb(34, 34, 34);
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+
+      .host-time {
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 18px;
+        color: rgb(113, 113, 113);
+      }
+    }
+  }
+}
+
+
+.stay-details-advantages {
+    padding: 32px 0;
+    border-bottom: 1px solid rgb(221, 221, 221);
+
+    .advantages-list {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+
+        .advantage {
+            display: flex;
+            gap: 24px;
+
+            .advantage-icon {
+                -webkit-box-pack: center !important;
+                flex-shrink: 0 !important;
+                width: 40px !important;
+                display: flex !important;
+                justify-content: center !important
+            }
+
+            svg {
+                width: 24px;
+                height: 24px;
+                color: rgb(34, 34, 34);
+
+            }
+
+            .advantage-text {
+                display: flex;
+                flex-direction: column;
+                span:nth-child(1) {
+                    font-size: 16px;
+                    font-weight: 600;
+                    line-height: 20px;
+                    color: rgb(34, 34, 34);
+                }
+                span:nth-child(2) {
+                    font-size: 14px;
+                    font-weight: 400;
+                    line-height: 18px;
+                    color: rgb(113, 113, 113);
+                }
+            }
+        }
+    }
+
+}
+
+.stay-details-description {
+    padding-top: 32px;
+    padding-bottom: 48px;
+    border-bottom: 1px solid rgb(221, 221, 221);
+
+    .description-text {
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 24px;
+        color: rgb(34, 34, 34);
+        margin: 0;
+    }
+}
