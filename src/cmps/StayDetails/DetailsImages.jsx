@@ -12,6 +12,7 @@ function imageHtml(url, className) {
                 background: '#E4E4E4',
                 overflow: 'hidden',
             }}
+            key={url}
         >
             <img
                 src={url}
@@ -34,6 +35,7 @@ export function DetailsImages({ urls }) {
         style={{
             paddingTop: '24px',
         }}
+
         >
             {imageHtml(urls[0], 'main')}
             <div className='rest'>

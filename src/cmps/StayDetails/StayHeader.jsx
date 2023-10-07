@@ -1,26 +1,28 @@
 import { DetailsImages } from "./DetailsImages"
+import { GoShare } from "react-icons/go"
+import { BiHeart } from "react-icons/bi"
 
 export function StayHeader({
   name,
   imgUrls,
-  reviews,
+  // reviews,
 }) {
-  function calculateAverageRating(reviews) {
-    if (!reviews.length) return 0
-
-    const totalRating = reviews.reduce((sum, review) => sum + review.rate, 0)
-
-    return totalRating / reviews.length
-  }
-  const avgRate = calculateAverageRating(reviews)
 
   return (
     <div className="stay-header">
       <div className="stay-header-top flex">
         <h1 className="name-title">{name}</h1>
         <div className="details-action-buttons flex">
-          <div>Share</div>
-          <div>Save</div>
+          <div>
+            <button className="share-btn flex align-center">
+            <GoShare /> Share
+            </button>
+          </div>
+          <div>
+            <button className="save-btn flex align-center">
+            <BiHeart /> Save
+            </button>
+          </div>
         </div>
       </div>
       <DetailsImages urls={imgUrls} />

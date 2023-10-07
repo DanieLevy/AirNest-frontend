@@ -1,0 +1,120 @@
+.stay-details-aside {
+  margin-top: 32px;
+  margin-bottom: 32px;
+  font-size: 1rem;
+  color: rgb(34, 34, 34);
+
+  .checkout-form-container {
+    position: sticky;
+    top: 150px;
+    justify-content: flex-end;
+
+    .checkout-form {
+      width: 80%;
+      max-width: unset;
+      border: 1px solid rgb(221, 221, 221);
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: #0000001f 0 6px 16px;
+
+      .form-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 24px;
+        width: 100%;
+
+        .form-header-price {
+          color: rgb(34, 34, 34);
+          .price {
+            font-size: 22px;
+            font-weight: 600;
+            line-height: 26px;
+          }
+
+          .per-night {
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 20px;
+          }
+        }
+      }
+
+      .form-header-reservation {
+        border: 1px solid rgba(0, 0, 0, 0.3137254902);
+        border-radius: 13px;
+        margin-bottom: 15px;
+
+        .reservation-dates-container {
+          display: flex;
+          justify-content: space-between;
+          position: relative;
+
+          .reservation-dates {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            padding: 7px 12px;
+            width: 50%;
+
+            .reservation-dates-label {
+              font-family: cereal-bold;
+              font-size: .625em;
+            }
+
+            input {
+              border: none;
+              padding: 0;
+              outline: none;
+              font-size: 0.875em;
+              color: #717171;
+              font-family: cereal-light;
+            }
+          }
+
+          .reservation-dates:nth-child(2) {
+            border-left: 1px solid rgba(0, 0, 0, 0.3137254902);
+          }
+        }
+
+        .reservation-guests {
+          position: relative;
+          display: flex;
+          flex-direction: column;
+          gap: 5px;
+          border-top: 1px solid rgba(0,0,0,.3137254902);
+          padding: 7px 12px;
+          font-family: cereal-bold;
+          font-size: .625rem;
+
+          input {
+            border: none;
+            padding: 0;
+            outline: none;
+            font-size: 0.875rem;
+            color: #717171;
+            font-family: cereal-light;
+          }
+        }
+      }
+    }
+  }
+}
+
+.reservation-footer {
+  font-weight: 400;
+  font-size: 0.875rem;
+  line-height: 1.125rem;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  list-style-type: none;
+  margin: 8px 0px 0px;
+  padding: 0px;
+  text-align: center;
+
+  div {
+    margin-top: 8px !important;
+    white-space: normal !important;
+  }
+}

@@ -1,16 +1,19 @@
-import React, { useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
-import { stayService } from '../services/stay.service.local.js'
-import { StayDescription } from '../cmps/StayDetails/StayDescription.jsx'
-import { StayHeader } from '../cmps/StayDetails/StayHeader.jsx'
-import { StayAmenities } from '../cmps/StayDetails/StayAmenities.jsx'
-import { StayReviews } from '../cmps/StayDetails/StayReviews.jsx'
-import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service.js'
-import { CheckoutForm } from '../cmps/StayDetails/CheckoutForm.jsx'
-import { useDispatch, useSelector } from 'react-redux'
-import { userService } from '../services/user.service.js'
-import { getActionAddOrder, getActionStageOrder } from '../store/actions/order.actions.js'
-import { LOADING_DONE, LOADING_START } from '../store/reducer/system.reducer.js'
+import React, { useEffect, useState } from "react"
+import { useNavigate, useParams } from "react-router-dom"
+import { stayService } from "../services/stay.service.local.js"
+import { StayDescription } from "../cmps/StayDetails/StayDescription.jsx"
+import { StayHeader } from "../cmps/StayDetails/StayHeader.jsx"
+import { StayAmenities } from "../cmps/StayDetails/StayAmenities.jsx"
+import { StayReviews } from "../cmps/StayDetails/StayReviews.jsx"
+import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service.js"
+import { CheckoutForm } from "../cmps/StayDetails/CheckoutForm.jsx"
+import { useDispatch, useSelector } from "react-redux"
+import { userService } from "../services/user.service.js"
+import {
+  getActionAddOrder,
+  getActionStageOrder,
+} from "../store/actions/order.actions.js"
+import { LOADING_DONE, LOADING_START } from "../store/reducer/system.reducer.js"
 
 export function StayDetails() {
   const { stayId } = useParams()
@@ -25,16 +28,23 @@ export function StayDetails() {
   useEffect(() => {
     loadStay()
   }, [stayId])
-  console.log('🚀 ~ file: StayDetails.jsx:20 ~ StayDetails ~ loggedUser:', loggedUser)
+  console.log(
+    "🚀 ~ file: StayDetails.jsx:20 ~ StayDetails ~ loggedUser:",
+    loggedUser
+  )
+  console.log(
+    "🚀 ~ file: StayDetails.jsx:20 ~ StayDetails ~ currStay:",
+    currStay
+  )
 
   async function loadStay() {
     try {
       const stay = await stayService.getById(stayId)
       setCurrStay(stay)
     } catch (err) {
-      console.log('Had issues in stay details', err)
-      showErrorMsg('Cannot load stay')
-      navigate('/')
+      console.log("Had issues in stay details", err)
+      showErrorMsg("Cannot load stay")
+      navigate("/")
     }
   }
 
@@ -61,8 +71,8 @@ export function StayDetails() {
     }
 
     dispatch(getActionStageOrder(orderDetails))
-    showSuccessMsg('Order staged for confirmation.')
-    navigate('/order')
+    showSuccessMsg("Order staged for confirmation.")
+    navigate("/order")
   }
 
   if (isLoading) return <div>Loading...</div>
@@ -88,27 +98,29 @@ export function StayDetails() {
   } = currStay
 
   return (
-    <section className='stay-details'>
-      <StayHeader
-        name={name}
-        imgUrls={imgUrls}
-        type={type}
-        reviews={reviews}
-        price={price}
-        host={host}
-        loc={loc}
-        bedrooms={bedrooms}
-        beds={beds}
-        bathrooms={bathrooms}
-        capacity={capacity}
-        room_type={room_type}
-      />
-      <div className='mid-section'>
-        <StayDescription summary={summary} />
-        <CheckoutForm onSubmit={handleCheckoutSubmit} />
+    <section className="stay-details">
+      <StayHeader name={name} imgUrls={imgUrls} />
+      <div className="stay-details-desc">
+        <StayDescription
+          type={type}
+          summary={summary}
+          reviews={reviews}
+          price={price}
+          host={host}
+          loc={loc}
+          bedrooms={bedrooms}
+          beds={beds}
+          bathrooms={bathrooms}
+          capacity={capacity}
+          room_type={room_type}
+          name={name}
+          amenities={amenities}
+        />
+
       </div>
+        {/* <CheckoutForm onSubmit={handleCheckoutSubmit} />
       <StayAmenities data={currStay.amenities} />
-      <StayReviews data={currStay.reviews} />
+      <StayReviews data={currStay.reviews} /> */}
     </section>
   )
 }
