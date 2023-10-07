@@ -3,13 +3,15 @@ import { orderService } from '../services/order.service'
 import { useDispatch, useSelector } from 'react-redux'
 import { addOrder, getActionAddOrder, getActionClearStagedOrder, loadOrders } from '../store/actions/order.actions'
 import { showErrorMsg } from '../services/event-bus.service'
+import { Link } from 'react-router-dom'
+import { userService } from '../services/user.service'
 
-export function OrderPage() {
+export function OrderConfirm() {
   const stagedOrder = useSelector((state) => state.orderModule.stagedOrder)
   const isLoading = useSelector((state) => state.systemModule.isLoading)
 
   const [isConfirmed, setIsConfirmed] = useState(false)
-
+  const loggedUser = userService.getLoggedinUser()
   const dispatch = useDispatch()
   useEffect(() => {
     loadOrders()
@@ -20,7 +22,14 @@ export function OrderPage() {
 
   async function handleConfirmOrder() {
     try {
-      const confirmedOrder = await orderService.add(stagedOrder)
+      const stagedOrderWithUser = {
+        ...stagedOrder,
+        buyer: {
+          _id: loggedUser._id,
+          fullname: loggedUser.fullname,
+        },
+      }
+      const confirmedOrder = await orderService.add(stagedOrderWithUser)
 
       dispatch(getActionAddOrder(confirmedOrder))
       setIsConfirmed(true)
@@ -42,6 +51,7 @@ export function OrderPage() {
       <p>Children: {stagedOrder.children}</p>
 
       {!isConfirmed ? <button onClick={handleConfirmOrder}>Confirm Order</button> : <div>Order Confirmed!</div>}
+      {/* {isConfirmed ? <Link to={`/order/${loggedUser._id}`} } */}
     </div>
   )
 }
