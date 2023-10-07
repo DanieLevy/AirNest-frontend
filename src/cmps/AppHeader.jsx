@@ -85,7 +85,7 @@ export function AppHeader() {
           </svg>
         </Link>
         <ExploreBar />
-        <Link to='/list' className="nav-text"> <span >Airbnb your home</span></Link>
+        <Link to='/edit' className="nav-text"> <span >Airbnb your home</span></Link>
 
         <div
           className="user-nav flex"
@@ -125,7 +125,7 @@ export function AppHeader() {
                     Signup
                   </li>
                   <div className="divider"></div>
-                  <Link to='/list' style={{ textDecorationLine: 'none' }}><li>AirNest your home</li></Link>
+                  <Link to='/edit' style={{ textDecorationLine: 'none' }}><li>AirNest your home</li></Link>
                 </>
               ) : (
                 <>
