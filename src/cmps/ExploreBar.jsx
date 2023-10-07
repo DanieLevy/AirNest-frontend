@@ -18,6 +18,8 @@ export function ExploreBar() {
   const [isActive, setIsActive] = useState(null)
   const [formData, setFormData] = useState({
     location: '',
+    startDate: null,
+    endDate: null,
   })
   const expandedBarRef = useRef(null)
   useEffect(() => {
@@ -67,6 +69,13 @@ export function ExploreBar() {
       location: locationText,
     }))
     setIsActive('check-in')
+  }
+  function handleDateSelection({ startDate, endDate }) {
+    setFormData((prevState) => ({
+      ...prevState,
+      startDate,
+      endDate,
+    }))
   }
 
   const handleChange = (event) => {
@@ -238,7 +247,7 @@ export function ExploreBar() {
                 </div>
               </article>
 
-              {isActive === 'check-in' || isActive === 'check-out' ? <DatesModal /> : null}
+              {isActive === 'check-in' || isActive === 'check-out' ? <DatesModal onSetDates={handleDateSelection} /> : null}
 
               <span className='splitter'></span>
 

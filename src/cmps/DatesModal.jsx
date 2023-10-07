@@ -1,7 +1,7 @@
-import React, { useState } from "react"
-import { format } from "date-fns"
-import { DayPicker } from "react-day-picker"
-import "react-day-picker/dist/style.css"
+import React, { useState } from 'react'
+import { format } from 'date-fns'
+import { DayPicker } from 'react-day-picker'
+import 'react-day-picker/dist/style.css'
 
 export function DatesModal({ isOpen, onCloseModal, onSetDates }) {
   const [range, setRange] = useState({
@@ -9,24 +9,48 @@ export function DatesModal({ isOpen, onCloseModal, onSetDates }) {
     endDate: null,
   })
 
-  const initialMonth = new Date();
-  initialMonth.setMonth(initialMonth.getMonth() - 6);   
+  const initialMonth = new Date()
+  initialMonth.setMonth(initialMonth.getMonth() - 6)
 
   function handleDayClick(day) {
-    // Update the range when the user clicks a date
-    setRange(range)
+    const rangeCopy = { ...range }
+
+    if (!range.startDate || (range.startDate && range.endDate)) {
+      rangeCopy.startDate = day
+      rangeCopy.endDate = null
+    } else {
+      rangeCopy.endDate = day
+    }
+
+    setRange(rangeCopy)
   }
 
+  // function handleSelect(day) {
+  //   const rangeCopy = { ...range }
+
+  //   if (!range.startDate) {
+  //     rangeCopy.startDate = day
+  //   } else {
+  //     rangeCopy.endDate = day
+  //     console.log('clicked date!')
+  //     onSetDates(rangeCopy)
+  //   }
+
+  //   setRange(rangeCopy)
+  // }
   function handleSelect(day) {
-    const rangeCopy = {...range};
-  
-    if (!range.startDate) {
-      rangeCopy.startDate = day; 
+    const rangeCopy = { ...range }
+
+    if (!range.startDate || (range.startDate && range.endDate)) {
+      rangeCopy.startDate = day
+      rangeCopy.endDate = null
     } else {
-      rangeCopy.endDate = day;
+      rangeCopy.endDate = day
+      console.log('clicked date!')
+      onSetDates(rangeCopy)
     }
-  
-    setRange(rangeCopy);
+
+    setRange(rangeCopy)
   }
 
   function handleConfirm() {
@@ -34,10 +58,10 @@ export function DatesModal({ isOpen, onCloseModal, onSetDates }) {
   }
 
   return (
-    <div className="dates-modal">
+    <div className='dates-modal'>
       {/* <DayPicker id="dates" numberOfMonths={2} /> */}
       <DayPicker
-        mode="range"
+        mode='range'
         selected={range}
         onSelect={setRange}
         onDayClick={handleDayClick}
@@ -45,7 +69,6 @@ export function DatesModal({ isOpen, onCloseModal, onSetDates }) {
         month={initialMonth}
         disabledDays={{ before: new Date() }}
         numberOfMonths={2}
-
       />
     </div>
   )
