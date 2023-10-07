@@ -17,7 +17,7 @@ export function LoginSignup({ login, signup, onToggleLogin, isSignup, setSignupM
 
   function clearState() {
     setCredentials({ username: "", password: "", fullname: "", imgUrl: "" })
-    setIsSignup(false)
+    setSignupModal(false)
   }
 
   function handleChange(ev) {

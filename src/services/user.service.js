@@ -19,7 +19,6 @@ export const userService = {
 }
 
 window.userService = userService
-_createLocalUser()
 
 function getUsers() {
   return storageService.query('user')
@@ -94,13 +93,6 @@ function getLoggedinUser() {
   return JSON.parse(sessionStorage.getItem(STORAGE_KEY_LOGGEDIN_USER))
 }
 
-async function _createLocalUser() {
-  const user = getLoggedinUser()
-  if (!user) {
-    await userService.signup({ fullname: 'Puki Norma', username: 'puki', password: '123', isAdmin: false })
-  }
-}
-
 function getEmptyCredentials() {
   return {
     username: '',
@@ -109,7 +101,6 @@ function getEmptyCredentials() {
     imgUrl: ''
   }
 }
-
 
 async function demoUser() {
   return {
