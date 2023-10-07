@@ -17,6 +17,7 @@ export default function MultiSelectLabels({ selectedLabels, options = stayServic
             value={selectedLabels}
             options={options}
             onChange={onLabelsChange}
+            required
         />
     );
 }

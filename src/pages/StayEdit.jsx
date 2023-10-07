@@ -80,7 +80,7 @@ export function StayEdit() {
   if (!stay) return <div>loading...</div>
   return (
     <main>
-      <FormEditor stay={stay} setLabels={setLabels} handleInputChange={handleInputChange} handleSubmit={handleSubmit} urls={stay.imgUrls} onUrlsChange={setImgUrl} onAmenitiesChange={setAmenities} />
+      <FormEditor stay={stay} setLabels={setLabels} handleInputChange={handleInputChange} handleSubmit={handleSubmit} onUrlsChange={setImgUrl} onAmenitiesChange={setAmenities} />
     </main>
   )
 }
