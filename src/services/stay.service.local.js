@@ -33,13 +33,12 @@ function getById(stayId) {
 }
 
 async function remove(stayId) {
-  // throw new Error('Nope')
   await storageService.remove(STORAGE_KEY, stayId)
 }
 
 async function save(stay) {
   let savedStay
-  const { _id, fullname, imgUrl } = userService.getLoggedinUser()
+  const { _id, fullname, imgUrl } = await userService.getLoggedinUser()
   stay.imgUrls = stay.imgUrls.filter(url => url)
   if (stay._id) {
     savedStay = await storageService.put(STORAGE_KEY, stay)
@@ -111,7 +110,6 @@ function getEmptyStay() {
 }
 
 function getLabels() {
-  // return ['Top of the world', 'Trending', 'Play', 'Tropical']
   return [
     { value: 'Top of the world', label: 'Top of the world' },
     { value: 'Trending', label: 'Trending' },
@@ -555,5 +553,3 @@ const stays = [
   },
 ]
 
-// TEST DATA
-// storageService.post(STORAGE_KEY, {vendor: 'Subali Rahok 2', price: 980}).then(x => console.log(x))
