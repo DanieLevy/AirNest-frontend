@@ -1,24 +1,67 @@
-import React, { useState } from "react"
-import { BarndedBtn } from "../barnded-btn"
-import DatePicker from "react-datepicker"
-// import { BarndedBtn } from '../barnded-btn'
-// import "react-datepicker/dist/react-datepicker.css"
-import { AiFillStar } from "react-icons/ai"
+import React, { useEffect, useState } from "react"
+import { BarndedBtn2 } from "../branded-Btn-2"
+
+import { format } from "date-fns"
+import { DayPicker } from "react-day-picker"
+
+import { AiOutlineMinus } from "react-icons/ai"
+import { AiOutlinePlus } from "react-icons/ai"
+
+const initialFrom = new Date()
+const initialTo = new Date()
+
+initialFrom.setUTCHours(0, 0, 0, 0)
+initialTo.setUTCHours(0, 0, 0, 0)
 
 export function CheckoutForm({ onSubmit, price, reviews }) {
-  const [startDate, setStartDate] = useState(Date.now())
-  const [endDate, setEndDate] = useState(Date.now())
-  const [adults, setAdults] = useState(1)
-  const [children, setChildren] = useState(0)
+  const [selectedRange, setSelectedRange] = useState({
+    from: initialFrom,
+    to: initialTo,
+  })
+
+  const [isDatesModal, setIsDatesModal] = useState(false)
+  const [isGuestsModal, setIsGuestsModal] = useState(false)
+
+  const [selectedGuests, setSelectedGuests] = useState({
+    adults: 1,
+    children: 0,
+    infants: 0,
+    pets: 0,
+  })
+
+  useEffect(() => {
+    // if user click outside the modal guests modal or dates modal - close it
+    const closeModals = (event) => {
+      if (
+        !event.target.closest(".guests-modal") &&
+        !event.target.closest(".date-picker-container")
+      ) {
+        setIsGuestsModal(false)
+        setIsDatesModal(false)
+      }
+    }
+
+    document.addEventListener("click", closeModals)
+
+    return () => {
+      document.removeEventListener("click", closeModals)
+    }
+  }, [])
 
   const handleSubmit = (event) => {
     event.preventDefault()
+
+    const checkInTs = selectedRange.from.getTime()
+    const checkOutTs = selectedRange.to.getTime()
+
     const formData = {
-      startDate,
-      endDate,
-      adults,
-      children,
+      checkIn: checkInTs,
+      checkOut: checkOutTs,
+      guests: selectedGuests,
     }
+    alert(JSON.stringify(formData))
+    console.log(formData)
+
     onSubmit(formData)
   }
 
@@ -35,91 +78,283 @@ export function CheckoutForm({ onSubmit, price, reviews }) {
   return (
     <div className="checkout-form-container flex">
       <form onSubmit={handleSubmit} className="checkout-form">
-        <div>
+        <div className="helped-container">
           <div className="form-header">
             <div className="form-header-price">
-                <span className="price">${price} <span className="per-night">night</span>
-                </span>
+              <span className="price">
+                ${price} <span className="per-night">night</span>
+              </span>
             </div>
-            </div>
-            <div className="form-header-reservation">
-              <div className="reservation-dates-container">
+          </div>
+          <div className="form-header-reservation">
+            <div
+              className="reservation-dates-container"
+              onClick={(ev) => {
+                ev.stopPropagation()
+                setIsDatesModal(!isDatesModal)
+              }}
+            >
               <div className="reservation-dates">
                 <label className="reservation-dates-label">CHECK-IN</label>
-                <input placeholder='Add date' name="check-in"/>
-                </div>
-                <div className="reservation-dates">
+                <input
+                  placeholder="Add date"
+                  name="check-in"
+                  required
+                  readOnly
+                  value={
+                    selectedRange.from
+                      ? format(selectedRange.from, "dd/MM/yyyy")
+                      : ""
+                  }
+                />
+              </div>
+              <div className="reservation-dates">
                 <label className="reservation-dates-label">CHECK-OUT</label>
-                <input placeholder='Add date' name="check-out"/>
-                </div>
+                <input
+                  placeholder="Add date"
+                  name="check-out"
+                  required
+                  readOnly
+                  value={
+                    selectedRange.to
+                      ? format(selectedRange.to, "dd/MM/yyyy")
+                      : ""
+                  }
+                />
               </div>
-              <div className="reservation-guests">
-                <label className="reservation-guests-label">GUESTS</label>
-                <input placeholder='1 guests' name="guests"/>
-                </div>
             </div>
-            <BarndedBtn txt={'Reserve'} />
 
-            <div className="reservation-footer">
-              <div>
-              You won't be charged yet
+            {isDatesModal && (
+              <div className="date-picker-container">
+                <DayPicker
+                  mode="range"
+                  selected={selectedRange}
+                  onDayClick={(date) => {
+                    if (!selectedRange.from) {
+                      setSelectedRange({ ...selectedRange, from: date })
+                    } else if (!selectedRange.to) {
+                      setSelectedRange({ ...selectedRange, to: date })
+                      setIsDatesModal(false) // close modal
+                    } else {
+                      setSelectedRange({ from: date, to: null })
+                    }
+                  }}
+                  numberOfMonths={2}
+                  modifiers={{
+                    disabled: [{ before: new Date() }],
+                  }}
+                />
+              </div>
+            )}
+
+            <div
+              className="reservation-guests"
+              onClick={(ev) => {
+                ev.stopPropagation()
+                setIsGuestsModal(!isGuestsModal)
+              }}
+            >
+              <label className="reservation-guests-label">GUESTS</label>
+              <input
+                placeholder={`${selectedGuests.adults} guests ${
+                  selectedGuests.children
+                    ? `, ${selectedGuests.children} children`
+                    : ""
+                } ${
+                  selectedGuests.infants
+                    ? `, ${selectedGuests.infants} infants`
+                    : ""
+                } ${
+                  selectedGuests.pets ? `, ${selectedGuests.pets} pets` : ""
+                }`}
+                name="guests"
+                required
+                readOnly
+                value={`${selectedGuests.adults} guests ${
+                  selectedGuests.children
+                    ? `, ${selectedGuests.children} children`
+                    : ""
+                } ${
+                  selectedGuests.infants
+                    ? `, ${selectedGuests.infants} infants`
+                    : ""
+                } ${
+                  selectedGuests.pets ? `, ${selectedGuests.pets} pets` : ""
+                }`}
+              />
+            </div>
+          </div>
+
+          {isGuestsModal && (
+            <div className="guests-modal">
+              {/* Adults */}
+              <div className="guests-options" id="adults">
+                <div className="guests-title">
+                  <h3 className="guests-modal-title">Adults</h3>
+                  <span className="guests-modal-subtitle">
+                    Ages 13 or above
+                  </span>
+                </div>
+                <div className="guests-action flex">
+                  <button
+                    disabled={selectedGuests.adults === 0}
+                    onClick={() =>
+                      setSelectedGuests({
+                        ...selectedGuests,
+                        adults: selectedGuests.adults - 1,
+                      })
+                    }
+                    type="button"
+                    className="guests-modal-btn"
+                  >
+                    <AiOutlineMinus />
+                  </button>
+                  <span className="guests-modal-count">
+                    {selectedGuests.adults}
+                  </span>
+                  <button
+                    type="button"
+                    className="guests-modal-btn"
+                    onClick={() =>
+                      setSelectedGuests({
+                        ...selectedGuests,
+                        adults: selectedGuests.adults + 1,
+                      })
+                    }
+                    disabled={selectedGuests.adults === 16}
+                  >
+                    <AiOutlinePlus />
+                  </button>
+                </div>
+              </div>
+
+              {/* Children */}
+              <div className="guests-options" id="children">
+                <div className="guests-title">
+                  <h3 className="guests-modal-title">Children</h3>
+                  <span className="guests-modal-subtitle">Ages 2-12</span>
+                </div>
+                <div className="guests-action flex">
+                  <button
+                    disabled={selectedGuests.children === 0}
+                    onClick={() =>
+                      setSelectedGuests({
+                        ...selectedGuests,
+                        children: selectedGuests.children - 1,
+                      })
+                    }
+                    type="button"
+                    className="guests-modal-btn"
+                  >
+                    <AiOutlineMinus />
+                  </button>
+                  <span className="guests-modal-count">
+                    {selectedGuests.children}
+                  </span>
+                  <button
+                    type="button"
+                    className="guests-modal-btn"
+                    onClick={() =>
+                      setSelectedGuests({
+                        ...selectedGuests,
+                        children: selectedGuests.children + 1,
+                      })
+                    }
+                    disabled={selectedGuests.children === 5}
+                  >
+                    <AiOutlinePlus />
+                  </button>
+                </div>
+              </div>
+
+              {/* Infants */}
+              <div className="guests-options" id="infants">
+                <div className="guests-title">
+                  <h3 className="guests-modal-title">Infants</h3>
+                  <span className="guests-modal-subtitle">Under 2</span>
+                </div>
+                <div className="guests-action flex">
+                  <button
+                    type="button"
+                    className="guests-modal-btn"
+                    disabled={selectedGuests.infants === 0}
+                    onClick={() =>
+                      setSelectedGuests({
+                        ...selectedGuests,
+                        infants: selectedGuests.infants - 1,
+                      })
+                    }
+                  >
+                    <AiOutlineMinus />
+                  </button>
+                  <span className="guests-modal-count">
+                    {selectedGuests.infants}
+                  </span>
+                  <button
+                    type="button"
+                    className="guests-modal-btn"
+                    disabled={selectedGuests.infants === 5}
+                    onClick={() =>
+                      setSelectedGuests({
+                        ...selectedGuests,
+                        infants: selectedGuests.infants + 1,
+                      })
+                    }
+                  >
+                    <AiOutlinePlus />
+                  </button>
+                </div>
+              </div>
+
+              {/* PETS */}
+              <div className="guests-options" id="pets">
+                <div className="guests-title">
+                  <h3 className="guests-modal-title">Pets</h3>
+                  <span className="guests-modal-subtitle">
+                    <a href="#">Bringing a service animal?</a>
+                  </span>
+                </div>
+                <div className="guests-action flex">
+                  <button
+                    disabled={selectedGuests.pets === 0}
+                    onClick={() =>
+                      setSelectedGuests({
+                        ...selectedGuests,
+                        pets: selectedGuests.pets - 1,
+                      })
+                    }
+                    type="button"
+                    className="guests-modal-btn"
+                  >
+                    <AiOutlineMinus />
+                  </button>
+                  <span className="guests-modal-count">
+                    {selectedGuests.pets}
+                  </span>
+                  <button
+                    type="button"
+                    disabled={selectedGuests.pets === 5}
+                    onClick={() =>
+                      setSelectedGuests({
+                        ...selectedGuests,
+                        pets: selectedGuests.pets + 1,
+                      })
+                    }
+                    className="guests-modal-btn"
+                  >
+                    <AiOutlinePlus />
+                  </button>
+                </div>
               </div>
             </div>
+          )}
+
+          <BarndedBtn2 txt={"Reserve"} />
+          <div className="reservation-footer">
+            <div>You won't be charged yet</div>
+          </div>
         </div>
       </form>
     </div>
   )
 }
-
-// {/* <label>
-// Start Date:
-// <DatePicker
-//   selected={startDate}
-//   onChange={(date) => setStartDate(date)}
-//   selectsStart
-//   startDate={startDate}
-//   endDate={endDate}
-// />
-// </label>
-// </div>
-// <div>
-// <label>
-// End Date:
-// <DatePicker
-//   selected={endDate}
-//   onChange={(date) => setEndDate(date)}
-//   selectsEnd
-//   startDate={startDate}
-//   endDate={endDate}
-//   minDate={startDate}
-// />
-// </label>
-// </div>
-// <div>
-// <label>
-// Adults:
-// <select value={adults} onChange={(e) => setAdults(e.target.value)}>
-//   {[...Array(10)].map((_, i) => (
-//     <option key={i} value={i + 1}>
-//       {i + 1}
-//     </option>
-//   ))}
-// </select>
-// </label>
-// </div>
-// <div>
-// <label>
-// Children:
-// <select
-//   value={children}
-//   onChange={(e) => setChildren(e.target.value)}
-// >
-//   {[...Array(10)].map((_, i) => (
-//     <option key={i} value={i}>
-//       {i}
-//     </option>
-//   ))}
-// </select>
-// </label>
-// <button type="submit">Submit</button>
-// <div>{/* <BarndedBtn txt={'Checkout'} /> */}</div> */}
