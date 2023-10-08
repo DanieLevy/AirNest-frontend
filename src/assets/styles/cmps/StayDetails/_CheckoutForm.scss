@@ -31,13 +31,14 @@
         top: 188px;
         max-width: 300px;
         border-radius: 32px;
-        box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.0392156863), 0 8px 16px rgba(0, 0, 0, 0.1490196078);
+        box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.0392156863),
+          0 8px 16px rgba(0, 0, 0, 0.1490196078);
         padding: 16px 32px;
 
         .guests-options {
           gap: 10px;
-          padding-top: 12px!important;
-          padding-bottom: 12px!important;
+          padding-top: 12px !important;
+          padding-bottom: 12px !important;
         }
       }
 
@@ -127,7 +128,7 @@
 
 .reservation-footer {
   font-weight: 400;
-  font-size: 0.875rem;
+  font-size: 1rem;
   line-height: 1.125rem;
   align-items: center;
   display: flex;
@@ -138,8 +139,60 @@
   text-align: center;
 
   div {
-    margin-top: 8px !important;
-    white-space: normal !important;
+    span {
+      font-size: .875em;
+      font-family: cereal-light;
+    }
+  }
+
+  .reservation-footer-price {
+    margin-top: 24px;
+    flex-direction: column;
+
+    .footer-price-container {
+      flex-direction: column;
+      gap: 16px;
+      line-height: 1.25rem;
+
+      .link {
+        color: rgb(34, 34, 34);
+        font-size: 1rem;
+        text-decoration: underline;
+        font-weight: 400;
+        font-family: cereal;
+      }
+
+      .price {
+
+      }
+
+      .footer-price-nigts {
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .footer-price-fee {
+        display: flex;
+        justify-content: space-between;
+      }
+
+    }
+
+    .footer-price-sum {
+      margin-top: 24px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(0, 0, 0, 0.3137254902);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      span {
+        font-size: 1rem;
+        font-weight: 600;
+        line-height: 1.25rem;
+        color: rgb(34, 34, 34);
+        font-family: cereal-bold;
+      }
+    }
   }
 }
 
@@ -147,7 +200,8 @@
   position: absolute;
   background: white;
   border-radius: 32px;
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.0392156863), 0 8px 16px rgba(0, 0, 0, 0.1490196078);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.0392156863),
+    0 8px 16px rgba(0, 0, 0, 0.1490196078);
   padding: 16px 32px;
   z-index: 10;
   margin-top: 0px;

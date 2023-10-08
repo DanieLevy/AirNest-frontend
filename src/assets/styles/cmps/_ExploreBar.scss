@@ -224,7 +224,6 @@
 .white-space {
   position: fixed;
   background-color: white;
-  // z-index: 101;
   width: 100%;
   top: 80px;
   height: 80px;
@@ -234,7 +233,6 @@
   align-items: flex-start;
   padding-inline: 10vw;
   animation-duration: 1s;
-  /* don't forget to set a duration! */
 }
 
 .explore-bar-backdrop {
@@ -276,7 +274,6 @@
   cursor: auto;
   min-width: 100%;
   min-height: 400px;
-  // z-index: 10;
 
   display: flex;
   width: max-content;

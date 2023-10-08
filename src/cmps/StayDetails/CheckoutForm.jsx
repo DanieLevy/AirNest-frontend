@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react"
+
 import { BarndedBtn2 } from "../branded-Btn-2"
 
 import { format } from "date-fns"
@@ -6,6 +7,7 @@ import { DayPicker } from "react-day-picker"
 
 import { AiOutlineMinus } from "react-icons/ai"
 import { AiOutlinePlus } from "react-icons/ai"
+import { is } from "date-fns/locale"
 
 const initialFrom = new Date()
 const initialTo = new Date()
@@ -29,8 +31,20 @@ export function CheckoutForm({ onSubmit, price, reviews }) {
     pets: 0,
   })
 
+  const [isCheckoutSum, setIsCheckoutSum] = useState(false)
+  const dateDiff =
+    selectedRange.to && selectedRange.from
+      ? selectedRange.to.getTime() - selectedRange.from.getTime()
+      : 0
+  const dateDiffDays = dateDiff / (1000 * 60 * 60 * 24)
+  const totalSum = price * dateDiffDays
+  const totalPlusFee = totalSum + totalSum * 0.125
+
   useEffect(() => {
-    // if user click outside the modal guests modal or dates modal - close it
+    dateDiffDays ? setIsCheckoutSum(true) : setIsCheckoutSum(false)
+  }, [selectedRange])
+
+  useEffect(() => {
     const closeModals = (event) => {
       if (
         !event.target.closest(".guests-modal") &&
@@ -58,6 +72,7 @@ export function CheckoutForm({ onSubmit, price, reviews }) {
       checkIn: checkInTs,
       checkOut: checkOutTs,
       guests: selectedGuests,
+      totalPrice: totalPlusFee,
     }
     alert(JSON.stringify(formData))
     console.log(formData)
@@ -350,9 +365,33 @@ export function CheckoutForm({ onSubmit, price, reviews }) {
           )}
 
           <BarndedBtn2 txt={"Reserve"} />
-          <div className="reservation-footer">
-            <div>You won't be charged yet</div>
-          </div>
+          {dateDiffDays ? (
+            <div className="reservation-footer">
+              <div style={{ width: "100%" }}>
+                <span>You won't be charged yet</span>
+                <div className="reservation-footer-price flex">
+                  <div className="footer-price-container flex">
+                    <div className="footer-price-nigts">
+                      <span className="link">
+                        ${price} x {dateDiffDays} nights
+                      </span>
+                      <span className="price">${price * dateDiffDays}</span>
+                    </div>
+                    <div className="footer-price-fee">
+                      <span className="link">Airbnb service fee</span>
+                      <span className="price">{totalSum * 0.125}</span>
+                    </div>
+                  </div>
+                  <div className="footer-price-sum">
+                    <span>Total</span>
+                    <span>${totalPlusFee}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div className="reservation-footer"></div>
+          )}
         </div>
       </form>
     </div>

@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { userService } from '../services/user.service.js'
 import { getActionAddOrder, getActionStageOrder } from '../store/actions/order.actions.js'
 import { LOADING_DONE, LOADING_START } from '../store/reducer/system.reducer.js'
+import { StayMap } from '../cmps/StayDetails/StayMap.jsx'
 
 export function StayDetails() {
   const { stayId } = useParams()
@@ -96,9 +97,8 @@ export function StayDetails() {
           amenities={amenities}
         />
       </div>
-      {/* <CheckoutForm onSubmit={handleCheckoutSubmit} />
-      <StayAmenities data={currStay.amenities} />
-      <StayReviews data={currStay.reviews} /> */}
+      <StayReviews data={currStay.reviews} />
+      <StayMap loc={loc} />
     </section>
   )
 }
