@@ -3,6 +3,7 @@ import { userService } from '../../services/user.service.js'
 import { store } from '../store.js'
 import { showSuccessMsg, showErrorMsg } from '../../services/event-bus.service.js'
 import { ADD_STAY, REMOVE_STAY, SET_STAYS, UNDO_REMOVE_STAY, UPDATE_STAY } from '../reducer/stay.reducer.js'
+import { LOADING_DONE, LOADING_START } from '../reducer/system.reducer'
 // import { SET_SCORE } from "../user.reducer.js";
 
 // Action Creators:
@@ -26,7 +27,7 @@ export function getActionUpdateStay(stay) {
 }
 
 export async function loadStays(filterBy) {
-  console.log('loading stays')
+  store.dispatch({ type: LOADING_START })
   try {
     const stays = await stayService.query(filterBy)
     console.log('Stays from DB:', stays)
@@ -37,6 +38,8 @@ export async function loadStays(filterBy) {
   } catch (err) {
     console.log('Cannot load stays', err)
     throw err
+  } finally {
+    store.dispatch({ type: LOADING_DONE })
   }
 }
 

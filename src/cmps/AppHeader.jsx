@@ -29,11 +29,13 @@ export function AppHeader() {
   const [isExpanded, setIsExpanded] = useState(true)
   const [userModal, setUserModal] = useState(false)
   const [loginModal, setLoginModal] = useState(false)
+  const [signupModal, setSignupModal] = useState(false)
 
   async function onLogin(credentials) {
     try {
       const user = await login(credentials)
       showSuccessMsg(`Welcome: ${user.fullname}`)
+      closeModal()
     } catch (err) {
       showErrorMsg('Cannot login')
     }
@@ -42,6 +44,7 @@ export function AppHeader() {
     try {
       const user = await signup(credentials)
       showSuccessMsg(`Welcome new user: ${user.fullname}`)
+      closeModal()
     } catch (err) {
       showErrorMsg('Cannot signup')
     }
@@ -55,6 +58,11 @@ export function AppHeader() {
     }
   }
 
+  function closeModal() {
+    setLoginModal(false)
+    setUserModal(false)
+  }
+
   const labels = [
     "amazingpools",
     "amazingviews",
@@ -66,7 +74,7 @@ export function AppHeader() {
   ]
 
   return (
-    <section className={` full main-layout header-container ${isExpanded ? 'expanded' : ''}`}>
+    (<section className={` full main-layout header-container ${isExpanded ? 'expanded' : ''}`}>
       <header className='main-header flex'>
         <Link to='/' className='logo flex'>
           {/* AIRBNB LOGO */}
@@ -77,7 +85,7 @@ export function AppHeader() {
           </svg>
         </Link>
         <ExploreBar />
-        <Link to='/list' className="nav-text"> <span >Airbnb your home</span></Link>
+        <Link to='/edit' className="nav-text"> <span >Airbnb your home</span></Link>
 
         <div
           className="user-nav flex"
@@ -87,37 +95,72 @@ export function AppHeader() {
           }}
         >
           <IoIosMenu />
-          <FaCircleUser className='user-icon' />
+          {user && user.imgUrl ? <img src={user.imgUrl} alt="" /> : <FaCircleUser className='user-icon' />}
         </div>
 
         {userModal && (
           <section className="user-modal">
+            <div className="back-drop" onClick={() => closeModal()}></div>
             <ul className="user-modal-nav">
-              <li
-                onClick={(ev) => {
-                  ev.stopPropagation()
-                  setUserModal(false)
-                  setLoginModal(true)
-                }}
-              >
-                Login
-              </li>
-              <li>Signup</li>
+              {!user ? (
+                <>
+                  <li
+                    onClick={(ev) => {
+                      ev.stopPropagation();
+                      setUserModal(false);
+                      setLoginModal(true)
+                      setSignupModal(false);
+                    }}
+                  >
+                    Login
+                  </li>
+                  <li
+                    onClick={(ev) => {
+                      ev.stopPropagation();
+                      setUserModal(false);
+                      setLoginModal(true)
+                      setSignupModal(true);
+                    }}
+                  >
+                    Signup
+                  </li>
+                  <div className="divider"></div>
+                  <Link to='/edit' style={{ textDecorationLine: 'none' }}><li>AirNest your home</li></Link>
+                </>
+              ) : (
+                <>
+                  <li>Whislist</li>
+                  <li>Trip</li>
+                  <div className="divider"></div>
+                  <li>DashBoard</li>
+                  <li>Listing</li>
+                  <div className="divider"></div>
+                  <li onClick={() => {
+                    onLogout()
+                    setUserModal(false)
+                  }}>Logout</li>
+                </>
+              )}
             </ul>
           </section>
-        )}
 
-        {loginModal && (
-          <LoginSignup
-            onLogin={onLogin}
-            onSignup={onSignup}
-            onToggleLogin={setLoginModal}
-          />
-        )}
+        )
+        }
 
-      </header>
+        {
+          loginModal && (
+            <LoginSignup
+              login={onLogin}
+              signup={onSignup}
+              onToggleLogin={setLoginModal}
+              closeModal={closeModal}
+              isSignup={signupModal}
+              setSignupModal={setSignupModal}
+            />
+          )
+        }
+      </header >
       {/* <ExploreBar /> */}
-
       {/* <Carousel
         show={13}
         slide={5}
@@ -145,6 +188,6 @@ export function AppHeader() {
           )
         })}
       </Carousel> */}
-    </section>
-  )
+    </section >)
+  );
 }
