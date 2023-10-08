@@ -6,6 +6,7 @@
   .stay-details-preview {
     padding: 32px 0;
     border-bottom: 1px solid rgb(221, 221, 221);
+
     h1 {
       font-size: 22px;
       line-height: 26px;
@@ -61,11 +62,17 @@
     align-items: center;
 
     .host-img {
+      display: flex;
+      justify-content: center;
+      align-items: center;
       width: 40px;
       height: 40px;
       border-radius: 50%;
       background-color: rgb(221, 221, 221);
+      overflow: hidden;
+      object-fit: cover;
     }
+
     .host-name {
       font-size: 16px;
       font-weight: 600;
@@ -87,64 +94,66 @@
 
 
 .stay-details-advantages {
-    padding: 32px 0;
-    border-bottom: 1px solid rgb(221, 221, 221);
+  padding: 32px 0;
+  border-bottom: 1px solid rgb(221, 221, 221);
 
-    .advantages-list {
+  .advantages-list {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+
+    .advantage {
+      display: flex;
+      gap: 24px;
+
+      .advantage-icon {
+        -webkit-box-pack: center !important;
+        flex-shrink: 0 !important;
+        width: 40px !important;
+        display: flex !important;
+        justify-content: center !important
+      }
+
+      svg {
+        width: 24px;
+        height: 24px;
+        color: rgb(34, 34, 34);
+
+      }
+
+      .advantage-text {
         display: flex;
         flex-direction: column;
-        gap: 24px;
 
-        .advantage {
-            display: flex;
-            gap: 24px;
-
-            .advantage-icon {
-                -webkit-box-pack: center !important;
-                flex-shrink: 0 !important;
-                width: 40px !important;
-                display: flex !important;
-                justify-content: center !important
-            }
-
-            svg {
-                width: 24px;
-                height: 24px;
-                color: rgb(34, 34, 34);
-
-            }
-
-            .advantage-text {
-                display: flex;
-                flex-direction: column;
-                span:nth-child(1) {
-                    font-size: 16px;
-                    font-weight: 600;
-                    line-height: 20px;
-                    color: rgb(34, 34, 34);
-                }
-                span:nth-child(2) {
-                    font-size: 14px;
-                    font-weight: 400;
-                    line-height: 18px;
-                    color: rgb(113, 113, 113);
-                }
-            }
+        span:nth-child(1) {
+          font-size: 16px;
+          font-weight: 600;
+          line-height: 20px;
+          color: rgb(34, 34, 34);
         }
+
+        span:nth-child(2) {
+          font-size: 14px;
+          font-weight: 400;
+          line-height: 18px;
+          color: rgb(113, 113, 113);
+        }
+      }
     }
+  }
 
 }
 
 .stay-details-description {
-    padding-top: 32px;
-    padding-bottom: 48px;
-    border-bottom: 1px solid rgb(221, 221, 221);
+  padding-top: 32px;
+  padding-bottom: 48px;
+  border-bottom: 1px solid rgb(221, 221, 221);
 
-    .description-text {
-        font-size: 16px;
-        font-weight: 400;
-        line-height: 24px;
-        color: rgb(34, 34, 34);
-        margin: 0;
-    }
+  .description-text {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    color: rgb(34, 34, 34);
+    margin: 0;
+  }
 }
