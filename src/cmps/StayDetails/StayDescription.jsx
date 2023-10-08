@@ -56,12 +56,11 @@ export function StayDescription({
         <div className="stay-details-host">
           <div className="host-info">
             <div className="host-img">
-              {/* {host.imgUrl ? (
+              {host.imgUrl ? (
                 <img src={host.imgUrl} alt="" />
               ) : (
                 <img src="https://i.ibb.co/jDy9rL4/user.png" alt="userImg" />
-              )} */}
-              <img src="https://i.ibb.co/jDy9rL4/user.png" alt="userImg" />
+              )}
             </div>
             <div className="host-name">
               <span>Hosted by {host.fullname}</span>
@@ -143,10 +142,10 @@ export function StayDescription({
 
       <aside className="stay-details-aside">
         <CheckoutForm
-        onSubmit={onSubmit}
-        price={price}
-        reviews={reviews}
-         />
+          onSubmit={onSubmit}
+          price={price}
+          reviews={reviews}
+        />
       </aside>
     </div>
   )
