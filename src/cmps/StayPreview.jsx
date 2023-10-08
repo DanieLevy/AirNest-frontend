@@ -3,7 +3,6 @@ import ImageGallery from 'react-image-gallery'
 import 'react-image-gallery/styles/css/image-gallery.css'
 
 export function StayPreview({ stay }) {
-  console.log('stay:', stay)
   const stayLink = `/stay/${stay._id}`
 
   const images = stay.imgUrls.length
