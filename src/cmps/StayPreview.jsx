@@ -5,17 +5,10 @@ import 'react-image-gallery/styles/css/image-gallery.css'
 export function StayPreview({ stay }) {
   const stayLink = `/stay/${stay._id}`
 
-  const images = stay.imgUrls.length
-    ? stay.imgUrls.map((imgUrl) => ({ original: imgUrl }))
-    : [
-        {
-          original:
-            'https://media.gettyimages.com/id/1322234491/photo/wide-angle-real-estate-interior-shot-of-a-beautiful-trendy-a-frame-tiny-home-in-western.jpg?s=170667a&w=gi&k=20&c=dHb27VRb6GMS3360Y1JJ7EH90WN61i6jgKBUXAW3e_k=',
-        },
-        {
-          original: 'https://media.gettyimages.com/photos/interior-of-modern-living-room-picture-id1156030827?s=612x612',
-        },
-      ]
+  // const images = stay.imgUrls.length
+  //   ? stay.imgUrls.map((imgUrl) => ({ original: imgUrl }))
+  //   : [{ original: 'https://i.imgur.com/6XH6t3h.png' }]
+  const images = stay.imgUrls.map((imgUrl) => ({ original: imgUrl }))
 
   const HeartOutlineIcon = () => (
     <svg
@@ -38,10 +31,9 @@ export function StayPreview({ stay }) {
           items={images}
           showPlayButton={false}
           showFullscreenButton={false}
-          // showNav={false}
           showBullets={true}
-          // loading={lazy}
-          // showThumbnails={true}
+          loading={lazy}
+          showThumbnails={true}
         />
       </div>
       <a href={stayLink} target='_blank' rel='noopener noreferrer' className='stay-card'>
