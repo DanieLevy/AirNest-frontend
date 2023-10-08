@@ -17,6 +17,30 @@
       padding: 24px;
       box-shadow: #0000001f 0 6px 16px;
 
+      .guests-modal {
+        background: rgb(255, 255, 255);
+        border-radius: 32px;
+        box-sizing: border-box;
+        margin-bottom: 16px;
+        min-width: 280px;
+        position: absolute;
+        text-align: left;
+        width: 100%;
+        z-index: 999;
+        right: 16px;
+        top: 188px;
+        max-width: 300px;
+        border-radius: 32px;
+        box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.0392156863), 0 8px 16px rgba(0, 0, 0, 0.1490196078);
+        padding: 16px 32px;
+
+        .guests-options {
+          gap: 10px;
+          padding-top: 12px!important;
+          padding-bottom: 12px!important;
+        }
+      }
+
       .form-header {
         display: flex;
         align-items: center;
@@ -59,7 +83,7 @@
 
             .reservation-dates-label {
               font-family: cereal-bold;
-              font-size: .625em;
+              font-size: 0.625em;
             }
 
             input {
@@ -82,10 +106,10 @@
           display: flex;
           flex-direction: column;
           gap: 5px;
-          border-top: 1px solid rgba(0,0,0,.3137254902);
+          border-top: 1px solid rgba(0, 0, 0, 0.3137254902);
           padding: 7px 12px;
           font-family: cereal-bold;
-          font-size: .625rem;
+          font-size: 0.625rem;
 
           input {
             border: none;
@@ -117,4 +141,30 @@
     margin-top: 8px !important;
     white-space: normal !important;
   }
+}
+
+.date-picker-container {
+  position: absolute;
+  background: white;
+  border-radius: 32px;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.0392156863), 0 8px 16px rgba(0, 0, 0, 0.1490196078);
+  padding: 16px 32px;
+  z-index: 10;
+  margin-top: 0px;
+  right: -5px;
+  width: auto;
+  top: 140px;
+}
+
+.rdp {
+  --rdp-cell-size: 40px;
+
+  --rdp-accent-color: #333;
+  --rdp-background-color: #fff;
+
+  --rdp-accent-color-dark: #666;
+  --rdp-background-color-dark: #ddd;
+
+  --rdp-outline: 2px solid var(--rdp-accent-color);
+  --rdp-outline-selected: 2px solid rgba(0, 0, 0, 0.75);
 }
