@@ -59,7 +59,7 @@
 
             .reservation-dates-label {
               font-family: cereal-bold;
-              font-size: .625em;
+              font-size: 0.625em;
             }
 
             input {
@@ -69,6 +69,7 @@
               font-size: 0.875em;
               color: #717171;
               font-family: cereal-light;
+              background-color: transparent;
             }
           }
 
@@ -82,10 +83,10 @@
           display: flex;
           flex-direction: column;
           gap: 5px;
-          border-top: 1px solid rgba(0,0,0,.3137254902);
+          border-top: 1px solid rgba(0, 0, 0, 0.3137254902);
           padding: 7px 12px;
           font-family: cereal-bold;
-          font-size: .625rem;
+          font-size: 0.625rem;
 
           input {
             border: none;
@@ -94,6 +95,12 @@
             font-size: 0.875rem;
             color: #717171;
             font-family: cereal-light;
+            background-color: transparent;
+          }
+          // TEMP - IN CHECKOUT STAY DETAILS, FUNC ONLY
+          .guest-label {
+            background: transparent;
+            border: none;
           }
         }
       }
