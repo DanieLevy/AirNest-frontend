@@ -30,7 +30,7 @@ export function StayDescription({
     return totalRating / reviews.length
   }
 
-  const avgRate = calculateAverageRating(reviews)
+  const avgRate = calculateAverageRating(reviews).toFixed(2)
 
   function onSubmit(formData) {
   }
