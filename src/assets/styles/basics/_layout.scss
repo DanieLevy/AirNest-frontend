@@ -12,24 +12,21 @@
 
   @include for-narrow-layout {
     grid-template-columns:
-      24px
-      // minmax(auto, $mobile-breakpoint)
-      1fr
-      24px;
+      minmax(24px, 1fr)
+      minmax(auto, $mobile-breakpoint)
+      minmax(24px, 1fr);
   }
   @include for-normal-layout {
     grid-template-columns:
-      40px
-      // minmax(auto, $narrow-breakpoint)
-      1fr
-      40px;
+      minmax(40px, 1fr)
+      minmax(auto, $narrow-breakpoint)
+      minmax(40px, 1fr);
   }
   @include for-wide-layout {
     grid-template-columns:
-      80px
-      // minmax(auto, $normal-breakpoint)
-      1fr
-      80px;
+      minmax(40px, 1fr)
+      minmax(auto, $normal-breakpoint)
+      minmax(40px, 1fr);
   }
   // & .stay-details {
   //   grid-template-columns: 80px 1fr 80px;
