@@ -245,6 +245,9 @@ gap: 10px;
     &:hover {
       border-bottom: 3px solid #ddd1d1;
       color: #000;
+      img {
+        opacity: 100%;
+      }
     }
   }
 }
