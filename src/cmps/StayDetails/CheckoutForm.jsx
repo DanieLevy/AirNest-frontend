@@ -7,7 +7,7 @@ import { DayPicker } from 'react-day-picker'
 
 import { AiOutlineMinus } from 'react-icons/ai'
 import { AiOutlinePlus } from 'react-icons/ai'
-import { is } from 'date-fns/locale'
+// import { is } from 'date-fns/locale'
 
 const initialFrom = new Date()
 const initialTo = new Date()
