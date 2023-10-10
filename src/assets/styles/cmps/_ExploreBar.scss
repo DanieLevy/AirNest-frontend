@@ -59,10 +59,6 @@
     width: 240px;
   }
 
-  .check-in,
-  .check-out,
-  .guests {}
-
   input[type="text"] {
     background: none;
     border: none;
@@ -93,11 +89,11 @@
     border-radius: 50%;
   }
 
-  .bar>div {
+  .bar > div {
     position: relative;
   }
 
-  .bar>div::before {
+  .bar > div::before {
     position: absolute;
     content: "";
     left: 0;
@@ -108,11 +104,11 @@
     background: hsl(0 0% 90%);
   }
 
-  .bar>div:nth-of-type(1)::before {
+  .bar > div:nth-of-type(1)::before {
     background: transparent;
   }
 
-  .bar>div:hover::before {
+  .bar > div:hover::before {
     background: transparent;
   }
 }
@@ -133,7 +129,12 @@
   vertical-align: middle;
   cursor: pointer;
   animation-duration: 1s;
-  /* don't forget to set a duration! */
+
+  .location-btn,
+  .dates-btn,
+  .guests-btn {
+    background-color: transparent;
+  }
 
   &.expanded {
     top: 80px;
@@ -150,8 +151,12 @@
     padding-inline-start: 0;
     background-color: #ebebeb;
 
-    article {
+    input {
+      max-width: 100px;
+      font-family: cereal;
+    }
 
+    article {
       .check-in-text,
       .check-out-text {
         flex-direction: column;
@@ -178,8 +183,6 @@
   }
 
   button {
-    background-color: transparent;
-    color: inherit;
     font-size: 0.875rem;
     line-height: 18px;
     text-overflow: ellipsis;
@@ -352,7 +355,7 @@
       img {
         border: 1px solid #dddddd;
         transition-property: border-color;
-        transition-duration: .15s;
+        transition-duration: 0.15s;
         transition-timing-function: ease-in-out;
         border-radius: 12px;
         cursor: pointer;

@@ -12,12 +12,15 @@ import "animate.css"
 import { BarndedBtn } from "./barnded-btn"
 import { FadeIn } from "react-slide-fade-in"
 import { DatesModal } from "./DatesModal"
+import { set } from "date-fns"
 
 export function ExploreBar() {
   const [isExpanded, setIsExpanded] = useState(false)
   const [isActive, setIsActive] = useState(null)
   const [formData, setFormData] = useState({
     location: "",
+    startDate: null,
+    endDate: null,
   })
 
   const [selectedRange, setSelectedRange] = useState({
@@ -49,14 +52,41 @@ export function ExploreBar() {
     }
   }, [isExpanded])
 
-  function onSetDates(dates) {
-    console.log(dates);
-    // setSelectedRange(dates)
-    // setFormData((prevState) => ({
-    //   ...prevState,
-    //   startDate: dates.from,
-    //   endDate: dates.to,
-    // }))
+  function handleDayClick(date) {
+    console.log("date", date)
+
+    if (selectedRange.from && selectedRange.to) {
+      setSelectedRange({
+        from: date,
+        to: null,
+      })
+      setIsActive("check-out")
+      return
+    }
+
+    if (selectedRange.from && date < selectedRange.from) {
+      // Reset range
+      setSelectedRange({
+        from: date,
+        to: null,
+      })
+      // setIsActive("check-out")
+      return
+    }
+    if (!selectedRange.from) {
+      setIsActive("check-out")
+      setSelectedRange({ from: date, to: null })
+    }
+    if (selectedRange.from && !selectedRange.to) {
+      setIsActive("guests")
+      setSelectedRange({ from: selectedRange.from, to: date })
+
+      setFormData((prevState) => ({
+        ...prevState,
+        startDate: selectedRange.from,
+        endDate: date,
+      }))
+    }
   }
 
   function handleScroll() {
@@ -82,7 +112,6 @@ export function ExploreBar() {
   }
   function handleLocationClick(e) {
     e.stopPropagation()
-
     let locationText
     if (e.target.tagName === "IMG") {
       locationText = e.target.nextSibling.innerText
@@ -111,11 +140,18 @@ export function ExploreBar() {
 
   function handleSubmit(ev) {
     ev.preventDefault()
-    console.log(ev)
-    console.log(ev.target.location.value)
-    console.log(ev.target.name)
-    console.log(ev.target)
-    console.log("submitted")
+
+    const fromTimestamp = selectedRange.from.getTime()
+    const toTimestamp = selectedRange.to.getTime()
+    alert(
+      `Location: ${formData.location},
+       Start Date: ${fromTimestamp},
+        End Date: ${toTimestamp},
+         Guests: ${selectedGuests.adults} Adults,
+          ${selectedGuests.children} Children,
+           ${selectedGuests.infants} Infants,
+            ${selectedGuests.pets} Pets`
+    )
   }
 
   return (
@@ -333,7 +369,7 @@ export function ExploreBar() {
                     readOnly
                     value={
                       formData.startDate
-                        ? `${formData.startDate.toLocaleDateString()} - ${formData.endDate.toLocaleDateString()}`
+                        ? `${formData.startDate.toLocaleDateString()}`
                         : ""
                     }
                   />
@@ -364,7 +400,20 @@ export function ExploreBar() {
               </article>
 
               {isActive === "check-in" || isActive === "check-out" ? (
-                <DatesModal onSetDates={onSetDates} />
+                <React.Fragment>
+                  <div
+                    className="dates-modal"
+                    onClick={(ev) => ev.stopPropagation()}
+                  >
+                    <DayPicker
+                      mode="range"
+                      selected={selectedRange}
+                      onDayClick={handleDayClick}
+                      numberOfMonths={2}
+                      modifiers={{ disabled: [{ before: new Date() }] }}
+                    />
+                  </div>
+                </React.Fragment>
               ) : null}
 
               <span className="splitter"></span>

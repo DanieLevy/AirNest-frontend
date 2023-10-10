@@ -27,19 +27,9 @@ export function DatesModal({ onSetDates }) {
   }
 
   return (
-    <React.Fragment>
-    {datesOpen && (
-    <div className="dates-modal">
-      <DayPicker
-        mode="range"
-        selected={selectedRange}
-        onDayClick={handleDayClick}
-        numberOfMonths={1}
-        modifiers={{ disabled: [{ before: new Date() }] }}
-      />
-    </div>
-    )}
-    </React.Fragment>
+<h1 className="dates-modal">
+  dd </h1>
+  
   )
 }
 
