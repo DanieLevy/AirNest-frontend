@@ -37,7 +37,6 @@ export function StayDetails() {
       navigate('/')
     }
   }
-
   function handleCheckoutSubmit(formData) {
     const orderDetails = {
       ...formData,
@@ -95,6 +94,7 @@ export function StayDetails() {
           room_type={room_type}
           name={name}
           amenities={amenities}
+          onSubmit={handleCheckoutSubmit}
         />
       </div>
       <StayReviews data={currStay.reviews} />

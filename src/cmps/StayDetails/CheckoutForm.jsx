@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState } from 'react'
 
-import { BarndedBtn2 } from "../branded-Btn-2"
+import { BarndedBtn2 } from '../branded-Btn-2'
 
-import { format } from "date-fns"
-import { DayPicker } from "react-day-picker"
+import { format } from 'date-fns'
+import { DayPicker } from 'react-day-picker'
 
-import { AiOutlineMinus } from "react-icons/ai"
-import { AiOutlinePlus } from "react-icons/ai"
-import { is } from "date-fns/locale"
+import { AiOutlineMinus } from 'react-icons/ai'
+import { AiOutlinePlus } from 'react-icons/ai'
+import { is } from 'date-fns/locale'
 
 const initialFrom = new Date()
 const initialTo = new Date()
@@ -32,10 +32,7 @@ export function CheckoutForm({ onSubmit, price, reviews }) {
   })
 
   const [isCheckoutSum, setIsCheckoutSum] = useState(false)
-  const dateDiff =
-    selectedRange.to && selectedRange.from
-      ? selectedRange.to.getTime() - selectedRange.from.getTime()
-      : 0
+  const dateDiff = selectedRange.to && selectedRange.from ? selectedRange.to.getTime() - selectedRange.from.getTime() : 0
   const dateDiffDays = dateDiff / (1000 * 60 * 60 * 24)
   const totalSum = price * dateDiffDays
   const totalPlusFee = totalSum + totalSum * 0.125
@@ -46,19 +43,16 @@ export function CheckoutForm({ onSubmit, price, reviews }) {
 
   useEffect(() => {
     const closeModals = (event) => {
-      if (
-        !event.target.closest(".guests-modal") &&
-        !event.target.closest(".date-picker-container")
-      ) {
+      if (!event.target.closest('.guests-modal') && !event.target.closest('.date-picker-container')) {
         setIsGuestsModal(false)
         setIsDatesModal(false)
       }
     }
 
-    document.addEventListener("click", closeModals)
+    document.addEventListener('click', closeModals)
 
     return () => {
-      document.removeEventListener("click", closeModals)
+      document.removeEventListener('click', closeModals)
     }
   }, [])
 
@@ -74,8 +68,6 @@ export function CheckoutForm({ onSubmit, price, reviews }) {
       guests: selectedGuests,
       totalPrice: totalPlusFee,
     }
-    alert(JSON.stringify(formData))
-    console.log(formData)
 
     onSubmit(formData)
   }
@@ -91,58 +83,50 @@ export function CheckoutForm({ onSubmit, price, reviews }) {
   const avgRate = calculateAverageRating(reviews)
 
   return (
-    <div className="checkout-form-container flex">
-      <form onSubmit={handleSubmit} className="checkout-form">
-        <div className="helped-container">
-          <div className="form-header">
-            <div className="form-header-price">
-              <span className="price">
-                ${price} <span className="per-night">night</span>
+    <div className='checkout-form-container flex'>
+      <form onSubmit={handleSubmit} className='checkout-form'>
+        <div className='helped-container'>
+          <div className='form-header'>
+            <div className='form-header-price'>
+              <span className='price'>
+                ${price} <span className='per-night'>night</span>
               </span>
             </div>
           </div>
-          <div className="form-header-reservation">
+          <div className='form-header-reservation'>
             <div
-              className="reservation-dates-container"
+              className='reservation-dates-container'
               onClick={(ev) => {
                 ev.stopPropagation()
                 setIsDatesModal(!isDatesModal)
               }}
             >
-              <div className="reservation-dates">
-                <label className="reservation-dates-label">CHECK-IN</label>
+              <div className='reservation-dates'>
+                <label className='reservation-dates-label'>CHECK-IN</label>
                 <input
-                  placeholder="Add date"
-                  name="check-in"
+                  placeholder='Add date'
+                  name='check-in'
                   required
                   readOnly
-                  value={
-                    selectedRange.from
-                      ? format(selectedRange.from, "dd/MM/yyyy")
-                      : ""
-                  }
+                  value={selectedRange.from ? format(selectedRange.from, 'dd/MM/yyyy') : ''}
                 />
               </div>
-              <div className="reservation-dates">
-                <label className="reservation-dates-label">CHECK-OUT</label>
+              <div className='reservation-dates'>
+                <label className='reservation-dates-label'>CHECK-OUT</label>
                 <input
-                  placeholder="Add date"
-                  name="check-out"
+                  placeholder='Add date'
+                  name='check-out'
                   required
                   readOnly
-                  value={
-                    selectedRange.to
-                      ? format(selectedRange.to, "dd/MM/yyyy")
-                      : ""
-                  }
+                  value={selectedRange.to ? format(selectedRange.to, 'dd/MM/yyyy') : ''}
                 />
               </div>
             </div>
 
             {isDatesModal && (
-              <div className="date-picker-container">
+              <div className='date-picker-container'>
                 <DayPicker
-                  mode="range"
+                  mode='range'
                   selected={selectedRange}
                   onDayClick={(date) => {
                     if (!selectedRange.from) {
@@ -163,54 +147,36 @@ export function CheckoutForm({ onSubmit, price, reviews }) {
             )}
 
             <div
-              className="reservation-guests"
+              className='reservation-guests'
               onClick={(ev) => {
                 ev.stopPropagation()
                 setIsGuestsModal(!isGuestsModal)
               }}
             >
-              <label className="reservation-guests-label">GUESTS</label>
+              <label className='reservation-guests-label'>GUESTS</label>
               <input
-                placeholder={`${selectedGuests.adults} guests ${
-                  selectedGuests.children
-                    ? `, ${selectedGuests.children} children`
-                    : ""
-                } ${
-                  selectedGuests.infants
-                    ? `, ${selectedGuests.infants} infants`
-                    : ""
-                } ${
-                  selectedGuests.pets ? `, ${selectedGuests.pets} pets` : ""
-                }`}
-                name="guests"
+                placeholder={`${selectedGuests.adults} guests ${selectedGuests.children ? `, ${selectedGuests.children} children` : ''} ${
+                  selectedGuests.infants ? `, ${selectedGuests.infants} infants` : ''
+                } ${selectedGuests.pets ? `, ${selectedGuests.pets} pets` : ''}`}
+                name='guests'
                 required
                 readOnly
-                value={`${selectedGuests.adults} guests ${
-                  selectedGuests.children
-                    ? `, ${selectedGuests.children} children`
-                    : ""
-                } ${
-                  selectedGuests.infants
-                    ? `, ${selectedGuests.infants} infants`
-                    : ""
-                } ${
-                  selectedGuests.pets ? `, ${selectedGuests.pets} pets` : ""
-                }`}
+                value={`${selectedGuests.adults} guests ${selectedGuests.children ? `, ${selectedGuests.children} children` : ''} ${
+                  selectedGuests.infants ? `, ${selectedGuests.infants} infants` : ''
+                } ${selectedGuests.pets ? `, ${selectedGuests.pets} pets` : ''}`}
               />
             </div>
           </div>
 
           {isGuestsModal && (
-            <div className="guests-modal">
+            <div className='guests-modal'>
               {/* Adults */}
-              <div className="guests-options" id="adults">
-                <div className="guests-title">
-                  <h3 className="guests-modal-title">Adults</h3>
-                  <span className="guests-modal-subtitle">
-                    Ages 13 or above
-                  </span>
+              <div className='guests-options' id='adults'>
+                <div className='guests-title'>
+                  <h3 className='guests-modal-title'>Adults</h3>
+                  <span className='guests-modal-subtitle'>Ages 13 or above</span>
                 </div>
-                <div className="guests-action flex">
+                <div className='guests-action flex'>
                   <button
                     disabled={selectedGuests.adults === 0}
                     onClick={() =>
@@ -219,17 +185,15 @@ export function CheckoutForm({ onSubmit, price, reviews }) {
                         adults: selectedGuests.adults - 1,
                       })
                     }
-                    type="button"
-                    className="guests-modal-btn"
+                    type='button'
+                    className='guests-modal-btn'
                   >
                     <AiOutlineMinus />
                   </button>
-                  <span className="guests-modal-count">
-                    {selectedGuests.adults}
-                  </span>
+                  <span className='guests-modal-count'>{selectedGuests.adults}</span>
                   <button
-                    type="button"
-                    className="guests-modal-btn"
+                    type='button'
+                    className='guests-modal-btn'
                     onClick={() =>
                       setSelectedGuests({
                         ...selectedGuests,
@@ -244,12 +208,12 @@ export function CheckoutForm({ onSubmit, price, reviews }) {
               </div>
 
               {/* Children */}
-              <div className="guests-options" id="children">
-                <div className="guests-title">
-                  <h3 className="guests-modal-title">Children</h3>
-                  <span className="guests-modal-subtitle">Ages 2-12</span>
+              <div className='guests-options' id='children'>
+                <div className='guests-title'>
+                  <h3 className='guests-modal-title'>Children</h3>
+                  <span className='guests-modal-subtitle'>Ages 2-12</span>
                 </div>
-                <div className="guests-action flex">
+                <div className='guests-action flex'>
                   <button
                     disabled={selectedGuests.children === 0}
                     onClick={() =>
@@ -258,17 +222,15 @@ export function CheckoutForm({ onSubmit, price, reviews }) {
                         children: selectedGuests.children - 1,
                       })
                     }
-                    type="button"
-                    className="guests-modal-btn"
+                    type='button'
+                    className='guests-modal-btn'
                   >
                     <AiOutlineMinus />
                   </button>
-                  <span className="guests-modal-count">
-                    {selectedGuests.children}
-                  </span>
+                  <span className='guests-modal-count'>{selectedGuests.children}</span>
                   <button
-                    type="button"
-                    className="guests-modal-btn"
+                    type='button'
+                    className='guests-modal-btn'
                     onClick={() =>
                       setSelectedGuests({
                         ...selectedGuests,
@@ -283,15 +245,15 @@ export function CheckoutForm({ onSubmit, price, reviews }) {
               </div>
 
               {/* Infants */}
-              <div className="guests-options" id="infants">
-                <div className="guests-title">
-                  <h3 className="guests-modal-title">Infants</h3>
-                  <span className="guests-modal-subtitle">Under 2</span>
+              <div className='guests-options' id='infants'>
+                <div className='guests-title'>
+                  <h3 className='guests-modal-title'>Infants</h3>
+                  <span className='guests-modal-subtitle'>Under 2</span>
                 </div>
-                <div className="guests-action flex">
+                <div className='guests-action flex'>
                   <button
-                    type="button"
-                    className="guests-modal-btn"
+                    type='button'
+                    className='guests-modal-btn'
                     disabled={selectedGuests.infants === 0}
                     onClick={() =>
                       setSelectedGuests({
@@ -302,12 +264,10 @@ export function CheckoutForm({ onSubmit, price, reviews }) {
                   >
                     <AiOutlineMinus />
                   </button>
-                  <span className="guests-modal-count">
-                    {selectedGuests.infants}
-                  </span>
+                  <span className='guests-modal-count'>{selectedGuests.infants}</span>
                   <button
-                    type="button"
-                    className="guests-modal-btn"
+                    type='button'
+                    className='guests-modal-btn'
                     disabled={selectedGuests.infants === 5}
                     onClick={() =>
                       setSelectedGuests({
@@ -322,14 +282,14 @@ export function CheckoutForm({ onSubmit, price, reviews }) {
               </div>
 
               {/* PETS */}
-              <div className="guests-options" id="pets">
-                <div className="guests-title">
-                  <h3 className="guests-modal-title">Pets</h3>
-                  <span className="guests-modal-subtitle">
-                    <a href="#">Bringing a service animal?</a>
+              <div className='guests-options' id='pets'>
+                <div className='guests-title'>
+                  <h3 className='guests-modal-title'>Pets</h3>
+                  <span className='guests-modal-subtitle'>
+                    <a href='#'>Bringing a service animal?</a>
                   </span>
                 </div>
-                <div className="guests-action flex">
+                <div className='guests-action flex'>
                   <button
                     disabled={selectedGuests.pets === 0}
                     onClick={() =>
@@ -338,16 +298,14 @@ export function CheckoutForm({ onSubmit, price, reviews }) {
                         pets: selectedGuests.pets - 1,
                       })
                     }
-                    type="button"
-                    className="guests-modal-btn"
+                    type='button'
+                    className='guests-modal-btn'
                   >
                     <AiOutlineMinus />
                   </button>
-                  <span className="guests-modal-count">
-                    {selectedGuests.pets}
-                  </span>
+                  <span className='guests-modal-count'>{selectedGuests.pets}</span>
                   <button
-                    type="button"
+                    type='button'
                     disabled={selectedGuests.pets === 5}
                     onClick={() =>
                       setSelectedGuests({
@@ -355,7 +313,7 @@ export function CheckoutForm({ onSubmit, price, reviews }) {
                         pets: selectedGuests.pets + 1,
                       })
                     }
-                    className="guests-modal-btn"
+                    className='guests-modal-btn'
                   >
                     <AiOutlinePlus />
                   </button>
@@ -364,25 +322,25 @@ export function CheckoutForm({ onSubmit, price, reviews }) {
             </div>
           )}
 
-          <BarndedBtn2 txt={"Reserve"} />
+          <BarndedBtn2 txt={'Reserve'} />
           {dateDiffDays ? (
-            <div className="reservation-footer">
-              <div style={{ width: "100%" }}>
+            <div className='reservation-footer'>
+              <div style={{ width: '100%' }}>
                 <span>You won't be charged yet</span>
-                <div className="reservation-footer-price flex">
-                  <div className="footer-price-container flex">
-                    <div className="footer-price-nigts">
-                      <span className="link">
+                <div className='reservation-footer-price flex'>
+                  <div className='footer-price-container flex'>
+                    <div className='footer-price-nigts'>
+                      <span className='link'>
                         ${price} x {dateDiffDays} nights
                       </span>
-                      <span className="price">${price * dateDiffDays}</span>
+                      <span className='price'>${price * dateDiffDays}</span>
                     </div>
-                    <div className="footer-price-fee">
-                      <span className="link">Airbnb service fee</span>
-                      <span className="price">{totalSum * 0.125}</span>
+                    <div className='footer-price-fee'>
+                      <span className='link'>Airbnb service fee</span>
+                      <span className='price'>{totalSum * 0.125}</span>
                     </div>
                   </div>
-                  <div className="footer-price-sum">
+                  <div className='footer-price-sum'>
                     <span>Total</span>
                     <span>${totalPlusFee}</span>
                   </div>
@@ -390,7 +348,7 @@ export function CheckoutForm({ onSubmit, price, reviews }) {
               </div>
             </div>
           ) : (
-            <div className="reservation-footer"></div>
+            <div className='reservation-footer'></div>
           )}
         </div>
       </form>
