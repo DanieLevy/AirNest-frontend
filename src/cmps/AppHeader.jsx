@@ -78,7 +78,7 @@ export function AppHeader() {
 
   return (
     <section
-      className={` full main-layout header-container ${
+      className={`header-container ${
         isExpanded ? "expanded" : ""
       }`}
     >
