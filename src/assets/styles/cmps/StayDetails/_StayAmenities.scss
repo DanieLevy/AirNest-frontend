@@ -10,14 +10,16 @@
   }
 
   .stay-amenities-list {
-    // padding-left: 8px !important;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     padding-right: 8px !important;
 
     .amenity {
       display: flex;
       justify-content: flex-start;
       flex-direction: row;
-      align-self: center;
+      align-items: center;
+      padding: 5px;
 
       .amenity-icon {
         margin-right: 16px;
