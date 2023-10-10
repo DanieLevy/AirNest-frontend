@@ -9,12 +9,16 @@ import { userService } from '../services/user.service'
 export function OrderConfirm() {
   const stagedOrder = useSelector((state) => state.orderModule.stagedOrder)
   const isLoading = useSelector((state) => state.systemModule.isLoading)
-
+  const loggedUser = useSelector((state) => state.userModule.user)
   const [isConfirmed, setIsConfirmed] = useState(false)
-  const loggedUser = userService.getLoggedinUser()
+
+  // const loggedUser = userService.getLoggedinUser()
+
   const dispatch = useDispatch()
+
   useEffect(() => {
     loadOrders()
+
     return () => {
       dispatch(getActionClearStagedOrder())
     }
@@ -45,10 +49,10 @@ export function OrderConfirm() {
   return (
     <div>
       <h2>Confirm Your Order</h2>
-      <p>Start Date: {new Date(stagedOrder.startDate).toLocaleDateString()}</p>
-      <p>End Date: {new Date(stagedOrder.endDate).toLocaleDateString()}</p>
-      <p>Adults: {stagedOrder.adults}</p>
-      <p>Children: {stagedOrder.children}</p>
+      <p>Start Date: {new Date(stagedOrder.checkIn).toLocaleDateString()}</p>
+      <p>End Date: {new Date(stagedOrder.checkOut).toLocaleDateString()}</p>
+      <p>Adults: {stagedOrder.guests.adults}</p>
+      <p>Children: {stagedOrder.guests.children}</p>
 
       {!isConfirmed ? <button onClick={handleConfirmOrder}>Confirm Order</button> : <div>Order Confirmed!</div>}
       {/* {isConfirmed ? <Link to={`/order/${loggedUser._id}`} } */}
