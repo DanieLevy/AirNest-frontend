@@ -12,17 +12,22 @@ import { FaAirbnb } from "react-icons/fa6"
 import { IoIosMenu } from "react-icons/io"
 import { FaCircleUser } from "react-icons/fa6"
 import { is } from "date-fns/locale"
+import { store } from "../store/store.js"
 
 export function AppHeader() {
   const user = useSelector((storeState) => storeState.userModule.user)
   const [isExpanded, setIsExpanded] = useState(true)
   const [userModal, setUserModal] = useState(false)
-  const [loginModal, setLoginModal] = useState(false)
+  // const [loginModal, setLoginModal] = useState(false)
+  const loginModal = useSelector(
+    (storeState) => storeState.userModule.loginModal
+  )
   const [signupModal, setSignupModal] = useState(false)
 
   const location = useLocation()
   const path = location.pathname
   const isStayPage = location.pathname.startsWith("/stay")
+  const isOrderPage = location.pathname.startsWith("/order")
 
   async function onLogin(credentials) {
     try {
@@ -52,7 +57,7 @@ export function AppHeader() {
   }
 
   function closeModal() {
-    setLoginModal(false)
+    store.dispatch({ type: "SET_LOGIN_MODAL", loginModal: false })
     setUserModal(false)
   }
 
@@ -60,11 +65,15 @@ export function AppHeader() {
     console.log(label)
   }
 
+  function onToggleLogin() {
+    store.dispatch({ type: "SET_LOGIN_MODAL", loginModal: !loginModal })
+  }
+
   return (
     <React.Fragment>
       <section
         className={`header-container
-    main-layout ${isStayPage ? "small relative" : ""}
+    main-layout ${isStayPage || isOrderPage ? "small relative" : ""}
      ${isExpanded ? "expanded" : ""}`}
       >
         <header className="main-header flex">
@@ -115,7 +124,10 @@ export function AppHeader() {
                       onClick={(ev) => {
                         ev.stopPropagation()
                         setUserModal(false)
-                        setLoginModal(true)
+                        store.dispatch({
+                          type: "SET_LOGIN_MODAL",
+                          loginModal: true,
+                        })
                         setSignupModal(false)
                       }}
                     >
@@ -125,7 +137,10 @@ export function AppHeader() {
                       onClick={(ev) => {
                         ev.stopPropagation()
                         setUserModal(false)
-                        setLoginModal(true)
+                        store.dispatch({
+                          type: "SET_LOGIN_MODAL",
+                          loginModal: true,
+                        })
                         setSignupModal(true)
                       }}
                     >
@@ -162,7 +177,7 @@ export function AppHeader() {
             <LoginSignup
               login={onLogin}
               signup={onSignup}
-              onToggleLogin={setLoginModal}
+              onToggleLogin={onToggleLogin}
               closeModal={closeModal}
               isSignup={signupModal}
               setSignupModal={setSignupModal}
@@ -170,8 +185,7 @@ export function AppHeader() {
           )}
         </header>
       </section>
-      <div className={isStayPage ? "divider unset" : "divider"}>
-      </div>
+      <div className={isStayPage ? "divider unset" : "divider"}></div>
     </React.Fragment>
   )
 }

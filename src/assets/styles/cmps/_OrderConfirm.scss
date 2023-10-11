@@ -1,0 +1,235 @@
+.order-confirm {
+  padding: 5px;
+  width: 100%;
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin: 0 0 0.6em;
+  }
+
+  & .order-confirm-header {
+    padding-top: 64px;
+    padding-bottom: 48px;
+    gap: 32px;
+    align-items: center;
+
+    h2 {
+      margin: 0;
+    }
+  }
+
+  & .order-confirm-stay {
+    padding: 24px;
+    border: 1px solid rgb(221,221,221);
+    border-radius: 12px;
+    height: fit-content;
+    min-height: 40%;
+    min-width: 400px;
+
+    & .order-confirm-price {
+      padding: 24px 0;
+      font-size: 1.375rem;
+      margin: 0;
+
+    }
+
+    & .order-confirm-price-details {
+      .divider {
+        margin: 24px 0;
+      }
+
+      .cost-details-total {
+        display: flex;
+        justify-content: space-between;
+      }
+    }
+
+    & .stay-details {
+      display: flex;
+      padding-bottom: 24px;
+      margin-top: 18px;
+
+      & .stay-details-title {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding-left: 12px;
+
+        .stay-details-title-body {
+          font-family: cereal;
+          font-size: 14px;
+
+          span {
+            align-items: baseline;
+            gap: 3px;
+            span {
+              font-size: 12px;
+              font-family: cereal-light;
+              font-weight: 600;
+              color: #717171;
+            }
+          }
+        }
+
+        h3 {
+          color: #717171;
+          font-family: cereal-light;
+          font-size: 0.75rem;
+        }
+
+        h4 {
+          font-size: .875rem;
+          font-family: cereal-light;
+          font-weight: 700;
+        }
+      }
+
+      & .stay-details-img {
+        img {
+              height: 106px;
+          width: 124px;
+          border-radius: 8px;
+        }
+
+      }
+    }
+  }
+
+  & .order-confirm-body {
+    // background-color: green;
+    justify-content: space-between;
+    flex-direction: row;
+    gap: 32px;
+
+    & .order-confirm-summary {
+      //   background-color: blue;
+      min-width: 40%;
+
+      & .summary-header {
+        flex-direction: column;
+
+        & .summary-details {
+
+          > * {
+            padding-bottom: 24px;
+          }
+
+          h3 {
+            font-size: 1.375rem;
+            margin: 0;
+          }
+
+          & .summary-details-dates,
+          .summary-details-guests {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1rem;
+
+            & .summary-details-title {
+              line-height: 1;
+            }
+
+            & .summary-details-subtitle {
+              font-size: 1rem;
+              font-family: cereal-light;
+              font-weight: unset;
+            }
+          }
+        }
+
+        & .rare-find {
+          padding: 24px;
+          border: 1px solid rgb(221, 221, 221);
+          border-radius: 12px;
+          height: fit-content;
+          margin-bottom: 48px;
+          justify-content: space-between;
+          width: 100%;
+
+          & .rare-find-title {
+            line-height: 1;
+
+            h4 {
+              font-family: cereal;
+              margin: 0 0 0.6em;
+            }
+
+            h5 {
+              font-size: 1rem;
+              font-family: cereal-light;
+              margin-top: 1px;
+              margin-bottom: 0;
+              font-weight: unset;
+            }
+          }
+
+          & .rare-find-img {
+            svg {
+              // fill: red;
+              display: block;
+              height: 32px;
+              width: 32px;
+              fill: rgb(227, 28, 95);
+              stroke: currentcolor;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.order-confirm-login {
+  text-align: center;
+  padding: 32px 0;
+
+  font-size: 1.5rem;
+  font-family: cereal;
+
+  .order-confirm-login-link {
+    background-color: transparent;
+    border-radius: 8px;
+    border-width: 1px;
+    border-style: solid;
+    transition: box-shadow 0.2s ease, transform 0.1s ease;
+    border-color: #222;
+    font-family: cereal;
+    font-weight: 600;
+    font-size: 1rem;
+
+    &:hover {
+      box-shadow: rgb(0 0 0 / 20%) 0px 1px 2px 0px;
+      transform: translateY(-1px);
+    }
+  }
+}
+
+.order-confirm-btn {
+  margin-top: 48px;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.summary-details-guests {
+  margin-bottom: 24px;
+}
+
+.cost-details-nights, .cost-details-service-fee {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  font-size: 1rem;
+  font-family: cereal;
+
+  & .link {
+    text-decoration: underline;
+  }
+}

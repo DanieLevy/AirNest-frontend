@@ -8,12 +8,14 @@ export const SET_WATCHED_USER = 'SET_WATCHED_USER'
 export const REMOVE_USER = 'REMOVE_USER'
 export const SET_USERS = 'SET_USERS'
 export const SET_SCORE = 'SET_SCORE'
+export const SET_LOGIN_MODAL = 'SET_LOGIN_MODAL'
 
 const initialState = {
     count: 10,
     user: userService.getLoggedinUser(),
     users: [],
-    watchedUser : null
+    watchedUser : null,
+    loginModal: false,
 }
 
 export function userReducer(state = initialState, action) {
@@ -46,6 +48,11 @@ export function userReducer(state = initialState, action) {
         case SET_SCORE:
             newState = { ...state, user: { ...state.user, score: action.score } }
             break
+
+        case SET_LOGIN_MODAL:
+            newState = { ...state, loginModal: action.loginModal }
+            break
+
         default:
     }
     // For debug:

@@ -7,18 +7,19 @@ import { DayPicker } from 'react-day-picker'
 
 import { AiOutlineMinus } from 'react-icons/ai'
 import { AiOutlinePlus } from 'react-icons/ai'
+import { is } from 'date-fns/locale'
 // import { is } from 'date-fns/locale'
 
-const initialFrom = new Date()
-const initialTo = new Date()
+// const initialFrom = new Date()
+// const initialTo = new Date()
 
-initialFrom.setUTCHours(0, 0, 0, 0)
-initialTo.setUTCHours(0, 0, 0, 0)
+// initialFrom.setUTCHours(0, 0, 0, 0)
+// initialTo.setUTCHours(0, 0, 0, 0)
 
 export function CheckoutForm({ onSubmit, price, reviews }) {
   const [selectedRange, setSelectedRange] = useState({
-    from: initialFrom,
-    to: initialTo,
+    from: null,
+    to: null,
   })
 
   const [isDatesModal, setIsDatesModal] = useState(false)
@@ -58,15 +59,27 @@ export function CheckoutForm({ onSubmit, price, reviews }) {
 
   const handleSubmit = (event) => {
     event.preventDefault()
+    if (!selectedRange.from || !selectedRange.to) {
+      isDatesModal ? setIsDatesModal(false) : setIsDatesModal(true)
+    }
+
+    // if selectedRange is not more then 1 day - show error
+    if (dateDiffDays < 1) {
+      alert('Please select more then 1 day')
+      return
+    }
+    
 
     const checkInTs = selectedRange.from.getTime()
     const checkOutTs = selectedRange.to.getTime()
+    const nights = dateDiffDays
 
     const formData = {
       checkIn: checkInTs,
       checkOut: checkOutTs,
       guests: selectedGuests,
       totalPrice: totalPlusFee,
+      nights: nights,
     }
 
     onSubmit(formData)
