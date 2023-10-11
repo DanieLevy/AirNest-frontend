@@ -58,4 +58,8 @@
   position: sticky;
   top: 80px;
   z-index: 10;
+
+  &.unset {
+    position: unset;
+  }
 }

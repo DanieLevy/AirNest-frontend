@@ -64,7 +64,7 @@ export function AppHeader() {
     <React.Fragment>
       <section
         className={`header-container
-    main-layout ${isStayPage ? "small" : ""}
+    main-layout ${isStayPage ? "small relative" : ""}
      ${isExpanded ? "expanded" : ""}`}
       >
         <header className="main-header flex">
@@ -170,7 +170,8 @@ export function AppHeader() {
           )}
         </header>
       </section>
-      <div className="divider"></div>
+      <div className={isStayPage ? "divider unset" : "divider"}>
+      </div>
     </React.Fragment>
   )
 }

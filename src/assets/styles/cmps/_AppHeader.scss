@@ -3,6 +3,10 @@
   top: 0;
   z-index: 100;
   background-color: $clr3;
+
+  &.relative {
+    position: relative;
+  }
 }
 
 .main-header {
@@ -13,12 +17,6 @@
   color: #222222;
   height: 80px;
 
-  .divider {
-    border-bottom-width: 1px;
-    border-bottom-style: solid;
-    border-bottom-color: #ddd;
-    margin: 5px 0;
-  }
 
   img {
     width: 32px;

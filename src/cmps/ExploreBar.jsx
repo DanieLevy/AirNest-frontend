@@ -21,7 +21,7 @@ import { set } from "date-fns"
 
 export function ExploreBar() {
   const [isExpanded, setIsExpanded] = useState(false)
-  const [isActive, setIsActive] = useState(null)
+  const [isActive, setIsActive] = useState("location")
   const [formData, setFormData] = useState({
     location: "",
     startDate: null,
