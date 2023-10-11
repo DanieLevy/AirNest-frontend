@@ -185,7 +185,7 @@ export function OrderConfirm() {
             <div className="divider"></div>
             <div className="cost-details-total">
               <div>Total</div>
-              <div>${stagedOrder.stay.price * stagedOrder.nights * 1.1}</div>
+              <div>${stagedOrder.stay.price * stagedOrder.nights * 1.1.toFixed(2)}</div>
             </div>
           </div>
         </div>
