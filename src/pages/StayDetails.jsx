@@ -1,17 +1,20 @@
-import React, { useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
-import { stayService } from '../services/stay.service.local.js'
-import { StayDescription } from '../cmps/StayDetails/StayDescription.jsx'
-import { StayHeader } from '../cmps/StayDetails/StayHeader.jsx'
-import { StayAmenities } from '../cmps/StayDetails/StayAmenities.jsx'
-import { StayReviews } from '../cmps/StayDetails/StayReviews.jsx'
-import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service.js'
-import { CheckoutForm } from '../cmps/StayDetails/CheckoutForm.jsx'
-import { useDispatch, useSelector } from 'react-redux'
-import { userService } from '../services/user.service.js'
-import { getActionAddOrder, getActionStageOrder } from '../store/actions/order.actions.js'
-import { LOADING_DONE, LOADING_START } from '../store/reducer/system.reducer.js'
-import { StayMap } from '../cmps/StayDetails/StayMap.jsx'
+import React, { useEffect, useState } from "react"
+import { useNavigate, useParams } from "react-router-dom"
+import { stayService } from "../services/stay.service.local.js"
+import { StayDescription } from "../cmps/StayDetails/StayDescription.jsx"
+import { StayHeader } from "../cmps/StayDetails/StayHeader.jsx"
+import { StayAmenities } from "../cmps/StayDetails/StayAmenities.jsx"
+import { StayReviews } from "../cmps/StayDetails/StayReviews.jsx"
+import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service.js"
+import { CheckoutForm } from "../cmps/StayDetails/CheckoutForm.jsx"
+import { useDispatch, useSelector } from "react-redux"
+import { userService } from "../services/user.service.js"
+import {
+  getActionAddOrder,
+  getActionStageOrder,
+} from "../store/actions/order.actions.js"
+import { LOADING_DONE, LOADING_START } from "../store/reducer/system.reducer.js"
+import { StayMap } from "../cmps/StayDetails/StayMap.jsx"
 
 export function StayDetails() {
   const { stayId } = useParams()
@@ -25,16 +28,19 @@ export function StayDetails() {
   useEffect(() => {
     loadStay()
   }, [stayId])
-  console.log('🚀 ~ file: StayDetails.jsx:20 ~ StayDetails ~ currStay:', currStay)
+  console.log(
+    "🚀 ~ file: StayDetails.jsx:20 ~ StayDetails ~ currStay:",
+    currStay
+  )
 
   async function loadStay() {
     try {
       const stay = await stayService.getById(stayId)
       setCurrStay(stay)
     } catch (err) {
-      console.log('Had issues in stay details', err)
-      showErrorMsg('Cannot load stay')
-      navigate('/')
+      console.log("Had issues in stay details", err)
+      showErrorMsg("Cannot load stay")
+      navigate("/")
     }
   }
   function handleCheckoutSubmit(formData) {
@@ -50,12 +56,12 @@ export function StayDetails() {
     }
 
     dispatch(getActionStageOrder(orderDetails))
-    showSuccessMsg('Order staged for confirmation.')
-    navigate('/order/confirm')
+    showSuccessMsg("Order staged for confirmation.")
+    navigate("/order/confirm")
   }
 
-  if (isLoading) return <div>Loading...</div>
-  if (!currStay) return <div>no stay or user</div>
+  if (isLoading) return <div className="main-layout">Loading...</div>
+  if (!currStay) return <div className="main-layout">no stay or user</div>
 
   const {
     name,
@@ -77,9 +83,9 @@ export function StayDetails() {
   } = currStay
 
   return (
-    <section className='stay-details'>
+    <section className="main-layout small stay-details">
       <StayHeader name={name} imgUrls={imgUrls} />
-      <div className='stay-details-desc'>
+      <div className="stay-details-desc">
         <StayDescription
           type={type}
           summary={summary}

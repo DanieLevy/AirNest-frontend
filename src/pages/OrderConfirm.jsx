@@ -1,10 +1,15 @@
-import React, { useEffect, useState } from 'react'
-import { orderService } from '../services/order.service'
-import { useDispatch, useSelector } from 'react-redux'
-import { addOrder, getActionAddOrder, getActionClearStagedOrder, loadOrders } from '../store/actions/order.actions'
-import { showErrorMsg } from '../services/event-bus.service'
-import { Link } from 'react-router-dom'
-import { userService } from '../services/user.service'
+import React, { useEffect, useState } from "react"
+import { orderService } from "../services/order.service"
+import { useDispatch, useSelector } from "react-redux"
+import {
+  addOrder,
+  getActionAddOrder,
+  getActionClearStagedOrder,
+  loadOrders,
+} from "../store/actions/order.actions"
+import { showErrorMsg } from "../services/event-bus.service"
+import { Link } from "react-router-dom"
+import { userService } from "../services/user.service"
 
 export function OrderConfirm() {
   const stagedOrder = useSelector((state) => state.orderModule.stagedOrder)
@@ -38,23 +43,28 @@ export function OrderConfirm() {
       dispatch(getActionAddOrder(confirmedOrder))
       setIsConfirmed(true)
     } catch (err) {
-      console.error('Failed to confirm order:', err)
-      showErrorMsg('problem saving order', err)
+      console.error("Failed to confirm order:", err)
+      showErrorMsg("problem saving order", err)
     }
   }
 
   if (isLoading) return <div>Loading...</div>
-  if (!stagedOrder && !isConfirmed) return <div>No staged order found!</div>
+  if (!stagedOrder && !isConfirmed)
+    return (<div className="main-layout">No staged order found!</div>)
 
   return (
-    <div>
+    <div className="main-layout order-confirm">
       <h2>Confirm Your Order</h2>
       <p>Start Date: {new Date(stagedOrder.checkIn).toLocaleDateString()}</p>
       <p>End Date: {new Date(stagedOrder.checkOut).toLocaleDateString()}</p>
       <p>Adults: {stagedOrder.guests.adults}</p>
       <p>Children: {stagedOrder.guests.children}</p>
 
-      {!isConfirmed ? <button onClick={handleConfirmOrder}>Confirm Order</button> : <div>Order Confirmed!</div>}
+      {!isConfirmed ? (
+        <button onClick={handleConfirmOrder}>Confirm Order</button>
+      ) : (
+        <div>Order Confirmed!</div>
+      )}
       {/* {isConfirmed ? <Link to={`/order/${loggedUser._id}`} } */}
     </div>
   )

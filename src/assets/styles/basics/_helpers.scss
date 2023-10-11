@@ -51,3 +51,11 @@
 .portrait-ratio {
   @include aspect-ratio(9, 16);
 }
+
+.divider {
+  height: 1px;
+  background-color: $clr2;
+  position: sticky;
+  top: 80px;
+  z-index: 10;
+}

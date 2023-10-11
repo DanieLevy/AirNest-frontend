@@ -1,7 +1,12 @@
+import { useEffect } from "react"
+import { useState } from "react"
 import Carousel from "react-multi-carousel"
 import "react-multi-carousel/lib/styles.css"
 
 export function LabelsCarousel({ onLabelClick }) {
+
+  const [isActive, setIsActive] = useState('OMG!')
+
   const labels = [
     {
       img: "https://a0.muscache.com/pictures/c5a4f6fc-c92c-4ae8-87dd-57f1ff1b89a6.jpg",
@@ -80,29 +85,29 @@ export function LabelsCarousel({ onLabelClick }) {
   const responsive = {
     superLargeDesktop: {
       // the naming can be any, depends on you.
-        breakpoint: { max: 4000, min: 3000 },   
-        items: 8
+      breakpoint: { max: 4000, min: 3000 },
+      items: 8,
     },
     desktop: {
-        breakpoint: { max: 3000, min: 1024 },
-        items: 8
+      breakpoint: { max: 3000, min: 1024 },
+      items: 8,
     },
     tablet: {
-        breakpoint: { max: 1024, min: 464 },
-        items: 8
+      breakpoint: { max: 1024, min: 464 },
+      items: 8,
     },
     mobile: {
-        breakpoint: { max: 464, min: 0 },
-        items: 8
-    }
+      breakpoint: { max: 464, min: 0 },
+      items: 8,
+    },
   }
 
   const item = (label) => {
     return (
       <div
-        className="label"
+        className={`label ${isActive === label.name ? "active" : ""}`}
         key={label}
-        onClick={() => onLabelClick(label.name)}
+        onClick={() => handleClick(label)}
       >
         <img src={label.img} alt={label.name} />
         <p>{label.name}</p>
@@ -110,9 +115,14 @@ export function LabelsCarousel({ onLabelClick }) {
     )
   }
 
+  function handleClick(label) {
+    console.log('label:', label);
+    setIsActive(label.name)
+  }
+
   return (
     <Carousel
-    //   swipeable={true}
+      //   swipeable={true}
       draggable={false}
       transitionDuration={1}
       containerClass="carousel-container"
@@ -120,7 +130,6 @@ export function LabelsCarousel({ onLabelClick }) {
       dotListClass="custom-dot-list-style"
       itemClass="carousel-item"
       className="labels-carousel"
-    //   rewindWithAnimation={true}
       centerMode={true}
     >
       {labels.map((label) => item(label))}

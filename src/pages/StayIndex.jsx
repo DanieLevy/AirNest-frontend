@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
 
 import { StayList } from "../cmps/StayList.jsx"
@@ -7,6 +7,7 @@ import { StayMapIndex } from "../cmps/StayMapIndex.jsx"
 
 import { HiMiniMap } from "react-icons/hi2"
 import { HiMiniListBullet } from "react-icons/hi2"
+import { StayFilter } from "../cmps/StayFilter.jsx"
 
 export function StayIndex() {
   const [listMode, setListMode] = useState(true) // true = list, false = map
@@ -22,30 +23,33 @@ export function StayIndex() {
   }, [])
 
   return (
-    <main className="stay-index">
-      <section>
-        <div className="show-map-btn-container ">
-          <button
-            className="show-map-btn"
-            onClick={() => setListMode(!listMode)}
-          >
-            {listMode ? (
-              <>
-                Show Map
-                <HiMiniMap className="map-icon" />
-              </>
-            ) : (
-              <>
-                Show List
-                <HiMiniListBullet className="map-icon" />
-              </>
-            )}
-          </button>
-        </div>
-        {isLoading && <div>Loading...</div>}
-        {!isLoading && listMode && <StayList stays={stays} />}
-        {!isLoading && !listMode && <StayMapIndex stays={stays} />}
-      </section>
-    </main>
+    <React.Fragment>
+      <StayFilter />
+      <main className="main-layout stay-index">
+        <section>
+          <div className="show-map-btn-container ">
+            <button
+              className="show-map-btn"
+              onClick={() => setListMode(!listMode)}
+            >
+              {listMode ? (
+                <>
+                  Show Map
+                  <HiMiniMap className="map-icon" />
+                </>
+              ) : (
+                <>
+                  Show List
+                  <HiMiniListBullet className="map-icon" />
+                </>
+              )}
+            </button>
+          </div>
+          {isLoading && <div>Loading...</div>}
+          {!isLoading && listMode && <StayList stays={stays} />}
+          {!isLoading && !listMode && <StayMapIndex stays={stays} />}
+        </section>
+      </main>
+    </React.Fragment>
   )
 }

@@ -1,0 +1,11 @@
+.filter-by {
+    position: sticky;
+    top: 80px;
+    background-color: white;
+    z-index: 5;
+
+    span {
+        font-family: 'cereal';
+        font-weight: 600;
+    }
+}

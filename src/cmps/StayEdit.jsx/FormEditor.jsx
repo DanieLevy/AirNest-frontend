@@ -5,7 +5,7 @@ import MultiSelectLabels from "./MultiSelectLabels";
 export function FormEditor({ stay, handleInputChange, handleSubmit, onUrlsChange, onAmenitiesChange, setLabels }) {
 
     return (
-        <section>
+        <section className="main-layout">
             <form onSubmit={handleSubmit}>
                 <div className="flex">
                     Name:
