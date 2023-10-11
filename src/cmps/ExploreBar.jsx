@@ -12,6 +12,13 @@ import "animate.css"
 import { BarndedBtn } from "./barnded-btn"
 import { useLocation } from "react-router"
 
+
+/// Dont remove! - DatesModal is used in this component
+import { DatesModal } from "./DatesModal"
+import { FadeIn } from "react-slide-fade-in"
+import { set } from "date-fns"
+/// Dont remove! - DatesModal is used in this component
+
 export function ExploreBar() {
   const [isExpanded, setIsExpanded] = useState(false)
   const [isActive, setIsActive] = useState(null)
