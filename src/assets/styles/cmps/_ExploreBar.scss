@@ -112,13 +112,28 @@
   border: 1px solid #dddddd;
   border-radius: 40px;
   transition: box-shadow 0.2s ease;
+  box-shadow: 0 1px 2px #00000014, 0 4px 12px #0000000d;
+  transition: box-shadow 0.2s ease;
   align-items: center;
   color: #222;
   display: inline-flex;
   max-width: 100%;
   vertical-align: middle;
   cursor: pointer;
-  animation-duration: 1s;
+  animation-duration: 0.5s;
+
+  &.short {
+    justify-content: space-between;
+    width: 300px;
+    height: 48px;
+
+    & .title {
+      padding: 0 16px;
+      font-size: 0.875rem;
+      font-family: cereal-medium;
+      line-height: 1.375rem;
+    }
+  }
 
   .location-btn,
   .dates-btn,
@@ -128,7 +143,6 @@
 
   &.expanded {
     top: 80px;
-    // z-index: 102;
     width: max-content;
     display: flex;
     justify-content: space-between;
@@ -178,9 +192,9 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
-    // min-width: 80px;
     cursor: inherit;
     font-family: cereal-medium;
+    padding: 5px 5px;
   }
 
   .guests-btn {
@@ -203,7 +217,7 @@
 
   // hover
   &:hover {
-    box-shadow: 0 1px 2px #00000014, 0 4px 12px #0000000d;
+    box-shadow: 0 2px 4px #0000002e;
   }
 }
 
@@ -225,7 +239,7 @@
   justify-content: center;
   align-items: flex-start;
   padding-inline: 10vw;
-  animation-duration: 1s;
+  animation-duration: 0.5s;
   z-index: 10;
 }
 

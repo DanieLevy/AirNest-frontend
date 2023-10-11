@@ -10,9 +10,7 @@ import { CiLocationArrow1 } from "react-icons/ci"
 import "animate.css"
 
 import { BarndedBtn } from "./barnded-btn"
-import { FadeIn } from "react-slide-fade-in"
-import { DatesModal } from "./DatesModal"
-import { set } from "date-fns"
+import { useLocation } from "react-router"
 
 export function ExploreBar() {
   const [isExpanded, setIsExpanded] = useState(false)
@@ -36,6 +34,10 @@ export function ExploreBar() {
   })
 
   const expandedBarRef = useRef(null)
+
+  const location = useLocation()
+  const path = location.pathname
+  const isStayPage = path === "/" || path.startsWith("/?")
 
   useEffect(() => {
     if (isExpanded) {
@@ -156,7 +158,7 @@ export function ExploreBar() {
 
   return (
     <React.Fragment>
-      {!isExpanded && (
+      {!isExpanded && isStayPage && (
         <div
           className={`explore-bar-preview ${
             !isExpanded ? "animate__animated animate__fadeInUp" : ""
@@ -192,11 +194,25 @@ export function ExploreBar() {
         </div>
       )}
 
+      {!isExpanded && !isStayPage && (
+        <div
+          className={`explore-bar-preview short ${
+            !isExpanded ? "animate__animated animate__fadeInUp" : ""
+          }`}
+          onClick={isExpanded ? null : handleClick}
+        >
+          <div className="title">Start your search</div>
+          <button type="button" className="search-btn">
+            <IoSearch />
+          </button>
+        </div>
+      )}
+
       {isExpanded && (
         <React.Fragment>
           <div
             ref={expandedBarRef}
-            className="white-space animate__animated animate__fadeInDown"
+            className="white-space animate__animated animate__slideInDown"
             // onClick={handleClick}
           >
             <form
@@ -449,6 +465,7 @@ export function ExploreBar() {
                           <button
                             disabled={selectedGuests.adults === 0}
                             type="button"
+                            loading={selectedGuests.adults === 0}
                             className="guests-modal-btn"
                             onClick={() => {
                               if (selectedGuests.adults > 0)
