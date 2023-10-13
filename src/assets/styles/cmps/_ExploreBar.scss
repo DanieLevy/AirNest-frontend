@@ -466,3 +466,28 @@
   border-radius: 6px;
   border: 3px solid #fff;
 }
+
+.explore-bar-mobile {
+  background-color: #fff;
+  height: 80px;
+  align-items: center;
+
+  & .ebm-filter-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    border: 1px solid #ddd;
+    border-radius: 25px;
+    margin: 0 10px;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    
+    svg {
+      width: 16px;
+      height: 16px;
+      fill: black;
+    }
+  }
+}

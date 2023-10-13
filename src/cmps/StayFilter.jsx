@@ -3,10 +3,28 @@ import { LabelsCarousel } from "./LabelsCarousel"
 import { useState } from "react"
 import { useEffect } from "react"
 import { set } from "date-fns"
+import { is } from "date-fns/locale"
 
 export function StayFilter() {
   const [paddingTop, setPaddingTop] = useState(15)
   const [boxShadow, setBoxShadow] = useState("none")
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768)
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    window.addEventListener('resize', handleResize);
+    window.addEventListener("scroll", handleScroll)
+
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      window.removeEventListener("scroll", handleScroll)
+
+    };
+  }, [])
 
   const handleScroll = () => {
     if (window.scrollY > 0) {
@@ -17,14 +35,6 @@ export function StayFilter() {
       setBoxShadow("none")
     }
   }
-
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll)
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll)
-    }
-  }, [])
 
   function onLabelClick(label) {
     console.log(label)
@@ -41,6 +51,7 @@ export function StayFilter() {
           }}
         >
           <LabelsCarousel onLabelClick={onLabelClick} />
+          {!isMobile && (
           <button className="filters-btn">
             <div className="flex align-center justify-center">
               <svg xmlns="http://www.w3.org/2000/svg">
@@ -49,6 +60,7 @@ export function StayFilter() {
               <span>Filters</span>
             </div>
           </button>
+          )}
         </section>
       </section>
     </React.Fragment>

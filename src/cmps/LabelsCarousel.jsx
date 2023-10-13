@@ -1,11 +1,24 @@
+import { is } from "date-fns/locale"
 import { useEffect } from "react"
 import { useState } from "react"
 import Carousel from "react-multi-carousel"
 import "react-multi-carousel/lib/styles.css"
 
 export function LabelsCarousel({ onLabelClick }) {
+  const [isActive, setIsActive] = useState("OMG!")
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768)
 
-  const [isActive, setIsActive] = useState('OMG!')
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [])
 
   const labels = [
     {
@@ -86,19 +99,19 @@ export function LabelsCarousel({ onLabelClick }) {
     superLargeDesktop: {
       // the naming can be any, depends on you.
       breakpoint: { max: 4000, min: 3000 },
-      items: 8,
+      items: 10,
     },
     desktop: {
       breakpoint: { max: 3000, min: 1024 },
-      items: 8,
+      items: 10,
     },
     tablet: {
       breakpoint: { max: 1024, min: 464 },
-      items: 8,
+      items: 10,
     },
     mobile: {
       breakpoint: { max: 464, min: 0 },
-      items: 8,
+      items: 10,
     },
   }
 
@@ -116,14 +129,14 @@ export function LabelsCarousel({ onLabelClick }) {
   }
 
   function handleClick(label) {
-    console.log('label:', label);
+    console.log("label:", label)
     setIsActive(label.name)
   }
 
   return (
     <Carousel
-      //   swipeable={true}
-      draggable={false}
+      swipeable={isMobile ? true : false}
+      draggable={isMobile ? true : false}
       transitionDuration={1}
       containerClass="carousel-container"
       responsive={responsive}
@@ -131,9 +144,10 @@ export function LabelsCarousel({ onLabelClick }) {
       itemClass="carousel-item"
       className="labels-carousel"
       centerMode={true}
+      infinite={true}
+      arrows={isMobile ? false : true}
+      
     >
-      {labels.map((label) => item(label))}
-      {labels.map((label) => item(label))}
       {labels.map((label) => item(label))}
     </Carousel>
   )

@@ -1,27 +1,27 @@
 import React, { useEffect, useRef, useState } from "react"
 import { DayPicker } from "react-day-picker"
-
-import { IoIosSearch } from "react-icons/io"
-import { IoSearch } from "react-icons/io5"
-import { AiOutlineMinus } from "react-icons/ai"
-import { AiOutlinePlus } from "react-icons/ai"
-import { CiLocationArrow1 } from "react-icons/ci"
-
 import "animate.css"
 
 import { BarndedBtn } from "./barnded-btn"
 import { useLocation } from "react-router"
 
-
 /// Dont remove! - DatesModal is used in this component
 import { DatesModal } from "./DatesModal"
 import { FadeIn } from "react-slide-fade-in"
 import { set } from "date-fns"
+import { is } from "date-fns/locale"
 /// Dont remove! - DatesModal is used in this component
+
+import { IoSearch } from "react-icons/io5"
+import { AiOutlineMinus } from "react-icons/ai"
+import { AiOutlinePlus } from "react-icons/ai"
+import { CiLocationArrow1 } from "react-icons/ci"
+import { HiOutlineSearch } from "react-icons/hi"
 
 export function ExploreBar() {
   const [isExpanded, setIsExpanded] = useState(false)
   const [isActive, setIsActive] = useState("location")
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768)
   const [formData, setFormData] = useState({
     location: "",
     startDate: null,
@@ -47,6 +47,8 @@ export function ExploreBar() {
   const isStayPage = path === "/" || path.startsWith("/?")
 
   useEffect(() => {
+    window.addEventListener("resize", handleResize)
+
     if (isExpanded) {
       window.addEventListener("scroll", handleScroll)
       document.addEventListener("click", handleDocumentClick)
@@ -58,8 +60,13 @@ export function ExploreBar() {
     return () => {
       window.removeEventListener("scroll", handleScroll)
       document.removeEventListener("click", handleDocumentClick)
+      window.removeEventListener("resize", handleResize)
     }
   }, [isExpanded])
+
+  const handleResize = () => {
+    setIsMobile(window.innerWidth < 768)
+  }
 
   function handleDayClick(date) {
     console.log("date", date)
@@ -165,7 +172,7 @@ export function ExploreBar() {
 
   return (
     <React.Fragment>
-      {!isExpanded && isStayPage && (
+      {!isExpanded && isStayPage && !isMobile && (
         <div
           className={`explore-bar-preview ${
             !isExpanded ? "animate__animated animate__fadeInUp" : ""
@@ -201,7 +208,7 @@ export function ExploreBar() {
         </div>
       )}
 
-      {!isExpanded && !isStayPage && (
+      {!isExpanded && !isStayPage && !isMobile && (
         <div
           className={`explore-bar-preview short ${
             !isExpanded ? "animate__animated animate__fadeInUp" : ""
@@ -641,6 +648,21 @@ export function ExploreBar() {
           </div>
           <div className="explore-bar-backdrop"></div>
         </React.Fragment>
+      )}
+
+      {isMobile && (
+        <div className="explore-bar-mobile flex">
+          <div className="ebm-container flex">
+            <div className="ebm-search-bar flex">
+            <HiOutlineSearch />
+            </div>
+            <div className="ebm-filter-btn flex">
+              <svg xmlns="http://www.w3.org/2000/svg">
+                <path d="M5 8a3 3 0 0 1 2.83 2H14v2H7.83A3 3 0 1 1 5 8zm0 2a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm6-8a3 3 0 1 1-2.83 4H2V4h6.17A3 3 0 0 1 11 2zm0 2a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"></path>
+              </svg>
+            </div>
+          </div>
+        </div>
       )}
     </React.Fragment>
   )
