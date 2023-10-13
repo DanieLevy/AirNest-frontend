@@ -16,7 +16,7 @@ import { IoSearch } from "react-icons/io5"
 import { AiOutlineMinus } from "react-icons/ai"
 import { AiOutlinePlus } from "react-icons/ai"
 import { CiLocationArrow1 } from "react-icons/ci"
-import { HiOutlineSearch } from "react-icons/hi"
+import { CgSearch } from "react-icons/cg"
 
 export function ExploreBar() {
   const [isExpanded, setIsExpanded] = useState(false)
@@ -654,8 +654,20 @@ export function ExploreBar() {
         <div className="explore-bar-mobile flex">
           <div className="ebm-container flex">
             <div className="ebm-search-bar flex">
-            <HiOutlineSearch />
+              <div className="ebm-search-logo">
+                <CgSearch />
             </div>
+                <div className="ebm-search-text">
+                  <div className="ebm-search-location">
+                    <span>Anywhere</span>
+                  </div>
+                <div className="ebm-search-dates">
+                  <span>Anyweek</span>
+                  <span className="dot">•</span>
+                  <span>Add guests</span>
+                </div>
+                </div>
+              </div>
             <div className="ebm-filter-btn flex">
               <svg xmlns="http://www.w3.org/2000/svg">
                 <path d="M5 8a3 3 0 0 1 2.83 2H14v2H7.83A3 3 0 1 1 5 8zm0 2a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm6-8a3 3 0 1 1-2.83 4H2V4h6.17A3 3 0 0 1 11 2zm0 2a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"></path>

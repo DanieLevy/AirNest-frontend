@@ -472,6 +472,74 @@
   height: 80px;
   align-items: center;
 
+  & .ebm-container {
+    align-items: center;
+    width: 100%;
+    
+    
+    & .ebm-search-bar {
+      touch-action: manipulation !important;
+      background: rgb(255, 255, 255) !important;
+      border: 0.5px solid rgba(0, 0, 0, 0.08);
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+      border-radius: 10000px;
+      transform: translate3d(0, 0, 0);
+      width: 100% !important;
+      height: 100% !important;
+      align-items: center;
+      min-height: 56px;
+      
+      &:hover {
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        
+      }
+      & .ebm-search-logo {
+        padding: 0 16px 0 20px;
+
+        svg {
+          display: block;
+          height: 20px;
+          width: 20px;
+          // fill: currentcolor;
+        }
+      }
+
+      & .ebm-search-text {
+        padding-left: 2px;
+
+        & .ebm-search-location {
+          font-size: 0.875rem;
+          font-family: cereal-medium;
+          line-height: 1.375rem;
+          color: #222;
+          padding: 0;
+          margin: 0;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          overflow: hidden;
+          max-width: 100%;
+        }
+
+        & .ebm-search-dates {
+          font-size: 0.75rem;
+          font-family: cereal-light;
+          line-height: 1.25rem;
+          color: #717171;
+          padding: 0;
+          margin: 0;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          overflow: hidden;
+          max-width: 100%;
+
+          & .dot {
+            padding: 0 5px;
+          }
+        }
+      }
+    }
+  }
+
   & .ebm-filter-btn {
     display: flex;
     align-items: center;
@@ -480,10 +548,10 @@
     border: 1px solid #ddd;
     border-radius: 25px;
     margin: 0 10px;
-    width: 40px;
-    height: 40px;
+    min-width: 40px !important;
+        height: 40px;
     cursor: pointer;
-    
+
     svg {
       width: 16px;
       height: 16px;
