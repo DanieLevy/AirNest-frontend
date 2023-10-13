@@ -15,7 +15,7 @@ export function RootCmp() {
           <Route key={route.path} exact={true} element={route.component} path={route.path} />
         ))}
       </Routes>
-      {/* <AppFooter /> */}
+      <AppFooter />
       <UserMsg />
     </div>
   )

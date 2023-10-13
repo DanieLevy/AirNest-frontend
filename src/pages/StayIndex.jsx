@@ -11,6 +11,8 @@ import { StayFilter } from "../cmps/StayFilter.jsx"
 
 export function StayIndex() {
   const [listMode, setListMode] = useState(true) // true = list, false = map
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768)
+  const [isVisible, setIsVisible] = useState(true)
 
   const stays = useSelector((storeState) => storeState.stayModule.stays)
   console.log("stays:", stays)
@@ -20,6 +22,26 @@ export function StayIndex() {
 
   useEffect(() => {
     loadStays()
+    
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+
+    let prevScrollY = 0
+
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY
+      currentScrollY > prevScrollY ? setIsVisible(false) : setIsVisible(true)
+      prevScrollY = currentScrollY
+    }
+
+
+    window.addEventListener("resize", handleResize)
+    window.addEventListener("scroll", handleScroll)
+
+    return () => {
+      window.removeEventListener("resize", handleResize)
+    }
   }, [])
 
   return (
@@ -27,7 +49,9 @@ export function StayIndex() {
       <StayFilter />
       <main className="main-layout stay-index">
         <section>
-          <div className="show-map-btn-container ">
+          <div className={`show-map-btn-container ${isVisible ? "" : "hidden"}`}
+            style={{ bottom: isMobile ? "75px" : "50px" }}
+          >
             <button
               className="show-map-btn"
               onClick={() => setListMode(!listMode)}

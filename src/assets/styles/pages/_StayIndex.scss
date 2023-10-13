@@ -15,6 +15,12 @@
     z-index: 10;
     left: 50%;
     transform: translateX(-50%);
+    transition: all 0.3s ease-in-out;
+
+    &.hidden {
+      transform: translateX(-50%) translateY(60px);
+      transition: transform 0.3s ease-in-out;
+    }
 
     button {
       -webkit-box-pack: center;
