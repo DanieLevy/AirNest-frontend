@@ -16,8 +16,15 @@ export function StayReviews({ data }) {
         setReviewsModal(false)
       }
     }
+
+    const handleResize = () => {  
+      setIsMobile(window.innerWidth < 768)
+    }
+
+    window.addEventListener("resize", handleResize)
     window.addEventListener("click", closeModal)
     return () => {
+      window.removeEventListener("resize", handleResize)
       window.removeEventListener("click", closeModal)
     }
   }, [])
@@ -32,7 +39,7 @@ export function StayReviews({ data }) {
 
   return (
     <React.Fragment>
-      <div className="reviews-container">
+      <div className={isMobile ? "main-layout small reviews-container" : "reviews-container"}>
         <div className="reviews-header flex">
           <div className="reviews-rating flex">
             <div className="flex" style={{ placeSelf: "center" }}>

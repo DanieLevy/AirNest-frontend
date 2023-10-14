@@ -1,8 +1,24 @@
 import React from "react"
 import GoogleMapReact from "google-map-react"
 import { FaMapMarkerAlt } from "react-icons/fa"
+import { useEffect, useState } from "react"
 
 export function StayMap({ loc }) {
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768)
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+
+    window.addEventListener("resize", handleResize)
+
+    return () => {
+      window.removeEventListener("resize", handleResize)
+    }
+
+  }, [])
+
     console.log('🚀 ~ file: StayMap.jsx:1 ~ StayMap ~ loc', loc);
   const center = {
     lat: loc.lat,
@@ -30,7 +46,7 @@ export function StayMap({ loc }) {
 
 
   return (
-    <div className="details-map">
+    <div className={isMobile ? "main-layout small details-map" : "details-map"}>
         <h4 className="map-title">Where you'll be</h4>
     <div className="map-location">
         {loc.address}, {loc.city}, {loc.country}

@@ -18,11 +18,12 @@ import { is } from "date-fns/locale"
 // initialTo.setUTCHours(0, 0, 0, 0)
 
 export function CheckoutForm({ onSubmit, price, reviews }) {
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768)
   const [isStayPage, setIsStayPage] = useState(
     location.pathname.startsWith("/stay")
   )
   const [selectedRange, setSelectedRange] = useState(
-    isStayPage
+    isStayPage && isMobile
       ? {
           from: new Date(),
           to: addDays(new Date(), 3),
@@ -35,7 +36,6 @@ export function CheckoutForm({ onSubmit, price, reviews }) {
 
   const [isDatesModal, setIsDatesModal] = useState(false)
   const [isGuestsModal, setIsGuestsModal] = useState(false)
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 768)
 
   const [selectedGuests, setSelectedGuests] = useState({
     adults: 1,
@@ -125,7 +125,7 @@ export function CheckoutForm({ onSubmit, price, reviews }) {
 
   return (
     <React.Fragment>
-      {!isStayPage && (
+      {isStayPage && !isMobile && (
         <div className="checkout-form-container flex">
           <form onSubmit={handleSubmit} className="checkout-form">
             <div className="helped-container">

@@ -45,9 +45,17 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    padding: 0 15px;
+    padding: 0 13px;
 
-    & .details-action-buttons
+    position: absolute;
+    z-index: 100;
+    top: 15px;
+    width: 100%;
+
+    & .action-btns {
+      gap: 10px;
+    }
+
     button {
       display: inline-flex !important;
       border-radius: 50% !important;
