@@ -7,6 +7,7 @@ import { FiCheckCircle } from 'react-icons/fi'
 import { PiMedal } from 'react-icons/pi'
 import { StayAmenities } from './StayAmenities'
 import { CheckoutForm } from './CheckoutForm'
+import { useState } from 'react'
 
 export function StayDescription({
   summary,
@@ -23,6 +24,9 @@ export function StayDescription({
   amenities,
   onSubmit,
 }) {
+
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768)
+
   function calculateAverageRating(reviews) {
     if (!reviews.length) return 0
 
@@ -120,7 +124,6 @@ export function StayDescription({
 
         <StayAmenities data={amenities} />
       </main>
-
       <aside className='stay-details-aside'>
         <CheckoutForm onSubmit={onSubmit} price={price} reviews={reviews} />
       </aside>

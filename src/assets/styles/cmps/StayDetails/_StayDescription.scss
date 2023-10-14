@@ -92,7 +92,6 @@
   }
 }
 
-
 .stay-details-advantages {
   padding: 32px 0;
   border-bottom: 1px solid rgb(221, 221, 221);
@@ -111,14 +110,13 @@
         flex-shrink: 0 !important;
         width: 40px !important;
         display: flex !important;
-        justify-content: center !important
+        justify-content: center !important;
       }
 
       svg {
         width: 24px;
         height: 24px;
         color: rgb(34, 34, 34);
-
       }
 
       .advantage-text {
@@ -141,7 +139,6 @@
       }
     }
   }
-
 }
 
 .stay-details-description {
@@ -155,5 +152,11 @@
     line-height: 24px;
     color: rgb(34, 34, 34);
     margin: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .stay-description {
+    display: flex;
   }
 }

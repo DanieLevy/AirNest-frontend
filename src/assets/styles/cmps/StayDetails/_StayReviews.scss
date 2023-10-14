@@ -35,42 +35,42 @@
 }
 
 .review {
-    max-width: 80%;
-    display: flex;
-    flex-direction: column;
-    font-size: 1rem;
-    font-weight: 400;
-    line-height: 1.5;
+  max-width: 80%;
+  display: flex;
+  flex-direction: column;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
 
-    .review-title {
-      gap: 10px;
-      align-items: center;
-      margin-bottom: 13px;
+  .review-title {
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 13px;
 
-      img {
-        height: 40px;
-        width: 40px;
-        border-radius: 50%;
+    img {
+      height: 40px;
+      width: 40px;
+      border-radius: 50%;
+    }
+
+    .reviewer-details {
+      flex-direction: column;
+
+      span {
+        font-size: 1rem;
+        font-family: cereal;
+        font-weight: 600;
       }
 
-      .reviewer-details {
-        flex-direction: column;
-
-        span {
-          font-size: 1rem;
-          font-family: cereal;
-          font-weight: 600;
-        }
-
-        span:nth-child(2) {
-          font-size: 0.875rem;
-          font-family: cereal-light;
-          font-weight: 400;
-          color: #717171;
-        }
+      span:nth-child(2) {
+        font-size: 0.875rem;
+        font-family: cereal-light;
+        font-weight: 400;
+        color: #717171;
       }
     }
   }
+}
 
 .show-all-reviews {
   border-radius: 8px;
@@ -97,16 +97,15 @@
   overflow: auto;
   background-color: #0006;
   .reviews-modal {
-
     .close-modal-btn {
-        position: absolute;
-        top: -5px;
-        right: 0px;
-        font-size: 1.75rem;
-        font-weight: 600;
-        padding: 0.5em;
-        cursor: pointer;
-        background: transparent;
+      position: absolute;
+      top: -5px;
+      right: 0px;
+      font-size: 1.75rem;
+      font-weight: 600;
+      padding: 0.5em;
+      cursor: pointer;
+      background: transparent;
     }
     position: relative;
     background-color: #fefefe;
@@ -117,14 +116,33 @@
     box-shadow: #00000047 0 8px 28px;
     width: 50%;
 
-    display:grid;
+    display: grid;
     grid-template-columns: 1fr;
     grid-gap: 40px 1px;
 
     .review {
-        .review-title {
-            margin-bottom: 0;
-        }
+      .review-title {
+        margin-bottom: 0;
+      }
     }
+  }
+}
+
+@media (max-width: 768px) {
+  .reviews-container {
+    padding: 24px 0;
+    font-size: 1.125rem;
+
+    .reviews-header {
+      margin-bottom: 24px;
+    }
+
+    .reviews-list {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .review {
+    max-width: 100%;
   }
 }

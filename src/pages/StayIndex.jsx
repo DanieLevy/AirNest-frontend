@@ -49,8 +49,8 @@ export function StayIndex() {
       <StayFilter />
       <main className="main-layout stay-index">
         <section>
-          <div className={`show-map-btn-container ${isVisible ? "" : "hidden"}`}
-            style={{ bottom: isMobile ? "75px" : "50px" }}
+          <div className={`show-map-btn-container ${isVisible && isMobile ? "" : "hidden"}`}
+            style={{ bottom: isMobile ? "75px" : "80px" }}
           >
             <button
               className="show-map-btn"

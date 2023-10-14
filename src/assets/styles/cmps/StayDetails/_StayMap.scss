@@ -100,3 +100,12 @@
     height: 23px;
   }
 }
+
+@media (max-width: 768px) {
+  .details-map {
+    .map-container {
+      height: 35vh;
+      margin-bottom: 45px;
+    }
+  }
+}

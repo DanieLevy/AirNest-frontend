@@ -188,16 +188,6 @@ const stays = [
         },
       },
       {
-        id: "madeId",
-        txt: "Very helpful hosts. Cooked traditional...",
-        rate: 4,
-        by: {
-          _id: "u102",
-          fullname: "user2",
-          imgUrl: "/img/img2.jpg",
-        },
-      },
-      {
         id: "madeId2",
         txt: "Amazing location and very cozy space...",
         rate: 5,
@@ -237,6 +227,16 @@ const stays = [
           imgUrl: "/img/img4.jpg",
         },
       },
+      {
+        id: "madeId6",
+        txt: "Great location and very comfortable...",
+        rate: 5,
+        by: {
+          _id: "u112",
+          fullname: "user7",
+          imgUrl: "/img/img6.jpg",
+        },
+      }
     ],
     likedByUsers: ["mini-user"],
   },
@@ -337,7 +337,7 @@ const stays = [
     _id: "s104",
     name: "Belém Riverside Suite",
     type: "Condo",
-    imgUrls: ["/img/img7.jpg", "/img/img8.jpg"],
+    imgUrls: ["/img/img7.jpg", "/img/img6.jpg"],
     price: 120.0,
     summary:
       "Relax in this serene suite located right by the Tagus River in Belém. Guests can enjoy morning walks by the riverside, visit nearby monuments like the Belém Tower, or indulge in the world-famous Pastéis de Belém. The condo boasts modern amenities, a spacious living area, and a balcony with breathtaking river views. Perfect for those seeking a calm retreat in the city.",

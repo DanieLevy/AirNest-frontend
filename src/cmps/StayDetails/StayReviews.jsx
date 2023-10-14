@@ -3,6 +3,11 @@ import { AiFillStar } from "react-icons/ai"
 
 export function StayReviews({ data }) {
   const [reviewsModal, setReviewsModal] = useState(false)
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768)
+
+  const maxReviewsToShow = isMobile ? 3 : 6
+  const slicedReviews = data.slice(0, maxReviewsToShow)
+  console.log("slicedReviews:", slicedReviews);
 
   useEffect(() => {
     // click outside modal to close
@@ -39,7 +44,7 @@ export function StayReviews({ data }) {
           <span>{reviews.length} Reviews</span>
         </div>
         <div className="reviews-list">
-          {reviews.map((review) => (
+          {slicedReviews.map((review) => (
             <li className="review flex" key={review.id}>
               <div className="review-title flex">
                 <img src={review.by.imgUrl} alt="" />

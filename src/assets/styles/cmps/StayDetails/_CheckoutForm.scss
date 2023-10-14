@@ -140,7 +140,7 @@
 
   div {
     span {
-      font-size: .875em;
+      font-size: 0.875em;
       font-family: cereal-light;
     }
   }
@@ -163,7 +163,6 @@
       }
 
       .price {
-
       }
 
       .footer-price-nigts {
@@ -175,7 +174,6 @@
         display: flex;
         justify-content: space-between;
       }
-
     }
 
     .footer-price-sum {
@@ -221,4 +219,67 @@
 
   --rdp-outline: 2px solid var(--rdp-accent-color);
   --rdp-outline-selected: 2px solid rgba(0, 0, 0, 0.75);
+}
+
+.stay-footer-mobile {
+  position: fixed;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  height: 80px;
+  background-color: white;
+  z-index: 1000;
+  padding: 0 24px;
+
+  border-top: 1px solid rgb(221, 221, 221) !important;
+  min-height: 80px !important;
+
+  & .stay-footer-container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: space-between;
+
+    & .branded-btn2 {
+      max-width: 110px;
+      height: 48px;
+      align-self: center;
+
+      & .content2 {
+
+        & .branded-btn-txt2 {
+          font-size: 1rem;
+          font-weight: 400;
+          line-height: 1.25rem;
+          font-family: cereal-medium;
+        }
+      }
+    }
+
+    & .stay-footer-details {
+      display: flex;
+      flex-direction: column;
+      align-self: center;
+
+
+      & .price {
+        font-size: 1rem;
+        font-weight: 600;
+        line-height: 20px;
+        font-family: cereal;
+
+        & .per-night {
+          font-size: 0.875rem;
+          font-family: cereal;
+          font-weight: 400;
+        }
+      }
+
+      & .dates {
+        font-size: 0.875rem;
+        font-weight: 600;
+        text-decoration: underline;
+      }
+    }
+  }
 }
