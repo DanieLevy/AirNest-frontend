@@ -9,6 +9,7 @@ import { GoShare } from "react-icons/go"
 import { PiUploadSimpleLight } from "react-icons/pi"
 import { PiHeartLight } from "react-icons/pi"
 import { PiArrowLeftLight } from "react-icons/pi"
+import { useNavigate } from "react-router"
 
 export function StayHeader({
   name,
@@ -16,6 +17,8 @@ export function StayHeader({
   // reviews,
 }) {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768)
+
+  const navigate = useNavigate()
 
   useEffect(() => {
     const handleResize = () => {
@@ -59,12 +62,14 @@ export function StayHeader({
             showFullscreenButton={false}
             showThumbnails={false}
             showNav={true}
-            autoPlay={true}
+            autoPlay={false}
             slideDuration={500}
             slideInterval={3000}
           />
           <div className="stay-header-buttons">
-            <button className="back-btn flex align-center">
+            <button className="back-btn flex align-center"
+              onClick={() => navigate(-1)}
+            >
               <PiArrowLeftLight />
             </button>
             <div className="action-btns flex">

@@ -148,3 +148,11 @@
     max-width: 100%;
   }
 }
+
+@media (max-width: 768px) {
+    .reviews-modal {
+      width: 90%!important;
+      grid-gap: 20px 1px!important;
+      margin: 60px auto 90px!important;
+    }
+}
