@@ -15,6 +15,7 @@ import {
 } from "../store/actions/order.actions.js"
 import { LOADING_DONE, LOADING_START } from "../store/reducer/system.reducer.js"
 import { StayMap } from "../cmps/StayDetails/StayMap.jsx"
+import { is } from "date-fns/locale"
 
 export function StayDetails() {
   const { stayId } = useParams()
@@ -22,11 +23,22 @@ export function StayDetails() {
   const dispatch = useDispatch()
 
   const isLoading = useSelector((state) => state.systemModule.isLoading)
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768)
 
   const [currStay, setCurrStay] = useState(null)
 
   useEffect(() => {
     loadStay()
+
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+
+    window.addEventListener("resize", handleResize)
+
+    return () => {
+      window.removeEventListener("resize", handleResize)
+    }
   }, [stayId])
   console.log(
     "🚀 ~ file: StayDetails.jsx:20 ~ StayDetails ~ currStay:",
@@ -88,9 +100,9 @@ export function StayDetails() {
   } = currStay
 
   return (
-    <section className="main-layout small stay-details">
+    <section className={isMobile ? "stay-details" : "main-layout small stay-details"}>
       <StayHeader name={name} imgUrls={imgUrls} />
-      <div className="stay-details-desc">
+      <div className={isMobile ? "main-layout small stay-details-desc" : "stay-details-desc"}>
         <StayDescription
           type={type}
           summary={summary}

@@ -36,3 +36,42 @@
     }
   }
 }
+
+// MOBILE 
+.stay-header-mobile {
+  position: relative;
+
+  & .stay-header-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0 15px;
+
+    & .details-action-buttons
+    button {
+      display: inline-flex !important;
+      border-radius: 50% !important;
+      border: 1px solid rgba(0, 0, 0, 0.08) !important;
+      outline: none !important;
+      margin: 0px !important;
+      padding: 0px !important;
+      color: rgb(34, 34, 34) !important;
+      background-color: rgb(255, 255, 255) !important;
+      cursor: pointer !important;
+      touch-action: manipulation !important;
+      align-items: center !important;
+      justify-content: center !important;
+      background-clip: padding-box !important;
+      box-shadow: 0 0 0 1px transparent, 0 0 0 4px transparent, 0 0 0 1px transparent !important;
+      height: 36px !important;
+      width: 36px !important;
+
+      svg {
+        width: 18px;
+        height: 18px;
+        fill: rgb(34, 34, 34);
+        stroke-width: 12px;
+      }
+    }
+  }
+}
