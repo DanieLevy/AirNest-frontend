@@ -60,6 +60,10 @@ export function CheckoutForm({ onSubmit, price, reviews }) {
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768)
+      setSelectedRange({
+        from: new Date(),
+        to: addDays(new Date(), 3),
+      })
     }
 
     const closeModals = (event) => {
@@ -77,34 +81,38 @@ export function CheckoutForm({ onSubmit, price, reviews }) {
 
     return () => {
       document.removeEventListener("click", closeModals)
+      window.removeEventListener("resize", handleResize)
     }
   }, [])
 
   const handleSubmit = (event) => {
-    event.preventDefault()
+    event.preventDefault();
     if (!selectedRange.from || !selectedRange.to) {
-      isDatesModal ? setIsDatesModal(false) : setIsDatesModal(true)
+      isDatesModal ? setIsDatesModal(false) : setIsDatesModal(true);
+      return;
     }
-
-    // if selectedRange is not more then 1 day - show error
-    if (dateDiffDays < 1) {
-      alert("Please select more then 1 day")
-      return
+    
+  
+    // Check if both selectedRange.from and selectedRange.to are defined
+    if (selectedRange.from && selectedRange.to) {
+      // Calculate the time difference
+      const checkInTs = selectedRange.from.getTime();
+      const checkOutTs = selectedRange.to.getTime();
+      const nights = dateDiffDays;
+  
+      const formData = {
+        checkIn: checkInTs,
+        checkOut: checkOutTs,
+        guests: selectedGuests,
+        totalPrice: totalPlusFee,
+        nights: nights,
+      };
+  
+      onSubmit(formData);
+    } else {
+      // Handle the case when either selectedRange.from or selectedRange.to is not defined
+      alert("Please select both check-in and check-out dates.");
     }
-
-    const checkInTs = selectedRange.from.getTime()
-    const checkOutTs = selectedRange.to.getTime()
-    const nights = dateDiffDays
-
-    const formData = {
-      checkIn: checkInTs,
-      checkOut: checkOutTs,
-      guests: selectedGuests,
-      totalPrice: totalPlusFee,
-      nights: nights,
-    }
-
-    onSubmit(formData)
   }
 
   function addDays(date, days) {
@@ -432,22 +440,24 @@ export function CheckoutForm({ onSubmit, price, reviews }) {
         </div>
       )}
       {isMobile && isStayPage && (
-        <footer className="stay-footer-mobile">
-          <div className="stay-footer-container flex">
-            <div className="stay-footer-details">
-              <span className="price">
-                ${price} <span className="per-night">night</span>
-              </span>
-              <span className="dates">
-                {selectedRange.from ? format(selectedRange.from, "dd MMM") : ""}{" "}
-                - {selectedRange.to ? format(selectedRange.to, "dd MMM") : ""}
-              </span>
+        <form onSubmit={handleSubmit} className="checkout-form-mobile">
+          <footer className="stay-footer-mobile">
+            <div className="stay-footer-container flex">
+              <div className="stay-footer-details">
+                <span className="price">
+                  ${price} <span className="per-night">night</span>
+                </span>
+                <span className="dates">
+                  {selectedRange.from
+                    ? format(selectedRange.from, "dd MMM")
+                    : ""}{" "}
+                  - {selectedRange.to ? format(selectedRange.to, "dd MMM") : ""}
+                </span>
+              </div>
+              <BarndedBtn2 txt="Reserve" className="stay-footer-btn" />
             </div>
-              <BarndedBtn2 txt="Reserve"
-              className="stay-footer-btn"
-               />
-          </div>
-        </footer>
+          </footer>
+        </form>
       )}
     </React.Fragment>
   )

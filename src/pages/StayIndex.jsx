@@ -15,14 +15,13 @@ export function StayIndex() {
   const [isVisible, setIsVisible] = useState(true)
 
   const stays = useSelector((storeState) => storeState.stayModule.stays)
-  console.log("stays:", stays)
   const isLoading = useSelector(
     (storeState) => storeState.systemModule.isLoading
   )
 
   useEffect(() => {
     loadStays()
-    
+
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768)
     }
@@ -34,7 +33,6 @@ export function StayIndex() {
       currentScrollY > prevScrollY ? setIsVisible(false) : setIsVisible(true)
       prevScrollY = currentScrollY
     }
-
 
     window.addEventListener("resize", handleResize)
     window.addEventListener("scroll", handleScroll)
@@ -49,7 +47,10 @@ export function StayIndex() {
       <StayFilter />
       <main className="main-layout stay-index">
         <section>
-          <div className={`show-map-btn-container ${isVisible && isMobile ? "" : "hidden"}`}
+          <div
+            className={`show-map-btn-container ${
+              isVisible && isMobile ? "" : "hidden"
+            }`}
             style={{ bottom: isMobile ? "75px" : "80px" }}
           >
             <button

@@ -7,17 +7,26 @@ export function StayReviews({ data }) {
 
   const maxReviewsToShow = isMobile ? 3 : 6
   const slicedReviews = data.slice(0, maxReviewsToShow)
-  console.log("slicedReviews:", slicedReviews);
+
+  const hash = window.location.hash
 
   useEffect(() => {
-    // click outside modal to close
+    if (hash === "#reviews") {
+      setReviewsModal(true)
+    } else {
+      setReviewsModal(false)
+    }
+  }, [hash])
+
+  useEffect(() => {
     const closeModal = (ev) => {
       if (ev.target.classList.contains("reviews-modal-container")) {
         setReviewsModal(false)
+        window.location.hash = ""
       }
     }
 
-    const handleResize = () => {  
+    const handleResize = () => {
       setIsMobile(window.innerWidth < 768)
     }
 
@@ -39,7 +48,11 @@ export function StayReviews({ data }) {
 
   return (
     <React.Fragment>
-      <div className={isMobile ? "main-layout small reviews-container" : "reviews-container"}>
+      <div
+        className={
+          isMobile ? "main-layout small reviews-container" : "reviews-container"
+        }
+      >
         <div className="reviews-header flex">
           <div className="reviews-rating flex">
             <div className="flex" style={{ placeSelf: "center" }}>
@@ -76,7 +89,10 @@ export function StayReviews({ data }) {
           <div className="reviews-modal">
             <button
               className="close-modal-btn"
-              onClick={() => setReviewsModal(false)}
+              onClick={() => {
+                setReviewsModal(false)
+                window.location.hash = ""
+              }}
             >
               &times;
             </button>

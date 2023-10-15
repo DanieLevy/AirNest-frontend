@@ -41,6 +41,11 @@
 .stay-header-mobile {
   position: relative;
 
+  .image-gallery-content .image-gallery-slide .image-gallery-image {
+    border-radius: 0!important;
+    max-height: 260px;
+  }
+
   & .stay-header-buttons {
     display: flex;
     flex-direction: row;

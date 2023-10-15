@@ -155,20 +155,27 @@ export function ExploreBar() {
   }
 
   function handleSubmit(ev) {
-    ev.preventDefault()
-
-    const fromTimestamp = selectedRange.from.getTime()
-    const toTimestamp = selectedRange.to.getTime()
-    alert(
-      `Location: ${formData.location},
-       Start Date: ${fromTimestamp},
-        End Date: ${toTimestamp},
-         Guests: ${selectedGuests.adults} Adults,
-          ${selectedGuests.children} Children,
-           ${selectedGuests.infants} Infants,
-            ${selectedGuests.pets} Pets`
-    )
+    ev.preventDefault();
+  
+    // Check if both selectedRange.from and selectedRange.to are defined
+    if (selectedRange.from && selectedRange.to) {
+      const fromTimestamp = selectedRange.from.getTime();
+      const toTimestamp = selectedRange.to.getTime();
+      alert(
+        `Location: ${formData.location},
+         Start Date: ${fromTimestamp},
+          End Date: ${toTimestamp},
+           Guests: ${selectedGuests.adults} Adults,
+            ${selectedGuests.children} Children,
+             ${selectedGuests.infants} Infants,
+              ${selectedGuests.pets} Pets`
+      );
+    } else {
+      // Handle the case when either selectedRange.from or selectedRange.to is not defined
+      alert("Please select both check-in and check-out dates.");
+    }
   }
+  
 
   return (
     <React.Fragment>
@@ -479,7 +486,6 @@ export function ExploreBar() {
                           <button
                             disabled={selectedGuests.adults === 0}
                             type="button"
-                            loading={selectedGuests.adults === 0}
                             className="guests-modal-btn"
                             onClick={() => {
                               if (selectedGuests.adults > 0)
