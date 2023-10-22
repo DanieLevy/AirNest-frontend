@@ -1,36 +1,76 @@
-import { is } from "date-fns/locale"
-import React, { lazy } from "react"
-import { useState } from "react"
-import { useEffect } from "react"
-import ImageGallery from "react-image-gallery"
-import "react-image-gallery/styles/css/image-gallery.css"
-import { useSelector } from "react-redux"
-import { Link } from "react-router-dom"
+import { is } from "date-fns/locale";
+import React, { lazy } from "react";
+import { useState } from "react";
+import { useEffect } from "react";
+import ImageGallery from "react-image-gallery";
+import "react-image-gallery/styles/css/image-gallery.css";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
+import {
+  PiArrowLeftThin,
+  PiArrowRight,
+  PiArrowRightThin,
+  PiCaretLeft,
+  PiCaretRight,
+} from "react-icons/pi";
 
 export function StayPreview({ stay }) {
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 768)
-  const stayLink = `/stay/${stay._id}`
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const stayLink = `/stay/${stay._id}`;
 
   const reviewsAvg =
     stay.reviews.reduce((acc, review) => {
-      return acc + review.rate
-    }, 0) / stay.reviews.length
+      return acc + review.rate;
+    }, 0) / stay.reviews.length;
 
-    const user = useSelector((storeState) => storeState.userModule.user)
+  const user = useSelector((storeState) => storeState.userModule.user);
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth < 768)
-    }
+      setIsMobile(window.innerWidth < 768);
+    };
 
-    window.addEventListener("resize", handleResize)
+    window.addEventListener("resize", handleResize);
 
     return () => {
-      window.removeEventListener("resize", handleResize)
-    }
-  }, [])
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
-  const images = stay.imgUrls.map((imgUrl) => ({ original: imgUrl }))
+  const images = stay.imgUrls.map((imgUrl) => ({ original: imgUrl }));
+
+  const leftNav = (onClick, disabled) => {
+    return (
+      <button
+        className="main-image-gallery left-nav"
+        disabled={disabled}
+        onClick={(ev) => {
+          onClick();
+          ev.stopPropagation();
+        }}
+        aria-label="Previous Slide"
+      >
+        <PiCaretLeft />
+      </button>
+    );
+  };
+
+  const rightNav = (onClick, disabled) => {
+    return (
+      <button
+        className="main-image-gallery right-nav"
+        disabled={disabled}
+        onClick={(ev) => {
+          onClick();
+          ev.stopPropagation();
+        }}
+        aria-label="Next Slide"
+      >
+        <PiCaretRight />
+      </button>
+    );
+  };
 
   const HeartOutlineIcon = () => (
     <svg
@@ -43,10 +83,13 @@ export function StayPreview({ stay }) {
     >
       <path d="m16 28c7-4.733 14-10 14-17 0-1.792-.683-3.583-2.05-4.95-1.367-1.366-3.158-2.05-4.95-2.05-1.791 0-3.583.684-4.949 2.05l-2.051 2.051-2.05-2.051c-1.367-1.366-3.158-2.05-4.95-2.05-1.791 0-3.583.684-4.949 2.05-1.367 1.367-2.051 3.158-2.051 4.95 0 7 7 12.267 14 17z"></path>
     </svg>
-  )
+  );
 
   return (
-    <article className="stay-preview">
+    <article
+      className="stay-preview"
+      onClick={() => window.open(stayLink, "_blank")}
+    >
       <div className="preview-img">
         <HeartOutlineIcon />
         <ImageGallery
@@ -57,6 +100,9 @@ export function StayPreview({ stay }) {
           loading={lazy}
           showThumbnails={true}
           stopPropagation={true}
+          disableKeyDown={true}
+          renderLeftNav={leftNav}
+          renderRightNav={rightNav}
         />
       </div>
       {isMobile ? (
@@ -119,5 +165,5 @@ export function StayPreview({ stay }) {
         </a>
       )}
     </article>
-  )
+  );
 }
