@@ -51,7 +51,7 @@ async function save(stay) {
       fullname: fullname || "",
       imgUrl: imgUrl || "",
     }
-
+    stay.reviews = _reviewDemoData()
     savedStay = await storageService.post(STORAGE_KEY, stay)
   }
   return savedStay
@@ -694,3 +694,69 @@ const stays = [
     likedByUsers: ["mini-user5"],
   },
 ]
+
+
+function _reviewDemoData() {
+  return [
+    {
+      id: "madeId",
+      txt: "Very helpful hosts. Cooked traditional...",
+      rate: 4,
+      by: {
+        _id: "u102",
+        fullname: "user2",
+        imgUrl: "/img/img2.jpg",
+      },
+    },
+    {
+      id: "madeId2",
+      txt: "Amazing location and very cozy space...",
+      rate: 5,
+      by: {
+        _id: "u104",
+        fullname: "user3",
+        imgUrl: "/img/img3.jpg",
+      },
+    },
+    {
+      id: "madeId3",
+      txt: "Stylish place in the heart of the action...",
+      rate: 5,
+      by: {
+        _id: "u106",
+        fullname: "user4",
+        imgUrl: "/img/img5.jpg",
+      },
+    },
+    {
+      id: "madeId4",
+      txt: "Peaceful location with stunning views...",
+      rate: 4,
+      by: {
+        _id: "u108",
+        fullname: "user5",
+        imgUrl: "/img/img7.jpg",
+      },
+    },
+    {
+      id: "madeId5",
+      txt: "A charming space with a vintage touch...",
+      rate: 4,
+      by: {
+        _id: "u110",
+        fullname: "user6",
+        imgUrl: "/img/img4.jpg",
+      },
+    },
+    {
+      id: "madeId6",
+      txt: "Great location and very comfortable...",
+      rate: 5,
+      by: {
+        _id: "u112",
+        fullname: "user7",
+        imgUrl: "/img/img6.jpg",
+      },
+    }
+  ]
+}

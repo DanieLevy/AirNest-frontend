@@ -60,6 +60,13 @@ export function StayEdit() {
     }))
   }
 
+  function setLocation(loc) {
+    setStay(prev => ({
+      ...prev,
+      loc
+    }))
+  }
+
   function handleInputChange(e) {
     let { name, value } = e.target;
 
@@ -80,7 +87,7 @@ export function StayEdit() {
   if (!stay) return <div>loading...</div>
   return (
     <main>
-      <FormEditor stay={stay} setLabels={setLabels} handleInputChange={handleInputChange} handleSubmit={handleSubmit} onUrlsChange={setImgUrl} onAmenitiesChange={setAmenities} />
+      <FormEditor stay={stay} setLabels={setLabels} handleInputChange={handleInputChange} setLocation={setLocation} handleSubmit={handleSubmit} onUrlsChange={setImgUrl} onAmenitiesChange={setAmenities} />
     </main>
   )
 }
