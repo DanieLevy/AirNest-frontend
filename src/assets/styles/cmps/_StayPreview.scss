@@ -13,20 +13,24 @@
   .preview-img {
     position: relative;
 
+    .image-gallery-image {
+      border-radius: 5%!important;
+    }
+
     .heart-icon {
-        position: absolute;
-        width: 24px;
-        height: 24px;
-        top: 10px;
-        right: 10px;
-        z-index: 1;
-        stroke: white;
-        font-size: 1.5rem;
-        cursor: pointer;
-        fill: rgba(58, 58, 58, 0.434);
-        & .liked {
-          fill: #ff385c;
-        }
+      position: absolute;
+      width: 24px;
+      height: 24px;
+      top: 10px;
+      right: 10px;
+      z-index: 1;
+      stroke: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+      fill: rgba(58, 58, 58, 0.434);
+      & .liked {
+        fill: #ff385c;
+      }
     }
   }
 
@@ -74,7 +78,15 @@
 
     .preview-rating {
       display: flex;
-      gap: 2px;
+      align-items: baseline;
+      gap: 4px;
+
+      .star {
+        display: block;
+        height: 12px;
+        width: 12px;
+        fill: currentcolor;
+      }
     }
 
     .preview-price,
@@ -104,7 +116,7 @@
   align-items: center;
   background-clip: padding-box;
   background-color: #ffffffe6;
-  border: 1px solid rgba(0,0,0,.08);
+  border: 1px solid rgba(0, 0, 0, 0.08);
   box-shadow: #0000 0 0 0 1px;
   color: #000;
   font-size: 1rem;
@@ -119,14 +131,13 @@
 }
 
 .image-gallery-icon {
-    opacity: 0.3;
-    transition: opacity 0.3s ease-in-out;
+  opacity: 0.3;
+  z-index: 1;
+  transition: opacity 0.3s ease-in-out;
 }
 
 .image-gallery-icon:hover {
-    opacity: 1;
-
-
+  opacity: 1;
 }
 
 .image-gallery-content .image-gallery-slide .image-gallery-image {

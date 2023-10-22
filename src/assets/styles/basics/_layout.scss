@@ -1,57 +1,30 @@
 .main-layout {
-  display: grid;
-  grid-template-columns: 40px 1fr 40px;
-
-  > * {
-    grid-column: 2;
-
-    &.full {
-      grid-column: 1 /-1;
-    }
-  }
+  padding: 0 20px;
 
   @include for-narrow-layout {
-    grid-template-columns:
-      minmax(24px, 1fr)
-      minmax(auto, $mobile-breakpoint)
-      minmax(24px, 1fr);
+    padding: 0 40px;
   }
   @include for-normal-layout {
-    grid-template-columns:
-      minmax(40px, 1fr)
-      minmax(auto, $narrow-breakpoint)
-      minmax(40px, 1fr);
+    padding: 0 40px;
   }
   @include for-wide-layout {
-    grid-template-columns:
-      minmax(40px, 1fr)
-      minmax(auto, $normal-breakpoint)
-      minmax(40px, 1fr);
+    padding: 0 80px;
   }
-  // & .stay-details {
-  //   grid-template-columns: 80px 1fr 80px;
-  // }
-}
 
-//   @include for-narrow-layout {
-//     grid-template-columns:
-//       minmax(24px, 1fr)
-//       minmax(auto, $mobile-breakpoint)
-//       minmax(24px, 1fr);
-//   }
-//   @include for-normal-layout {
-//     grid-template-columns:
-//       minmax(40px, 1fr)
-//       minmax(auto, $narrow-breakpoint)
-//       minmax(40px, 1fr);
-//   }
-//   @include for-wide-layout {
-//     grid-template-columns:
-//       minmax(80px, 1fr)
-//       minmax(auto, $normal-breakpoint)
-//       minmax(80px, 1fr);
-//   }
-// }
+  &.small {
+    padding: 0 20px;
+    
+    @include for-narrow-layout {
+      padding: 0 40px;
+    }
+    @include for-normal-layout {
+      padding: 0 80px;
+    }
+    @include for-wide-layout {
+      padding: 0 150px;
+    }
+  }
+}
 
 .card-grid {
   display: grid;

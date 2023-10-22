@@ -1,4 +1,4 @@
-import { utilService } from './util.service'
+import { utilService } from "./util.service"
 
 export const storageService = {
   query,
@@ -22,11 +22,9 @@ function query(entityType, delay = 50) {
 }
 
 function get(entityType, entityId) {
-  return query(entityType).then((entities) => {
-    const entity = entities.find((entity) => entity._id === entityId)
-    if (!entity) throw new Error(`Get failed, cannot find entity with id: ${entityId} in: ${entityType}`)
-    return entity
-  })
+  return query(entityType).then((entities) =>
+    entities.find((entity) => entity._id === entityId)
+  )
 }
 
 function post(entityType, newEntity) {
@@ -43,7 +41,10 @@ function put(entityType, updatedEntity) {
   updatedEntity = JSON.parse(JSON.stringify(updatedEntity))
   return query(entityType).then((entities) => {
     const idx = entities.findIndex((entity) => entity._id === updatedEntity._id)
-    if (idx < 0) throw new Error(`Update failed, cannot find entity with id: ${updatedEntity._id} in: ${entityType}`)
+    if (idx < 0)
+      throw new Error(
+        `Update failed, cannot find entity with id: ${updatedEntity._id} in: ${entityType}`
+      )
     entities.splice(idx, 1, updatedEntity)
     _save(entityType, entities)
     return updatedEntity
@@ -53,7 +54,10 @@ function put(entityType, updatedEntity) {
 function remove(entityType, entityId) {
   return query(entityType).then((entities) => {
     const idx = entities.findIndex((entity) => entity._id === entityId)
-    if (idx < 0) throw new Error(`Remove failed, cannot find entity with id: ${entityId} in: ${entityType}`)
+    if (idx < 0)
+      throw new Error(
+        `Remove failed, cannot find entity with id: ${entityId} in: ${entityType}`
+      )
     entities.splice(idx, 1)
     _save(entityType, entities)
   })
@@ -66,8 +70,9 @@ function _save(entityType, entities) {
 }
 
 function _makeId(length = 5) {
-  var text = ''
-  var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+  var text = ""
+  var possible =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
   for (var i = 0; i < length; i++) {
     text += possible.charAt(Math.floor(Math.random() * possible.length))
   }

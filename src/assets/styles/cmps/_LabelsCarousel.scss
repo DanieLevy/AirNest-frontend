@@ -1,0 +1,100 @@
+.carousel-container {
+    grid-column: 1;
+    .carousel-item {
+      min-height: 67px;
+      padding: 0 15px;
+      max-width: max-content;
+      width: 100%!important;
+    }
+  
+    .react-multiple-carousel__arrow--left {
+      position: absolute;
+      left: 0px;
+    }
+  
+    .react-multiple-carousel__arrow {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 1;
+      transition: opacity 0.5s;
+      border-radius: 50%;
+      border: 1px solid rgba(0, 0, 0, 0.3);
+      background-color: #fff;
+      box-shadow: 0px 0px 10px 20px #fff;
+      text-align: center;
+      height: 26px !important;
+      width: 26px !important;
+      margin: 0;
+      position: absolute;
+      right: 0px;
+      min-width: unset;
+      min-height: unset;
+      z-index: 1;
+      padding: 14px;
+  
+      &::before {
+        font-size: 0.875rem;
+        color: #222222;
+      }
+    }
+  
+    .label {
+      cursor: pointer;
+      white-space: nowrap;
+      text-align: center;
+      color: #717171;
+      align-self: self-end;
+  
+      img {
+        box-sizing: border-box;
+        color: #717171;
+        font-size: 12px;
+        height: 24px;
+        fill: #717171;
+        opacity: 50%;
+        transition: opacity 0.2s;
+        object-fit: contain;
+      }
+  
+      p {
+        margin-bottom: 4px;
+        font-size: 12px;
+        font-weight: 600;
+        line-height: 1.25rem;
+        letter-spacing: 0.2px;
+        font-family: cereal-light;
+      }
+    }
+  }
+  
+  .react-multi-carousel-track {
+    max-height: inherit;
+  
+    li {
+      display: flex;
+      padding: 4px 0 4px;
+      &:hover {
+        .label {
+          border-bottom: 3px solid #222222;
+          color: #000;
+        }
+        img {
+          opacity: 100%;
+        }
+      }
+  
+      .active {
+        border-bottom: 3px solid #222222;
+        color: #222222;
+        img {
+          opacity: 100%;
+        }
+      }
+    }
+  
+    li:nth-child(1) {
+      padding-left: 0;
+    }
+  }
+  

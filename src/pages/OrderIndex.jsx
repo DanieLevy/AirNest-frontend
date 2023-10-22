@@ -13,7 +13,7 @@ export function OrderIndex() {
   }, [])
 
   return (
-    <main className='order-index'>
+    <main className='main-layout order-index'>
       <section>
         {isLoading && <div>Loading...</div>}
 

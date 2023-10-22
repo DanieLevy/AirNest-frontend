@@ -1,0 +1,17 @@
+.filter-by {
+    position: sticky;
+    top: 80px;
+    background-color: white;
+    z-index: 5;
+
+    span {
+        font-family: 'cereal';
+        font-weight: 600;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .header-content {
+        display: block;
+    }
+}

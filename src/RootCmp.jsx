@@ -8,16 +8,14 @@ import { UserMsg } from './cmps/UserMsg'
 
 export function RootCmp() {
   return (
-    <div className='main-layout'>
+    <div className='app'>
       <AppHeader />
-      {/* <main className=''> */}
       <Routes>
         {routes.map((route) => (
           <Route key={route.path} exact={true} element={route.component} path={route.path} />
         ))}
       </Routes>
-      {/* </main> */}
-      {/* <AppFooter /> */}
+      <AppFooter />
       <UserMsg />
     </div>
   )

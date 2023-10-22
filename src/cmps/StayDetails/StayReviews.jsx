@@ -1,16 +1,119 @@
-// import { SvgIcon } from '../SvgIcon'
+import React, { useEffect, useState } from "react"
+import { AiFillStar } from "react-icons/ai"
 
 export function StayReviews({ data }) {
+  const [reviewsModal, setReviewsModal] = useState(false)
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768)
+
+  const maxReviewsToShow = isMobile ? 3 : 6
+  const slicedReviews = data.slice(0, maxReviewsToShow)
+
+  const hash = window.location.hash
+
+  useEffect(() => {
+    if (hash === "#reviews") {
+      setReviewsModal(true)
+    } else {
+      setReviewsModal(false)
+    }
+  }, [hash])
+
+  useEffect(() => {
+    const closeModal = (ev) => {
+      if (ev.target.classList.contains("reviews-modal-container")) {
+        setReviewsModal(false)
+        window.location.hash = ""
+      }
+    }
+
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+
+    window.addEventListener("resize", handleResize)
+    window.addEventListener("click", closeModal)
+    return () => {
+      window.removeEventListener("resize", handleResize)
+      window.removeEventListener("click", closeModal)
+    }
+  }, [])
+
+  const reviews = data
+
+  const sumOfRatings = reviews.reduce((acc, review) => {
+    return acc + review.rate
+  }, 0)
+
+  const avgRating = (sumOfRatings / reviews.length).toFixed(2)
+
   return (
-    <div className='stay-reviews'>
-      <h2>Reviews</h2>
-      <ul>
-        {data.map((review, index) => (
-          <li key={index}>
-            <span className='review-username'>{review.by.fullname}:</span> {review.txt}
-          </li>
-        ))}
-      </ul>
-    </div>
+    <React.Fragment>
+      <div
+        className={
+          isMobile ? "main-layout small reviews-container" : "reviews-container"
+        }
+      >
+        <div className="reviews-header flex">
+          <div className="reviews-rating flex">
+            <div className="flex" style={{ placeSelf: "center" }}>
+              <AiFillStar />
+            </div>
+            <span>{avgRating}</span>
+          </div>
+          <span>•</span>
+          <span>{reviews.length} Reviews</span>
+        </div>
+        <div className="reviews-list">
+          {slicedReviews.map((review) => (
+            <li className="review flex" key={review.id}>
+              <div className="review-title flex">
+                <img src={review.by.imgUrl} alt="" />
+                <div className="reviewer-details flex">
+                  <span>{review.by.fullname}</span>
+                  <span>October 2021</span>
+                </div>
+              </div>
+              <div className="review-body">
+                <p>{review.txt}</p>
+              </div>
+            </li>
+          ))}
+        </div>
+        <div className="show-all-reviews" onClick={() => setReviewsModal(true)}>
+          Show all {reviews.length} reviews
+        </div>
+      </div>
+
+      {reviewsModal && (
+        <div className="reviews-modal-container">
+          <div className="reviews-modal">
+            <button
+              className="close-modal-btn"
+              onClick={() => {
+                setReviewsModal(false)
+                window.location.hash = ""
+              }}
+            >
+              &times;
+            </button>
+            <h1>Reviews</h1>
+            {reviews.map((review) => (
+              <li className="review flex" key={review.id}>
+                <div className="review-title flex">
+                  <img src={review.by.imgUrl} alt="" />
+                  <div className="reviewer-details flex">
+                    <span>{review.by.fullname}</span>
+                    <span>October 2021</span>
+                  </div>
+                </div>
+                <div className="review-body">
+                  <p>{review.txt}</p>
+                </div>
+              </li>
+            ))}
+          </div>
+        </div>
+      )}
+    </React.Fragment>
   )
 }
