@@ -278,7 +278,6 @@ export function StayAmenities({ data }) {
       </div>
       <div className="stay-amenities-list">
         {data.map((amenity, idx) => {
-          if (amenity === 'Cooking basics') amenity = 'cookingBasics'
           if (amenity === 'Pets allowed') amenity = 'petsallowed'
           return (
             <div className="amenity" key={idx}>

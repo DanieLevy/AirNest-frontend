@@ -6,25 +6,15 @@ import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
-import {
-  PiArrowLeftThin,
-  PiArrowRight,
-  PiArrowRightThin,
-  PiCaretLeft,
-  PiCaretRight,
-} from "react-icons/pi";
+import { HiArrowSmLeft, HiArrowSmRight } from "react-icons/hi";
+import { userService } from "../services/user.service";
+
+import { loadUser } from "../store/actions/user.actions.js"
+
 
 export function StayPreview({ stay }) {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const stayLink = `/stay/${stay._id}`;
-
-  const reviewsAvg =
-    stay.reviews.reduce((acc, review) => {
-      return acc + review.rate;
-    }, 0) / stay.reviews.length;
-
-  const user = useSelector((storeState) => storeState.userModule.user);
 
   useEffect(() => {
     const handleResize = () => {
@@ -37,6 +27,11 @@ export function StayPreview({ stay }) {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+  const reviewsAvg =
+    stay.reviews.reduce((acc, review) => {
+      return acc + review.rate;
+    }, 0) / stay.reviews.length;
 
   const images = stay.imgUrls.map((imgUrl) => ({ original: imgUrl }));
 
@@ -51,7 +46,7 @@ export function StayPreview({ stay }) {
         }}
         aria-label="Previous Slide"
       >
-        <PiCaretLeft />
+        <HiArrowSmLeft />
       </button>
     );
   };
@@ -67,7 +62,7 @@ export function StayPreview({ stay }) {
         }}
         aria-label="Next Slide"
       >
-        <PiCaretRight />
+        <HiArrowSmRight />
       </button>
     );
   };
@@ -85,13 +80,28 @@ export function StayPreview({ stay }) {
     </svg>
   );
 
+
   return (
     <article
       className="stay-preview"
       onClick={() => window.open(stayLink, "_blank")}
     >
       <div className="preview-img">
-        <HeartOutlineIcon />
+        <div
+          onClick={(ev) => {
+            ev.stopPropagation();
+            if (userWishlist.includes(stay._id)) {
+              console.log("remove");
+              userService.removeFromWishlist(stay._id);
+            } else {
+              console.log("add");
+              userService.addToWishlist(stay._id);
+            }
+            console.log(userWishlist);
+          }}
+        >
+          <HeartOutlineIcon />
+        </div>
         <ImageGallery
           items={images}
           showPlayButton={false}
