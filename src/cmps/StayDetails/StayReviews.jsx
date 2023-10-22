@@ -1,50 +1,44 @@
-import React, { useEffect, useState } from "react"
-import { AiFillStar } from "react-icons/ai"
+import React, { useEffect, useState } from "react";
+import { AiFillStar } from "react-icons/ai";
+import { store } from "../../store/store";
+import { useSelector } from "react-redux";
 
 export function StayReviews({ data }) {
-  const [reviewsModal, setReviewsModal] = useState(false)
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 768)
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const reviewsModal = useSelector(
+    (storeState) => storeState.userModule.reviewsModal
+  );
 
-  const maxReviewsToShow = isMobile ? 3 : 6
-  const slicedReviews = data.slice(0, maxReviewsToShow)
+  const maxReviewsToShow = isMobile ? 3 : 6;
+  const slicedReviews = data.slice(0, maxReviewsToShow);
 
-  const hash = window.location.hash
-
-  useEffect(() => {
-    if (hash === "#reviews") {
-      setReviewsModal(true)
-    } else {
-      setReviewsModal(false)
-    }
-  }, [hash])
+  const hash = window.location.hash;
 
   useEffect(() => {
     const closeModal = (ev) => {
       if (ev.target.classList.contains("reviews-modal-container")) {
-        setReviewsModal(false)
-        window.location.hash = ""
+        store.dispatch({ type: "SET_REVIEWS_MODAL", reviewsModal: false });
       }
     }
 
     const handleResize = () => {
-      setIsMobile(window.innerWidth < 768)
+      setIsMobile(window.innerWidth < 768);
     }
 
-    window.addEventListener("resize", handleResize)
-    window.addEventListener("click", closeModal)
+    window.addEventListener("resize", handleResize);
+    window.addEventListener("click", closeModal);
     return () => {
-      window.removeEventListener("resize", handleResize)
-      window.removeEventListener("click", closeModal)
-    }
-  }, [])
-
-  const reviews = data
+      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("click", closeModal);
+    };
+  }, []);
+  const reviews = data;
 
   const sumOfRatings = reviews.reduce((acc, review) => {
-    return acc + review.rate
-  }, 0)
+    return acc + review.rate;
+  }, 0);
 
-  const avgRating = (sumOfRatings / reviews.length).toFixed(2)
+  const avgRating = (sumOfRatings / reviews.length).toFixed(2);
 
   return (
     <React.Fragment>
@@ -79,7 +73,15 @@ export function StayReviews({ data }) {
             </li>
           ))}
         </div>
-        <div className="show-all-reviews" onClick={() => setReviewsModal(true)}>
+        <div
+          className="show-all-reviews"
+          onClick={() => {
+            store.dispatch({
+              type: "SET_REVIEWS_MODAL",
+              reviewsModal: true,
+            });
+          }}
+        >
           Show all {reviews.length} reviews
         </div>
       </div>
@@ -90,8 +92,10 @@ export function StayReviews({ data }) {
             <button
               className="close-modal-btn"
               onClick={() => {
-                setReviewsModal(false)
-                window.location.hash = ""
+                store.dispatch({
+                  type: "SET_REVIEWS_MODAL",
+                  reviewsModal: false,
+                });
               }}
             >
               &times;
@@ -115,5 +119,5 @@ export function StayReviews({ data }) {
         </div>
       )}
     </React.Fragment>
-  )
+  );
 }
