@@ -1,4 +1,5 @@
 import { AmenitiesEditor } from "./AmenitiesEditor";
+import { Component } from "./GooglePlaceAutoComplete";
 import { ImagesEditor } from "./ImagesEditor";
 import MultiSelectLabels from "./MultiSelectLabels";
 
@@ -7,6 +8,7 @@ export function FormEditor({ stay, handleInputChange, handleSubmit, onUrlsChange
     return (
         <section>
             <form onSubmit={handleSubmit}>
+
                 <div className="flex">
                     Name:
                     <input
@@ -19,6 +21,7 @@ export function FormEditor({ stay, handleInputChange, handleSubmit, onUrlsChange
                 </div>
 
                 <ImagesEditor urls={stay.imgUrls} onUrlsChange={onUrlsChange} className="main" />
+                <Component />
 
                 <div className="flex">
                     Country:

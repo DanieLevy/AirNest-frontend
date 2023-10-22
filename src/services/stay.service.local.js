@@ -37,9 +37,11 @@ async function remove(stayId) {
 }
 
 async function save(stay) {
+  console.log('stay:', stay)
   let savedStay
   const { _id, fullname, imgUrl } = await userService.getLoggedinUser()
   stay.imgUrls = stay.imgUrls.filter(url => url)
+
   if (stay._id) {
     savedStay = await storageService.put(STORAGE_KEY, stay)
   } else {
@@ -69,6 +71,22 @@ async function addStayMsg(stayId, txt) {
   await storageService.put(STORAGE_KEY, stay)
 
   return msg
+}
+
+async function _getStayLatLang(address, city, countryCode) {
+  const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${_joinString(address)},+${_joinString(city)},+${countryCode}&key=AIzaSyB0XrNIJmg5sZqYETs7D_1d2qfIIwy1fkY`);
+  const { results } = await response.json();
+  return results[0].geometry.location
+}
+
+async function _getCountryCode(name) {
+  const response = await fetch(`https://restcountries.com/v3.1/name/${name}`);
+  const country = await response.json();
+  return country[0].cca2
+}
+
+function _joinString(string) {
+  return string.split(' ').join('+')
 }
 
 function getEmptyStay() {
