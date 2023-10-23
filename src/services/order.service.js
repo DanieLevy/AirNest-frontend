@@ -25,11 +25,11 @@ async function remove(orderId) {
 }
 
 async function add(orderDetails) {
-  const { startDate, endDate, adults, children, stay, buyer, hostId, hostName } = orderDetails
+  const { checkIn, checkOut, adults, children, stay, buyer, hostId, hostName } = orderDetails
 
   const orderToAdd = {
-    startDate,
-    endDate,
+    checkIn,
+    checkOut,
     adults,
     children,
     stay: {

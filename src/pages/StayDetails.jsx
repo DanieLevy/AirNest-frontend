@@ -1,21 +1,18 @@
-import React, { useEffect, useState } from "react"
-import { useNavigate, useParams } from "react-router-dom"
-import { stayService } from "../services/stay.service.local.js"
-import { StayDescription } from "../cmps/StayDetails/StayDescription.jsx"
-import { StayHeader } from "../cmps/StayDetails/StayHeader.jsx"
-import { StayAmenities } from "../cmps/StayDetails/StayAmenities.jsx"
-import { StayReviews } from "../cmps/StayDetails/StayReviews.jsx"
-import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service.js"
-import { CheckoutForm } from "../cmps/StayDetails/CheckoutForm.jsx"
-import { useDispatch, useSelector } from "react-redux"
-import { userService } from "../services/user.service.js"
-import {
-  getActionAddOrder,
-  getActionStageOrder,
-} from "../store/actions/order.actions.js"
-import { LOADING_DONE, LOADING_START } from "../store/reducer/system.reducer.js"
-import { StayMap } from "../cmps/StayDetails/StayMap.jsx"
-import { is } from "date-fns/locale"
+import React, { useEffect, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
+import { stayService } from '../services/stay.service.local.js'
+import { StayDescription } from '../cmps/StayDetails/StayDescription.jsx'
+import { StayHeader } from '../cmps/StayDetails/StayHeader.jsx'
+import { StayAmenities } from '../cmps/StayDetails/StayAmenities.jsx'
+import { StayReviews } from '../cmps/StayDetails/StayReviews.jsx'
+import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service.js'
+import { CheckoutForm } from '../cmps/StayDetails/CheckoutForm.jsx'
+import { useDispatch, useSelector } from 'react-redux'
+import { userService } from '../services/user.service.js'
+import { getActionAddOrder, getActionStageOrder } from '../store/actions/order.actions.js'
+import { LOADING_DONE, LOADING_START } from '../store/reducer/system.reducer.js'
+import { StayMap } from '../cmps/StayDetails/StayMap.jsx'
+import { is } from 'date-fns/locale'
 
 export function StayDetails() {
   const { stayId } = useParams()
@@ -34,28 +31,27 @@ export function StayDetails() {
       setIsMobile(window.innerWidth < 768)
     }
 
-    window.addEventListener("resize", handleResize)
+    window.addEventListener('resize', handleResize)
 
     return () => {
-      window.removeEventListener("resize", handleResize)
+      window.removeEventListener('resize', handleResize)
     }
   }, [stayId])
-  console.log(
-    "🚀 ~ file: StayDetails.jsx:20 ~ StayDetails ~ currStay:",
-    currStay
-  )
+  console.log('🚀 ~ file: StayDetails.jsx:20 ~ StayDetails ~ currStay:', currStay)
 
   async function loadStay() {
     try {
       const stay = await stayService.getById(stayId)
       setCurrStay(stay)
     } catch (err) {
-      console.log("Had issues in stay details", err)
-      showErrorMsg("Cannot load stay")
-      navigate("/")
+      console.log('Had issues in stay details', err)
+      showErrorMsg('Cannot load stay')
+      navigate('/')
     }
   }
   function handleCheckoutSubmit(formData) {
+    console.log('🚀 ~ file: StayDetails.jsx:60 ~ handleCheckoutSubmit ~ formData:', formData)
+
     const orderDetails = {
       ...formData,
       stay: {
@@ -73,12 +69,12 @@ export function StayDetails() {
     }
 
     dispatch(getActionStageOrder(orderDetails))
-    showSuccessMsg("Order staged for confirmation.")
-    navigate("/order/confirm")
+    showSuccessMsg('Order staged for confirmation.')
+    navigate('/order/confirm')
   }
 
-  if (isLoading) return <div className="main-layout">Loading...</div>
-  if (!currStay) return <div className="main-layout">no stay or user</div>
+  if (isLoading) return <div className='main-layout'>Loading...</div>
+  if (!currStay) return <div className='main-layout'>no stay or user</div>
 
   const {
     name,
@@ -100,9 +96,9 @@ export function StayDetails() {
   } = currStay
 
   return (
-    <section className={isMobile ? "stay-details" : "main-layout small stay-details"}>
+    <section className={isMobile ? 'stay-details' : 'main-layout small stay-details'}>
       <StayHeader name={name} imgUrls={imgUrls} />
-      <div className={isMobile ? "main-layout small stay-details-desc" : "stay-details-desc"}>
+      <div className={isMobile ? 'main-layout small stay-details-desc' : 'stay-details-desc'}>
         <StayDescription
           type={type}
           summary={summary}

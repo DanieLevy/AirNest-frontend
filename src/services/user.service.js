@@ -49,7 +49,7 @@ async function update({ _id, score }) {
 
 async function login(userCred) {
   const users = await storageService.query('user')
-  const user = users.find(user => user.username === userCred.username)
+  const user = users.find((user) => user.username === userCred.username)
   // const user = await httpService.post('auth/login', userCred)
   if (user) {
     return saveLocalUser(user)
@@ -58,10 +58,10 @@ async function login(userCred) {
 
 async function signup(userCred) {
   const users = await storageService.query('user')
-  const userExist = users.find(user => user.username === userCred.username)
+  const userExist = users.find((user) => user.username === userCred.username)
 
   if (userExist) {
-    console.log('user name already exist');
+    console.log('user name already exist')
     return
   } else {
     const user = await storageService.post('user', userCred)
@@ -71,7 +71,7 @@ async function signup(userCred) {
 }
 
 async function logout() {
-  sessionStorage.removeItem(STORAGE_KEY_LOGGEDIN_USER)
+  localStorage.removeItem(STORAGE_KEY_LOGGEDIN_USER)
   // return await httpService.post('auth/logout')
 }
 
@@ -85,12 +85,12 @@ async function changeScore(by) {
 
 function saveLocalUser(user) {
   user = { _id: user._id, fullname: user.fullname, imgUrl: user.imgUrl }
-  sessionStorage.setItem(STORAGE_KEY_LOGGEDIN_USER, JSON.stringify(user))
+  localStorage.setItem(STORAGE_KEY_LOGGEDIN_USER, JSON.stringify(user))
   return user
 }
 
 function getLoggedinUser() {
-  return JSON.parse(sessionStorage.getItem(STORAGE_KEY_LOGGEDIN_USER))
+  return JSON.parse(localStorage.getItem(STORAGE_KEY_LOGGEDIN_USER))
 }
 
 function getEmptyCredentials() {
@@ -98,7 +98,7 @@ function getEmptyCredentials() {
     username: '',
     password: '',
     fullname: '',
-    imgUrl: ''
+    imgUrl: '',
   }
 }
 
