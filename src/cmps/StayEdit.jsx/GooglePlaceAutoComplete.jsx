@@ -6,6 +6,8 @@ export function Component({ setLocation, stayLocation }) {
     console.log('stayLocation:', stayLocation)
     const [value, setValue] = useState(null);
 
+
+
     async function getPlaceDetails(placeId) {
         try {
             console.log('value:', value)
@@ -25,8 +27,8 @@ export function Component({ setLocation, stayLocation }) {
                 return acc
             }, {})
 
-            const streetNumber = location[0].address_components.find(address => address.types.includes('street_number')).short_name
-            if (streetNumber) locationDetails.address = `${locationDetails.address} ${streetNumber}`
+            const streetNumber = location[0].address_components.find(address => address.types.includes('street_number'))
+            if (streetNumber) locationDetails.address = `${locationDetails.address} ${streetNumber.short_name}`
 
             locationDetails.lat = location[0].geometry.location.lat()
             locationDetails.lng = location[0].geometry.location.lng()
