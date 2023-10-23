@@ -292,7 +292,7 @@ const stays = [
     _id: 's103',
     name: 'Bairro Alto Modern Loft',
     type: 'Loft',
-    imgUrls: ['/img/img20.jpg', '/img/img21.jpg', '/img/img22.jpg', '/img/img23.jpg', '/img/img24.jpg'],
+    imgUrls: ['/img/img21.jpg', '/img/img22.jpg', '/img/img23.jpg', '/img/img24.jpg'],
     price: 110.0,
     summary:
       'Discover the lively Bairro Alto from this modern loft. With high ceilings and an open-concept design, this space is a blend of comfort and style. Surrounded by a plethora of bars, restaurants, and cultural spots, guests can dive into the nightlife or simply enjoy the city views from the balcony. Ideal for solo travelers or couples seeking a vibrant Lisbon experience.',
