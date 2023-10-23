@@ -7,6 +7,7 @@ import { is } from "date-fns/locale"
 
 export function StayFilter() {
   const [paddingTop, setPaddingTop] = useState(15)
+  const [paddingBottom, setPaddingBottom] = useState(15)
   const [boxShadow, setBoxShadow] = useState("none")
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768)
 
@@ -28,10 +29,11 @@ export function StayFilter() {
 
   const handleScroll = () => {
     if (window.scrollY > 0) {
-      setPaddingTop(0)
+      setPaddingTop(10)
+      setPaddingBottom(10)
       setBoxShadow("rgb(0 0 0 / 16%) 0 0 6px")
     } else {
-      setPaddingTop(10)
+      setPaddingTop(15)
       setBoxShadow("none")
     }
   }
@@ -48,6 +50,7 @@ export function StayFilter() {
           style={{
             paddingTop: `${paddingTop}px`,
             boxShadow: `${boxShadow}`,
+            paddingBottom: `${paddingBottom}px`,
           }}
         >
           <LabelsCarousel onLabelClick={onLabelClick} />

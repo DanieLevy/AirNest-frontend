@@ -145,6 +145,7 @@
   display: grid;
   grid-template-columns: 1fr 90px;
   gap: 15px;
+  transition: all 0.2s;
 
   button {
     font-family: cereal-medium;
