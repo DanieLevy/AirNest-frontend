@@ -156,7 +156,9 @@ export function ExploreBar() {
 
   function handleSubmit(ev) {
     ev.preventDefault();
-  
+    console.log('formData:', formData)
+    console.log('selectedGuests', selectedGuests);
+
     // Check if both selectedRange.from and selectedRange.to are defined
     if (selectedRange.from && selectedRange.to) {
       const fromTimestamp = selectedRange.from.getTime();
@@ -175,15 +177,14 @@ export function ExploreBar() {
       alert("Please select both check-in and check-out dates.");
     }
   }
-  
+
 
   return (
     <React.Fragment>
       {!isExpanded && isStayPage && !isMobile && (
         <div
-          className={`explore-bar-preview ${
-            !isExpanded ? "animate__animated animate__fadeInUp" : ""
-          }`}
+          className={`explore-bar-preview ${!isExpanded ? "animate__animated animate__fadeInUp" : ""
+            }`}
           onClick={isExpanded ? null : handleClick}
         >
           <button
@@ -217,9 +218,8 @@ export function ExploreBar() {
 
       {!isExpanded && !isStayPage && !isMobile && (
         <div
-          className={`explore-bar-preview short ${
-            !isExpanded ? "animate__animated animate__fadeInUp" : ""
-          }`}
+          className={`explore-bar-preview short ${!isExpanded ? "animate__animated animate__fadeInUp" : ""
+            }`}
           onClick={isExpanded ? null : handleClick}
         >
           <div className="title">Start your search</div>
@@ -234,16 +234,15 @@ export function ExploreBar() {
           <div
             ref={expandedBarRef}
             className="white-space animate__animated animate__slideInDown"
-            // onClick={handleClick}
+          // onClick={handleClick}
           >
             <form
               className="explore-bar-preview expanded"
               onSubmit={handleSubmit}
             >
               <article
-                className={`explore-bar location flex ${
-                  isActive === "location" ? "active" : ""
-                }`}
+                className={`explore-bar location flex ${isActive === "location" ? "active" : ""
+                  }`}
                 onClick={() => setIsActive("location")}
               >
                 <label htmlFor="location">Where</label>
@@ -393,9 +392,8 @@ export function ExploreBar() {
               <span className="splitter"></span>
 
               <article
-                className={`explore-bar check-in ${
-                  isActive === "check-in" ? "active" : ""
-                }`}
+                className={`explore-bar check-in ${isActive === "check-in" ? "active" : ""
+                  }`}
                 onClick={() => setIsActive("check-in")}
               >
                 <div className="check-in-text flex">
@@ -416,9 +414,8 @@ export function ExploreBar() {
               <span className="splitter"></span>
 
               <article
-                className={`explore-bar check-out ${
-                  isActive === "check-out" ? "active" : ""
-                }`}
+                className={`explore-bar check-out ${isActive === "check-out" ? "active" : ""
+                  }`}
                 onClick={() => setIsActive("check-out")}
               >
                 <div className="check-out-text flex">
@@ -456,9 +453,8 @@ export function ExploreBar() {
               <span className="splitter"></span>
 
               <article
-                className={`explore-bar guests ${
-                  isActive === "guests" ? "active" : ""
-                }`}
+                className={`explore-bar guests ${isActive === "guests" ? "active" : ""
+                  }`}
                 onClick={() => setIsActive("guests")}
               >
                 <div className="guests-text flex">
@@ -467,9 +463,8 @@ export function ExploreBar() {
                     type="text"
                     placeholder="Add guests"
                     className="guests-input"
-                    value={`${
-                      selectedGuests.adults + selectedGuests.children
-                    } guests ${selectedGuests.infants} infants`}
+                    value={`${selectedGuests.adults + selectedGuests.children
+                      } guests ${selectedGuests.infants} infants`}
                     readOnly
                   />
                   {isActive === "guests" && (
@@ -662,18 +657,18 @@ export function ExploreBar() {
             <div className="ebm-search-bar flex">
               <div className="ebm-search-logo">
                 <CgSearch />
-            </div>
-                <div className="ebm-search-text">
-                  <div className="ebm-search-location">
-                    <span>Anywhere</span>
-                  </div>
+              </div>
+              <div className="ebm-search-text">
+                <div className="ebm-search-location">
+                  <span>Anywhere</span>
+                </div>
                 <div className="ebm-search-dates">
                   <span>Anyweek</span>
                   <span className="dot">•</span>
                   <span>Add guests</span>
                 </div>
-                </div>
               </div>
+            </div>
             <div className="ebm-filter-btn flex">
               <svg xmlns="http://www.w3.org/2000/svg">
                 <path d="M5 8a3 3 0 0 1 2.83 2H14v2H7.83A3 3 0 1 1 5 8zm0 2a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm6-8a3 3 0 1 1-2.83 4H2V4h6.17A3 3 0 0 1 11 2zm0 2a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"></path>
