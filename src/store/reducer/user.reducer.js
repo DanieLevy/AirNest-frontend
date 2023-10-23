@@ -9,6 +9,7 @@ export const REMOVE_USER = 'REMOVE_USER'
 export const SET_USERS = 'SET_USERS'
 export const SET_SCORE = 'SET_SCORE'
 export const SET_LOGIN_MODAL = 'SET_LOGIN_MODAL'
+export const SET_REVIEWS_MODAL = 'SET_REVIEWS_MODAL'
 
 const initialState = {
     count: 10,
@@ -16,6 +17,7 @@ const initialState = {
     users: [],
     watchedUser : null,
     loginModal: false,
+    reviewsModal: false
 }
 
 export function userReducer(state = initialState, action) {
@@ -51,6 +53,10 @@ export function userReducer(state = initialState, action) {
 
         case SET_LOGIN_MODAL:
             newState = { ...state, loginModal: action.loginModal }
+            break
+        
+        case SET_REVIEWS_MODAL:
+            newState = { ...state, reviewsModal: action.reviewsModal }
             break
 
         default:

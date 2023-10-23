@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
 import { geocodeByPlaceId } from 'react-google-places-autocomplete';
 
-export function Component() {
+export function Component({ setLocation, stayLocation }) {
+    console.log('stayLocation:', stayLocation)
     const [value, setValue] = useState(null);
 
     async function getPlaceDetails(placeId) {
         try {
+            console.log('value:', value)
             const location = await geocodeByPlaceId(placeId)
 
             const locationDetails = location[0].address_components.reduce((acc, curr) => {
@@ -31,6 +33,7 @@ export function Component() {
             locationDetails.formatedAddress = location[0].formatted_address.split(',')
             locationDetails.placeId = placeId
 
+            setLocation(locationDetails)
             console.log('obj:', locationDetails)
         } catch (error) {
             console.error(error)
@@ -38,7 +41,7 @@ export function Component() {
     };
 
     return (
-        <div>
+        <div>Property address
             <GooglePlacesAutocomplete
                 apiKey='AIzaSyCF6YSAF__0aiqIrTE2ZClywS74stbpWuE'
                 debounce={300}

@@ -3,7 +3,7 @@ import { Component } from "./GooglePlaceAutoComplete";
 import { ImagesEditor } from "./ImagesEditor";
 import MultiSelectLabels from "./MultiSelectLabels";
 
-export function FormEditor({ stay, handleInputChange, handleSubmit, onUrlsChange, onAmenitiesChange, setLabels }) {
+export function FormEditor({ stay, handleInputChange, handleSubmit, onUrlsChange, onAmenitiesChange, setLabels, setLocation }) {
 
     return (
         <section className="main-layout">
@@ -21,9 +21,9 @@ export function FormEditor({ stay, handleInputChange, handleSubmit, onUrlsChange
                 </div>
 
                 <ImagesEditor urls={stay.imgUrls} onUrlsChange={onUrlsChange} className="main" />
-                <Component />
+                <Component setLocation={setLocation} stayLocation={stay.loc.formatedAddress} />
 
-                <div className="flex">
+                {/* <div className="flex">s
                     Country:
                     <input
                         type="text"
@@ -54,7 +54,7 @@ export function FormEditor({ stay, handleInputChange, handleSubmit, onUrlsChange
                         onChange={handleInputChange}
                         required
                     />
-                </div>
+                </div> */}
 
                 <div style={{ display: 'flex', gap: 10 }}>
                     <label>Property type:</label>
