@@ -292,15 +292,15 @@ const stays = [
     _id: 's103',
     name: 'Bairro Alto Modern Loft',
     type: 'Loft',
-    imgUrls: ['/img/img5.jpg', '/img/img6.jpg'],
+    imgUrls: ['/img/img20.jpg', '/img/img21.jpg', '/img/img22.jpg', '/img/img23.jpg', '/img/img24.jpg'],
     price: 110.0,
     summary:
       'Discover the lively Bairro Alto from this modern loft. With high ceilings and an open-concept design, this space is a blend of comfort and style. Surrounded by a plethora of bars, restaurants, and cultural spots, guests can dive into the nightlife or simply enjoy the city views from the balcony. Ideal for solo travelers or couples seeking a vibrant Lisbon experience.',
     capacity: 4,
     room_type: 'Entire home',
-    bedrooms: 1,
-    beds: 2,
-    bathrooms: 1,
+    bedrooms: 5,
+    beds: 3,
+    bathrooms: 4,
     amenities: ['TV', 'Wifi', 'Kitchen', 'Air conditioning', 'Elevator', 'Cooking basics'],
     labels: ['Nightlife', 'Modern', 'City View', 'Vibrant'],
     host: {
@@ -309,12 +309,12 @@ const stays = [
       imgUrl: 'https://a0.muscache.com/im/pictures/def456.jpg?aki_policy=profile_small',
     },
     loc: {
-      country: 'Portugal',
-      countryCode: 'PT',
-      city: 'Lisbon',
+      country: 'Israel',
+      countryCode: 'IL',
+      city: 'Hertliya',
       address: '32 Night st',
-      lat: -8.61508,
-      lng: 41.1433,
+      lat: 32.16486,
+      lng: 34.84417,
     },
     reviews: [
       {
