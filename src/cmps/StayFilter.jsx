@@ -15,6 +15,12 @@ export function StayFilter() {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const [filterModal, setFilterModal] = useState(false);
   const [rangeValues, setRangeValues] = useState([0, 100]);
+  const [inputBoxShadow1, setInputBoxShadow1] = useState(
+    "inset 0 0 0 1px #b0b0b0"
+  );
+  const [inputBoxShadow2, setInputBoxShadow2] = useState(
+    "inset 0 0 0 1px #b0b0b0"
+  );
 
   useEffect(() => {
     const handleResize = () => {
@@ -89,8 +95,18 @@ export function StayFilter() {
           )}
         </section>
       </section>
-      {filterModal && (
-        <section className="filter-modal-container">
+
+        <section className="filter-modal-container"
+        style={filterModal ? 
+          {transform: 'translateY(0)',
+          backgroundColor: 'rgba(0,0,0,0.5)',
+        } 
+        :
+         {transform: 'translateY(100%)',
+          backgroundColor: 'rgba(0,0,0,0)',
+        }
+      }
+        >
           <div className="filter-modal">
             <div className="filter-modal-header">
               <div
@@ -131,7 +147,10 @@ export function StayFilter() {
                   />
                 </div>
                 <div className="price-range-inputs">
-                  <div className="price-range-input">
+                  <div
+                    className="price-range-input"
+                    style={{ boxShadow: inputBoxShadow1 }}
+                  >
                     <label htmlFor="min">Minimum</label>
                     <div className="input-container flex align-center">
                       <span>$</span>
@@ -140,11 +159,21 @@ export function StayFilter() {
                         placeholder="Min"
                         id="min"
                         value={rangeValues[0]}
+                        onFocus={() => {
+                          setInputBoxShadow1('inset 0 0 0 2px #222');
+                        }}
+                        onBlur={() => {
+                          setInputBoxShadow1('inset 0 0 0 1px #b0b0b0');
+                        }}
+
                       />
                     </div>
                   </div>
                   <div className="price-range-divider"></div>
-                  <div className="price-range-input">
+                  <div
+                    className="price-range-input"
+                    style={{ boxShadow: inputBoxShadow2 }}
+                  >
                     <label htmlFor="max">Maximum</label>
                     <div className="input-container flex align-center">
                       <span>$</span>
@@ -153,6 +182,12 @@ export function StayFilter() {
                         placeholder="Max"
                         id="max"
                         value={rangeValues[1]}
+                        onFocus={() => {
+                          setInputBoxShadow2('inset 0 0 0 2px #222');
+                        }}
+                        onBlur={() => {
+                          setInputBoxShadow2('inset 0 0 0 1px #b0b0b0');
+                        }} 
                       />
                     </div>
                   </div>
@@ -167,7 +202,6 @@ export function StayFilter() {
             </div>
           </div>
         </section>
-      )}
     </React.Fragment>
   );
 }
