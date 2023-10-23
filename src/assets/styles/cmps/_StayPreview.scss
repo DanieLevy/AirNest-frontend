@@ -171,6 +171,10 @@
   z-index: 1;
   transition: opacity 0.3s ease-in-out;
 
+  .image-gallery-slides {
+    border-radius: 5%;
+  }
+
   svg {
     width: 25px !important;
     height: 25px !important;
@@ -204,8 +208,4 @@
     opacity: 1;
   }
   
-}
-
-.image-gallery-slides {
-  border-radius: 5%;
 }
