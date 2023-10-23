@@ -37,20 +37,20 @@ export function OrderList() {
       },
       {
         Header: 'Start Date',
-        accessor: 'startDate',
+        accessor: 'checkIn',
         Cell: ({ value }) => new Date(value).toLocaleDateString(),
       },
       {
         Header: 'End Date',
-        accessor: 'endDate',
+        accessor: 'checkOut',
         Cell: ({ value }) => new Date(value).toLocaleDateString(),
       },
       {
         Header: 'Total Price',
         accessor: 'totalPrice',
         Cell: ({ row }) => {
-          const checkInDate = new Date(row.original.startDate)
-          const checkOutDate = new Date(row.original.endDate)
+          const checkInDate = new Date(row.original.checkIn)
+          const checkOutDate = new Date(row.original.checkOut)
           const differenceInTime = checkOutDate.getTime() - checkInDate.getTime()
           let differenceInDays = Math.ceil(differenceInTime / (1000 * 3600 * 24))
 

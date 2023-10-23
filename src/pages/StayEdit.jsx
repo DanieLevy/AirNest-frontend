@@ -20,7 +20,7 @@ export function StayEdit() {
     try {
       const stay = await stayService.getById(stayId)
       setStay(stay)
-    } catch (error) {
+    } catch (err) {
       console.log('loadToy err:', err)
     }
   }

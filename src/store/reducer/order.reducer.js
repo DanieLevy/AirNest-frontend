@@ -24,8 +24,6 @@ const initialState = {
 export function orderReducer(state = initialState, action = {}) {
   switch (action.type) {
     case SET_ORDERS:
-      console.log('🚀 ~ file: order.reducer.js:15 ~ orderReducer ~ action.orders:', action.orders)
-
       return { ...state, orders: action.orders }
 
     case ADD_ORDER:

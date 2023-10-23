@@ -5,6 +5,7 @@ import { OrderList } from '../cmps/Order/OrderList'
 
 export function OrderIndex() {
   const orders = useSelector((storeState) => storeState.orderModule.orders)
+  const logginUser = useSelector((storeState) => storeState.orderModule.user)
   console.log('orders:', orders)
   const isLoading = useSelector((storeState) => storeState.systemModule.isLoading)
 
