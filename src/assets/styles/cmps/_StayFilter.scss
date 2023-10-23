@@ -119,9 +119,11 @@
                         transition: box-shadow 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
                         max-height: 52px;
                         padding: 4px;
+                        width: 45%;
 
                         & .input-container {
                             padding: 0px 8px 8px 8px;
+                            gap: 3px;
 
                             span {
                                 font-family: cereal;
