@@ -5,7 +5,7 @@ export function ListingList({ stays }) {
   return (
     <ul>
       {stays.map((stay) => (
-        <ListingPreview key={stay.id} stay={stay} />
+        <ListingPreview key={stay._id} stay={stay} />
       ))}
     </ul>
   )

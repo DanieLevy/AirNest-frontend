@@ -40,8 +40,12 @@ function getById(stayId) {
 }
 async function getStaysByUserId(userId) {
   let stays = await storageService.query(STORAGE_KEY)
-  return stays.filter((stay) => stay._id === userId)
 
+  console.log('🚀 ~ file: stay.service.local.js:46 ~ getStaysByUserId ~ stays:', stays)
+
+  stays = stays.filter((stay) => stay.host._id === userId)
+
+  return stays
   // if (filterBy.logginUser) {
   //   return stays.filter((stay) => stay.host._id === filterBy.logginUser._id)
   // }
