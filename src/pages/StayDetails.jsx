@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { stayService } from '../services/stay.service.local.js'
 import { StayDescription } from '../cmps/StayDetails/StayDescription.jsx'
 import { StayHeader } from '../cmps/StayDetails/StayHeader.jsx'
@@ -18,6 +18,8 @@ export function StayDetails() {
   const { stayId } = useParams()
   const navigate = useNavigate()
   const dispatch = useDispatch()
+
+  const [searchParams] = useSearchParams();
 
   const isLoading = useSelector((state) => state.systemModule.isLoading)
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768)

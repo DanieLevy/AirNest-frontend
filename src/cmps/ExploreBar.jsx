@@ -17,11 +17,16 @@ import { AiOutlineMinus } from "react-icons/ai"
 import { AiOutlinePlus } from "react-icons/ai"
 import { CiLocationArrow1 } from "react-icons/ci"
 import { CgSearch } from "react-icons/cg"
+import { useSearchParams } from 'react-router-dom';
+import { QUERY_KEYS } from "../services/util.service"
+import { utilService } from "../services/util.service"
 
 export function ExploreBar() {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [isExpanded, setIsExpanded] = useState(false)
   const [isActive, setIsActive] = useState("location")
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768)
+
   const [formData, setFormData] = useState({
     location: "",
     startDate: null,
@@ -34,7 +39,7 @@ export function ExploreBar() {
   })
 
   const [selectedGuests, setSelectedGuests] = useState({
-    adults: 1,
+    adults: 0,
     children: 0,
     infants: 0,
     pets: 0,
@@ -89,10 +94,12 @@ export function ExploreBar() {
       // setIsActive("check-out")
       return
     }
+
     if (!selectedRange.from) {
       setIsActive("check-out")
       setSelectedRange({ from: date, to: null })
     }
+
     if (selectedRange.from && !selectedRange.to) {
       setIsActive("guests")
       setSelectedRange({ from: selectedRange.from, to: date })
@@ -115,6 +122,7 @@ export function ExploreBar() {
     ev.stopPropagation()
     setIsExpanded(!isExpanded)
   }
+
   function handleDocumentClick(ev) {
     console.log("clicked outside")
     if (
@@ -126,6 +134,7 @@ export function ExploreBar() {
       setIsActive(null)
     }
   }
+
   function handleLocationClick(e) {
     e.stopPropagation()
     let locationText
@@ -156,28 +165,29 @@ export function ExploreBar() {
 
   function handleSubmit(ev) {
     ev.preventDefault();
-    console.log('formData:', formData)
-    console.log('selectedGuests', selectedGuests);
 
-    // Check if both selectedRange.from and selectedRange.to are defined
-    if (selectedRange.from && selectedRange.to) {
-      const fromTimestamp = selectedRange.from.getTime();
-      const toTimestamp = selectedRange.to.getTime();
-      alert(
-        `Location: ${formData.location},
-         Start Date: ${fromTimestamp},
-          End Date: ${toTimestamp},
-           Guests: ${selectedGuests.adults} Adults,
-            ${selectedGuests.children} Children,
-             ${selectedGuests.infants} Infants,
-              ${selectedGuests.pets} Pets`
-      );
-    } else {
-      // Handle the case when either selectedRange.from or selectedRange.to is not defined
-      alert("Please select both check-in and check-out dates.");
+    if (selectedRange.from && !selectedRange.to) {
+      const inputDate = new Date(selectedRange.from)
+      inputDate.setDate(inputDate.getDate() + 1)
+      selectedRange.to = inputDate.toString()
     }
-  }
+    if (selectedRange.to && !selectedRange.from) {
+      const inputDate = new Date(selectedRange.to)
+      inputDate.setDate(inputDate.getDate() - 1)
+      selectedRange.from = inputDate.toString()
+    }
 
+    setSearchParams({
+      [QUERY_KEYS.region]: formData.location,
+      [QUERY_KEYS.checkin]: selectedRange.from,
+      [QUERY_KEYS.checkout]: selectedRange.to,
+      [QUERY_KEYS.adults]: selectedGuests.adults,
+      [QUERY_KEYS.children]: selectedGuests.children,
+      [QUERY_KEYS.infants]: selectedGuests.infants,
+      [QUERY_KEYS.pets]: selectedGuests.pets,
+    });
+    setIsExpanded(false)
+  }
 
   return (
     <React.Fragment>
@@ -192,7 +202,7 @@ export function ExploreBar() {
             className="location-btn"
             onClick={() => setIsActive("location")}
           >
-            Anywhere
+            {searchParams.get([QUERY_KEYS.region]) ? `${searchParams.get([QUERY_KEYS.region])}`.split(',')[0] : 'Anywhere'}
           </button>
           <span className="splitter"></span>
           <button
@@ -200,7 +210,9 @@ export function ExploreBar() {
             className="dates-btn"
             onClick={() => setIsActive("check-in")}
           >
-            Anyweek
+            {searchParams.get([QUERY_KEYS.checkin]) && searchParams.get([QUERY_KEYS.checkout]) ?
+              `${utilService.getDayAndMonthFromDate(searchParams.get([QUERY_KEYS.checkin]))} - ${utilService.getDayAndMonthFromDate(searchParams.get([QUERY_KEYS.checkout]))}`
+              : 'Anyweek'}
           </button>
           <span className="splitter"></span>
           <button
@@ -208,7 +220,7 @@ export function ExploreBar() {
             className="guests-btn"
             onClick={() => setIsActive("guests")}
           >
-            Add guests
+            {searchParams.get([QUERY_KEYS.adults]) ? `${(+searchParams.get([QUERY_KEYS.adults])) + (+searchParams?.get([QUERY_KEYS.children]))} guests` : 'Add guests'}
           </button>
           <button type="button" className="search-btn">
             <IoSearch />

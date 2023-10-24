@@ -8,11 +8,14 @@ import { StayMapIndex } from "../cmps/StayMapIndex.jsx"
 import { HiMiniMap } from "react-icons/hi2"
 import { HiMiniListBullet } from "react-icons/hi2"
 import { StayFilter } from "../cmps/StayFilter.jsx"
+import { useSearchParams } from "react-router-dom"
+import { QUERY_KEYS } from "../services/util.service.js"
 
 export function StayIndex() {
   const [listMode, setListMode] = useState(true) // true = list, false = map
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768)
   const [isVisible, setIsVisible] = useState(true)
+  const [searchParams] = useSearchParams();
 
   const stays = useSelector((storeState) => storeState.stayModule.stays)
   const isLoading = useSelector(
@@ -20,8 +23,8 @@ export function StayIndex() {
   )
 
   useEffect(() => {
-    loadStays()
-
+    loadStays(searchParams)
+    
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768)
     }
@@ -40,7 +43,7 @@ export function StayIndex() {
     return () => {
       window.removeEventListener("resize", handleResize)
     }
-  }, [])
+  }, [searchParams])
 
   return (
     <React.Fragment>
@@ -48,9 +51,8 @@ export function StayIndex() {
       <main className="main-layout stay-index">
         <section>
           <div
-            className={`show-map-btn-container ${
-              isVisible && isMobile ? "" : "hidden"
-            }`}
+            className={`show-map-btn-container ${isVisible && isMobile ? "" : "hidden"
+              }`}
             style={{ bottom: isMobile ? "75px" : "80px" }}
           >
             <button
