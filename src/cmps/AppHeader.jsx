@@ -164,7 +164,9 @@ export function AppHeader() {
                         </Link>
                         <div className='divider'></div>
                         <li>DashBoard</li>
-                        <li>Listing</li>
+                        <Link to={`/user/${user._id}`} style={{ textDecorationLine: 'none' }}>
+                          <li>Listings</li>
+                        </Link>
                         <div className='divider'></div>
                         <li
                           onClick={() => {
