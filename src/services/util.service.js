@@ -6,7 +6,34 @@ export const utilService = {
     randomPastTime,
     saveToStorage,
     loadFromStorage,
-    getAssetSrc
+    getAssetSrc,
+    getDayAndMonthFromDate
+}
+
+export const QUERY_KEYS = {
+    region: 'region',
+    checkin: 'checkin',
+    checkout: 'checkout',
+    adults: 'adults',
+    children: 'children',
+    infants: 'infants',
+    pets: 'pets',
+}
+
+function getDayAndMonthFromDate(dateString) {
+    const dateObject = new Date(dateString)
+
+    const day = dateObject.getDate()
+    const monthNumber = dateObject.getMonth()
+
+    const monthNames = [
+        'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+        'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+    ]
+
+    const month = monthNames[monthNumber]
+
+    return [month, day].toString().replace(',', ' ')
 }
 
 function makeId(length = 6) {

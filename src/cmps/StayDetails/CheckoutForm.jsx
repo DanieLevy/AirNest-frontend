@@ -8,6 +8,7 @@ import { DayPicker } from "react-day-picker"
 import { AiOutlineMinus } from "react-icons/ai"
 import { AiOutlinePlus } from "react-icons/ai"
 import { is } from "date-fns/locale"
+import { useSearchParams } from "react-router-dom"
 
 // import { is } from 'date-fns/locale'
 
@@ -19,19 +20,21 @@ import { is } from "date-fns/locale"
 
 export function CheckoutForm({ onSubmit, price, reviews }) {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768)
+  const [searchParams] = useSearchParams();
+
   const [isStayPage, setIsStayPage] = useState(
     location.pathname.startsWith("/stay")
   )
   const [selectedRange, setSelectedRange] = useState(
     isStayPage && isMobile
       ? {
-          from: new Date(),
-          to: addDays(new Date(), 3),
-        }
+        from: new Date(),
+        to: addDays(new Date(), 3),
+      }
       : {
-          from: null,
-          to: null,
-        }
+        from: null,
+        to: null,
+      }
   )
 
   const [isDatesModal, setIsDatesModal] = useState(false)
@@ -91,15 +94,15 @@ export function CheckoutForm({ onSubmit, price, reviews }) {
       isDatesModal ? setIsDatesModal(false) : setIsDatesModal(true);
       return;
     }
-    
-  
+
+
     // Check if both selectedRange.from and selectedRange.to are defined
     if (selectedRange.from && selectedRange.to) {
       // Calculate the time difference
       const checkInTs = selectedRange.from.getTime();
       const checkOutTs = selectedRange.to.getTime();
       const nights = dateDiffDays;
-  
+
       const formData = {
         checkIn: checkInTs,
         checkOut: checkOutTs,
@@ -107,7 +110,7 @@ export function CheckoutForm({ onSubmit, price, reviews }) {
         totalPrice: totalPlusFee,
         nights: nights,
       };
-  
+
       onSubmit(formData);
     } else {
       // Handle the case when either selectedRange.from or selectedRange.to is not defined
@@ -214,31 +217,25 @@ export function CheckoutForm({ onSubmit, price, reviews }) {
                 >
                   <label className="reservation-guests-label">GUESTS</label>
                   <input
-                    placeholder={`${selectedGuests.adults} guests ${
-                      selectedGuests.children
+                    placeholder={`${selectedGuests.adults} guests ${selectedGuests.children
                         ? `, ${selectedGuests.children} children`
                         : ""
-                    } ${
-                      selectedGuests.infants
+                      } ${selectedGuests.infants
                         ? `, ${selectedGuests.infants} infants`
                         : ""
-                    } ${
-                      selectedGuests.pets ? `, ${selectedGuests.pets} pets` : ""
-                    }`}
+                      } ${selectedGuests.pets ? `, ${selectedGuests.pets} pets` : ""
+                      }`}
                     name="guests"
                     required
                     readOnly
-                    value={`${selectedGuests.adults} guests ${
-                      selectedGuests.children
+                    value={`${selectedGuests.adults} guests ${selectedGuests.children
                         ? `, ${selectedGuests.children} children`
                         : ""
-                    } ${
-                      selectedGuests.infants
+                      } ${selectedGuests.infants
                         ? `, ${selectedGuests.infants} infants`
                         : ""
-                    } ${
-                      selectedGuests.pets ? `, ${selectedGuests.pets} pets` : ""
-                    }`}
+                      } ${selectedGuests.pets ? `, ${selectedGuests.pets} pets` : ""
+                      }`}
                   />
                 </div>
               </div>

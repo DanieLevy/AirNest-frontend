@@ -5,16 +5,17 @@ import { useEffect } from "react";
 import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { HiArrowSmLeft, HiArrowSmRight } from "react-icons/hi";
 import { userService } from "../services/user.service";
 
 import { loadUser } from "../store/actions/user.actions.js"
 
-
 export function StayPreview({ stay }) {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
-  const stayLink = `/stay/${stay._id}`;
+  const [searchParams] = useSearchParams();
+
+  const stayLink = `/stay/${stay._id}?${searchParams.toString()}`;
 
   useEffect(() => {
     const handleResize = () => {

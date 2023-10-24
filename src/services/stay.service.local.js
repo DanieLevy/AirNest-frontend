@@ -17,17 +17,22 @@ export const stayService = {
 }
 
 window.cs = stayService
-async function query(filterBy = { txt: '', price: 0 }) {
-  let stays = await storageService.query(STORAGE_KEY)
-  // if (filterBy.txt) {
-  //     const regex = new RegExp(filterBy.txt, 'i')
-  //     stays = stays.filter(stay => regex.test(stay.vendor) || regex.test(stay.description))
-  // }
-  // if (filterBy.price) {
-  //     stays = stays.filter(stay => stay.price <= filterBy.price)
-  // }
 
-  return stays
+async function query(params) {
+  const paramsObject = {}
+  for (const key of params.keys()) {
+    paramsObject[key] = params.get(key)
+  }
+  console.log('paramsObject:', paramsObject)
+
+  let capacity = +paramsObject?.adults + +paramsObject?.children
+  let stays = await storageService.query(STORAGE_KEY)
+  let staysToReturn = stays
+  console.log('capacity:', capacity)
+
+  if (capacity) staysToReturn = staysToReturn.filter((stay) => stay.capacity >= capacity)
+  if (paramsObject.region) staysToReturn = staysToReturn.filter((stay) => stay.loc.country === paramsObject.region.split(',')[0])
+  return staysToReturn
 }
 
 function getById(stayId) {
