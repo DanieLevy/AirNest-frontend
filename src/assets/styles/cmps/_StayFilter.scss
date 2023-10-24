@@ -155,6 +155,11 @@
                             height: 100%;
                             cursor: text;
                         }
+
+                        input:checked {
+                            background-color: #222222;
+                            color: #ffffff;
+                        }
                     }
                 }
 
