@@ -31,14 +31,7 @@ export function StayIndex() {
 
     let prevScrollY = 0
 
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY
-      currentScrollY > prevScrollY ? setIsVisible(false) : setIsVisible(true)
-      prevScrollY = currentScrollY
-    }
-
     window.addEventListener("resize", handleResize)
-    window.addEventListener("scroll", handleScroll)
 
     return () => {
       window.removeEventListener("resize", handleResize)
