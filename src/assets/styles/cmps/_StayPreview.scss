@@ -61,7 +61,7 @@
     .preview-header {
       justify-content: space-between;
       align-items: center;
-      
+
       & .preview-name {
         max-width: 80%;
         overflow: hidden;
@@ -73,6 +73,7 @@
           overflow: hidden;
           white-space: nowrap;
           text-overflow: ellipsis;
+          height: 16px;
         }
       }
     }
@@ -211,6 +212,10 @@
     border: 1px solid rgba(0, 0, 0, 0.08);
     box-shadow: #0000 0 0 0 1px;
     color: #000;
+
+    &:hover {
+      background-color: #ffffffef;
+    }
   }
 
   &.left-nav {
@@ -218,6 +223,11 @@
     top: 50%;
     transform: translateY(-50%);
     left: 0;
+
+    svg {
+      width: 13px;
+      height: 13px;
+    }
   }
 
   &.right-nav {

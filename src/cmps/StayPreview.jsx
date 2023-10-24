@@ -4,9 +4,9 @@ import { useState } from "react";
 import { useEffect } from "react";
 import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Link, useSearchParams } from "react-router-dom";
-import { HiArrowSmLeft, HiArrowSmRight } from "react-icons/hi";
+import { HiMiniChevronLeft, HiMiniChevronRight } from "react-icons/hi2";
 import { userService } from "../services/user.service";
 
 import { store } from "../store/store";
@@ -71,7 +71,7 @@ export function StayPreview({ stay }) {
         }}
         aria-label="Previous Slide"
       >
-        <HiArrowSmLeft />
+        <HiMiniChevronLeft />
       </button>
     );
   };
@@ -87,7 +87,7 @@ export function StayPreview({ stay }) {
         }}
         aria-label="Next Slide"
       >
-        <HiArrowSmRight />
+        <HiMiniChevronRight />
       </button>
     );
   };
@@ -150,7 +150,7 @@ export function StayPreview({ stay }) {
           <div className="stay-card-details">
             <div className="preview-header flex">
               <div className="preview-name">
-              <h1>{stay.name}</h1>
+                <h1>{stay.name}</h1>
               </div>
               <div className="preview-rating">
                 <i className="fa-solid fa-star"></i>
@@ -178,8 +178,8 @@ export function StayPreview({ stay }) {
         >
           <div className="stay-card-details">
             <div className="preview-header flex">
-            <div className="preview-name">
-              <h1>{stay.name}</h1>
+              <div className="preview-name">
+                <h1>{stay.name}</h1>
               </div>
               <div className="preview-rating">
                 <svg
