@@ -40,10 +40,10 @@ export function getActionConfirmOrder() {
 }
 
 // Asynchronous Functions
-export async function loadOrders() {
+export async function loadOrders(filterbBy = {}) {
   store.dispatch({ type: LOADING_START })
   try {
-    const orders = await orderService.query()
+    const orders = await orderService.query(filterbBy)
 
     store.dispatch({ type: SET_ORDERS, orders })
   } catch (err) {

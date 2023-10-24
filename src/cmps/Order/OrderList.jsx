@@ -5,8 +5,6 @@ import { useTable } from 'react-table'
 export function OrderList() {
   const data = useSelector((storeState) => storeState.orderModule.orders)
 
-  console.log('🚀 ~ file: OrderList.jsx:8 ~ OrderList ~ orders:', data)
-
   //   const orders = useMemo(
   //     () => [
   //       {

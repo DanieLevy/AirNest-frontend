@@ -13,6 +13,7 @@ export const stayService = {
   addStayMsg,
   getLabels,
   getAmenities,
+  getStaysByUserId,
 }
 
 window.cs = stayService
@@ -25,11 +26,20 @@ async function query(filterBy = { txt: '', price: 0 }) {
   // if (filterBy.price) {
   //     stays = stays.filter(stay => stay.price <= filterBy.price)
   // }
+
   return stays
 }
 
 function getById(stayId) {
   return storageService.get(STORAGE_KEY, stayId)
+}
+async function getStaysByUserId(userId) {
+  let stays = await storageService.query(STORAGE_KEY)
+  return stays.filter((stay) => stay._id === userId)
+
+  // if (filterBy.logginUser) {
+  //   return stays.filter((stay) => stay.host._id === filterBy.logginUser._id)
+  // }
 }
 
 async function remove(stayId) {
@@ -346,9 +356,9 @@ const stays = [
     amenities: ['TV', 'Wifi', 'Kitchen', 'Balcony', 'Free parking', 'Cooking basics'],
     labels: ['Riverside', 'Serene', 'Historic Area', 'Scenic View'],
     host: {
-      _id: 'u107',
-      fullname: 'Ana Costa',
-      imgUrl: 'https://a0.muscache.com/im/pictures/ghi789.jpg?aki_policy=profile_small',
+      _id: 'hzf46',
+      fullname: 'test3',
+      imgUrl: 'https://upcdn.io/W142hJk/raw/demo/4m5QTjiUCW.jpg',
     },
     loc: {
       country: 'Portugal',

@@ -12,9 +12,8 @@ async function query(filterBy = {}) {
   try {
     const orders = await storageService.query('order')
 
-    // If a userId is provided in filterBy, filter the orders by that userId.
-    if (filterBy.userId) {
-      return orders.filter((order) => order.userId === filterBy.userId)
+    if (filterBy.logginUser) {
+      return orders.filter((order) => order.buyer._id === filterBy.logginUser._id)
     }
 
     return orders
