@@ -149,7 +149,9 @@ export function StayPreview({ stay }) {
         <Link to={stayLink} className="stay-card">
           <div className="stay-card-details">
             <div className="preview-header flex">
+              <div className="preview-name">
               <h1>{stay.name}</h1>
+              </div>
               <div className="preview-rating">
                 <i className="fa-solid fa-star"></i>
                 <span>{reviewsAvg.toFixed(2)}</span>
@@ -176,7 +178,9 @@ export function StayPreview({ stay }) {
         >
           <div className="stay-card-details">
             <div className="preview-header flex">
+            <div className="preview-name">
               <h1>{stay.name}</h1>
+              </div>
               <div className="preview-rating">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

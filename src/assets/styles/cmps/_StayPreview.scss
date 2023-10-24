@@ -14,7 +14,7 @@
     position: relative;
 
     .image-gallery-image {
-      border-radius: 5%!important;
+      border-radius: 5% !important;
     }
 
     .heart-icon {
@@ -61,6 +61,20 @@
     .preview-header {
       justify-content: space-between;
       align-items: center;
+      
+      & .preview-name {
+        max-width: 80%;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+
+        h1 {
+          max-width: 100%;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
+      }
     }
 
     .preview-header,
@@ -69,6 +83,7 @@
     .preview-summary,
     .preview-dates,
     .preview-price {
+      max-width: 100%;
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
@@ -97,6 +112,15 @@
     .preview-summary,
     .preview-dates {
       color: $clr4;
+    }
+
+    .preview-summary {
+      p {
+        max-width: 100%;
+        overflow-x: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
     }
 
     .preview-price .price-span {
@@ -158,7 +182,7 @@
 
 .main-image-gallery {
   color: #fff;
-  transition: all .3s ease-out;
+  transition: all 0.3s ease-out;
   appearance: none;
   background-color: transparent;
   border: 0;
@@ -206,5 +230,4 @@
   &:hover {
     opacity: 1;
   }
-  
 }
