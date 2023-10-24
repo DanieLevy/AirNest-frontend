@@ -4,20 +4,20 @@ import { useState } from "react";
 import { useEffect } from "react";
 import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useSearchParams } from "react-router-dom";
 import { HiArrowSmLeft, HiArrowSmRight } from "react-icons/hi";
 import { userService } from "../services/user.service";
 
-import { loadUser } from "../store/actions/user.actions.js";
-import { stayService } from "../services/stay.service.local.js";
+import { store } from "../store/store";
+import { stayService } from "../services/stay.service.local";
 
 export function StayPreview({ stay }) {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const [searchParams] = useSearchParams();
 
   const stayLink = `/stay/${stay._id}?${searchParams.toString()}`;
-  const user = useSelector((storeState) => storeState.userModule.user)
+  const user = useSelector((storeState) => storeState.userModule.user);
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768);
@@ -30,26 +30,27 @@ export function StayPreview({ stay }) {
     };
   }, []);
 
+  const isLiked = () => {
+    if (!user) return false;
+    return stay.likedByUsers.some((likedUser) => likedUser._id === user._id);
+  };
+
   async function handleLike(ev) {
-    console.log(userService.getLoggedinUser(),'user');
     ev.stopPropagation();
     if (!user) {
-      alert('Please login to like a stay')
-      return
+      alert("Please login to like a stay");
+      return;
     }
-    // check if user already liked this stay, if yes - remove like and save the stay (update) at stay.likedByUsers
-    // if not - add like and save the stay (update) at stay.likedByUsers
-
-    const isLiked = stay.likedByUsers.some((user) => user._id === userService.getLoggedinUser()._id)
-    if (isLiked) {
-      const idx = stay.likedByUsers.findIndex((user) => user._id === userService.getLoggedinUser()._id)
-      stay.likedByUsers.splice(idx, 1)
+    if (isLiked()) {
+      const idx = stay.likedByUsers.findIndex(
+        (user) => user._id === userService.getLoggedinUser()._id
+      );
+      stay.likedByUsers.splice(idx, 1);
     } else {
-      stay.likedByUsers.push(user)
+      stay.likedByUsers.push(user);
     }
-    await stayService.save(stay)
-    // dispatch(loadUser())
-
+    await stayService.save(stay);
+    store.dispatch({ type: "UPDATE_STAY", stay });
   }
 
   const reviewsAvg =
@@ -91,8 +92,6 @@ export function StayPreview({ stay }) {
     );
   };
 
-  const isLiked = stay.likedByUsers.some((user) => user._id === userService.getLoggedinUser()._id)
-
   const HeartOutlineIcon = () => (
     <svg
       viewBox="0 0 32 32"
@@ -100,26 +99,29 @@ export function StayPreview({ stay }) {
       aria-hidden="true"
       role="presentation"
       focusable="false"
-      className="heart-icon">
-      <path
-      d="m16 28c7-4.733 14-10 14-17 0-1.792-.683-3.583-2.05-4.95-1.367-1.366-3.158-2.05-4.95-2.05-1.791 0-3.583.684-4.949 2.05l-2.051 2.051-2.05-2.051c-1.367-1.366-3.158-2.05-4.95-2.05-1.791 0-3.583.684-4.949 2.05-1.367 1.367-2.051 3.158-2.051 4.95 0 7 7 12.267 14 17z"></path>
+      className="heart-icon"
+    >
+      <path d="m16 28c7-4.733 14-10 14-17 0-1.792-.683-3.583-2.05-4.95-1.367-1.366-3.158-2.05-4.95-2.05-1.791 0-3.583.684-4.949 2.05l-2.051 2.051-2.05-2.051c-1.367-1.366-3.158-2.05-4.95-2.05-1.791 0-3.583.684-4.949 2.05-1.367 1.367-2.051 3.158-2.051 4.95 0 7 7 12.267 14 17z"></path>
     </svg>
   );
 
   const HeartFillIcon = () => (
     <svg
-    viewBox="0 0 32 32"
-    xmlns="http://www.w3.org/2000/svg"
-    aria-hidden="true"
-    role="presentation"
-    focusable="false"
-    className="heart-icon">
-    <path
-    fill="#FF385C"
-    d="m16 28c7-4.733 14-10 14-17 0-1.792-.683-3.583-2.05-4.95-1.367-1.366-3.158-2.05-4.95-2.05-1.791 0-3.583.684-4.949 2.05l-2.051 2.051-2.05-2.051c-1.367-1.366-3.158-2.05-4.95-2.05-1.791 0-3.583.684-4.949 2.05-1.367 1.367-2.051 3.158-2.051 4.95 0 7 7 12.267 14 17z"></path>
-  </svg>
+      viewBox="0 0 32 32"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+      role="presentation"
+      focusable="false"
+      className="heart-icon"
+    >
+      <path
+        fill="#FF385C"
+        d="m16 28c7-4.733 14-10 14-17 0-1.792-.683-3.583-2.05-4.95-1.367-1.366-3.158-2.05-4.95-2.05-1.791 0-3.583.684-4.949 2.05l-2.051 2.051-2.05-2.051c-1.367-1.366-3.158-2.05-4.95-2.05-1.791 0-3.583.684-4.949 2.05-1.367 1.367-2.051 3.158-2.051 4.95 0 7 7 12.267 14 17z"
+      ></path>
+    </svg>
   );
 
+  console.log(isLiked());
 
   return (
     <article
@@ -127,10 +129,8 @@ export function StayPreview({ stay }) {
       onClick={() => window.open(stayLink, "_blank")}
     >
       <div className="preview-img">
-        <div
-          onClick={handleLike}
-        >
-          {isLiked ? <HeartFillIcon /> : <HeartOutlineIcon />}
+        <div onClick={handleLike}>
+          {isLiked() ? <HeartFillIcon /> : <HeartOutlineIcon />}
         </div>
         <ImageGallery
           items={images}
