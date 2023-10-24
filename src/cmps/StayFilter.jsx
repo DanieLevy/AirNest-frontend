@@ -196,72 +196,122 @@ export function StayFilter() {
                 </div>
               </div>
             </div>
-              <div className="stay-details">
-                <div className="stay-details-title">Rooms and beds</div>
-                <div className="details-title">Bedrooms</div>
-                <div className="details-inputs">
-                  {["Any", "1", "2", "3", "4", "5", "6", "7", "8+"].map(
-                    (label) => (
-                      <div className="details-input" key={label}>
-                        <button
-                          className={`details-btn ${
-                            selectedBedrooms === label ? "selected" : ""
-                          }`}
-                          onClick={() => {
-                            console.log(label);
-                            setSelectedBedrooms(label);
-                          }}
-                        >
-                          <span>{label}</span>
-                        </button>
-                      </div>
-                    )
-                  )}
-                </div>
+            <div className="stay-details">
+              <div className="stay-details-title">Rooms and beds</div>
+              <div className="details-title">Bedrooms</div>
+              <div className="details-inputs">
+                {["Any", "1", "2", "3", "4", "5", "6", "7", "8+"].map(
+                  (label) => (
+                    <div className="details-input" key={label}>
+                      <button
+                        className={`details-btn ${
+                          selectedBedrooms === label ? "selected" : ""
+                        }`}
+                        onClick={() => {
+                          console.log(label);
+                          setSelectedBedrooms(label);
+                        }}
+                      >
+                        <span>{label}</span>
+                      </button>
+                    </div>
+                  )
+                )}
+              </div>
 
-                <div className="details-title">Beds</div>
-                <div className="details-inputs">
-                  {["Any", "1", "2", "3", "4", "5", "6", "7", "8+"].map(
-                    (label) => (
-                      <div className="details-input" key={label}>
-                        <button
-                          className={`details-btn ${
-                            selectedBeds === label ? "selected" : ""
-                          }`}
-                          onClick={() => {
-                            console.log(label);
-                            setSelectedBeds(label);
-                          }}
-                        >
-                          <span>{label}</span>
-                        </button>
-                      </div>
-                    )
-                  )}
-                </div>
+              <div className="details-title">Beds</div>
+              <div className="details-inputs">
+                {["Any", "1", "2", "3", "4", "5", "6", "7", "8+"].map(
+                  (label) => (
+                    <div className="details-input" key={label}>
+                      <button
+                        className={`details-btn ${
+                          selectedBeds === label ? "selected" : ""
+                        }`}
+                        onClick={() => {
+                          console.log(label);
+                          setSelectedBeds(label);
+                        }}
+                      >
+                        <span>{label}</span>
+                      </button>
+                    </div>
+                  )
+                )}
+              </div>
 
-                <div className="details-title">Bathrooms</div>
-                <div className="details-inputs">
-                  {["Any", "1", "2", "3", "4", "5", "6", "7", "8+"].map(
-                    (label) => (
-                      <div className="details-input" key={label}>
-                        <button
-                          className={`details-btn ${
-                            selectedBathrooms === label ? "selected" : ""
-                          }`}
-                          onClick={() => {
-                            console.log(label);
-                            setSelectedBathrooms(label);
-                          }}
-                        >
-                          <span>{label}</span>
-                        </button>
-                      </div>
-                    )
-                  )}
+              <div className="details-title">Bathrooms</div>
+              <div className="details-inputs">
+                {["Any", "1", "2", "3", "4", "5", "6", "7", "8+"].map(
+                  (label) => (
+                    <div className="details-input" key={label}>
+                      <button
+                        className={`details-btn ${
+                          selectedBathrooms === label ? "selected" : ""
+                        }`}
+                        onClick={() => {
+                          console.log(label);
+                          setSelectedBathrooms(label);
+                        }}
+                      >
+                        <span>{label}</span>
+                      </button>
+                    </div>
+                  )
+                )}
+              </div>
+            </div>
+            <div className="stay-ammenities">
+              <div className="stay-ammenities-title">Amenities</div>
+              <div className="ammenities-section-title">
+                <span>Essentials</span>
+              </div>
+              <div className="ammenities-section">
+                <div className="ammenities-input">
+                  <input type="checkbox" id="wifi" />
+                  <label htmlFor="wifi">Wifi</label>
+                </div>
+                <div className="ammenities-input">
+                  <input type="checkbox" id="washer" />
+                  <label htmlFor="washer">Washer</label>
+                </div>
+                <div className="ammenities-input">
+                  <input type="checkbox" id="air-conditioning" />
+                  <label htmlFor="air-conditioning">Air conditioning</label>
+                </div>
+                <div className="ammenities-input">
+                  <input type="checkbox" id="dedicated-workspace" />
+                  <label htmlFor="dedicated-workspace">
+                    Dedicated workspace
+                  </label>
+                </div>
+                <div className="ammenities-input">
+                  <input type="checkbox" id="hair-dryer" />
+                  <label htmlFor="hair-dryer">Hair dryer</label>
+                </div>
+                <div className="ammenities-input">
+                  <input type="checkbox" id="kitchen" />
+                  <label htmlFor="kitchen">Kitchen</label>
+                </div>
+                <div className="ammenities-input">
+                  <input type="checkbox" id="dryer" />
+                  <label htmlFor="dryer">Dryer</label>
+                </div>
+                <div className="ammenities-input">
+                  <input type="checkbox" id="heating" />
+                  <label htmlFor="heating">Heating</label>
+                </div>
+                <div className="ammenities-input">
+                  <input type="checkbox" id="tv" />
+                  <label htmlFor="tv">TV</label>
+                </div>
+                <div className="ammenities-input">
+                  <input type="checkbox" id="iron" />
+                  <label htmlFor="iron">Iron</label>
                 </div>
               </div>
             </div>
+          </div>
           <div className="filter-modal-footer">
             <div className="clear-btn">Clear all</div>
             <div className="search-btn">
