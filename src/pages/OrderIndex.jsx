@@ -18,7 +18,7 @@ export function OrderIndex() {
   }, [logginUser])
 
   return (
-    <main className='main-layout order-index'>
+    <main className='main-layout medium order-index'>
       <section>
         {isLoading && <div>Loading...</div>}
 

@@ -86,7 +86,7 @@ export function AppHeader() {
       {!(isMobile && isStayPage) ? (
         <section
           className={`header-container
-    main-layout ${isStayPage || isOrderPage ? 'small relative' : ''}
+    main-layout ${isStayPage ? 'small relative' : ''} ${isOrderPage ? 'medium relative' : ''}
      ${isExpanded ? 'expanded' : ''}`}
         >
           {!isMobile && (
@@ -102,8 +102,7 @@ export function AppHeader() {
                   ></path>
                 </svg>
               </Link>
-
-              <ExploreBar />
+              {isOrderPage ? '' : <ExploreBar />}
 
               <Link to='/edit' className='nav-text'>
                 <span>Airbnb your home</span>
