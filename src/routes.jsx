@@ -3,6 +3,7 @@ import { OrderIndex } from './pages/OrderIndex.jsx'
 import { StayDetails } from './pages/StayDetails.jsx'
 import { StayEdit } from './pages/StayEdit.jsx'
 import { StayIndex } from './pages/StayIndex.jsx'
+import { UserDetails } from './pages/UserDetails.jsx'
 
 // Routes accesible from the main navigation (in AppHeader)
 const routes = [
@@ -30,6 +31,11 @@ const routes = [
     path: '/edit/:stayId',
     component: <StayEdit />,
     label: 'edit',
+  },
+  {
+    path: '/user/:userId',
+    component: <UserDetails />,
+    label: 'user',
   },
   {
     path: '/order/confirm',

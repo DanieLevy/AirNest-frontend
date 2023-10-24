@@ -5,12 +5,17 @@ import { OrderList } from '../cmps/Order/OrderList'
 
 export function OrderIndex() {
   const orders = useSelector((storeState) => storeState.orderModule.orders)
-  console.log('orders:', orders)
+  const logginUser = useSelector((storeState) => storeState.userModule.user)
+
   const isLoading = useSelector((storeState) => storeState.systemModule.isLoading)
 
   useEffect(() => {
-    loadOrders()
-  }, [])
+    if (logginUser) {
+      loadOrders({ logginUser })
+    } else {
+      loadOrders()
+    }
+  }, [logginUser])
 
   return (
     <main className='main-layout order-index'>

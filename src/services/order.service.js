@@ -8,9 +8,13 @@ export const orderService = {
   remove,
 }
 
-async function query(filterBy) {
+async function query(filterBy = {}) {
   try {
     const orders = await storageService.query('order')
+
+    if (filterBy.logginUser) {
+      return orders.filter((order) => order.buyer._id === filterBy.logginUser._id)
+    }
 
     return orders
   } catch (error) {
