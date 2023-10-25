@@ -86,7 +86,7 @@ export function AppHeader() {
       {!(isMobile && isStayPage) ? (
         <section
           className={`header-container
-    main-layout ${isStayPage ? 'small relative' : ''} ${isOrderPage ? 'medium relative' : ''}
+    main-layout ${isStayPage ? 'stayDetails relative' : ''} ${isOrderPage ? 'medium relative' : ''}
      ${isExpanded ? 'expanded' : ''}`}
         >
           {!isMobile && (
