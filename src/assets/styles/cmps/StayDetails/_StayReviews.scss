@@ -76,7 +76,9 @@
   border-radius: 8px;
   border-width: 1px;
   border-style: solid;
-  transition: box-shadow 0.2s ease, transform 0.1s ease;
+  transition:
+    box-shadow 0.2s ease,
+    transform 0.1s ease;
   border-color: #222;
   padding: 13px 23px;
   max-width: fit-content;
@@ -85,6 +87,11 @@
   font-weight: 600;
   font-size: 1rem;
   cursor: pointer;
+
+  &:hover {
+    box-shadow: 0 0 0 1px #222;
+    transform: scale(1.01);
+  }
 }
 
 .reviews-modal-container {
@@ -95,7 +102,6 @@
   top: 0;
   width: 100%;
   height: 100%;
-  overflow: auto;
   background-color: #0006;
   .reviews-modal {
     .close-modal-btn {
@@ -108,25 +114,56 @@
       cursor: pointer;
       background: transparent;
     }
+
+    .divider {
+      margin-top: 24px;
+    }
     position: relative;
     background-color: #fefefe;
-    margin: 150px auto 100px;
+    margin: 40px auto 100px;
     padding: 24px;
     border: 1px solid #888;
     border-radius: 12px;
     box-shadow: #00000047 0 8px 28px;
-    width: 50%;
-
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-gap: 40px 1px;
+    max-width: 780px;
+    max-height: 90vh;
 
     .review {
       .review-title {
-        margin-bottom: 0;
+        margin-bottom: 10;
+        border-bottom: 1px solid #22222217;
+        padding-bottom: 10px;
       }
     }
   }
+}
+
+.reviews-modal-list {
+  margin-top: 24px;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 40px 1px;
+
+  padding: 0 15px;
+  overflow-x: auto;
+  max-height: 75vh;
+
+  // design the scrollbar
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 8px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 8px;
+  }
+
 }
 
 @media (max-width: 768px) {
@@ -134,7 +171,6 @@
     padding: 24px 0;
     font-size: 1.125rem;
     margin-bottom: 24px;
-
 
     .reviews-header {
       margin-top: 24px;
@@ -151,9 +187,9 @@
 }
 
 @media (max-width: 768px) {
-    .reviews-modal {
-      width: 90%!important;
-      grid-gap: 30px 1px!important;
-      margin: 60px auto 90px!important;
-    }
+  .reviews-modal {
+    width: 90% !important;
+    grid-gap: 30px 1px !important;
+    margin: 60px auto 90px !important;
+  }
 }

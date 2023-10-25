@@ -98,7 +98,7 @@ export function StayDetails() {
   } = currStay
 
   return (
-    <section className={isMobile ? 'stay-details' : 'main-layout small stay-details'}>
+    <section className={isMobile ? 'stay-details' : 'main-layout stayDetails stay-details'}>
       <StayHeader name={name} imgUrls={imgUrls} />
       <div className={isMobile ? 'main-layout small stay-details-desc' : 'stay-details-desc'}>
         <StayDescription

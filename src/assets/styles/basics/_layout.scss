@@ -11,6 +11,23 @@
     padding: 0 80px;
   }
 
+  &.stayDetails {
+    padding: 0 20px;
+
+    @include for-mobile-layout {
+      padding: 0 0!important;
+    }
+    @include for-narrow-layout {
+      padding: 0 40px!important;
+    }
+    @include for-normal-layout {
+      padding: 0 40px!important;
+    }
+    @include for-wide-layout {
+      padding: 0 16vw!important;
+    }
+  }
+
   &.small {
     padding: 0 20px;
 
@@ -36,6 +53,21 @@
     @include for-wide-layout {
       padding: 0 100px;
     }
+  }
+}
+
+.checkout-form {
+  @include for-mobile-layout {
+    max-width: 100%!important;
+  }
+  @include for-narrow-layout {
+    max-width: 75%!important;
+  }
+  @include for-normal-layout {
+    max-width: 80%!important;
+  }
+  @include for-wide-layout {
+    max-width: 360px!important;
   }
 }
 

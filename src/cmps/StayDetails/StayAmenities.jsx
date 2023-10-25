@@ -1,13 +1,11 @@
 import React, { useState } from "react";
 
 export function StayAmenities({ data }) {
-  const [showAllAmenities, setShowAllAmenities] = useState(false);
-
   const amenities = {
-    mountingView: {
-      title: "Mounting View",
+    firePlace: {
+      title: "Indoor fireplace: wood-burning",
       svg: (
-        <path d="M28 2a2 2 0 0 1 2 1.85V28a2 2 0 0 1-1.85 2H4a2 2 0 0 1-2-1.85V4a2 2 0 0 1 1.85-2H4zm-5.92 20H9.92L4 27.91V28h24v-.09zM28 4H4v21.08l12-12 12 12zM16 15.91 11.91 20h8.17zM22 7a3 3 0 1 1 0 6 3 3 0 0 1 0-6zm0 2a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"></path>
+        <path d="M31 6v2h-1v23h-6V13H8v18H2V8H1V6zm-15.37 9 .96.7c3.32 2.42 5.14 5.06 5.38 7.93l.02.28v.21l.01.14c0 3.18-2.7 5.74-6 5.74a5.9 5.9 0 0 1-5.99-5.39v-.21l-.01-.15a9.3 9.3 0 0 1 1.64-4.99l.22-.34.68-.98 1.24.79zM28 8H4v21h2V13a2 2 0 0 1 1.7-1.98l.15-.01L8 11h16a2 2 0 0 1 2 1.85V29h2zM16 25.36l-.1.09c-.61.65-.9 1.23-.9 1.72 0 .42.41.83 1 .83s1-.4 1-.83c0-.45-.24-.97-.76-1.56l-.15-.16zm.35-7.32-1.77 3.56-1.46-.93-.15.27a7.28 7.28 0 0 0-.94 2.75l-.02.29-.01.26v.12c.03.92.4 1.76 1.03 2.4.14-1.14.86-2.24 2.1-3.33l.23-.2.64-.53.64.53c1.38 1.16 2.19 2.32 2.33 3.53A3.6 3.6 0 0 0 20 24.49l.01-.22V24c-.1-1.86-1.12-3.7-3.13-5.5l-.27-.24zM31 2v2H1V2z"></path>
       ),
     },
     seaView: {
@@ -100,6 +98,12 @@ export function StayAmenities({ data }) {
         <path d="M1 2V0h30v2h-2v18a2 2 0 0 1-1.85 2H17v2.17a3 3 0 1 1-2 0V22H5a2 2 0 0 1-2-1.85V2zm15 24a1 1 0 1 0 0 2 1 1 0 0 0 0-2zM27 2H5v18h22z"></path>
       ),
     },
+    mountainView: {
+      title: "Mountain view",
+      svg: (
+        <path d="M28 2a2 2 0 0 1 2 1.85V28a2 2 0 0 1-1.85 2H4a2 2 0 0 1-2-1.85V4a2 2 0 0 1 1.85-2H4zm-5.92 20H9.92L4 27.91V28h24v-.09zM28 4H4v21.08l12-12 12 12zM16 15.91 11.91 20h8.17zM22 7a3 3 0 1 1 0 6 3 3 0 0 1 0-6zm0 2a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"></path>
+      ),
+    },
     iron: {
       title: "Iron",
       svg: (
@@ -136,12 +140,7 @@ export function StayAmenities({ data }) {
         <path d="M17 1v4.03l4.03-2.32 1 1.73L17 7.34v6.93l6-3.47V5h2v4.65l3.49-2.02 1 1.74L26 11.38l4.03 2.33-1 1.73-5.03-2.9L18 16l6 3.46 5.03-2.9 1 1.73L26 20.62l3.49 2.01-1 1.74L25 22.35V27h-2v-5.8l-6-3.47v6.93l5.03 2.9-1 1.73L17 26.97V31h-2v-4.03l-4.03 2.32-1-1.73 5.03-2.9v-6.93L9 21.2V27H7v-4.65l-3.49 2.02-1-1.74L6 20.62l-4.03-2.33 1-1.73L8 19.46 14 16l-6-3.46-5.03 2.9-1-1.73L6 11.38 2.51 9.37l1-1.74L7 9.65V5h2v5.8l6 3.47V7.34l-5.03-2.9 1-1.73L15 5.03V1z"></path>
       ),
     },
-    firePlace: {
-      title: "Indoor fireplace: wood-burning",
-      svg: (
-        <path d="M31 6v2h-1v23h-6V13H8v18H2V8H1V6zm-15.37 9 .96.7c3.32 2.42 5.14 5.06 5.38 7.93l.02.28v.21l.01.14c0 3.18-2.7 5.74-6 5.74a5.9 5.9 0 0 1-5.99-5.39v-.21l-.01-.15a9.3 9.3 0 0 1 1.64-4.99l.22-.34.68-.98 1.24.79zM28 8H4v21h2V13a2 2 0 0 1 1.7-1.98l.15-.01L8 11h16a2 2 0 0 1 2 1.85V29h2zM16 25.36l-.1.09c-.61.65-.9 1.23-.9 1.72 0 .42.41.83 1 .83s1-.4 1-.83c0-.45-.24-.97-.76-1.56l-.15-.16zm.35-7.32-1.77 3.56-1.46-.93-.15.27a7.28 7.28 0 0 0-.94 2.75l-.02.29-.01.26v.12c.03.92.4 1.76 1.03 2.4.14-1.14.86-2.24 2.1-3.33l.23-.2.64-.53.64.53c1.38 1.16 2.19 2.32 2.33 3.53A3.6 3.6 0 0 0 20 24.49l.01-.22V24c-.1-1.86-1.12-3.7-3.13-5.5l-.27-.24zM31 2v2H1V2z"></path>
-      ),
-    },
+
     heating: {
       title: "Heating",
       svg: (
@@ -346,11 +345,96 @@ export function StayAmenities({ data }) {
         <path d="M25 2a5 5 0 0 1 5 4.78V25a5 5 0 0 1-4.78 5H7a5 5 0 0 1-5-4.78V7a5 5 0 0 1 4.78-5H7zm0 2H7a3 3 0 0 0-3 2.82V11h2V6h20v20H6v-5H4v4a3 3 0 0 0 2.82 3H25a3 3 0 0 0 3-2.82V7a3 3 0 0 0-2.82-3zm-1 4H8v16h16zm-8 3a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6zM6 13H4v6h2z"></path>
       ),
     },
+    smokeAlarm: {
+      title: "Smoke alarm",
+      svg: (
+        <path d="M16 1a15 15 0 1 1 0 30 15 15 0 0 1 0-30zm0 2a13 13 0 1 0 0 26 13 13 0 0 0 0-26zm-4.9 14a5 5 0 0 0 3.9 3.9v2.03A7 7 0 0 1 9.07 17zm9.8 0h2.03A7 7 0 0 1 17 22.93V20.9a5 5 0 0 0 3.9-3.9zM16 13a3 3 0 1 1 0 6 3 3 0 0 1 0-6zm0 2a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm1-5.93A7 7 0 0 1 22.93 15H20.9a5 5 0 0 0-3.9-3.9zm-2 0v2.03a5 5 0 0 0-3.9 3.9H9.07A7 7 0 0 1 15 9.07zM23 8a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"></path>
+      ),
+    },
+    firstAidKit: {
+      title: "First aid kit",
+      svg: (
+        <path d="M26 3a5 5 0 0 1 5 4.78V24a5 5 0 0 1-4.78 5H6a5 5 0 0 1-5-4.78V8a5 5 0 0 1 4.78-5H6zm0 2H6a3 3 0 0 0-3 2.82V24a3 3 0 0 0 2.82 3H26a3 3 0 0 0 3-2.82V8a3 3 0 0 0-2.82-3zm-7 4v4h4v6h-4v4h-6v-4H9v-6h4V9zm-2 2h-2v4h-4v2h4v4h2v-4h4v-2h-4z"></path>
+      ),
+    },
+    privateEntrance: {
+      title: "Private entrance",
+      svg: (
+        <path d="M25 1a2 2 0 0 1 2 1.85V29h2v2H3v-2h2V3a2 2 0 0 1 1.85-2H7zm0 2H7v26h18zm-3 12a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"></path>
+      ),
+    },
+    sharedPool: {
+      title: "Shared pool",
+      svg: (
+        <path d="M24 26c.99 0 1.95.35 2.67 1 .3.29.71.45 1.14.5H28v2h-.23a3.96 3.96 0 0 1-2.44-1A1.98 1.98 0 0 0 24 28c-.5 0-.98.17-1.33.5a3.98 3.98 0 0 1-2.67 1 3.98 3.98 0 0 1-2.67-1A1.98 1.98 0 0 0 16 28c-.5 0-.98.17-1.33.5a3.98 3.98 0 0 1-2.67 1 3.98 3.98 0 0 1-2.67-1A1.98 1.98 0 0 0 8 28c-.5 0-.98.17-1.33.5a3.96 3.96 0 0 1-2.44 1H4v-2h.19a1.95 1.95 0 0 0 1.14-.5A3.98 3.98 0 0 1 8 26c.99 0 1.95.35 2.67 1 .35.33.83.5 1.33.5.5 0 .98-.17 1.33-.5A3.97 3.97 0 0 1 16 26c.99 0 1.95.35 2.67 1 .35.33.83.5 1.33.5.5 0 .98-.17 1.33-.5A3.98 3.98 0 0 1 24 26zm0-5c.99 0 1.95.35 2.67 1 .3.29.71.45 1.14.5H28v2h-.23a3.96 3.96 0 0 1-2.44-1A1.98 1.98 0 0 0 24 23c-.5 0-.98.17-1.33.5a3.98 3.98 0 0 1-2.67 1 3.98 3.98 0 0 1-2.67-1A1.98 1.98 0 0 0 16 23c-.5 0-.98.17-1.33.5a3.98 3.98 0 0 1-2.67 1 3.98 3.98 0 0 1-2.67-1A1.98 1.98 0 0 0 8 23c-.5 0-.98.17-1.33.5a3.96 3.96 0 0 1-2.44 1H4v-2h.19a1.95 1.95 0 0 0 1.14-.5A3.98 3.98 0 0 1 8 21c.99 0 1.95.35 2.67 1 .35.33.83.5 1.33.5.5 0 .98-.17 1.33-.5A3.97 3.97 0 0 1 16 21c.99 0 1.95.35 2.67 1 .35.33.83.5 1.33.5.5 0 .98-.17 1.33-.5A3.98 3.98 0 0 1 24 21zM20 3a4 4 0 0 1 4 3.8V9h4v2h-4v5a4 4 0 0 1 2.5.86l.17.15c.3.27.71.44 1.14.48l.19.01v2h-.23a3.96 3.96 0 0 1-2.44-1A1.98 1.98 0 0 0 24 18c-.5 0-.98.17-1.33.5a3.98 3.98 0 0 1-2.67 1 3.98 3.98 0 0 1-2.67-1A1.98 1.98 0 0 0 16 18c-.5 0-.98.17-1.33.5a3.98 3.98 0 0 1-2.67 1 3.98 3.98 0 0 1-2.67-1A1.98 1.98 0 0 0 8 18c-.5 0-.98.17-1.33.5a3.96 3.96 0 0 1-2.44 1H4v-2h.19a1.95 1.95 0 0 0 1.14-.5A3.98 3.98 0 0 1 8 16c.99 0 1.95.35 2.67 1 .35.33.83.5 1.33.5.5 0 .98-.17 1.33-.5a3.96 3.96 0 0 1 2.44-1H16v-5H4V9h12V7a2 2 0 0 0-4-.15V7h-2a4 4 0 0 1 7-2.65A3.98 3.98 0 0 1 20 3zm-2 13.52.46.31.21.18c.35.31.83.49 1.33.49a2 2 0 0 0 1.2-.38l.13-.11c.2-.19.43-.35.67-.49V11h-4zM20 5a2 2 0 0 0-2 1.85V9h4V7a2 2 0 0 0-2-2z"></path>
+      ),
+    },
   };
+
+  const [showAllAmenities, setShowAllAmenities] = useState(false);
+  const itemsToShow = 10;
   const amenitiesArray = Object.values(amenities);
+  const amenitiesToShow = amenitiesArray.slice(0, itemsToShow);
+
+  const amenitiesCategories = [
+    {
+      title: "Scenic View",
+      amenities: ["seaView", "valleyView", "mountainView"],
+    },
+    {
+      title: "Bathroom",
+      amenities: [
+        "bathtub",
+        "hairDryer",
+        "cleaningProducts",
+        "shampoo",
+        "outdoorShower",
+        "hotWater",
+      ],
+    },
+    {
+      title: "Bedroom and laundry",
+      amenities: [
+        "washer",
+        "essentials",
+        "hangers",
+        "bedLinens",
+        "extraPillowsAndBlankets",
+        "roomDarkeningShades",
+        "iron",
+        "dryingRack",
+        "lockbox",
+        "mosquitoNet",
+      ],
+    },
+    {
+      title: "Entertainment",
+      amenities: ["tv", "wifi"],
+    },
+    {
+      title: "Heating and cooling",
+      amenities: ["windowAC", "heating", "firePlace"],
+    },
+    {
+      title: "Home safety",
+      amenities: ["smokeAlarm", "fireExtinguisher", "firstAidKit"],
+    },
+    {
+      title: "Kitchen and dining",
+      amenities: [
+        "kitchen",
+        "cookingBasics",
+        "dishesAndSilverware",
+        "dishwasher",
+        "microwave",
+        "refrigerator",
+        "stove",
+        "bbqGrill",
+      ],
+    },
+  ];
 
   function formatSVG(svg) {
-    // format the svg from ammenities object to be used in jsx
     return (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -364,31 +448,105 @@ export function StayAmenities({ data }) {
     );
   }
 
-  const itemsToShow = 10;
-  const amenitiesToShow = amenitiesArray.slice(0, itemsToShow);
+  function checkIfAmenitiesExist(amenitie) {
+    amenitie = amenitie.toLowerCase();
+    const dataLowerCase = data.map((item) => item.toLowerCase());
+
+    if (dataLowerCase.includes(amenitie)) {
+      return true;
+    }
+
+    return false;
+  }
+
   return (
-    <div className="stay-amenities">
-      <div className="stay-amenities-title">
-        <div>What this place offers</div>
-      </div>
-      <div className="stay-amenities-list">
-        {amenitiesToShow.map((amenity, idx) => {
-          return (
-            <div className="amenity" key={idx}>
-              <div className="amenity-icon">{formatSVG(amenity.svg)}</div>
-              <div className="amenity-name">{amenity.title}</div>
+    <React.Fragment>
+      <div className="stay-amenities">
+        <div className="stay-amenities-title">
+          <div>What this place offers</div>
+        </div>
+        <div className="stay-amenities-list">
+          {amenitiesToShow.map((amenity, idx) => {
+            return (
+              <div className="amenity" key={idx}>
+                <div className="amenity-icon">{formatSVG(amenity.svg)}</div>
+                <div
+                  className={
+                    checkIfAmenitiesExist(amenity.title)
+                      ? "amenity-name has"
+                      : "amenity-name"
+                  }
+                >
+                  {amenity.title}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+        <div
+          className="show-all-reviews"
+          onClick={() => {
+            setShowAllAmenities(!showAllAmenities);
+          }}
+        >
+          Show all {amenitiesArray.length} amenities
+        </div>
+        {showAllAmenities && (
+          <div className="reviews-modal-container">
+            <div className="reviews-modal">
+              <button
+                className="close-modal-btn"
+                onClick={() => {
+                  setShowAllAmenities(false);
+                }}
+              >
+                &times;
+              </button>
+              <h1>What this place offers</h1>
+              <div className="divider"></div>
+              <div className="reviews-modal-list">
+                {amenitiesCategories.map((category) => (
+                  <section className="amenities-section" key={category.title}>
+                    <div className="amenities-section-title">
+                      {category.title}
+                    </div>
+                    <div className="amenities-section-list">
+                      {category.amenities.map((amenity) => {
+                        // Check if the amenity exists in the amenities object
+                        if (amenities[amenity]) {
+                          return (
+                            <div className="amenity" key={amenity}>
+                              <div className="amenity-icon">
+                                {formatSVG(amenities[amenity].svg)}
+                              </div>
+                              <div
+                                className={`amenity-name ${
+                                  checkIfAmenitiesExist(amenity) ? "has" : ""
+                                }`}
+                              >
+                                {amenities[amenity].title}
+                              </div>
+                            </div>
+                          );
+                        } else {
+                          // Handle the case where the amenity doesn't exist in your data
+                          return (
+                            <div className="amenity" key={amenity}>
+                              <div className="amenity-name">
+                                Amenity Not Found
+                              </div>
+                            </div>
+                          );
+                        }
+                      })}
+                    </div>
+                  </section>
+                ))}
+              </div>
             </div>
-          );
-        })}
+          </div>
+        )}
       </div>
-      <div
-        className="show-all-reviews"
-        onClick={() => {
-          setShowAllReviews(true);
-        }}
-      >
-        Show all {amenitiesArray.length} amenities
-      </div>
-    </div>
+    </React.Fragment>
   );
 }
