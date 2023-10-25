@@ -213,7 +213,7 @@ export function ExploreBar() {
             className="dates-btn"
             onClick={() => setIsActive("check-in")}
           >
-            {searchParams.get([QUERY_KEYS.checkin]) && searchParams.get([QUERY_KEYS.checkout]) ?
+            {searchParams.get([QUERY_KEYS.checkin]) && searchParams.get([QUERY_KEYS.checkin]) !== 'null' && searchParams.get([QUERY_KEYS.checkout]) && searchParams.get([QUERY_KEYS.checkout]) !== 'null' ?
               `${utilService.getDayAndMonthFromDate(searchParams.get([QUERY_KEYS.checkin]))} - ${utilService.getDayAndMonthFromDate(searchParams.get([QUERY_KEYS.checkout]))}`
               : 'Anyweek'}
           </button>
@@ -223,7 +223,7 @@ export function ExploreBar() {
             className="guests-btn"
             onClick={() => setIsActive("guests")}
           >
-            {searchParams.get([QUERY_KEYS.adults]) ? `${(+searchParams.get([QUERY_KEYS.adults])) + (+searchParams?.get([QUERY_KEYS.children]))} guests` : 'Add guests'}
+            {(+searchParams.get([QUERY_KEYS.adults])) + (+searchParams?.get([QUERY_KEYS.children])) !== 0 ? `${(+searchParams.get([QUERY_KEYS.adults])) + (+searchParams?.get([QUERY_KEYS.children]))} guests` : 'Add guests'}
           </button>
           <button type="button" className="search-btn">
             <IoSearch />

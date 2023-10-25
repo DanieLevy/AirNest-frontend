@@ -23,6 +23,7 @@ export function StayFilter() {
     "inset 0 0 0 1px #b0b0b0"
   );
 
+  const [searchParams, setSearchParams] = useSearchParams();
   const [appliedFilters, setAppliedFilters] = useState([]);
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(1500);
@@ -30,7 +31,23 @@ export function StayFilter() {
   const [selectedBeds, setSelectedBeds] = useState("Any");
   const [selectedBathrooms, setSelectedBathrooms] = useState("Any");
   const [selectedAmmenties, setSelectedAmmenties] = useState([]);
-  const [searchParams, setSearchParams] = useSearchParams();
+
+
+  useEffect(() => {
+    const minPrice = +(searchParams.get(QUERY_KEYS.minPrice) || 0)
+    const maxPrice = +(searchParams.get(QUERY_KEYS.maxPrice) || 1500)
+    const bedrooms = (+searchParams.get(QUERY_KEYS.bedrooms) || 'Any')
+    const beds = (+searchParams.get(QUERY_KEYS.beds) || 'Any')
+    const bathrooms = (+searchParams.get(QUERY_KEYS.bathrooms) || 'Any')
+    const amenities = ([searchParams.get(QUERY_KEYS.amenities)] || selectedAmmenties)
+
+    setMinPrice(minPrice)
+    setMaxPrice(maxPrice)
+    setSelectedBedrooms(bedrooms)
+    setSelectedBeds(beds)
+    setSelectedBathrooms(bathrooms)
+    setSelectedAmmenties(amenities)
+  }, [searchParams])
 
   useEffect(() => {
     const handleResize = () => {
@@ -126,6 +143,8 @@ export function StayFilter() {
         return prevAppliedFilters.filter((filter) => filter !== "Ammenities");
       });
     }
+
+
   }, [
     minPrice,
     maxPrice,
@@ -157,7 +176,7 @@ export function StayFilter() {
 
   function handleSubmit(ev) {
     ev.preventDefault();
-    if (minPrice) searchParams.set(QUERY_KEYS.minPrice, minPrice)
+    searchParams.set(QUERY_KEYS.minPrice, minPrice)
     if (maxPrice) searchParams.set(QUERY_KEYS.maxPrice, maxPrice)
     if (selectedBedrooms) searchParams.set(QUERY_KEYS.bedrooms, selectedBedrooms)
     if (selectedBeds) searchParams.set(QUERY_KEYS.beds, selectedBeds)

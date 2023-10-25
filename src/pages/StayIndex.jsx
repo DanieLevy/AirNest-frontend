@@ -24,7 +24,10 @@ export function StayIndex() {
 
   useEffect(() => {
     loadStays(searchParams)
-    
+  }, [searchParams])
+
+  useEffect(() => {
+
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768)
     }
@@ -36,7 +39,7 @@ export function StayIndex() {
     return () => {
       window.removeEventListener("resize", handleResize)
     }
-  }, [searchParams])
+  }, [])
 
   return (
     <React.Fragment>
