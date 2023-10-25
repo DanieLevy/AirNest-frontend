@@ -446,7 +446,7 @@ export function StayAmenities({ data }) {
         {svg}
       </svg>
     );
-    }
+  }
 
   function checkIfAmenitiesExist(amenitie) {
     amenitie = amenitie.toLowerCase();
