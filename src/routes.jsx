@@ -4,6 +4,7 @@ import { StayDetails } from './pages/StayDetails.jsx'
 import { StayEdit } from './pages/StayEdit.jsx'
 import { StayIndex } from './pages/StayIndex.jsx'
 import { UserDetails } from './pages/UserDetails.jsx'
+import { Wishlist } from './pages/WishList.jsx'
 
 // Routes accesible from the main navigation (in AppHeader)
 const routes = [
@@ -36,6 +37,11 @@ const routes = [
     path: '/user/:userId',
     component: <UserDetails />,
     label: 'user',
+  },
+  {
+    path: '/wishlist',
+    component: <Wishlist />,
+    label: 'Wishlist',
   },
   {
     path: '/order/confirm',

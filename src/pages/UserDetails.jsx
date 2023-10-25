@@ -25,9 +25,9 @@ export function UserDetails() {
   if (!logginUser) return <div> No user found!</div>
   if (!stays) return <div> No stays found!</div>
   return (
-    <div>
+    <main className='user-details-main-content'>
       <h2>Stays for User: {userId}</h2>
       <ListingList stays={stays} />
-    </div>
+    </main>
   )
 }
