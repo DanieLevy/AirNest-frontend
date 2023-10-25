@@ -152,19 +152,29 @@ export function AppHeader() {
                           Signup
                         </li>
                         <div className='divider'></div>
-                        <Link to='/edit' style={{ textDecorationLine: 'none' }}>
+                        <Link to='/edit' style={{ textDecorationLine: 'none' }}
+                        onClick={() => setUserModal(false)}
+                        >
                           <li>AirNest your home</li>
                         </Link>
                       </>
                     ) : (
                       <>
+                      <Link to={'/wishList'} style={{ textDecorationLine: 'none' }}
+                      onClick={() => setUserModal(false)}
+                      >
                         <li>Whislist</li>
-                        <Link to='/order' style={{ textDecorationLine: 'none' }}>
+                      </Link>
+                        <Link to='/order' style={{ textDecorationLine: 'none' }}
+                        onClick={() => setUserModal(false)}
+                        >
                           <li>Trip</li>
                         </Link>
                         <div className='divider'></div>
                         <li>DashBoard</li>
-                        <Link to={`/user/${user._id}`} style={{ textDecorationLine: 'none' }}>
+                        <Link to={`/user/${user._id}`} style={{ textDecorationLine: 'none' }}
+                        onClick={() => setUserModal(false)}
+                        >
                           <li>Listings</li>
                         </Link>
                         <div className='divider'></div>
