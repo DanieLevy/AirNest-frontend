@@ -34,6 +34,56 @@
         font-size: 16px;
         line-height: 20px;
         font-weight: 400;
+        text-decoration: line-through;
+      }
+    }
+  }
+
+  & .reviews-modal-container {
+
+    & .reviews-modal {
+      h1 {
+        font-size: 22px;
+        line-height: 26px;
+        font-weight: 600;
+      }
+
+      & .reviews-modal-list {
+        margin-bottom: 48px!important;
+        padding: 0;
+
+        & .amenities-section {
+
+          & .amenities-section-title {
+            font-size: 18px;
+            line-height: 22px;
+            font-weight: 600;
+            padding: 16px 0;
+          }
+
+          & .amenity {
+            display: flex;
+            padding: 24px 0;
+            align-items: center;
+            border-bottom: 1px solid #E0E0E0;
+            & .amenity-icon {
+              margin-right: 16px;
+              width: 24px;
+              height: 24px;
+            }
+
+            & .amenity-name {
+              display: flex;
+              align-items: center;
+              text-decoration: line-through;
+
+              font-size: 16px;
+              line-height: 20px;
+              font-weight: 400;
+            }
+          }
+        }
+
       }
     }
   }
