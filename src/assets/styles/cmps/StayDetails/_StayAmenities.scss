@@ -34,6 +34,7 @@
         font-size: 16px;
         line-height: 20px;
         font-weight: 400;
+        text-decoration: line-through;
       }
     }
   }
@@ -74,6 +75,7 @@
             & .amenity-name {
               display: flex;
               align-items: center;
+              text-decoration: line-through;
 
               font-size: 16px;
               line-height: 20px;

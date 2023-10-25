@@ -372,6 +372,7 @@ export function StayAmenities({ data }) {
       ),
     },
   };
+
   const amenitiesArray = Object.values(amenities);
 
   function formatSVG(svg) {
@@ -391,6 +392,14 @@ export function StayAmenities({ data }) {
 
   const itemsToShow = 10;
   const amenitiesToShow = amenitiesArray.slice(0, itemsToShow);
+
+  function checkIfAmenitiesExist(amenitie) {
+    if (data.includes(amenitie)) {
+      return true;
+    }
+  }
+
+
   return (
     <React.Fragment>
       <div className="stay-amenities">
