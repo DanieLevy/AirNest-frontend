@@ -99,12 +99,12 @@ export function StayAmenities({ data }) {
       svg: (
         <path d="M1 2V0h30v2h-2v18a2 2 0 0 1-1.85 2H17v2.17a3 3 0 1 1-2 0V22H5a2 2 0 0 1-2-1.85V2zm15 24a1 1 0 1 0 0 2 1 1 0 0 0 0-2zM27 2H5v18h22z"></path>
       ),
-      mountingView: {
-        title: "Mounting View",
-        svg: (
-          <path d="M28 2a2 2 0 0 1 2 1.85V28a2 2 0 0 1-1.85 2H4a2 2 0 0 1-2-1.85V4a2 2 0 0 1 1.85-2H4zm-5.92 20H9.92L4 27.91V28h24v-.09zM28 4H4v21.08l12-12 12 12zM16 15.91 11.91 20h8.17zM22 7a3 3 0 1 1 0 6 3 3 0 0 1 0-6zm0 2a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"></path>
-        ),
-      },
+    },
+    mountingView: {
+      title: "Mounting View",
+      svg: (
+        <path d="M28 2a2 2 0 0 1 2 1.85V28a2 2 0 0 1-1.85 2H4a2 2 0 0 1-2-1.85V4a2 2 0 0 1 1.85-2H4zm-5.92 20H9.92L4 27.91V28h24v-.09zM28 4H4v21.08l12-12 12 12zM16 15.91 11.91 20h8.17zM22 7a3 3 0 1 1 0 6 3 3 0 0 1 0-6zm0 2a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"></path>
+      ),
     },
     iron: {
       title: "Iron",
@@ -347,6 +347,30 @@ export function StayAmenities({ data }) {
         <path d="M25 2a5 5 0 0 1 5 4.78V25a5 5 0 0 1-4.78 5H7a5 5 0 0 1-5-4.78V7a5 5 0 0 1 4.78-5H7zm0 2H7a3 3 0 0 0-3 2.82V11h2V6h20v20H6v-5H4v4a3 3 0 0 0 2.82 3H25a3 3 0 0 0 3-2.82V7a3 3 0 0 0-2.82-3zm-1 4H8v16h16zm-8 3a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6zM6 13H4v6h2z"></path>
       ),
     },
+    smokeAlarm: {
+      title: "Smoke alarm",
+      svg: (
+        <path d="M16 1a15 15 0 1 1 0 30 15 15 0 0 1 0-30zm0 2a13 13 0 1 0 0 26 13 13 0 0 0 0-26zm-4.9 14a5 5 0 0 0 3.9 3.9v2.03A7 7 0 0 1 9.07 17zm9.8 0h2.03A7 7 0 0 1 17 22.93V20.9a5 5 0 0 0 3.9-3.9zM16 13a3 3 0 1 1 0 6 3 3 0 0 1 0-6zm0 2a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm1-5.93A7 7 0 0 1 22.93 15H20.9a5 5 0 0 0-3.9-3.9zm-2 0v2.03a5 5 0 0 0-3.9 3.9H9.07A7 7 0 0 1 15 9.07zM23 8a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"></path>
+      ),
+    },
+    firstAidKit: {
+      title: "First aid kit",
+      svg: (
+        <path d="M26 3a5 5 0 0 1 5 4.78V24a5 5 0 0 1-4.78 5H6a5 5 0 0 1-5-4.78V8a5 5 0 0 1 4.78-5H6zm0 2H6a3 3 0 0 0-3 2.82V24a3 3 0 0 0 2.82 3H26a3 3 0 0 0 3-2.82V8a3 3 0 0 0-2.82-3zm-7 4v4h4v6h-4v4h-6v-4H9v-6h4V9zm-2 2h-2v4h-4v2h4v4h2v-4h4v-2h-4z"></path>
+      ),
+    },
+    privateEntrance: {
+      title: "Private entrance",
+      svg: (
+        <path d="M25 1a2 2 0 0 1 2 1.85V29h2v2H3v-2h2V3a2 2 0 0 1 1.85-2H7zm0 2H7v26h18zm-3 12a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"></path>
+      ),
+    },
+    sharedPool: {
+      title: "Shared pool",
+      svg: (
+        <path d="M24 26c.99 0 1.95.35 2.67 1 .3.29.71.45 1.14.5H28v2h-.23a3.96 3.96 0 0 1-2.44-1A1.98 1.98 0 0 0 24 28c-.5 0-.98.17-1.33.5a3.98 3.98 0 0 1-2.67 1 3.98 3.98 0 0 1-2.67-1A1.98 1.98 0 0 0 16 28c-.5 0-.98.17-1.33.5a3.98 3.98 0 0 1-2.67 1 3.98 3.98 0 0 1-2.67-1A1.98 1.98 0 0 0 8 28c-.5 0-.98.17-1.33.5a3.96 3.96 0 0 1-2.44 1H4v-2h.19a1.95 1.95 0 0 0 1.14-.5A3.98 3.98 0 0 1 8 26c.99 0 1.95.35 2.67 1 .35.33.83.5 1.33.5.5 0 .98-.17 1.33-.5A3.97 3.97 0 0 1 16 26c.99 0 1.95.35 2.67 1 .35.33.83.5 1.33.5.5 0 .98-.17 1.33-.5A3.98 3.98 0 0 1 24 26zm0-5c.99 0 1.95.35 2.67 1 .3.29.71.45 1.14.5H28v2h-.23a3.96 3.96 0 0 1-2.44-1A1.98 1.98 0 0 0 24 23c-.5 0-.98.17-1.33.5a3.98 3.98 0 0 1-2.67 1 3.98 3.98 0 0 1-2.67-1A1.98 1.98 0 0 0 16 23c-.5 0-.98.17-1.33.5a3.98 3.98 0 0 1-2.67 1 3.98 3.98 0 0 1-2.67-1A1.98 1.98 0 0 0 8 23c-.5 0-.98.17-1.33.5a3.96 3.96 0 0 1-2.44 1H4v-2h.19a1.95 1.95 0 0 0 1.14-.5A3.98 3.98 0 0 1 8 21c.99 0 1.95.35 2.67 1 .35.33.83.5 1.33.5.5 0 .98-.17 1.33-.5A3.97 3.97 0 0 1 16 21c.99 0 1.95.35 2.67 1 .35.33.83.5 1.33.5.5 0 .98-.17 1.33-.5A3.98 3.98 0 0 1 24 21zM20 3a4 4 0 0 1 4 3.8V9h4v2h-4v5a4 4 0 0 1 2.5.86l.17.15c.3.27.71.44 1.14.48l.19.01v2h-.23a3.96 3.96 0 0 1-2.44-1A1.98 1.98 0 0 0 24 18c-.5 0-.98.17-1.33.5a3.98 3.98 0 0 1-2.67 1 3.98 3.98 0 0 1-2.67-1A1.98 1.98 0 0 0 16 18c-.5 0-.98.17-1.33.5a3.98 3.98 0 0 1-2.67 1 3.98 3.98 0 0 1-2.67-1A1.98 1.98 0 0 0 8 18c-.5 0-.98.17-1.33.5a3.96 3.96 0 0 1-2.44 1H4v-2h.19a1.95 1.95 0 0 0 1.14-.5A3.98 3.98 0 0 1 8 16c.99 0 1.95.35 2.67 1 .35.33.83.5 1.33.5.5 0 .98-.17 1.33-.5a3.96 3.96 0 0 1 2.44-1H16v-5H4V9h12V7a2 2 0 0 0-4-.15V7h-2a4 4 0 0 1 7-2.65A3.98 3.98 0 0 1 20 3zm-2 13.52.46.31.21.18c.35.31.83.49 1.33.49a2 2 0 0 0 1.2-.38l.13-.11c.2-.19.43-.35.67-.49V11h-4zM20 5a2 2 0 0 0-2 1.85V9h4V7a2 2 0 0 0-2-2z"></path>
+      ),
+    },
   };
   const amenitiesArray = Object.values(amenities);
 
@@ -368,28 +392,367 @@ export function StayAmenities({ data }) {
   const itemsToShow = 10;
   const amenitiesToShow = amenitiesArray.slice(0, itemsToShow);
   return (
-    <div className="stay-amenities">
-      <div className="stay-amenities-title">
-        <div>What this place offers</div>
-      </div>
-      <div className="stay-amenities-list">
-        {amenitiesToShow.map((amenity, idx) => {
-          return (
-            <div className="amenity" key={idx}>
-              <div className="amenity-icon">{formatSVG(amenity.svg)}</div>
-              <div className="amenity-name">{amenity.title}</div>
+    <React.Fragment>
+      <div className="stay-amenities">
+        <div className="stay-amenities-title">
+          <div>What this place offers</div>
+        </div>
+        <div className="stay-amenities-list">
+          {amenitiesToShow.map((amenity, idx) => {
+            return (
+              <div className="amenity" key={idx}>
+                <div className="amenity-icon">{formatSVG(amenity.svg)}</div>
+                <div className="amenity-name">{amenity.title}</div>
+              </div>
+            );
+          })}
+        </div>
+        <div
+          className="show-all-reviews"
+          onClick={() => {
+            setShowAllAmenities(!showAllAmenities);
+          }}
+        >
+          Show all {amenitiesArray.length} amenities
+        </div>
+        {showAllAmenities && (
+          <div className="reviews-modal-container">
+            <div className="reviews-modal">
+              <button
+                className="close-modal-btn"
+                onClick={() => {
+                  setShowAllAmenities(false);
+                }}
+              >
+                &times;
+              </button>
+              <h1>What this place offers</h1>
+              <div className="divider"></div>
+              <div className="reviews-modal-list">
+                <section className="amenities-section">
+                  <div className="amenities-section-title">Scenic views</div>
+                  <div className="amenities-section-list">
+                    <div className="amenity">
+                      <div className="amenity-icon">
+                        {formatSVG(amenities.mountingView.svg)}
+                      </div>
+                      <div className="amenity-name">
+                        {amenities.mountingView.title}
+                      </div>
+                    </div>
+                  </div>
+                </section>
+
+                <section className="amenities-section">
+                  <div className="amenities-section-title">Bathroom</div>
+                  <div className="amenities-section-list">
+                    <div className="amenity">
+                      <div className="amenity-icon">
+                        {formatSVG(amenities.shampoo.svg)}
+                      </div>
+                      <div className="amenity-name">
+                        {amenities.shampoo.title}
+                      </div>
+                    </div>
+                    <div className="amenity">
+                      <div className="amenity-icon">
+                        {formatSVG(amenities.bodySoap.svg)}
+                      </div>
+                      <div className="amenity-name">
+                        {amenities.bodySoap.title}
+                      </div>
+                    </div>
+                    <div className="amenity">
+                      <div className="amenity-icon">
+                        {formatSVG(amenities.outdoorShower.svg)}
+                      </div>
+                      <div className="amenity-name">
+                        {amenities.outdoorShower.title}
+                      </div>
+                    </div>
+                    <div className="amenity">
+                      <div className="amenity-icon">
+                        {formatSVG(amenities.hotWater.svg)}
+                      </div>
+                      <div className="amenity-name">
+                        {amenities.hotWater.title}
+                      </div>
+                    </div>
+                    <div className="amenity">
+                      <div className="amenity-icon">
+                        {formatSVG(amenities.bodySoap.svg)}
+                      </div>
+                      <div className="amenity-name">Shower gel</div>
+                    </div>
+                  </div>
+                </section>
+
+                <section className="amenities-section">
+                  <div className="amenities-section-title">
+                    Bedroom and laundry
+                  </div>
+                  <div className="amenities-section-list">
+                    <div className="amenity">
+                      <div className="amenity-icon">
+                        {formatSVG(amenities.essentials.svg)}
+                      </div>
+                      <div className="amenity-name">
+                        {amenities.essentials.title}
+                      </div>
+                    </div>
+                    <div className="amenity">
+                      <div className="amenity-icon">
+                        {formatSVG(amenities.hangers.svg)}
+                      </div>
+                      <div className="amenity-name">
+                        {amenities.hangers.title}
+                      </div>
+                    </div>
+                    <div className="amenity">
+                      <div className="amenity-icon">
+                        {formatSVG(amenities.bedLinens.svg)}
+                      </div>
+                      <div className="amenity-name">
+                        {amenities.bedLinens.title}
+                      </div>
+                    </div>
+                    <div className="amenity">
+                      <div className="amenity-icon">
+                        {formatSVG(amenities.dryingRack.svg)}
+                      </div>
+                      <div className="amenity-name">
+                        {amenities.dryingRack.title}
+                      </div>
+                    </div>
+                    <div className="amenity">
+                      <div className="amenity-icon">
+                        {formatSVG(amenities.mosquitoNet.svg)}
+                      </div>
+                      <div className="amenity-name">
+                        {amenities.mosquitoNet.title}
+                      </div>
+                    </div>
+                  </div>
+                </section>
+                <section className="amenities-section">
+                  <div className="amenities-section-title">
+                    Heating and cooling
+                  </div>
+                  <div className="amenities-section-list">
+                    <div className="amenity">
+                      <div className="amenity-icon">
+                        {formatSVG(amenities.firePlace.svg)}
+                      </div>
+                      <div className="amenity-name">
+                        {amenities.firePlace.title}
+                      </div>
+                    </div>
+                    <div className="amenity">
+                      <div className="amenity-icon">
+                        {formatSVG(amenities.heating.svg)}
+                      </div>
+                      <div className="amenity-name">
+                        {amenities.heating.title}
+                      </div>
+                    </div>
+                  </div>
+                </section>
+
+                <section className="amenities-section">
+                  <div className="amenities-section-title">Home safety</div>
+                  <div className="amenities-section-list">
+                    <div className="amenity">
+                      <div className="amenity-icon">
+                        {formatSVG(amenities.smokeAlarm.svg)}
+                      </div>
+                      <div className="amenity-name">
+                        {amenities.smokeAlarm.title}
+                      </div>
+                    </div>
+                    <div className="amenity">
+                      <div className="amenity-icon">
+                        {formatSVG(amenities.fireExtinguisher.svg)}
+                      </div>
+                      <div className="amenity-name">
+                        {amenities.fireExtinguisher.title}
+                      </div>
+                    </div>
+                    <div className="amenity">
+                      <div className="amenity-icon">
+                        {formatSVG(amenities.firstAidKit.svg)}
+                      </div>
+                      <div className="amenity-name">
+                        {amenities.firstAidKit.title}
+                      </div>
+                    </div>
+                  </div>
+                </section>
+                <section className="amenities-section">
+                  <div className="amenities-section-title">
+                    Internet and office
+                  </div>
+                  <div className="amenities-section-list">
+                    <div className="amenity">
+                      <div className="amenity-icon">
+                        {formatSVG(amenities.dedicatedWorkspace.svg)}
+                      </div>
+                      <div className="amenity-name">
+                        {amenities.dedicatedWorkspace.title}
+                      </div>
+                    </div>
+                  </div>
+                </section>
+                <section className="amenities-section">
+                  <div className="amenities-section-title">
+                    Kitchen and dining
+                  </div>
+                  <div className="amenities-section-list">
+                    <div className="amenity">
+                      <div className="amenity-icon">
+                        {formatSVG(amenities.kitchen.svg)}
+                      </div>
+                      <div className="amenity-name">
+                        {amenities.kitchen.title}
+                      </div>
+                    </div>
+                    <div className="amenity">
+                      <div className="amenity-icon">
+                        {formatSVG(amenities.cookingBasics.svg)}
+                      </div>
+                      <div className="amenity-name">
+                        {amenities.cookingBasics.title}
+                      </div>
+                    </div>
+                    <div className="amenity">
+                      <div className="amenity-icon">
+                        {formatSVG(amenities.dishesAndSilverware.svg)}
+                      </div>
+                      <div className="amenity-name">
+                        {amenities.dishesAndSilverware.title}
+                      </div>
+                    </div>
+                    <div className="amenity">
+                      <div className="amenity-icon">
+                        {formatSVG(amenities.wineGlasses.svg)}
+                      </div>
+                      <div className="amenity-name">
+                        {amenities.wineGlasses.title}
+                      </div>
+                    </div>
+                    <div className="amenity">
+                      <div className="amenity-icon">
+                        {formatSVG(amenities.bbqGrill.svg)}
+                      </div>
+                      <div className="amenity-name">
+                        {amenities.bbqGrill.title}
+                      </div>
+                    </div>
+                  </div>
+                </section>
+
+                <section className="amenities-section">
+                  <div className="amenities-section-title">
+                    Location features
+                  </div>
+                  <div className="amenities-section-list">
+                    <div className="amenity">
+                      <div className="amenity-icon">
+                        {formatSVG(amenities.privateEntrance.svg)}
+                      </div>
+                      <div className="amenity-name">
+                        {amenities.privateEntrance.title}
+                      </div>
+                    </div>
+                  </div>
+                </section>
+
+                <section className="amenities-section">
+                  <div className="amenities-section-title">Outdoor</div>
+                  <div className="amenities-section-list">
+                    <div className="amenity">
+                      <div className="amenity-icon">
+                        {formatSVG(amenities.patioOrBalcony.svg)}
+                      </div>
+                      <div className="amenity-name">
+                        {amenities.patioOrBalcony.title}
+                      </div>
+                    </div>
+                    <div className="amenity">
+                      <div className="amenity-icon">
+                        {formatSVG(amenities.backyard.svg)}
+                      </div>
+                      <div className="amenity-name">
+                        {amenities.backyard.title}
+                      </div>
+                    </div>
+                    <div className="amenity">
+                      <div className="amenity-icon">
+                        {formatSVG(amenities.outdoorFurniture.svg)}
+                      </div>
+                      <div className="amenity-name">
+                        {amenities.outdoorFurniture.title}
+                      </div>
+                    </div>
+                    <div className="amenity">
+                      <div className="amenity-icon">
+                        {formatSVG(amenities.outdoorDiningArea.svg)}
+                      </div>
+                      <div className="amenity-name">
+                        {amenities.outdoorDiningArea.title}
+                      </div>
+                    </div>
+                    <div className="amenity">
+                      <div className="amenity-icon">
+                        {formatSVG(amenities.bbqGrill.svg)}
+                      </div>
+                      <div className="amenity-name">
+                        {amenities.bbqGrill.title}
+                      </div>
+                    </div>
+                  </div>
+                </section>
+
+                <section className="amenities-section">
+                  <div className="amenities-section-title">
+                    Parking and facilities
+                  </div>
+                  <div className="amenities-section-list">
+                    <div className="amenity">
+                      <div className="amenity-icon">
+                        {formatSVG(amenities.freeParkingOnPremises.svg)}
+                      </div>
+                      <div className="amenity-name">
+                        {amenities.freeParkingOnPremises.title}
+                      </div>
+                    </div>
+                    <div className="amenity">
+                      <div className="amenity-icon">
+                        {formatSVG(amenities.sharedPool.svg)}
+                      </div>
+                      <div className="amenity-name">
+                        {amenities.sharedPool.title}
+                      </div>
+                    </div>
+                  </div>
+                </section>
+                <section className="amenities-section">
+                  <div className="amenities-section-title">Services</div>
+                  <div className="amenities-section-list">
+                    <div className="amenity">
+                      <div className="amenity-icon">
+                        {formatSVG(amenities.selfCheckIn.svg)}
+                      </div>
+                      <div className="amenity-name">
+                        {amenities.selfCheckIn.title}
+                      </div>
+                    </div>
+                  </div>
+                </section>
+              </div>
             </div>
-          );
-        })}
+          </div>
+        )}
       </div>
-      <div
-        className="show-all-reviews"
-        onClick={() => {
-          setShowAllReviews(true);
-        }}
-      >
-        Show all {amenitiesArray.length} amenities
-      </div>
-    </div>
+    </React.Fragment>
   );
 }
