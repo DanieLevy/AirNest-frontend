@@ -101,6 +101,8 @@ export function StayReviews({ data }) {
               &times;
             </button>
             <h1>Reviews</h1>
+            <div className="divider"></div>
+            <div className="reviews-modal-list">
             {reviews.map((review) => (
               <li className="review flex" key={review.id}>
                 <div className="review-title flex">
@@ -115,6 +117,7 @@ export function StayReviews({ data }) {
                 </div>
               </li>
             ))}
+            </div>
           </div>
         </div>
       )}
