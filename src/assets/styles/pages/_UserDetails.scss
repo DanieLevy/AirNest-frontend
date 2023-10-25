@@ -1,9 +1,44 @@
-.listing-container {
-  @include aspect-ratio(1, 0.8);
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+.user-details-main-content {
+  .cell-clickable {
+    cursor: pointer;
+  }
+  .custom-link {
+    text-decoration: none;
+    color: inherit;
   }
 }
+
+// .listing-container {
+//   @include aspect-ratio(1, 1);
+
+//   //   img {
+//   //     width: 100%;
+//   //     height: 100%;
+//   //     object-fit: cover;
+//   //   }
+// }
+// .listing-container {
+//   display: flex;
+//   align-items: center; // To vertically center the image and text
+
+//   > .listing-image {
+//     width: 50px; // or whatever size you want for the square image
+//     height: 50px;
+//     overflow: hidden;
+
+//     > img {
+//       width: 100%;
+//       height: 100%;
+//       object-fit: cover;
+//     }
+//   }
+
+//   > .listing-text {
+//     margin-left: 10px; // Spacing between image and text
+//   }
+// }
+
+// .table-cell-center {
+//   text-align: center;
+//   vertical-align: middle;
+// }
