@@ -18,6 +18,12 @@ export const QUERY_KEYS = {
     children: 'children',
     infants: 'infants',
     pets: 'pets',
+    minPrice: 'minPrice',
+    maxPrice: 'maxPrice',
+    bedrooms: 'bedrooms',
+    beds: 'beds',
+    bathrooms: 'bathrooms',
+    amenities: 'amenities',
 }
 
 function getDayAndMonthFromDate(dateString) {

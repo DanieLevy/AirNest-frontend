@@ -7,6 +7,8 @@ import { is } from "date-fns/locale";
 
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
+import { useSearchParams } from "react-router-dom";
+import { QUERY_KEYS } from "../services/util.service";
 
 export function StayFilter() {
   const [paddingTop, setPaddingTop] = useState(15);
@@ -28,6 +30,7 @@ export function StayFilter() {
   const [selectedBeds, setSelectedBeds] = useState("Any");
   const [selectedBathrooms, setSelectedBathrooms] = useState("Any");
   const [selectedAmmenties, setSelectedAmmenties] = useState([]);
+  const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
     const handleResize = () => {
@@ -154,18 +157,18 @@ export function StayFilter() {
 
   function handleSubmit(ev) {
     ev.preventDefault();
-    console.log("submitted");
-    const filters = {
-      minPrice,
-      maxPrice,
-      bedrooms: selectedBedrooms,
-      beds: selectedBeds,
-      bathrooms: selectedBathrooms,
-      ammenties: selectedAmmenties,
-    };
+    if (minPrice) searchParams.set(QUERY_KEYS.minPrice, minPrice)
+    if (maxPrice) searchParams.set(QUERY_KEYS.maxPrice, maxPrice)
+    if (selectedBedrooms) searchParams.set(QUERY_KEYS.bedrooms, selectedBedrooms)
+    if (selectedBeds) searchParams.set(QUERY_KEYS.beds, selectedBeds)
+    if (selectedBathrooms) searchParams.set(QUERY_KEYS.bathrooms, selectedBathrooms)
+    if (selectedAmmenties.length) searchParams.set(QUERY_KEYS.amenities, selectedAmmenties)
 
-    console.log(filters);
-    alert(`Filters: ${JSON.stringify(filters)}`);
+    if (searchParams.has(QUERY_KEYS.bedrooms) && selectedBedrooms === 'Any') searchParams.delete(QUERY_KEYS.bedrooms)
+    if (searchParams.has(QUERY_KEYS.beds) && selectedBeds === 'Any') searchParams.delete(QUERY_KEYS.beds)
+    if (searchParams.has(QUERY_KEYS.bathrooms) && selectedBathrooms === 'Any') searchParams.delete(QUERY_KEYS.bathrooms)
+
+    setSearchParams(searchParams);
   }
 
   function handleCheckboxChange(ev) {
@@ -225,9 +228,9 @@ export function StayFilter() {
           filterModal
             ? { transform: "translateY(0)", backgroundColor: "rgba(0,0,0,0.5)" }
             : {
-                transform: "translateY(100%)",
-                backgroundColor: "rgba(0,0,0,0)",
-              }
+              transform: "translateY(100%)",
+              backgroundColor: "rgba(0,0,0,0)",
+            }
         }
       >
         <form className="filter-by-form" onSubmit={handleSubmit}>
@@ -332,9 +335,8 @@ export function StayFilter() {
                       <div className="details-input" key={label}>
                         <button
                           type="button"
-                          className={`details-btn ${
-                            selectedBedrooms.toString() === label ? "selected" : ""
-                          }`}
+                          className={`details-btn ${selectedBedrooms.toString() === label ? "selected" : ""
+                            }`}
                           onClick={() => {
                             if (label === "Any") {
                               setSelectedBedrooms("Any");
@@ -357,9 +359,8 @@ export function StayFilter() {
                       <div className="details-input" key={label}>
                         <button
                           type="button"
-                          className={`details-btn ${
-                            selectedBeds.toString() === label ? "selected" : ""
-                          }`}
+                          className={`details-btn ${selectedBeds.toString() === label ? "selected" : ""
+                            }`}
                           onClick={() => {
                             if (label === "Any") {
                               setSelectedBeds("Any");
@@ -382,11 +383,10 @@ export function StayFilter() {
                       <div className="details-input" key={label}>
                         <button
                           type="button"
-                          className={`details-btn ${
-                            selectedBathrooms.toString() === label
-                              ? "selected"
-                              : ""
-                          }`}
+                          className={`details-btn ${selectedBathrooms.toString() === label
+                            ? "selected"
+                            : ""
+                            }`}
                           onClick={() => {
                             if (label === "Any") {
                               setSelectedBathrooms("Any");
@@ -536,6 +536,7 @@ export function StayFilter() {
                   className="filter-modal-btn"
                   onClick={() => {
                     setFilterModal(false);
+                    console.log('btn submit clicked ');
                   }}
                 >
                   Show 2 places

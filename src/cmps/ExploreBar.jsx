@@ -166,6 +166,9 @@ export function ExploreBar() {
   function handleSubmit(ev) {
     ev.preventDefault();
 
+    console.log('selectedRange', selectedRange.from);
+    console.log('selectedRange', selectedRange.to);
+
     if (selectedRange.from && !selectedRange.to) {
       const inputDate = new Date(selectedRange.from)
       inputDate.setDate(inputDate.getDate() + 1)

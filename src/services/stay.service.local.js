@@ -28,10 +28,18 @@ async function query(params) {
   let capacity = +paramsObject?.adults + +paramsObject?.children
   let stays = await storageService.query(STORAGE_KEY)
   let staysToReturn = stays
-  console.log('capacity:', capacity)
 
-  if (capacity) staysToReturn = staysToReturn.filter((stay) => stay.capacity >= capacity)
-  if (paramsObject.region) staysToReturn = staysToReturn.filter((stay) => stay.loc.country === paramsObject.region.split(',')[0])
+  console.log('capacity:', capacity)
+  if (paramsObject.amenities) console.log('paramsObject.amenities', paramsObject.amenities.split(','));
+
+  if (capacity) staysToReturn = staysToReturn.filter(stay => stay.capacity >= capacity)
+  if (paramsObject.region) staysToReturn = staysToReturn.filter(stay => stay.loc.country === paramsObject.region.split(',')[0])
+  if (paramsObject.maxPrice) staysToReturn = staysToReturn.filter(stay => stay.price >= +paramsObject.minPrice && stay.price <= paramsObject.maxPrice)
+  if (paramsObject.bedrooms) staysToReturn = staysToReturn.filter(stay => stay.bedrooms >= +paramsObject.bedrooms)
+  if (paramsObject.beds) staysToReturn = staysToReturn.filter(stay => stay.beds >= +paramsObject.beds)
+  if (paramsObject.bathrooms) staysToReturn = staysToReturn.filter(stay => stay.bathrooms >= +paramsObject.bathrooms)
+  if (paramsObject.amenities) staysToReturn = staysToReturn.filter(stay => paramsObject.amenities.split(',').every(amenity => stay.amenities.some((item) => new RegExp(amenity, 'i').test(item))))
+
   return staysToReturn
 }
 
