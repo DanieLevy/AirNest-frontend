@@ -35,6 +35,10 @@
         line-height: 20px;
         font-weight: 400;
         text-decoration: line-through;
+
+        &.has {
+          text-decoration: none;
+        }
       }
     }
   }
@@ -80,6 +84,10 @@
               font-size: 16px;
               line-height: 20px;
               font-weight: 400;
+
+              &.has {
+                text-decoration: none;
+              }
             }
           }
         }

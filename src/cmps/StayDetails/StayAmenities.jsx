@@ -373,6 +373,8 @@ export function StayAmenities({ data }) {
     },
   };
 
+  console.log('sssss', data);
+
   const amenitiesArray = Object.values(amenities);
 
   function formatSVG(svg) {
@@ -394,10 +396,16 @@ export function StayAmenities({ data }) {
   const amenitiesToShow = amenitiesArray.slice(0, itemsToShow);
 
   function checkIfAmenitiesExist(amenitie) {
-    if (data.includes(amenitie)) {
+    amenitie = amenitie.toLowerCase();
+    const dataLowerCase = data.map(item => item.toLowerCase());
+
+    if (dataLowerCase.includes(amenitie)) {
       return true;
     }
+
+    return false;
   }
+
 
 
   return (
@@ -411,7 +419,9 @@ export function StayAmenities({ data }) {
             return (
               <div className="amenity" key={idx}>
                 <div className="amenity-icon">{formatSVG(amenity.svg)}</div>
-                <div className="amenity-name">{amenity.title}</div>
+                <div className={checkIfAmenitiesExist(amenity.title) ? "amenity-name has" : "amenity-name"}>
+                  {amenity.title}
+                  </div>
               </div>
             );
           })}
@@ -445,7 +455,7 @@ export function StayAmenities({ data }) {
                       <div className="amenity-icon">
                         {formatSVG(amenities.mountingView.svg)}
                       </div>
-                      <div className="amenity-name">
+                      <div className={checkIfAmenitiesExist('mountingView') ? "amenity-name has" : "amenity-name"}>
                         {amenities.mountingView.title}
                       </div>
                     </div>
@@ -459,7 +469,7 @@ export function StayAmenities({ data }) {
                       <div className="amenity-icon">
                         {formatSVG(amenities.shampoo.svg)}
                       </div>
-                      <div className="amenity-name">
+                      <div className={checkIfAmenitiesExist('shampoo') ? "amenity-name has" : "amenity-name"}>
                         {amenities.shampoo.title}
                       </div>
                     </div>
@@ -467,7 +477,7 @@ export function StayAmenities({ data }) {
                       <div className="amenity-icon">
                         {formatSVG(amenities.bodySoap.svg)}
                       </div>
-                      <div className="amenity-name">
+                      <div className={checkIfAmenitiesExist('bodySoap') ? "amenity-name has" : "amenity-name"}>
                         {amenities.bodySoap.title}
                       </div>
                     </div>
@@ -475,7 +485,7 @@ export function StayAmenities({ data }) {
                       <div className="amenity-icon">
                         {formatSVG(amenities.outdoorShower.svg)}
                       </div>
-                      <div className="amenity-name">
+                      <div className={checkIfAmenitiesExist('outdoorShower') ? "amenity-name has" : "amenity-name"}>
                         {amenities.outdoorShower.title}
                       </div>
                     </div>
@@ -483,7 +493,7 @@ export function StayAmenities({ data }) {
                       <div className="amenity-icon">
                         {formatSVG(amenities.hotWater.svg)}
                       </div>
-                      <div className="amenity-name">
+                      <div className={checkIfAmenitiesExist('hotWater') ? "amenity-name has" : "amenity-name"}>
                         {amenities.hotWater.title}
                       </div>
                     </div>
@@ -491,7 +501,8 @@ export function StayAmenities({ data }) {
                       <div className="amenity-icon">
                         {formatSVG(amenities.bodySoap.svg)}
                       </div>
-                      <div className="amenity-name">Shower gel</div>
+                      <div className={checkIfAmenitiesExist('bodySoap') ? "amenity-name has" : "amenity-name"}>
+                        Shower gel</div>
                     </div>
                   </div>
                 </section>
@@ -505,7 +516,7 @@ export function StayAmenities({ data }) {
                       <div className="amenity-icon">
                         {formatSVG(amenities.essentials.svg)}
                       </div>
-                      <div className="amenity-name">
+                      <div className={checkIfAmenitiesExist('essentials') ? "amenity-name has" : "amenity-name"}>
                         {amenities.essentials.title}
                       </div>
                     </div>
@@ -513,7 +524,7 @@ export function StayAmenities({ data }) {
                       <div className="amenity-icon">
                         {formatSVG(amenities.hangers.svg)}
                       </div>
-                      <div className="amenity-name">
+                      <div className={checkIfAmenitiesExist('hangers') ? "amenity-name has" : "amenity-name"}>
                         {amenities.hangers.title}
                       </div>
                     </div>
@@ -521,7 +532,7 @@ export function StayAmenities({ data }) {
                       <div className="amenity-icon">
                         {formatSVG(amenities.bedLinens.svg)}
                       </div>
-                      <div className="amenity-name">
+                      <div className={checkIfAmenitiesExist('bedLinens') ? "amenity-name has" : "amenity-name"}>
                         {amenities.bedLinens.title}
                       </div>
                     </div>
@@ -529,7 +540,7 @@ export function StayAmenities({ data }) {
                       <div className="amenity-icon">
                         {formatSVG(amenities.dryingRack.svg)}
                       </div>
-                      <div className="amenity-name">
+                      <div className={checkIfAmenitiesExist('dryingRack') ? "amenity-name has" : "amenity-name"}>
                         {amenities.dryingRack.title}
                       </div>
                     </div>
@@ -537,7 +548,7 @@ export function StayAmenities({ data }) {
                       <div className="amenity-icon">
                         {formatSVG(amenities.mosquitoNet.svg)}
                       </div>
-                      <div className="amenity-name">
+                      <div className={checkIfAmenitiesExist('mosquitoNet') ? "amenity-name has" : "amenity-name"}>
                         {amenities.mosquitoNet.title}
                       </div>
                     </div>
@@ -552,7 +563,7 @@ export function StayAmenities({ data }) {
                       <div className="amenity-icon">
                         {formatSVG(amenities.firePlace.svg)}
                       </div>
-                      <div className="amenity-name">
+                      <div className={checkIfAmenitiesExist('firePlace') ? "amenity-name has" : "amenity-name"}>
                         {amenities.firePlace.title}
                       </div>
                     </div>
@@ -560,7 +571,7 @@ export function StayAmenities({ data }) {
                       <div className="amenity-icon">
                         {formatSVG(amenities.heating.svg)}
                       </div>
-                      <div className="amenity-name">
+                      <div className={checkIfAmenitiesExist('heating') ? "amenity-name has" : "amenity-name"}>
                         {amenities.heating.title}
                       </div>
                     </div>
@@ -574,7 +585,7 @@ export function StayAmenities({ data }) {
                       <div className="amenity-icon">
                         {formatSVG(amenities.smokeAlarm.svg)}
                       </div>
-                      <div className="amenity-name">
+                      <div className={checkIfAmenitiesExist('smokeAlarm') ? "amenity-name has" : "amenity-name"}>
                         {amenities.smokeAlarm.title}
                       </div>
                     </div>
@@ -582,7 +593,7 @@ export function StayAmenities({ data }) {
                       <div className="amenity-icon">
                         {formatSVG(amenities.fireExtinguisher.svg)}
                       </div>
-                      <div className="amenity-name">
+                      <div className={checkIfAmenitiesExist('fireExtinguisher') ? "amenity-name has" : "amenity-name"}>
                         {amenities.fireExtinguisher.title}
                       </div>
                     </div>
@@ -590,7 +601,7 @@ export function StayAmenities({ data }) {
                       <div className="amenity-icon">
                         {formatSVG(amenities.firstAidKit.svg)}
                       </div>
-                      <div className="amenity-name">
+                      <div className={checkIfAmenitiesExist('firstAidKit') ? "amenity-name has" : "amenity-name"}>
                         {amenities.firstAidKit.title}
                       </div>
                     </div>
@@ -605,7 +616,7 @@ export function StayAmenities({ data }) {
                       <div className="amenity-icon">
                         {formatSVG(amenities.dedicatedWorkspace.svg)}
                       </div>
-                      <div className="amenity-name">
+                      <div className={checkIfAmenitiesExist('dedicatedWorkspace') ? "amenity-name has" : "amenity-name"}>
                         {amenities.dedicatedWorkspace.title}
                       </div>
                     </div>
@@ -620,7 +631,7 @@ export function StayAmenities({ data }) {
                       <div className="amenity-icon">
                         {formatSVG(amenities.kitchen.svg)}
                       </div>
-                      <div className="amenity-name">
+                      <div className={checkIfAmenitiesExist('kitchen') ? "amenity-name has" : "amenity-name"}>
                         {amenities.kitchen.title}
                       </div>
                     </div>
@@ -628,7 +639,7 @@ export function StayAmenities({ data }) {
                       <div className="amenity-icon">
                         {formatSVG(amenities.cookingBasics.svg)}
                       </div>
-                      <div className="amenity-name">
+                      <div className={checkIfAmenitiesExist('cookingBasics') ? "amenity-name has" : "amenity-name"}>
                         {amenities.cookingBasics.title}
                       </div>
                     </div>
@@ -636,7 +647,7 @@ export function StayAmenities({ data }) {
                       <div className="amenity-icon">
                         {formatSVG(amenities.dishesAndSilverware.svg)}
                       </div>
-                      <div className="amenity-name">
+                      <div className={checkIfAmenitiesExist('dishesAndSilverware') ? "amenity-name has" : "amenity-name"}>
                         {amenities.dishesAndSilverware.title}
                       </div>
                     </div>
@@ -644,7 +655,7 @@ export function StayAmenities({ data }) {
                       <div className="amenity-icon">
                         {formatSVG(amenities.wineGlasses.svg)}
                       </div>
-                      <div className="amenity-name">
+                      <div className={checkIfAmenitiesExist('wineGlasses') ? "amenity-name has" : "amenity-name"}>
                         {amenities.wineGlasses.title}
                       </div>
                     </div>
@@ -652,7 +663,7 @@ export function StayAmenities({ data }) {
                       <div className="amenity-icon">
                         {formatSVG(amenities.bbqGrill.svg)}
                       </div>
-                      <div className="amenity-name">
+                      <div className={checkIfAmenitiesExist('bbqGrill') ? "amenity-name has" : "amenity-name"}>
                         {amenities.bbqGrill.title}
                       </div>
                     </div>
@@ -668,7 +679,7 @@ export function StayAmenities({ data }) {
                       <div className="amenity-icon">
                         {formatSVG(amenities.privateEntrance.svg)}
                       </div>
-                      <div className="amenity-name">
+                      <div className={checkIfAmenitiesExist('privateEntrance') ? "amenity-name has" : "amenity-name"}>
                         {amenities.privateEntrance.title}
                       </div>
                     </div>
@@ -682,7 +693,7 @@ export function StayAmenities({ data }) {
                       <div className="amenity-icon">
                         {formatSVG(amenities.patioOrBalcony.svg)}
                       </div>
-                      <div className="amenity-name">
+                      <div className={checkIfAmenitiesExist('patioOrBalcony') ? "amenity-name has" : "amenity-name"}>
                         {amenities.patioOrBalcony.title}
                       </div>
                     </div>
@@ -690,7 +701,7 @@ export function StayAmenities({ data }) {
                       <div className="amenity-icon">
                         {formatSVG(amenities.backyard.svg)}
                       </div>
-                      <div className="amenity-name">
+                      <div className={checkIfAmenitiesExist('backyard') ? "amenity-name has" : "amenity-name"}>
                         {amenities.backyard.title}
                       </div>
                     </div>
@@ -698,7 +709,7 @@ export function StayAmenities({ data }) {
                       <div className="amenity-icon">
                         {formatSVG(amenities.outdoorFurniture.svg)}
                       </div>
-                      <div className="amenity-name">
+                      <div className={checkIfAmenitiesExist('outdoorFurniture') ? "amenity-name has" : "amenity-name"}>
                         {amenities.outdoorFurniture.title}
                       </div>
                     </div>
@@ -706,7 +717,7 @@ export function StayAmenities({ data }) {
                       <div className="amenity-icon">
                         {formatSVG(amenities.outdoorDiningArea.svg)}
                       </div>
-                      <div className="amenity-name">
+                      <div className={checkIfAmenitiesExist('outdoorDiningArea') ? "amenity-name has" : "amenity-name"}>
                         {amenities.outdoorDiningArea.title}
                       </div>
                     </div>
@@ -714,7 +725,7 @@ export function StayAmenities({ data }) {
                       <div className="amenity-icon">
                         {formatSVG(amenities.bbqGrill.svg)}
                       </div>
-                      <div className="amenity-name">
+                      <div className={checkIfAmenitiesExist('bbqGrill') ? "amenity-name has" : "amenity-name"}>
                         {amenities.bbqGrill.title}
                       </div>
                     </div>
@@ -730,7 +741,7 @@ export function StayAmenities({ data }) {
                       <div className="amenity-icon">
                         {formatSVG(amenities.freeParkingOnPremises.svg)}
                       </div>
-                      <div className="amenity-name">
+                      <div className={checkIfAmenitiesExist('freeParkingOnPremises') ? "amenity-name has" : "amenity-name"}>
                         {amenities.freeParkingOnPremises.title}
                       </div>
                     </div>
@@ -738,7 +749,7 @@ export function StayAmenities({ data }) {
                       <div className="amenity-icon">
                         {formatSVG(amenities.sharedPool.svg)}
                       </div>
-                      <div className="amenity-name">
+                      <div className={checkIfAmenitiesExist('sharedPool') ? "amenity-name has" : "amenity-name"}>
                         {amenities.sharedPool.title}
                       </div>
                     </div>
@@ -751,7 +762,7 @@ export function StayAmenities({ data }) {
                       <div className="amenity-icon">
                         {formatSVG(amenities.selfCheckIn.svg)}
                       </div>
-                      <div className="amenity-name">
+                      <div className={checkIfAmenitiesExist('selfCheckIn') ? "amenity-name has" : "amenity-name"}>
                         {amenities.selfCheckIn.title}
                       </div>
                     </div>
