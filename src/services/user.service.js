@@ -108,8 +108,9 @@ async function demoUser() {
     password: '111',
   }
 }
-// ;(async () => {
-//   await userService.signup({ fullname: 'Puki Norma', username: 'puki', password: '123', score: 10000, isAdmin: false })
-//   await userService.signup({ fullname: 'Master Adminov', username: 'admin', password: '123', score: 10000, isAdmin: true })
-//   await userService.signup({ fullname: 'Muki G', username: 'muki', password: '123', score: 10000 })
-// })()
+; (async () => {
+  await userService.signup({
+    fullname: 'Puki Norma', username: 'puki', password: '123', imgUrl: 'https://marketplace.canva.com/EAFqNrAJpQs/1/0/1600w/canva-neutral-pink-modern-circle-shape-linkedin-profile-picture-WAhofEY5L1U.jpg', isAdmin: false
+  })
+
+})()
