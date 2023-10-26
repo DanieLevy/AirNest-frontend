@@ -1,90 +1,71 @@
-.user-msg {
-    color:white;
-    padding: 10px;
+h3 {
+    font-family: cereal-light;
     font-size: 1em;
-    position: fixed;
-    top:85px;
-    transform: translateX(-50%);
-    left: 50%;
-    z-index: 100;
-    border-radius: 5px;
-    background-color: grey;
-
+}
+.alert {
     display: flex;
+    justify-content: space-between;
     align-items: center;
 
-    animation: slideIn 0.5s forwards, slideOut 0.5s forwards 2.5s;
+    width: 30%;
+    padding: 15px 10px;
+    position: fixed;
+    top: 110px;
+    transform: translateX(-50%);
+    left: 50%;
+    border-radius: 5px;
+    box-shadow: 0 0 15px 5px #ccc;
+    z-index: 100;
+    animation:
+        slideIn 0.5s forwards,
+        slideOut 0.5s forwards 2.5s;
+    transition: all 0.5s ease-in-out;
 }
-.user-msg button {
+.close {
+    width: 30px;
+    height: 30px;
+    opacity: 0.5;
+    border-width: 1px;
+    border-style: solid;
     border-radius: 50%;
-    background-color: transparent;
-    color: white;
-    font-size: 1em;
+    text-align: center;
+    font-size: 1.6em;
     cursor: pointer;
-    border: 0;
-    margin: 0;
-    padding: 5px;
+    background-color: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
-
-.user-msg.success {
-    background-color: rgba(0, 255, 26, 0.498);
+@mixin alert($name, $bgColor) {
+    $accentColor: darken($bgColor, 30);
+    $accentColor2: darken($bgColor, 80);
+    .#{$name} {
+        background-color: #{$bgColor};
+        border-left: 5px solid $accentColor;
+        .close {
+            border-color: $accentColor2;
+            color: $accentColor2;
+        }
+    }
 }
-.user-msg.error {
-    background-color: rgb(216, 59, 59);
-}
+@include alert(alert, #ebebeb);
+@include alert(success, #a8f0c6);
+@include alert(error, #f7a7a3);
 
 @keyframes slideIn {
     from {
         transform: translateX(-50%) translateY(-100%);
     }
     to {
-        transform: translateX(-50%) translateY(0);
+        transform: translateX(-50%) translateY(0) scale(1);
     }
 }
 
-@import url('https://fonts.googleapis.com/css?family=Quicksand&display=swap');
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-}
-h3{
-    font-family:Quicksand;
-}
-.alert{
-  width:50%;
-  margin:20px auto;
-  padding:30px;
-  position:relative;
-  border-radius:5px;
-  box-shadow:0 0 15px 5px #ccc;
-}
-.close{
-  position:absolute;
-  width:30px;
-  height:30px;
-  opacity:0.5;
-  border-width:1px;
-  border-style:solid;
-  border-radius:50%;
-  right:15px;
-  top:25px;
-  text-align:center;
-  font-size:1.6em;
-  cursor:pointer;
-}
-@mixin alert($name,$bgColor){
-  $accentColor:darken($bgColor,50);
-  .#{$name}{
-    background-color:#{$bgColor};
-    border-left:5px solid $accentColor;
-    .close{
-      border-color:$accentColor;
-      color:$accentColor;
+@keyframes slideOut {
+    from {
+        transform: translateX(-50%) translateY(0);
     }
-  }
+    to {
+        transform: translateX(-50%) translateY(-250px);
+    }
 }
-@include alert(simple-alert,#ebebeb);
-@include alert(success-alert,#a8f0c6);
-@include alert(danger-alert,#f7a7a3);
-@include alert(warning-alert,#ffd48a);
