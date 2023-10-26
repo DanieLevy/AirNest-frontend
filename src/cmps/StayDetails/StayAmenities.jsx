@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 
 export function StayAmenities({ data }) {
-  const [showAllAmenities, setShowAllAmenities] = useState(false);
-
   const amenities = {
     firePlace: {
       title: "Indoor fireplace: wood-burning",
@@ -100,8 +98,8 @@ export function StayAmenities({ data }) {
         <path d="M1 2V0h30v2h-2v18a2 2 0 0 1-1.85 2H17v2.17a3 3 0 1 1-2 0V22H5a2 2 0 0 1-2-1.85V2zm15 24a1 1 0 1 0 0 2 1 1 0 0 0 0-2zM27 2H5v18h22z"></path>
       ),
     },
-    mountingView: {
-      title: "Mounting View",
+    mountainView: {
+      title: "Mountain view",
       svg: (
         <path d="M28 2a2 2 0 0 1 2 1.85V28a2 2 0 0 1-1.85 2H4a2 2 0 0 1-2-1.85V4a2 2 0 0 1 1.85-2H4zm-5.92 20H9.92L4 27.91V28h24v-.09zM28 4H4v21.08l12-12 12 12zM16 15.91 11.91 20h8.17zM22 7a3 3 0 1 1 0 6 3 3 0 0 1 0-6zm0 2a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"></path>
       ),
@@ -373,12 +371,70 @@ export function StayAmenities({ data }) {
     },
   };
 
-  console.log('sssss', data);
-
+  const [showAllAmenities, setShowAllAmenities] = useState(false);
+  const itemsToShow = 10;
   const amenitiesArray = Object.values(amenities);
+  const amenitiesToShow = amenitiesArray.slice(0, itemsToShow);
+
+  const amenitiesCategories = [
+    {
+      title: "Scenic View",
+      amenities: ["seaView", "valleyView", "mountainView"],
+    },
+    {
+      title: "Bathroom",
+      amenities: [
+        "bathtub",
+        "hairDryer",
+        "cleaningProducts",
+        "shampoo",
+        "outdoorShower",
+        "hotWater",
+      ],
+    },
+    {
+      title: "Bedroom and laundry",
+      amenities: [
+        "washer",
+        "essentials",
+        "hangers",
+        "bedLinens",
+        "extraPillowsAndBlankets",
+        "roomDarkeningShades",
+        "iron",
+        "dryingRack",
+        "lockbox",
+        "mosquitoNet",
+      ],
+    },
+    {
+      title: "Entertainment",
+      amenities: ["tv", "wifi"],
+    },
+    {
+      title: "Heating and cooling",
+      amenities: ["windowAC", "heating", "firePlace"],
+    },
+    {
+      title: "Home safety",
+      amenities: ["smokeAlarm", "fireExtinguisher", "firstAidKit"],
+    },
+    {
+      title: "Kitchen and dining",
+      amenities: [
+        "kitchen",
+        "cookingBasics",
+        "dishesAndSilverware",
+        "dishwasher",
+        "microwave",
+        "refrigerator",
+        "stove",
+        "bbqGrill",
+      ],
+    },
+  ];
 
   function formatSVG(svg) {
-    // format the svg from ammenities object to be used in jsx
     return (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -392,12 +448,9 @@ export function StayAmenities({ data }) {
     );
   }
 
-  const itemsToShow = 10;
-  const amenitiesToShow = amenitiesArray.slice(0, itemsToShow);
-
   function checkIfAmenitiesExist(amenitie) {
     amenitie = amenitie.toLowerCase();
-    const dataLowerCase = data.map(item => item.toLowerCase());
+    const dataLowerCase = data.map((item) => item.toLowerCase());
 
     if (dataLowerCase.includes(amenitie)) {
       return true;
@@ -405,8 +458,6 @@ export function StayAmenities({ data }) {
 
     return false;
   }
-
-
 
   return (
     <React.Fragment>
@@ -419,9 +470,15 @@ export function StayAmenities({ data }) {
             return (
               <div className="amenity" key={idx}>
                 <div className="amenity-icon">{formatSVG(amenity.svg)}</div>
-                <div className={checkIfAmenitiesExist(amenity.title) ? "amenity-name has" : "amenity-name"}>
+                <div
+                  className={
+                    checkIfAmenitiesExist(amenity.title)
+                      ? "amenity-name has"
+                      : "amenity-name"
+                  }
+                >
                   {amenity.title}
-                  </div>
+                </div>
               </div>
             );
           })}
@@ -448,326 +505,43 @@ export function StayAmenities({ data }) {
               <h1>What this place offers</h1>
               <div className="divider"></div>
               <div className="reviews-modal-list">
-                <section className="amenities-section">
-                  <div className="amenities-section-title">Scenic views</div>
-                  <div className="amenities-section-list">
-                    <div className="amenity">
-                      <div className="amenity-icon">
-                        {formatSVG(amenities.mountingView.svg)}
-                      </div>
-                      <div className={checkIfAmenitiesExist('mountingView') ? "amenity-name has" : "amenity-name"}>
-                        {amenities.mountingView.title}
-                      </div>
+                {amenitiesCategories.map((category) => (
+                  <section className="amenities-section" key={category.title}>
+                    <div className="amenities-section-title">
+                      {category.title}
                     </div>
-                  </div>
-                </section>
-
-                <section className="amenities-section">
-                  <div className="amenities-section-title">Bathroom</div>
-                  <div className="amenities-section-list">
-                    <div className="amenity">
-                      <div className="amenity-icon">
-                        {formatSVG(amenities.shampoo.svg)}
-                      </div>
-                      <div className={checkIfAmenitiesExist('shampoo') ? "amenity-name has" : "amenity-name"}>
-                        {amenities.shampoo.title}
-                      </div>
+                    <div className="amenities-section-list">
+                      {category.amenities.map((amenity) => {
+                        // Check if the amenity exists in the amenities object
+                        if (amenities[amenity]) {
+                          return (
+                            <div className="amenity" key={amenity}>
+                              <div className="amenity-icon">
+                                {formatSVG(amenities[amenity].svg)}
+                              </div>
+                              <div
+                                className={`amenity-name ${
+                                  checkIfAmenitiesExist(amenity) ? "has" : ""
+                                }`}
+                              >
+                                {amenities[amenity].title}
+                              </div>
+                            </div>
+                          );
+                        } else {
+                          // Handle the case where the amenity doesn't exist in your data
+                          return (
+                            <div className="amenity" key={amenity}>
+                              <div className="amenity-name">
+                                Amenity Not Found
+                              </div>
+                            </div>
+                          );
+                        }
+                      })}
                     </div>
-                    <div className="amenity">
-                      <div className="amenity-icon">
-                        {formatSVG(amenities.bodySoap.svg)}
-                      </div>
-                      <div className={checkIfAmenitiesExist('bodySoap') ? "amenity-name has" : "amenity-name"}>
-                        {amenities.bodySoap.title}
-                      </div>
-                    </div>
-                    <div className="amenity">
-                      <div className="amenity-icon">
-                        {formatSVG(amenities.outdoorShower.svg)}
-                      </div>
-                      <div className={checkIfAmenitiesExist('outdoorShower') ? "amenity-name has" : "amenity-name"}>
-                        {amenities.outdoorShower.title}
-                      </div>
-                    </div>
-                    <div className="amenity">
-                      <div className="amenity-icon">
-                        {formatSVG(amenities.hotWater.svg)}
-                      </div>
-                      <div className={checkIfAmenitiesExist('hotWater') ? "amenity-name has" : "amenity-name"}>
-                        {amenities.hotWater.title}
-                      </div>
-                    </div>
-                    <div className="amenity">
-                      <div className="amenity-icon">
-                        {formatSVG(amenities.bodySoap.svg)}
-                      </div>
-                      <div className={checkIfAmenitiesExist('bodySoap') ? "amenity-name has" : "amenity-name"}>
-                        Shower gel</div>
-                    </div>
-                  </div>
-                </section>
-
-                <section className="amenities-section">
-                  <div className="amenities-section-title">
-                    Bedroom and laundry
-                  </div>
-                  <div className="amenities-section-list">
-                    <div className="amenity">
-                      <div className="amenity-icon">
-                        {formatSVG(amenities.essentials.svg)}
-                      </div>
-                      <div className={checkIfAmenitiesExist('essentials') ? "amenity-name has" : "amenity-name"}>
-                        {amenities.essentials.title}
-                      </div>
-                    </div>
-                    <div className="amenity">
-                      <div className="amenity-icon">
-                        {formatSVG(amenities.hangers.svg)}
-                      </div>
-                      <div className={checkIfAmenitiesExist('hangers') ? "amenity-name has" : "amenity-name"}>
-                        {amenities.hangers.title}
-                      </div>
-                    </div>
-                    <div className="amenity">
-                      <div className="amenity-icon">
-                        {formatSVG(amenities.bedLinens.svg)}
-                      </div>
-                      <div className={checkIfAmenitiesExist('bedLinens') ? "amenity-name has" : "amenity-name"}>
-                        {amenities.bedLinens.title}
-                      </div>
-                    </div>
-                    <div className="amenity">
-                      <div className="amenity-icon">
-                        {formatSVG(amenities.dryingRack.svg)}
-                      </div>
-                      <div className={checkIfAmenitiesExist('dryingRack') ? "amenity-name has" : "amenity-name"}>
-                        {amenities.dryingRack.title}
-                      </div>
-                    </div>
-                    <div className="amenity">
-                      <div className="amenity-icon">
-                        {formatSVG(amenities.mosquitoNet.svg)}
-                      </div>
-                      <div className={checkIfAmenitiesExist('mosquitoNet') ? "amenity-name has" : "amenity-name"}>
-                        {amenities.mosquitoNet.title}
-                      </div>
-                    </div>
-                  </div>
-                </section>
-                <section className="amenities-section">
-                  <div className="amenities-section-title">
-                    Heating and cooling
-                  </div>
-                  <div className="amenities-section-list">
-                    <div className="amenity">
-                      <div className="amenity-icon">
-                        {formatSVG(amenities.firePlace.svg)}
-                      </div>
-                      <div className={checkIfAmenitiesExist('firePlace') ? "amenity-name has" : "amenity-name"}>
-                        {amenities.firePlace.title}
-                      </div>
-                    </div>
-                    <div className="amenity">
-                      <div className="amenity-icon">
-                        {formatSVG(amenities.heating.svg)}
-                      </div>
-                      <div className={checkIfAmenitiesExist('heating') ? "amenity-name has" : "amenity-name"}>
-                        {amenities.heating.title}
-                      </div>
-                    </div>
-                  </div>
-                </section>
-
-                <section className="amenities-section">
-                  <div className="amenities-section-title">Home safety</div>
-                  <div className="amenities-section-list">
-                    <div className="amenity">
-                      <div className="amenity-icon">
-                        {formatSVG(amenities.smokeAlarm.svg)}
-                      </div>
-                      <div className={checkIfAmenitiesExist('smokeAlarm') ? "amenity-name has" : "amenity-name"}>
-                        {amenities.smokeAlarm.title}
-                      </div>
-                    </div>
-                    <div className="amenity">
-                      <div className="amenity-icon">
-                        {formatSVG(amenities.fireExtinguisher.svg)}
-                      </div>
-                      <div className={checkIfAmenitiesExist('fireExtinguisher') ? "amenity-name has" : "amenity-name"}>
-                        {amenities.fireExtinguisher.title}
-                      </div>
-                    </div>
-                    <div className="amenity">
-                      <div className="amenity-icon">
-                        {formatSVG(amenities.firstAidKit.svg)}
-                      </div>
-                      <div className={checkIfAmenitiesExist('firstAidKit') ? "amenity-name has" : "amenity-name"}>
-                        {amenities.firstAidKit.title}
-                      </div>
-                    </div>
-                  </div>
-                </section>
-                <section className="amenities-section">
-                  <div className="amenities-section-title">
-                    Internet and office
-                  </div>
-                  <div className="amenities-section-list">
-                    <div className="amenity">
-                      <div className="amenity-icon">
-                        {formatSVG(amenities.dedicatedWorkspace.svg)}
-                      </div>
-                      <div className={checkIfAmenitiesExist('dedicatedWorkspace') ? "amenity-name has" : "amenity-name"}>
-                        {amenities.dedicatedWorkspace.title}
-                      </div>
-                    </div>
-                  </div>
-                </section>
-                <section className="amenities-section">
-                  <div className="amenities-section-title">
-                    Kitchen and dining
-                  </div>
-                  <div className="amenities-section-list">
-                    <div className="amenity">
-                      <div className="amenity-icon">
-                        {formatSVG(amenities.kitchen.svg)}
-                      </div>
-                      <div className={checkIfAmenitiesExist('kitchen') ? "amenity-name has" : "amenity-name"}>
-                        {amenities.kitchen.title}
-                      </div>
-                    </div>
-                    <div className="amenity">
-                      <div className="amenity-icon">
-                        {formatSVG(amenities.cookingBasics.svg)}
-                      </div>
-                      <div className={checkIfAmenitiesExist('cookingBasics') ? "amenity-name has" : "amenity-name"}>
-                        {amenities.cookingBasics.title}
-                      </div>
-                    </div>
-                    <div className="amenity">
-                      <div className="amenity-icon">
-                        {formatSVG(amenities.dishesAndSilverware.svg)}
-                      </div>
-                      <div className={checkIfAmenitiesExist('dishesAndSilverware') ? "amenity-name has" : "amenity-name"}>
-                        {amenities.dishesAndSilverware.title}
-                      </div>
-                    </div>
-                    <div className="amenity">
-                      <div className="amenity-icon">
-                        {formatSVG(amenities.wineGlasses.svg)}
-                      </div>
-                      <div className={checkIfAmenitiesExist('wineGlasses') ? "amenity-name has" : "amenity-name"}>
-                        {amenities.wineGlasses.title}
-                      </div>
-                    </div>
-                    <div className="amenity">
-                      <div className="amenity-icon">
-                        {formatSVG(amenities.bbqGrill.svg)}
-                      </div>
-                      <div className={checkIfAmenitiesExist('bbqGrill') ? "amenity-name has" : "amenity-name"}>
-                        {amenities.bbqGrill.title}
-                      </div>
-                    </div>
-                  </div>
-                </section>
-
-                <section className="amenities-section">
-                  <div className="amenities-section-title">
-                    Location features
-                  </div>
-                  <div className="amenities-section-list">
-                    <div className="amenity">
-                      <div className="amenity-icon">
-                        {formatSVG(amenities.privateEntrance.svg)}
-                      </div>
-                      <div className={checkIfAmenitiesExist('privateEntrance') ? "amenity-name has" : "amenity-name"}>
-                        {amenities.privateEntrance.title}
-                      </div>
-                    </div>
-                  </div>
-                </section>
-
-                <section className="amenities-section">
-                  <div className="amenities-section-title">Outdoor</div>
-                  <div className="amenities-section-list">
-                    <div className="amenity">
-                      <div className="amenity-icon">
-                        {formatSVG(amenities.patioOrBalcony.svg)}
-                      </div>
-                      <div className={checkIfAmenitiesExist('patioOrBalcony') ? "amenity-name has" : "amenity-name"}>
-                        {amenities.patioOrBalcony.title}
-                      </div>
-                    </div>
-                    <div className="amenity">
-                      <div className="amenity-icon">
-                        {formatSVG(amenities.backyard.svg)}
-                      </div>
-                      <div className={checkIfAmenitiesExist('backyard') ? "amenity-name has" : "amenity-name"}>
-                        {amenities.backyard.title}
-                      </div>
-                    </div>
-                    <div className="amenity">
-                      <div className="amenity-icon">
-                        {formatSVG(amenities.outdoorFurniture.svg)}
-                      </div>
-                      <div className={checkIfAmenitiesExist('outdoorFurniture') ? "amenity-name has" : "amenity-name"}>
-                        {amenities.outdoorFurniture.title}
-                      </div>
-                    </div>
-                    <div className="amenity">
-                      <div className="amenity-icon">
-                        {formatSVG(amenities.outdoorDiningArea.svg)}
-                      </div>
-                      <div className={checkIfAmenitiesExist('outdoorDiningArea') ? "amenity-name has" : "amenity-name"}>
-                        {amenities.outdoorDiningArea.title}
-                      </div>
-                    </div>
-                    <div className="amenity">
-                      <div className="amenity-icon">
-                        {formatSVG(amenities.bbqGrill.svg)}
-                      </div>
-                      <div className={checkIfAmenitiesExist('bbqGrill') ? "amenity-name has" : "amenity-name"}>
-                        {amenities.bbqGrill.title}
-                      </div>
-                    </div>
-                  </div>
-                </section>
-
-                <section className="amenities-section">
-                  <div className="amenities-section-title">
-                    Parking and facilities
-                  </div>
-                  <div className="amenities-section-list">
-                    <div className="amenity">
-                      <div className="amenity-icon">
-                        {formatSVG(amenities.freeParkingOnPremises.svg)}
-                      </div>
-                      <div className={checkIfAmenitiesExist('freeParkingOnPremises') ? "amenity-name has" : "amenity-name"}>
-                        {amenities.freeParkingOnPremises.title}
-                      </div>
-                    </div>
-                    <div className="amenity">
-                      <div className="amenity-icon">
-                        {formatSVG(amenities.sharedPool.svg)}
-                      </div>
-                      <div className={checkIfAmenitiesExist('sharedPool') ? "amenity-name has" : "amenity-name"}>
-                        {amenities.sharedPool.title}
-                      </div>
-                    </div>
-                  </div>
-                </section>
-                <section className="amenities-section">
-                  <div className="amenities-section-title">Services</div>
-                  <div className="amenities-section-list">
-                    <div className="amenity">
-                      <div className="amenity-icon">
-                        {formatSVG(amenities.selfCheckIn.svg)}
-                      </div>
-                      <div className={checkIfAmenitiesExist('selfCheckIn') ? "amenity-name has" : "amenity-name"}>
-                        {amenities.selfCheckIn.title}
-                      </div>
-                    </div>
-                  </div>
-                </section>
+                  </section>
+                ))}
               </div>
             </div>
           </div>

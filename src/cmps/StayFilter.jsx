@@ -9,6 +9,7 @@ import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
 import { useSearchParams } from "react-router-dom";
 import { QUERY_KEYS } from "../services/util.service";
+import { useSelector } from "react-redux";
 
 export function StayFilter() {
   const [paddingTop, setPaddingTop] = useState(15);
@@ -22,6 +23,8 @@ export function StayFilter() {
   const [inputBoxShadow2, setInputBoxShadow2] = useState(
     "inset 0 0 0 1px #b0b0b0"
   );
+
+  const stays = useSelector((storeState) => storeState.stayModule.stays)
 
   const [searchParams, setSearchParams] = useSearchParams();
   const [appliedFilters, setAppliedFilters] = useState([]);
@@ -39,7 +42,7 @@ export function StayFilter() {
     const bedrooms = (+searchParams.get(QUERY_KEYS.bedrooms) || 'Any')
     const beds = (+searchParams.get(QUERY_KEYS.beds) || 'Any')
     const bathrooms = (+searchParams.get(QUERY_KEYS.bathrooms) || 'Any')
-    const amenities = ([searchParams.get(QUERY_KEYS.amenities)] || selectedAmmenties)
+    const amenities = searchParams.get(QUERY_KEYS.amenities) ? searchParams.get(QUERY_KEYS.amenities).split(',') : []
 
     setMinPrice(minPrice)
     setMaxPrice(maxPrice)
@@ -144,7 +147,6 @@ export function StayFilter() {
       });
     }
 
-
   }, [
     minPrice,
     maxPrice,
@@ -177,7 +179,7 @@ export function StayFilter() {
   function handleSubmit(ev) {
     ev.preventDefault();
     searchParams.set(QUERY_KEYS.minPrice, minPrice)
-    if (maxPrice) searchParams.set(QUERY_KEYS.maxPrice, maxPrice)
+    searchParams.set(QUERY_KEYS.maxPrice, maxPrice)
     if (selectedBedrooms) searchParams.set(QUERY_KEYS.bedrooms, selectedBedrooms)
     if (selectedBeds) searchParams.set(QUERY_KEYS.beds, selectedBeds)
     if (selectedBathrooms) searchParams.set(QUERY_KEYS.bathrooms, selectedBathrooms)
@@ -558,7 +560,7 @@ export function StayFilter() {
                     console.log('btn submit clicked ');
                   }}
                 >
-                  Show 2 places
+                  show 2 places
                 </button>
               </div>
             </div>
