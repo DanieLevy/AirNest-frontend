@@ -3,6 +3,12 @@
   top: 0;
   z-index: 100;
   background-color: $clr3;
+  transition: all 0.3s;
+
+  &.expanded {
+    border-bottom: 1px solid #dddddd;
+    height: 160px;
+  }
 
   &.relative {
     position: relative;
@@ -16,7 +22,6 @@
   align-items: center;
   color: #222222;
   height: 80px;
-
 
   img {
     width: 32px;
@@ -33,7 +38,6 @@
     font-weight: 600;
     letter-spacing: 0.1rem;
     cursor: pointer;
-
 
     .logo-txt {
       margin-inline-start: 5px;

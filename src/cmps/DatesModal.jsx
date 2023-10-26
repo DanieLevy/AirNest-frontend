@@ -27,7 +27,7 @@ export function DatesModal({ onSetDates }) {
   }
 
   return (
-<h1 className="dates-modal">
+<h1 className="dateos-modal">
   dd </h1>
   
   )
