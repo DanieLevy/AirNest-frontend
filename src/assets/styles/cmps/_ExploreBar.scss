@@ -243,7 +243,16 @@
   align-items: flex-start;
   padding-inline: 10vw;
   z-index: 10;
+  animation: opacity 0.5s ease-in-out;
+}
 
+@keyframes opacity {
+  from {
+    opacity: .8;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes slideIn {
