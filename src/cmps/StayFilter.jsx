@@ -10,6 +10,7 @@ import "rc-slider/assets/index.css";
 import { useSearchParams } from "react-router-dom";
 import { QUERY_KEYS } from "../services/util.service";
 import { useSelector } from "react-redux";
+import { getResultLength } from "../store/actions/stay.actions";
 
 export function StayFilter() {
   const [paddingTop, setPaddingTop] = useState(15);
@@ -34,7 +35,7 @@ export function StayFilter() {
   const [selectedBeds, setSelectedBeds] = useState("Any");
   const [selectedBathrooms, setSelectedBathrooms] = useState("Any");
   const [selectedAmmenties, setSelectedAmmenties] = useState([]);
-
+  const [resultLength, setResultLength] = useState(stays.length)
 
   useEffect(() => {
     const minPrice = +(searchParams.get(QUERY_KEYS.minPrice) || 0)
@@ -146,7 +147,7 @@ export function StayFilter() {
         return prevAppliedFilters.filter((filter) => filter !== "Ammenities");
       });
     }
-
+    showResultLength()
   }, [
     minPrice,
     maxPrice,
@@ -174,6 +175,37 @@ export function StayFilter() {
   function onSliderChange(value) {
     setMinPrice(value[0]);
     setMaxPrice(value[1]);
+  }
+
+  function getExploreBarFilterValue() {
+    const exploreBarFilterValues = {}
+    const region = searchParams.get(QUERY_KEYS.region)
+    const adults = +searchParams.get(QUERY_KEYS.adults)
+    const children = +searchParams.get(QUERY_KEYS.children)
+
+    const capacity = adults + children
+
+    if (region) exploreBarFilterValues.region = region
+    if (capacity) exploreBarFilterValues.capacity = capacity
+
+    return exploreBarFilterValues
+  }
+
+  async function showResultLength() {
+    const filterBy = getExploreBarFilterValue()
+    filterBy.minPrice = minPrice
+    filterBy.maxPrice = maxPrice
+    filterBy.bedrooms = selectedBedrooms
+    filterBy.beds = selectedBeds
+    filterBy.bathrooms = selectedBathrooms
+    filterBy.amenities = selectedAmmenties
+
+    try {
+      const resultLength = await getResultLength(filterBy)
+      setResultLength(resultLength)
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   function handleSubmit(ev) {
@@ -560,7 +592,7 @@ export function StayFilter() {
                     console.log('btn submit clicked ');
                   }}
                 >
-                  show 2 places
+                  {resultLength ? `show ${resultLength} places` : 'No places'}
                 </button>
               </div>
             </div>

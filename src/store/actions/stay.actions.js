@@ -138,3 +138,8 @@ export function onRemoveStayOptimistic(stayId) {
       })
     })
 }
+
+
+export async function getResultLength(filter) {
+  return stayService.getResultLength(filter)
+}

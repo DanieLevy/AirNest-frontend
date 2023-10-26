@@ -14,6 +14,7 @@ export const stayService = {
   getLabels,
   getAmenities,
   getStaysByUserId,
+  getResultLength,
 }
 
 window.cs = stayService
@@ -54,6 +55,21 @@ function filterStaysByPrice(stays, minPrice, maxPrice) {
     })
 
   return stays
+}
+
+async function getResultLength(filter) {
+  let stays = await storageService.query(STORAGE_KEY)
+
+  stays = filterStaysByPrice(stays, filter.minPrice, filter.maxPrice)
+
+  if (filter.capacity) stays = stays.filter(stay => stay.capacity >= filter.capacity)
+  if (filter.region) stays = stays.filter(stay => stay.loc.country === filter.region.split(',')[0])
+  if (filter.bedrooms && filter.bedrooms !== 'Any') stays = stays.filter(stay => stay.bedrooms >= filter.bedrooms)
+  if (filter.beds && filter.beds !== 'Any') stays = stays.filter(stay => stay.beds >= filter.beds)
+  if (filter.bathrooms && filter.bathrooms !== 'Any') stays = stays.filter(stay => stay.bathrooms >= filter.bathrooms)
+  if (filter.amenities) stays = stays.filter(stay => filter.amenities.every(amenity => stay.amenities.some((item) => new RegExp(amenity, 'i').test(item))))
+
+  return stays.length
 }
 
 function getById(stayId) {
