@@ -304,7 +304,7 @@
     position: relative;
     right: 0px;
     background-color: rgb(255, 255, 255);
-    // max-height: fit-content;
+    max-height: 80px;
 
     & .order-details {
       margin-right: 16px;
@@ -354,6 +354,7 @@
       display: flex;
       min-width: 110px;
       opacity: 0;
+      max-height: fit-content;
       transition: all 0.3s ease-in-out 0s;
 
       & .branded-btn2 {
