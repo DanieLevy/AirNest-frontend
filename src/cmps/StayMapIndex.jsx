@@ -47,7 +47,7 @@ export function StayMapIndex({ stays }) {
 
   const markers = stays.map((stay) => {
     return (
-      <Marker
+      <Marker 
         key={stay._id}
         lat={stay.loc.lat}
         lng={stay.loc.lng}
@@ -65,7 +65,6 @@ export function StayMapIndex({ stays }) {
         defaultCenter={center}
         defaultZoom={zoom}
       >
-        <Marker lat={center.lat} lng={center.lng} />
         {markers}
 
         {tinyModal && selectedStay && (
