@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react"
 import { DayPicker } from "react-day-picker"
-import "animate.css"
 
 import { BarndedBtn } from "./barnded-btn"
 import { useLocation } from "react-router"
@@ -196,8 +195,7 @@ export function ExploreBar() {
     <React.Fragment>
       {!isExpanded && isStayPage && !isMobile && (
         <div
-          className={`explore-bar-preview ${!isExpanded ? "animate__animated animate__fadeInUp" : ""
-            }`}
+          className={`explore-bar-preview`}
           onClick={isExpanded ? null : handleClick}
         >
           <button
@@ -233,8 +231,7 @@ export function ExploreBar() {
 
       {!isExpanded && !isStayPage && !isMobile && (
         <div
-          className={`explore-bar-preview short ${!isExpanded ? "animate__animated animate__fadeInUp" : ""
-            }`}
+          className={`explore-bar-preview short`}
           onClick={isExpanded ? null : handleClick}
         >
           <div className="title">Start your search</div>
@@ -248,7 +245,7 @@ export function ExploreBar() {
         <React.Fragment>
           <div
             ref={expandedBarRef}
-            className="white-space animate__animated animate__slideInDown"
+            className="white-space"
           // onClick={handleClick}
           >
             <form
