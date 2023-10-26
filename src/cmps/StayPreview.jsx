@@ -170,12 +170,6 @@ export function StayPreview({ stay }) {
           </div>
         </Link>
       ) : (
-        <a
-          href={stayLink}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="stay-card"
-        >
           <div className="stay-card-details">
             <div className="preview-header flex">
               <div className="preview-name">
@@ -206,7 +200,6 @@ export function StayPreview({ stay }) {
               <span> / night</span>
             </div>
           </div>
-        </a>
       )}
     </article>
   );

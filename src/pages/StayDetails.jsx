@@ -39,7 +39,7 @@ export function StayDetails() {
       window.removeEventListener('resize', handleResize)
     }
   }, [stayId])
-  console.log('🚀 ~ file: StayDetails.jsx:20 ~ StayDetails ~ currStay:', currStay)
+
 
   async function loadStay() {
     try {
@@ -52,7 +52,7 @@ export function StayDetails() {
     }
   }
   function handleCheckoutSubmit(formData) {
-    console.log('🚀 ~ file: StayDetails.jsx:60 ~ handleCheckoutSubmit ~ formData:', formData)
+    // console.log('🚀 ~ file: StayDetails.jsx:60 ~ handleCheckoutSubmit ~ formData:', formData)
 
     const orderDetails = {
       ...formData,

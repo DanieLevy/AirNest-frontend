@@ -1,23 +1,71 @@
-.user-msg {
-    color:white;
-    padding: 10px;
-    font-size: 1.4em;
-    position: fixed;
-    top:0;
-    right:0;
-    background-color: grey;
+h3 {
+    font-family: cereal-light;
+    font-size: 1em;
 }
-.user-msg button {
-    float:right;
-    border:0;
+.alert {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    width: 30%;
+    padding: 15px 10px;
+    position: fixed;
+    top: 110px;
+    transform: translateX(-50%);
+    left: 50%;
+    border-radius: 5px;
+    box-shadow: 0 0 15px 5px #ccc;
+    z-index: 100;
+    animation:
+        slideIn 0.5s forwards,
+        slideOut 0.5s forwards 2.5s;
+    transition: all 0.5s ease-in-out;
+}
+.close {
+    width: 30px;
+    height: 30px;
+    opacity: 0.5;
+    border-width: 1px;
+    border-style: solid;
     border-radius: 50%;
-    margin: 5px;
-    background-color: #222;
+    text-align: center;
+    font-size: 1.6em;
+    cursor: pointer;
+    background-color: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+@mixin alert($name, $bgColor) {
+    $accentColor: darken($bgColor, 30);
+    $accentColor2: darken($bgColor, 80);
+    .#{$name} {
+        background-color: #{$bgColor};
+        border-left: 5px solid $accentColor;
+        .close {
+            border-color: $accentColor2;
+            color: $accentColor2;
+        }
+    }
+}
+@include alert(alert, #ebebeb);
+@include alert(success, #a8f0c6);
+@include alert(error, #f7a7a3);
+
+@keyframes slideIn {
+    from {
+        transform: translateX(-50%) translateY(-100%);
+    }
+    to {
+        transform: translateX(-50%) translateY(0) scale(1);
+    }
 }
 
-.user-msg.success {
-    background-color: rgb(41, 189, 73);
-}
-.user-msg.error {
-    background-color: rgb(216, 59, 59);
+@keyframes slideOut {
+    from {
+        transform: translateX(-50%) translateY(0);
+    }
+    to {
+        transform: translateX(-50%) translateY(-250px);
+    }
 }

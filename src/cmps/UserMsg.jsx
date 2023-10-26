@@ -17,10 +17,6 @@ export function UserMsg() {
       timeoutIdRef.current = setTimeout(closeMsg, 3000)
     })
 
-    socketService.on(SOCKET_EVENT_REVIEW_ABOUT_YOU, (review) => {
-      showSuccessMsg(`New review about me ${review.txt}`)
-    })
-
     return () => {
       unsubscribe()
       socketService.off(SOCKET_EVENT_REVIEW_ABOUT_YOU)
@@ -33,9 +29,17 @@ export function UserMsg() {
 
   if (!msg) return <span></span>
   return (
-    <section className={`user-msg ${msg.type}`}>
-      <button onClick={closeMsg}>x</button>
-      {msg.txt}
-    </section>
+    <div class={`alert ${msg.type}`}>
+      <div>
+    <h3>{msg.txt}</h3>
+      </div>
+    <button class="close"
+      onClick={closeMsg}
+    >
+      <span>
+      &times;
+      </span>
+    </button>
+  </div>
   )
 }
