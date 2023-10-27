@@ -19,19 +19,21 @@ import { CgSearch } from "react-icons/cg";
 import { useSearchParams } from "react-router-dom";
 import { QUERY_KEYS } from "../services/util.service";
 import { utilService } from "../services/util.service";
+import { store } from "../store/store";
+import { useDispatch } from "react-redux";
 
 export function ExploreBar({ onExpandChange }) {
+  const dispatch = useDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
   const [isExpanded, setIsExpanded] = useState(false);
   const [isActive, setIsActive] = useState(null);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
-
   function handleExpandChange(value = null) {
     const newValue = value === null ? !isExpanded : value;
     console.log("newValue", newValue);
+    dispatch({ type: "SET_EXPLORE_EXPANDED", isExploreExpanded: newValue });
     setIsExpanded(newValue);
-    onExpandChange(newValue);
   }
 
   const [formData, setFormData] = useState({
@@ -125,23 +127,19 @@ export function ExploreBar({ onExpandChange }) {
   }
 
   function handleClick(ev) {
-    console.log("clicked");
     ev.stopPropagation();
-    // setIsExpanded(!isExpanded);
+    console.log('isActive', isActive);
     handleExpandChange(!isExpanded);
-    // setIsActive(null);
-
   }
 
   function handleDocumentClick(ev) {
     console.log("clicked outside");
     ev.stopPropagation();
     if (expandedBarRef.current && !expandedBarRef.current.contains(ev.target)) {
-      // setIsExpanded(false);
+      setIsExpanded(false);
       handleExpandChange(false);
       setIsActive(null);
     }
-
   }
 
   function handleLocationClick(e) {
@@ -209,58 +207,63 @@ export function ExploreBar({ onExpandChange }) {
   return (
     <React.Fragment>
       {/* 1 */}
-      <div
-        className={`explore-bar-preview ${isExpanded ? "slideOut" : "slideIn"}`}
-        onClick={isExpanded ? null : handleClick}
-      >
-        <button
-          type="button"
-          className="location-btn"
-          onClick={() => setIsActive("location")}
+      {!isExpanded && isStayPage && !isMobile && (
+        <div
+          className={`explore-bar-preview ${
+            isExpanded ? "slideOut" : "slideIn"
+          }`}
+          onClick={isExpanded ? null : handleClick}
         >
-          {searchParams.get([QUERY_KEYS.region])
-            ? `${searchParams.get([QUERY_KEYS.region])}`.split(",")[0]
-            : "Anywhere"}
-        </button>
-        <span className="splitter"></span>
-        <button
-          type="button"
-          className="dates-btn"
-          onClick={() => setIsActive("check-in")}
-        >
-          {searchParams.get([QUERY_KEYS.checkin]) &&
-          searchParams.get([QUERY_KEYS.checkin]) !== "null" &&
-          searchParams.get([QUERY_KEYS.checkout]) &&
-          searchParams.get([QUERY_KEYS.checkout]) !== "null"
-            ? `${utilService.getDayAndMonthFromDate(
-                searchParams.get([QUERY_KEYS.checkin])
-              )} - ${utilService.getDayAndMonthFromDate(
-                searchParams.get([QUERY_KEYS.checkout])
-              )}`
-            : "Anyweek"}
-        </button>
-        <span className="splitter"></span>
-        <button
-          type="button"
-          className="guests-btn"
-          onClick={() => setIsActive("guests")}
-        >
-          {+searchParams.get([QUERY_KEYS.adults]) +
-            +searchParams?.get([QUERY_KEYS.children]) !==
-          0
-            ? `${
-                +searchParams.get([QUERY_KEYS.adults]) +
-                +searchParams?.get([QUERY_KEYS.children])
-              } guests`
-            : "Add guests"}
-        </button>
-        <button type="button" className="search-btn">
-          <IoSearch />
-        </button>
-      </div>
+          <button
+            type="button"
+            className="location-btn"
+            onClick={() => setIsActive("location")}
+          >
+            {searchParams.get([QUERY_KEYS.region])
+              ? `${searchParams.get([QUERY_KEYS.region])}`.split(",")[0]
+              : "Anywhere"}
+          </button>
+          <span className="splitter"></span>
+          <button
+            type="button"
+            className="dates-btn"
+            onClick={() => setIsActive("check-in")}
+          >
+            {searchParams.get([QUERY_KEYS.checkin]) &&
+            searchParams.get([QUERY_KEYS.checkin]) !== "null" &&
+            searchParams.get([QUERY_KEYS.checkout]) &&
+            searchParams.get([QUERY_KEYS.checkout]) !== "null"
+              ? `${utilService.getDayAndMonthFromDate(
+                  searchParams.get([QUERY_KEYS.checkin])
+                )} - ${utilService.getDayAndMonthFromDate(
+                  searchParams.get([QUERY_KEYS.checkout])
+                )}`
+              : "Anyweek"}
+          </button>
+          <span className="splitter"></span>
+          <button
+            type="button"
+            className="guests-btn"
+            onClick={() => setIsActive("guests")}
+          >
+            {+searchParams.get([QUERY_KEYS.adults]) +
+              +searchParams?.get([QUERY_KEYS.children]) !==
+            0
+              ? `${
+                  +searchParams.get([QUERY_KEYS.adults]) +
+                  +searchParams?.get([QUERY_KEYS.children])
+                } guests`
+              : "Add guests"}
+          </button>
+          <button type="button" className="search-btn">
+            <IoSearch />
+          </button>
+        </div>
+      )}
 
       {/* 2 */}
-      {/* <div
+      {!isExpanded && !isStayPage && !isMobile && (
+        <div
           className={`explore-bar-preview short`}
           onClick={isExpanded ? null : handleClick}
         >
@@ -268,427 +271,441 @@ export function ExploreBar({ onExpandChange }) {
           <button type="button" className="search-btn">
             <IoSearch />
           </button>
-        </div> */}
+        </div>
+      )}
 
       {/* 3 */}
       <React.Fragment>
-        <div className={!isExpanded ? "explore-helper" : "explore-helper show"
-        }
-        style={
-          {display: isExpanded ? '' : 'none'
-        }
-        }
-        >
-        <form
-          ref={expandedBarRef}
-          className={`explore-bar-preview expanded  ${isExpanded ? "slideIn2" : "slideOut2"}`}
-          onSubmit={handleSubmit}
-          // style={{zIndex: !isExpanded ? '1' : '0'}}
-        >
-          <article
-            className={`explore-bar location flex ${
-              isActive === "location" ? "active" : ""
-            }`}
-            onClick={() => setIsActive("location")}
+        {isExpanded && (
+          <div
+            className={!isExpanded ? "explore-helper" : "explore-helper show"}
+            style={{ display: isExpanded ? "" : "none" }}
           >
-            <label htmlFor="location">Where</label>
-            <input
-              type="text"
-              name="location"
-              id="location"
-              placeholder="Search destination"
-              value={formData.location}
-              onChange={handleChange}
-            />
-            {isActive === "location" && (
-              <div className="location-modal">
-                <ul className="location-list">
-                  <li
-                    className="location-list-item"
-                    onClick={handleLocationClick}
-                  >
-                    <div className="location-list-icon">
-                      <CiLocationArrow1 />
-                    </div>
-                    <span className="location-list-text">Barcelona, Spain</span>
-                  </li>
-                  <li
-                    className="location-list-item"
-                    onClick={handleLocationClick}
-                  >
-                    <div className="location-list-icon">
-                      <CiLocationArrow1 />
-                    </div>
-                    <span className="location-list-text">
-                      Mauntain View, CA
-                    </span>
-                  </li>
-                  <li
-                    className="location-list-item"
-                    onClick={handleLocationClick}
-                  >
-                    <div className="location-list-icon">
-                      <CiLocationArrow1 />
-                    </div>
-                    <span className="location-list-text">
-                      New York, United States
-                    </span>
-                  </li>
-                  <li
-                    className="location-list-item"
-                    onClick={handleLocationClick}
-                  >
-                    <div className="location-list-icon">
-                      <CiLocationArrow1 />
-                    </div>
-                    <span className="location-list-text">
-                      London, United Kingdom
-                    </span>
-                  </li>
-                  <li
-                    className="location-list-item"
-                    onClick={handleLocationClick}
-                  >
-                    <div className="location-list-icon">
-                      <CiLocationArrow1 />
-                    </div>
-                    <span className="location-list-text">Paris, France</span>
-                  </li>
-                  <li
-                    className="location-list-item"
-                    onClick={handleLocationClick}
-                  >
-                    <div className="location-list-icon">
-                      <CiLocationArrow1 />
-                    </div>
-                    <span className="location-list-text">Rome, Italy</span>
-                  </li>
-                  <li
-                    className="location-list-item"
-                    onClick={handleLocationClick}
-                  >
-                    <div className="location-list-icon">
-                      <CiLocationArrow1 />
-                    </div>
-                    <span className="location-list-text">Tokyo, Japan</span>
-                  </li>
-                </ul>
-                <section className="location-region">
-                  <div className="location-region-title">Search by region</div>
-                  <div className="location-region-list">
-                    <div className="location-region-item">
-                      <img src="https://a0.muscache.com/pictures/f9ec8a23-ed44-420b-83e5-10ff1f071a13.jpg" />
-                      <span className="location-region-text">I'm flexible</span>
-                    </div>
-                    <div
-                      className="location-region-item"
-                      onClick={handleLocationClick}
-                    >
-                      <img src="https://a0.muscache.com/im/pictures/66355b01-4695-4db9-b292-c149c46fb1ca.jpg?im_w=320" />
-                      <span className="location-region-text">Middle East</span>
-                    </div>
-                    <div
-                      className="location-region-item"
-                      onClick={handleLocationClick}
-                    >
-                      <img src="https://a0.muscache.com/im/pictures/ea5598d7-2b07-4ed7-84da-d1eabd9f2714.jpg?im_w=320" />
-                      <span className="location-region-text">Italy</span>
-                    </div>
-                    <div
-                      className="location-region-item"
-                      onClick={handleLocationClick}
-                    >
-                      <img src="https://a0.muscache.com/im/pictures/4e762891-75a3-4fe1-b73a-cd7e673ba915.jpg?im_w=320" />
-                      <span className="location-region-text">
-                        United States
-                      </span>
-                    </div>
-                    <div
-                      className="location-region-item"
-                      onClick={handleLocationClick}
-                    >
-                      <img src="https://a0.muscache.com/im/pictures/f0ece7c0-d9b2-49d5-bb83-64173d29cbe3.jpg?im_w=320" />
-                      <span className="location-region-text">France</span>
-                    </div>
-                    <div
-                      className="location-region-item"
-                      onClick={handleLocationClick}
-                    >
-                      <img src="https://a0.muscache.com/im/pictures/06a30699-aead-492e-ad08-33ec0b383399.jpg?im_w=320" />
-                      <span className="location-region-text">
-                        South America
-                      </span>
-                    </div>
-                  </div>
-                </section>
-              </div>
-            )}
-          </article>
-
-          <span className="splitter"></span>
-
-          <article
-            className={`explore-bar check-in ${
-              isActive === "check-in" ? "active" : ""
-            }`}
-            onClick={() => setIsActive("check-in")}
-          >
-            <div className="check-in-text flex">
-              Check-in
-              <input
-                type="text"
-                placeholder="Add dates"
-                readOnly
-                value={
-                  formData.startDate
-                    ? `${formData.startDate.toLocaleDateString()}`
-                    : ""
-                }
-              />
-            </div>
-          </article>
-
-          <span className="splitter"></span>
-
-          <article
-            className={`explore-bar check-out ${
-              isActive === "check-out" ? "active" : ""
-            }`}
-            onClick={() => setIsActive("check-out")}
-          >
-            <div className="check-out-text flex">
-              Check-out
-              <input
-                type="text"
-                placeholder="Add dates"
-                readOnly
-                value={
-                  formData.endDate
-                    ? `${formData.endDate.toLocaleDateString()}`
-                    : ""
-                }
-              />
-            </div>
-          </article>
-
-          {isActive === "check-in" || isActive === "check-out" ? (
-            <React.Fragment>
-
-              <div
-                className="dates-modal"
-                onClick={(ev) => ev.stopPropagation()}
+            <form
+              ref={expandedBarRef}
+              className={`explore-bar-preview expanded  ${
+                isExpanded ? "slideIn2" : "slideOut2"
+              }`}
+              onSubmit={handleSubmit}
+              style={{
+                backgroundColor: isActive === null ? "white" : "#ebebeb",
+              }}
+            >
+              <article
+                className={`explore-bar location flex ${
+                  isActive === "location" ? "active" : ""
+                }`}
+                onClick={() => setIsActive("location")}
               >
-                <DayPicker
-                  mode="range"
-                  selected={selectedRange}
-                  onDayClick={handleDayClick}
-                  numberOfMonths={2}
-                  modifiers={{ disabled: [{ before: new Date() }] }}
+                <label htmlFor="location">Where</label>
+                <input
+                  type="text"
+                  name="location"
+                  id="location"
+                  placeholder="Search destination"
+                  value={formData.location}
+                  onChange={handleChange}
                 />
-              </div>
-            </React.Fragment>
-          ) : null}
-
-          <span className="splitter"></span>
-
-          <article
-            className={`explore-bar guests ${
-              isActive === "guests" ? "active" : ""
-            }`}
-            onClick={() => setIsActive("guests")}
-          >
-            <div className="guests-text flex">
-              Who
-              <input
-                type="text"
-                placeholder="Add guests"
-                className="guests-input"
-                value={`${
-                  selectedGuests.adults + selectedGuests.children
-                } guests ${selectedGuests.infants} infants`}
-                readOnly
-              />
-              {isActive === "guests" && (
-                <div className="guests-modal">
-                  {/* Adults */}
-                  <div className="guests-options" id="adults">
-                    <div className="guests-title">
-                      <h3 className="guests-modal-title">Adults</h3>
-                      <span className="guests-modal-subtitle">
-                        Ages 13 or above
-                      </span>
-                    </div>
-                    <div className="guests-action flex">
-                      <button
-                        disabled={selectedGuests.adults === 0}
-                        type="button"
-                        className="guests-modal-btn"
-                        onClick={() => {
-                          if (selectedGuests.adults > 0)
-                            setSelectedGuests((prevState) => ({
-                              ...prevState,
-                              adults: prevState.adults - 1,
-                            }));
-                        }}
+                {isActive === "location" && (
+                  <div className="location-modal">
+                    <ul className="location-list">
+                      <li
+                        className="location-list-item"
+                        onClick={handleLocationClick}
                       >
-                        <AiOutlineMinus />
-                      </button>
-                      <span className="guests-modal-count">
-                        {selectedGuests.adults}
-                      </span>
-                      <button
-                        type="button"
-                        className="guests-modal-btn"
-                        onClick={() => {
-                          setSelectedGuests((prevState) => ({
-                            ...prevState,
-                            adults: prevState.adults + 1,
-                          }));
-                        }}
-                        disabled={selectedGuests.adults === 16}
+                        <div className="location-list-icon">
+                          <CiLocationArrow1 />
+                        </div>
+                        <span className="location-list-text">
+                          Barcelona, Spain
+                        </span>
+                      </li>
+                      <li
+                        className="location-list-item"
+                        onClick={handleLocationClick}
                       >
-                        <AiOutlinePlus />
-                      </button>
-                    </div>
+                        <div className="location-list-icon">
+                          <CiLocationArrow1 />
+                        </div>
+                        <span className="location-list-text">
+                          Mauntain View, CA
+                        </span>
+                      </li>
+                      <li
+                        className="location-list-item"
+                        onClick={handleLocationClick}
+                      >
+                        <div className="location-list-icon">
+                          <CiLocationArrow1 />
+                        </div>
+                        <span className="location-list-text">
+                          New York, United States
+                        </span>
+                      </li>
+                      <li
+                        className="location-list-item"
+                        onClick={handleLocationClick}
+                      >
+                        <div className="location-list-icon">
+                          <CiLocationArrow1 />
+                        </div>
+                        <span className="location-list-text">
+                          London, United Kingdom
+                        </span>
+                      </li>
+                      <li
+                        className="location-list-item"
+                        onClick={handleLocationClick}
+                      >
+                        <div className="location-list-icon">
+                          <CiLocationArrow1 />
+                        </div>
+                        <span className="location-list-text">
+                          Paris, France
+                        </span>
+                      </li>
+                      <li
+                        className="location-list-item"
+                        onClick={handleLocationClick}
+                      >
+                        <div className="location-list-icon">
+                          <CiLocationArrow1 />
+                        </div>
+                        <span className="location-list-text">Rome, Italy</span>
+                      </li>
+                      <li
+                        className="location-list-item"
+                        onClick={handleLocationClick}
+                      >
+                        <div className="location-list-icon">
+                          <CiLocationArrow1 />
+                        </div>
+                        <span className="location-list-text">Tokyo, Japan</span>
+                      </li>
+                    </ul>
+                    <section className="location-region">
+                      <div className="location-region-title">
+                        Search by region
+                      </div>
+                      <div className="location-region-list">
+                        <div className="location-region-item">
+                          <img src="https://a0.muscache.com/pictures/f9ec8a23-ed44-420b-83e5-10ff1f071a13.jpg" />
+                          <span className="location-region-text">
+                            I'm flexible
+                          </span>
+                        </div>
+                        <div
+                          className="location-region-item"
+                          onClick={handleLocationClick}
+                        >
+                          <img src="https://a0.muscache.com/im/pictures/66355b01-4695-4db9-b292-c149c46fb1ca.jpg?im_w=320" />
+                          <span className="location-region-text">
+                            Middle East
+                          </span>
+                        </div>
+                        <div
+                          className="location-region-item"
+                          onClick={handleLocationClick}
+                        >
+                          <img src="https://a0.muscache.com/im/pictures/ea5598d7-2b07-4ed7-84da-d1eabd9f2714.jpg?im_w=320" />
+                          <span className="location-region-text">Italy</span>
+                        </div>
+                        <div
+                          className="location-region-item"
+                          onClick={handleLocationClick}
+                        >
+                          <img src="https://a0.muscache.com/im/pictures/4e762891-75a3-4fe1-b73a-cd7e673ba915.jpg?im_w=320" />
+                          <span className="location-region-text">
+                            United States
+                          </span>
+                        </div>
+                        <div
+                          className="location-region-item"
+                          onClick={handleLocationClick}
+                        >
+                          <img src="https://a0.muscache.com/im/pictures/f0ece7c0-d9b2-49d5-bb83-64173d29cbe3.jpg?im_w=320" />
+                          <span className="location-region-text">France</span>
+                        </div>
+                        <div
+                          className="location-region-item"
+                          onClick={handleLocationClick}
+                        >
+                          <img src="https://a0.muscache.com/im/pictures/06a30699-aead-492e-ad08-33ec0b383399.jpg?im_w=320" />
+                          <span className="location-region-text">
+                            South America
+                          </span>
+                        </div>
+                      </div>
+                    </section>
                   </div>
+                )}
+              </article>
 
-                  {/* Children */}
-                  <div className="guests-options" id="children">
-                    <div className="guests-title">
-                      <h3 className="guests-modal-title">Children</h3>
-                      <span className="guests-modal-subtitle">Ages 2-12</span>
-                    </div>
-                    <div className="guests-action flex">
-                      <button
-                        disabled={selectedGuests.children === 0}
-                        type="button"
-                        className="guests-modal-btn"
-                        onClick={() => {
-                          if (selectedGuests.children > 0)
-                            setSelectedGuests((prevState) => ({
-                              ...prevState,
-                              children: prevState.children - 1,
-                            }));
-                        }}
-                      >
-                        <AiOutlineMinus />
-                      </button>
-                      <span className="guests-modal-count">
-                        {selectedGuests.children}
-                      </span>
-                      <button
-                        type="button"
-                        className="guests-modal-btn"
-                        onClick={() => {
-                          setSelectedGuests((prevState) => ({
-                            ...prevState,
-                            children: prevState.children + 1,
-                          }));
-                        }}
-                        disabled={selectedGuests.children === 5}
-                      >
-                        <AiOutlinePlus />
-                      </button>
-                    </div>
-                  </div>
+              <span className="splitter"></span>
 
-                  {/* Infants */}
-                  <div className="guests-options" id="infants">
-                    <div className="guests-title">
-                      <h3 className="guests-modal-title">Infants</h3>
-                      <span className="guests-modal-subtitle">Under 2</span>
-                    </div>
-                    <div className="guests-action flex">
-                      <button
-                        disabled={selectedGuests.infants === 0}
-                        type="button"
-                        className="guests-modal-btn"
-                        onClick={() => {
-                          if (selectedGuests.infants > 0)
-                            setSelectedGuests((prevState) => ({
-                              ...prevState,
-                              infants: prevState.infants - 1,
-                            }));
-                        }}
-                      >
-                        <AiOutlineMinus />
-                      </button>
-                      <span className="guests-modal-count">
-                        {selectedGuests.infants}
-                      </span>
-                      <button
-                        type="button"
-                        className="guests-modal-btn"
-                        onClick={() => {
-                          setSelectedGuests((prevState) => ({
-                            ...prevState,
-                            infants: prevState.infants + 1,
-                          }));
-                        }}
-                        disabled={selectedGuests.infants === 5}
-                      >
-                        <AiOutlinePlus />
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* PETS */}
-                  <div className="guests-options" id="pets">
-                    <div className="guests-title">
-                      <h3 className="guests-modal-title">Pets</h3>
-                      <span className="guests-modal-subtitle">
-                        <a href="#">Bringing a service animal?</a>
-                      </span>
-                    </div>
-                    <div className="guests-action flex">
-                      <button
-                        type="button"
-                        className="guests-modal-btn"
-                        onClick={() => {
-                          setSelectedGuests((prevState) => ({
-                            ...prevState,
-                            pets: prevState.pets - 1,
-                          }));
-                        }}
-                        disabled={selectedGuests.pets === 0}
-                      >
-                        <AiOutlineMinus />
-                      </button>
-                      <span className="guests-modal-count">
-                        {selectedGuests.pets}
-                      </span>
-                      <button
-                        type="button"
-                        className="guests-modal-btn"
-                        onClick={() => {
-                          setSelectedGuests((prevState) => ({
-                            ...prevState,
-                            pets: prevState.pets + 1,
-                          }));
-                        }}
-                        disabled={selectedGuests.pets === 5}
-                      >
-                        <AiOutlinePlus />
-                      </button>
-                    </div>
-                  </div>
+              <article
+                className={`explore-bar check-in ${
+                  isActive === "check-in" ? "active" : ""
+                }`}
+                onClick={() => setIsActive("check-in")}
+              >
+                <div className="check-in-text flex">
+                  Check-in
+                  <input
+                    type="text"
+                    placeholder="Add dates"
+                    readOnly
+                    value={
+                      formData.startDate
+                        ? `${formData.startDate.toLocaleDateString()}`
+                        : ""
+                    }
+                  />
                 </div>
-              )}
-            </div>
-            <BarndedBtn
-              onClick={() => console.log("clicked")}
-              txt={isActive === "guests" ? "Search" : ""}
-              icon={<IoSearch className="search-icon" />}
-              borderRadius={isActive === "guests" ? "32px" : "50%"}
-              width={isActive === "guests" ? "112px" : "48px"}
-            />
-          </article>
-        </form>
-        </div>
-        <div className="explore-bar-backdrop"
-        style={{display: isExpanded ? 'block' : 'none'}}
-        ></div>
+              </article>
 
+              <span className="splitter"></span>
+
+              <article
+                className={`explore-bar check-out ${
+                  isActive === "check-out" ? "active" : ""
+                }`}
+                onClick={() => setIsActive("check-out")}
+              >
+                <div className="check-out-text flex">
+                  Check-out
+                  <input
+                    type="text"
+                    placeholder="Add dates"
+                    readOnly
+                    value={
+                      formData.endDate
+                        ? `${formData.endDate.toLocaleDateString()}`
+                        : ""
+                    }
+                  />
+                </div>
+              </article>
+
+              {isActive === "check-in" || isActive === "check-out" ? (
+                <React.Fragment>
+                  <div
+                    className="dates-modal"
+                    onClick={(ev) => ev.stopPropagation()}
+                  >
+                    <DayPicker
+                      mode="range"
+                      selected={selectedRange}
+                      onDayClick={handleDayClick}
+                      numberOfMonths={2}
+                      modifiers={{ disabled: [{ before: new Date() }] }}
+                    />
+                  </div>
+                </React.Fragment>
+              ) : null}
+
+              <span className="splitter"></span>
+
+              <article
+                className={`explore-bar guests ${
+                  isActive === "guests" ? "active" : ""
+                }`}
+                onClick={() => setIsActive("guests")}
+              >
+                <div className="guests-text flex">
+                  Who
+                  <input
+                    type="text"
+                    placeholder="Add guests"
+                    className="guests-input"
+                    value={`${
+                      selectedGuests.adults + selectedGuests.children
+                    } guests ${selectedGuests.infants} infants`}
+                    readOnly
+                  />
+                  {isActive === "guests" && (
+                    <div className="guests-modal">
+                      {/* Adults */}
+                      <div className="guests-options" id="adults">
+                        <div className="guests-title">
+                          <h3 className="guests-modal-title">Adults</h3>
+                          <span className="guests-modal-subtitle">
+                            Ages 13 or above
+                          </span>
+                        </div>
+                        <div className="guests-action flex">
+                          <button
+                            disabled={selectedGuests.adults === 0}
+                            type="button"
+                            className="guests-modal-btn"
+                            onClick={() => {
+                              if (selectedGuests.adults > 0)
+                                setSelectedGuests((prevState) => ({
+                                  ...prevState,
+                                  adults: prevState.adults - 1,
+                                }));
+                            }}
+                          >
+                            <AiOutlineMinus />
+                          </button>
+                          <span className="guests-modal-count">
+                            {selectedGuests.adults}
+                          </span>
+                          <button
+                            type="button"
+                            className="guests-modal-btn"
+                            onClick={() => {
+                              setSelectedGuests((prevState) => ({
+                                ...prevState,
+                                adults: prevState.adults + 1,
+                              }));
+                            }}
+                            disabled={selectedGuests.adults === 16}
+                          >
+                            <AiOutlinePlus />
+                          </button>
+                        </div>
+                      </div>
+
+                      {/* Children */}
+                      <div className="guests-options" id="children">
+                        <div className="guests-title">
+                          <h3 className="guests-modal-title">Children</h3>
+                          <span className="guests-modal-subtitle">
+                            Ages 2-12
+                          </span>
+                        </div>
+                        <div className="guests-action flex">
+                          <button
+                            disabled={selectedGuests.children === 0}
+                            type="button"
+                            className="guests-modal-btn"
+                            onClick={() => {
+                              if (selectedGuests.children > 0)
+                                setSelectedGuests((prevState) => ({
+                                  ...prevState,
+                                  children: prevState.children - 1,
+                                }));
+                            }}
+                          >
+                            <AiOutlineMinus />
+                          </button>
+                          <span className="guests-modal-count">
+                            {selectedGuests.children}
+                          </span>
+                          <button
+                            type="button"
+                            className="guests-modal-btn"
+                            onClick={() => {
+                              setSelectedGuests((prevState) => ({
+                                ...prevState,
+                                children: prevState.children + 1,
+                              }));
+                            }}
+                            disabled={selectedGuests.children === 5}
+                          >
+                            <AiOutlinePlus />
+                          </button>
+                        </div>
+                      </div>
+
+                      {/* Infants */}
+                      <div className="guests-options" id="infants">
+                        <div className="guests-title">
+                          <h3 className="guests-modal-title">Infants</h3>
+                          <span className="guests-modal-subtitle">Under 2</span>
+                        </div>
+                        <div className="guests-action flex">
+                          <button
+                            disabled={selectedGuests.infants === 0}
+                            type="button"
+                            className="guests-modal-btn"
+                            onClick={() => {
+                              if (selectedGuests.infants > 0)
+                                setSelectedGuests((prevState) => ({
+                                  ...prevState,
+                                  infants: prevState.infants - 1,
+                                }));
+                            }}
+                          >
+                            <AiOutlineMinus />
+                          </button>
+                          <span className="guests-modal-count">
+                            {selectedGuests.infants}
+                          </span>
+                          <button
+                            type="button"
+                            className="guests-modal-btn"
+                            onClick={() => {
+                              setSelectedGuests((prevState) => ({
+                                ...prevState,
+                                infants: prevState.infants + 1,
+                              }));
+                            }}
+                            disabled={selectedGuests.infants === 5}
+                          >
+                            <AiOutlinePlus />
+                          </button>
+                        </div>
+                      </div>
+
+                      {/* PETS */}
+                      <div className="guests-options" id="pets">
+                        <div className="guests-title">
+                          <h3 className="guests-modal-title">Pets</h3>
+                          <span className="guests-modal-subtitle">
+                            <a href="#">Bringing a service animal?</a>
+                          </span>
+                        </div>
+                        <div className="guests-action flex">
+                          <button
+                            type="button"
+                            className="guests-modal-btn"
+                            onClick={() => {
+                              setSelectedGuests((prevState) => ({
+                                ...prevState,
+                                pets: prevState.pets - 1,
+                              }));
+                            }}
+                            disabled={selectedGuests.pets === 0}
+                          >
+                            <AiOutlineMinus />
+                          </button>
+                          <span className="guests-modal-count">
+                            {selectedGuests.pets}
+                          </span>
+                          <button
+                            type="button"
+                            className="guests-modal-btn"
+                            onClick={() => {
+                              setSelectedGuests((prevState) => ({
+                                ...prevState,
+                                pets: prevState.pets + 1,
+                              }));
+                            }}
+                            disabled={selectedGuests.pets === 5}
+                          >
+                            <AiOutlinePlus />
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+                <BarndedBtn
+                  onClick={() => console.log("clicked")}
+                  txt={isActive === "guests" ? "Search" : ""}
+                  icon={<IoSearch className="search-icon" />}
+                  borderRadius={isActive === "guests" ? "32px" : "50%"}
+                  width={isActive === "guests" ? "112px" : "48px"}
+                />
+              </article>
+            </form>
+          </div>
+        )}
+        <div
+          className={`explore-bar-backdrop ${isExpanded ? "show" : ""}`}
+        ></div>
       </React.Fragment>
 
       {isMobile && (

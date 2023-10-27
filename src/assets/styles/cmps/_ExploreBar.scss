@@ -14,12 +14,12 @@
 
   &:hover:not(.active) {
     border: 1px solid transparent;
-    background-color: #ddd;
+    background-color: #EBEBEB;
   }
 
   &.active {
     background-color: #fff;
-    box-shadow: 0 6px 20px #0003;
+    box-shadow: 0 3px 12px 0 rgb(0 0 0 / 0.1), 0 1px 2px 0 rgb(0 0 0 / 0.08);
   }
 
   &.guests {
@@ -105,14 +105,16 @@
 
 @keyframes slideIn {
   0% {
-    scale: 1.2;
+    scale: 1.7;
     // translate up
     translate: 0 50px;
+    opacity: 0;
   }
   100% {
     scale: 1;
     // translate down
     translate: 0 0px;
+    opacity: .5;
   }
 }
 
@@ -147,7 +149,7 @@
 @keyframes slideOut2 {
   0% {
     scale: 1;
-    // background-color: blue;
+    background-color: blue;
     // translate up
     translate: 0 0px;
 
@@ -177,39 +179,33 @@
   &.show {
     opacity: 1;
     top: 80px;
-    background-color: #fff;
-    border-bottom: 1px solid #ddd;
-        // margin-bottom: 86px;
+    background-color: transparent;
+    transition: all 0.5s ease-in-out;
 
   }
 }
 
 .explore-bar-preview {
   padding-inline-start: 8px;
-  background-color: #fff;
-  border: 1px solid #dddddd;
-  border-radius: 40px;
-  transition: box-shadow 0.2s ease;
-  box-shadow:
-    0 1px 2px #00000014,
-    0 4px 12px #0000000d;
-  transition: box-shadow 0.2s ease;
   align-items: center;
   color: #222;
   display: inline-flex;
   max-width: 100%;
   vertical-align: middle;
   cursor: pointer;
-  transition: all 0.3s;
+  border-radius: 32px;
+  background-color: #fff;
+  border: 1px solid #DDDDDD;
+  box-shadow: 0 3px 12px 0 rgba(0,0,0,0.1), 0 1px 2px 0 rgba(0,0,0,0.08);
+  transition: all 0.3s ease-in-out;
+
 
   &.slideIn {
     animation: slideIn 0.3s ease-in-out;
-    opacity: 1;
   }
 
   &.slideOut {
     animation: slideOut 0.3s ease-in-out;
-    opacity: 0;
   }
 
   &.short {
@@ -247,12 +243,10 @@
 
     &.slideIn2 {
       animation: slideIn2 0.3s ease-in-out;
-      opacity: 1;
     }
 
     &.slideOut2 {
       animation: slideOut2 0.3s ease-in-out;
-      opacity: 0;
     }
 
 
@@ -331,13 +325,22 @@
 }
 
 .explore-bar-backdrop {
-  background-color: #00000040;
+  background-color: transparent;
   position: fixed;
-  top: 167px;
+  top: 176px;
   left: 0;
-  z-index: 2;
+  z-index: 1;
   height: 100vh;
-  width: 100%;
+  width: 0;
+  opacity: 0;
+  transition: opacity .1s ease-in-out;
+
+  &.show {
+    width: 100%;
+    opacity: 1;
+    background-color: #00000040;
+    transition: opacity .3s ease-in-out;
+  }
 }
 
 .guests-text {

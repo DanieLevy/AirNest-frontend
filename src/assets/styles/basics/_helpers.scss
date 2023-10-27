@@ -58,6 +58,12 @@
   position: sticky;
   top: 80px;
   z-index: 10;
+  opacity: 0.5;
+  transition: opacity .4s;
+
+  &.expanded {
+    opacity: 0;
+  }
 
   &.unset {
     position: unset;
