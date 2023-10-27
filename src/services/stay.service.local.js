@@ -16,33 +16,31 @@ export const stayService = {
   getStaysByUserId,
   getResultLength,
   getCarouselLabels,
-  
+  filterStays,
+
 }
 
 window.cs = stayService
 
 async function query(params) {
+  const paramsObj = getParams(params)
+
+  let capacity = +paramsObj?.adults + +paramsObj?.children
+  let stays = await storageService.query(STORAGE_KEY)
+  let staysToReturn = stays
+
+  if (capacity) staysToReturn = staysToReturn.filter(stay => stay.capacity >= capacity)
+  if (paramsObj.region) staysToReturn = staysToReturn.filter(stay => stay.loc.country === paramsObj.region.split(',')[0])
+
+  return staysToReturn
+}
+
+function getParams(params) {
   const paramsObject = {}
   for (const key of params.keys()) {
     paramsObject[key] = params.get(key)
   }
-
-  let capacity = +paramsObject?.adults + +paramsObject?.children
-  let stays = await storageService.query(STORAGE_KEY)
-  let staysToReturn = stays
-
-  const minPrice = +paramsObject.minPrice
-  const maxPrice = +paramsObject.maxPrice
-  staysToReturn = filterStaysByPrice(staysToReturn, minPrice, maxPrice)
-
-  if (capacity) staysToReturn = staysToReturn.filter(stay => stay.capacity >= capacity)
-  if (paramsObject.region) staysToReturn = staysToReturn.filter(stay => stay.loc.country === paramsObject.region.split(',')[0])
-  if (paramsObject.bedrooms) staysToReturn = staysToReturn.filter(stay => stay.bedrooms >= +paramsObject.bedrooms)
-  if (paramsObject.beds) staysToReturn = staysToReturn.filter(stay => stay.beds >= +paramsObject.beds)
-  if (paramsObject.bathrooms) staysToReturn = staysToReturn.filter(stay => stay.bathrooms >= +paramsObject.bathrooms)
-  if (paramsObject.amenities) staysToReturn = staysToReturn.filter(stay => paramsObject.amenities.split(',').every(amenity => stay.amenities.some((item) => new RegExp(amenity, 'i').test(item))))
-
-  return staysToReturn
+  return paramsObject
 }
 
 function filterStaysByPrice(stays, minPrice, maxPrice) {
@@ -59,17 +57,29 @@ function filterStaysByPrice(stays, minPrice, maxPrice) {
   return stays
 }
 
-async function getResultLength(filter) {
-  let stays = await storageService.query(STORAGE_KEY)
+function filterStays(stays, params) {
+  const paramsObj = getParams(params)
+  let staysToReturn = stays
 
-  stays = filterStaysByPrice(stays, filter.minPrice, filter.maxPrice)
+  const minPrice = +paramsObj.minPrice
+  const maxPrice = +paramsObj.maxPrice
+  staysToReturn = filterStaysByPrice(staysToReturn, minPrice, maxPrice)
 
-  if (filter.capacity) stays = stays.filter(stay => stay.capacity >= filter.capacity)
-  if (filter.region) stays = stays.filter(stay => stay.loc.country === filter.region.split(',')[0])
-  if (filter.bedrooms && filter.bedrooms !== 'Any') stays = stays.filter(stay => stay.bedrooms >= filter.bedrooms)
-  if (filter.beds && filter.beds !== 'Any') stays = stays.filter(stay => stay.beds >= filter.beds)
-  if (filter.bathrooms && filter.bathrooms !== 'Any') stays = stays.filter(stay => stay.bathrooms >= filter.bathrooms)
-  if (filter.amenities) stays = stays.filter(stay => filter.amenities.every(amenity => stay.amenities.some((item) => new RegExp(amenity, 'i').test(item))))
+  if (paramsObj.bedrooms) staysToReturn = staysToReturn.filter(stay => stay.bedrooms >= +paramsObj.bedrooms)
+  if (paramsObj.beds) staysToReturn = staysToReturn.filter(stay => stay.beds >= +paramsObj.beds)
+  if (paramsObj.bathrooms) staysToReturn = staysToReturn.filter(stay => stay.bathrooms >= +paramsObj.bathrooms)
+  if (paramsObj.amenities) staysToReturn = staysToReturn.filter(stay => paramsObj.amenities.split(',').every(amenity => stay.amenities.some((item) => new RegExp(amenity, 'i').test(item))))
+
+  return staysToReturn
+}
+
+function getResultLength(filterBy, properties) {
+  let stays = filterStaysByPrice(properties, filterBy.minPrice, filterBy.maxPrice)
+
+  if (filterBy.bedrooms && filterBy.bedrooms !== 'Any') stays = stays.filter(stay => stay.bedrooms >= filterBy.bedrooms)
+  if (filterBy.beds && filterBy.beds !== 'Any') stays = stays.filter(stay => stay.beds >= filterBy.beds)
+  if (filterBy.bathrooms && filterBy.bathrooms !== 'Any') stays = stays.filter(stay => stay.bathrooms >= filterBy.bathrooms)
+  if (filterBy.amenities.length) stays = stays.filter(stay => filterBy.amenities.every(amenity => stay.amenities.some((item) => new RegExp(amenity, 'i').test(item))))
 
   return stays.length
 }
@@ -277,8 +287,8 @@ function _reviewDemoData() {
   ]
 }
 
-function getCarouselLabels(){
-  return  [
+function getCarouselLabels() {
+  return [
     {
       img: "https://a0.muscache.com/pictures/c5a4f6fc-c92c-4ae8-87dd-57f1ff1b89a6.jpg",
       name: "OMG!",

@@ -17,14 +17,19 @@ export function StayIndex() {
   const [isVisible, setIsVisible] = useState(true)
   const [searchParams] = useSearchParams();
 
-  const stays = useSelector((storeState) => storeState.stayModule.stays)
+  const region = searchParams.get(QUERY_KEYS.region)
+  const adults = searchParams.get(QUERY_KEYS.adults)
+  const children = searchParams.get(QUERY_KEYS.children)
+
+  const stays = useSelector((storeState) => storeState.stayModule.filteredStays)
+
   const isLoading = useSelector(
     (storeState) => storeState.systemModule.isLoading
   )
 
   useEffect(() => {
     loadStays(searchParams)
-  }, [searchParams])
+  }, [region, adults, children])
 
   useEffect(() => {
 

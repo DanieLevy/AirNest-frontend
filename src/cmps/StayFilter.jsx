@@ -10,7 +10,7 @@ import "rc-slider/assets/index.css";
 import { useSearchParams } from "react-router-dom";
 import { QUERY_KEYS } from "../services/util.service";
 import { useSelector } from "react-redux";
-import { getResultLength } from "../store/actions/stay.actions";
+import { filterStays, getResultLength } from "../store/actions/stay.actions";
 
 export function StayFilter() {
   const [paddingTop, setPaddingTop] = useState(15);
@@ -38,6 +38,10 @@ export function StayFilter() {
   const [resultLength, setResultLength] = useState(stays.length)
 
   useEffect(() => {
+    showResultLength()
+  }, [stays.length])
+
+  useEffect(() => {
     const minPrice = +(searchParams.get(QUERY_KEYS.minPrice) || 0)
     const maxPrice = +(searchParams.get(QUERY_KEYS.maxPrice) || 1500)
     const bedrooms = (+searchParams.get(QUERY_KEYS.bedrooms) || 'Any')
@@ -51,6 +55,8 @@ export function StayFilter() {
     setSelectedBeds(beds)
     setSelectedBathrooms(bathrooms)
     setSelectedAmmenties(amenities)
+
+    filterStays(stays, searchParams)
   }, [searchParams])
 
   useEffect(() => {
@@ -177,22 +183,8 @@ export function StayFilter() {
     setMaxPrice(value[1]);
   }
 
-  function getExploreBarFilterValue() {
-    const exploreBarFilterValues = {}
-    const region = searchParams.get(QUERY_KEYS.region)
-    const adults = +searchParams.get(QUERY_KEYS.adults)
-    const children = +searchParams.get(QUERY_KEYS.children)
-
-    const capacity = adults + children
-
-    if (region) exploreBarFilterValues.region = region
-    if (capacity) exploreBarFilterValues.capacity = capacity
-
-    return exploreBarFilterValues
-  }
-
   async function showResultLength() {
-    const filterBy = getExploreBarFilterValue()
+    const filterBy = {}
     filterBy.minPrice = minPrice
     filterBy.maxPrice = maxPrice
     filterBy.bedrooms = selectedBedrooms
@@ -200,12 +192,9 @@ export function StayFilter() {
     filterBy.bathrooms = selectedBathrooms
     filterBy.amenities = selectedAmmenties
 
-    try {
-      const resultLength = await getResultLength(filterBy)
-      setResultLength(resultLength)
-    } catch (error) {
-      console.log(error);
-    }
+    const resultLength = getResultLength(filterBy, stays)
+    console.log('resultLength:', resultLength)
+    setResultLength(resultLength)
   }
 
   function handleSubmit(ev) {
@@ -215,8 +204,9 @@ export function StayFilter() {
     if (selectedBedrooms) searchParams.set(QUERY_KEYS.bedrooms, selectedBedrooms)
     if (selectedBeds) searchParams.set(QUERY_KEYS.beds, selectedBeds)
     if (selectedBathrooms) searchParams.set(QUERY_KEYS.bathrooms, selectedBathrooms)
-    if (selectedAmmenties.length) searchParams.set(QUERY_KEYS.amenities, selectedAmmenties)
+    if (selectedAmmenties) searchParams.set(QUERY_KEYS.amenities, selectedAmmenties)
 
+    if (searchParams.has(QUERY_KEYS.amenities) && !selectedAmmenties.length) searchParams.delete(QUERY_KEYS.amenities)
     if (searchParams.has(QUERY_KEYS.bedrooms) && selectedBedrooms === 'Any') searchParams.delete(QUERY_KEYS.bedrooms)
     if (searchParams.has(QUERY_KEYS.beds) && selectedBeds === 'Any') searchParams.delete(QUERY_KEYS.beds)
     if (searchParams.has(QUERY_KEYS.bathrooms) && selectedBathrooms === 'Any') searchParams.delete(QUERY_KEYS.bathrooms)

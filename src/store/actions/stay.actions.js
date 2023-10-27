@@ -2,7 +2,7 @@ import { stayService } from '../../services/stay.service.local.js'
 import { userService } from '../../services/user.service.js'
 import { store } from '../store.js'
 import { showSuccessMsg, showErrorMsg } from '../../services/event-bus.service.js'
-import { ADD_STAY, REMOVE_STAY, SET_STAYS, UNDO_REMOVE_STAY, UPDATE_STAY } from '../reducer/stay.reducer.js'
+import { ADD_STAY, REMOVE_STAY, SET_STAYS, UNDO_REMOVE_STAY, UPDATE_STAY, SET_FILTERED_STAYS } from '../reducer/stay.reducer.js'
 import { LOADING_DONE, LOADING_START } from '../reducer/system.reducer'
 // import { SET_SCORE } from "../user.reducer.js";
 
@@ -30,9 +30,12 @@ export async function loadStays(params) {
   store.dispatch({ type: LOADING_START })
   try {
     const stays = await stayService.query(params)
-    console.log('Stays from DB:', stays)
     store.dispatch({
       type: SET_STAYS,
+      stays,
+    })
+    store.dispatch({
+      type: SET_FILTERED_STAYS,
       stays,
     })
   } catch (err) {
@@ -44,10 +47,8 @@ export async function loadStays(params) {
 }
 
 export async function loadStay(stayId) {
-  console.log('loading stays')
   try {
     const stay = await stayService.getById(stayId)
-    console.log('Stays from DB:', stayId)
     return stay
   } catch (err) {
     console.log('Cannot load stays', err)
@@ -68,7 +69,6 @@ export async function removeStay(stayId) {
 export async function addStay(stay) {
   try {
     const savedStay = await stayService.save(stay)
-    console.log('Added Stay', savedStay)
     store.dispatch(getActionAddStay(savedStay))
     return savedStay
   } catch (err) {
@@ -80,7 +80,6 @@ export async function addStay(stay) {
 export async function updateStay(stay) {
   try {
     const savedStay = await stayService.save(stay)
-    console.log('Updated Stay:', savedStay)
     store.dispatch(getActionUpdateStay(savedStay))
     return savedStay
   } catch (err) {
@@ -89,6 +88,13 @@ export async function updateStay(stay) {
   }
 }
 
+export function filterStays(properties, params) {
+  const stays = stayService.filterStays(properties, params)
+  store.dispatch({
+    type: SET_FILTERED_STAYS,
+    stays,
+  })
+}
 //was Cart
 // export function addToStay(stay) {
 //     store.dispatch({
@@ -140,6 +146,6 @@ export function onRemoveStayOptimistic(stayId) {
 }
 
 
-export async function getResultLength(filter) {
-  return stayService.getResultLength(filter)
+export function getResultLength(filter, stays) {
+  return stayService.getResultLength(filter, stays)
 }
