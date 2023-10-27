@@ -22,7 +22,7 @@ import { utilService } from "../services/util.service";
 
 export function ExploreBar({ onExpandChange }) {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [isExpanded, setIsExpanded] = useState(true);
+  const [isExpanded, setIsExpanded] = useState(false);
   const [isActive, setIsActive] = useState(null);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
