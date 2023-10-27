@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { DayPicker } from "react-day-picker";
 
-import { BarndedBtn } from "./barnded-btn";
+import { BrandedBtn } from "./BrandedBtn";
 import { useLocation } from "react-router";
 
 /// Dont remove! - DatesModal is used in this component
@@ -692,12 +692,13 @@ export function ExploreBar({ onExpandChange }) {
                     </div>
                   )}
                 </div>
-                <BarndedBtn
+                <BrandedBtn
                   onClick={() => console.log("clicked")}
                   txt={isActive === "guests" ? "Search" : ""}
                   icon={<IoSearch className="search-icon" />}
                   borderRadius={isActive === "guests" ? "32px" : "50%"}
                   width={isActive === "guests" ? "112px" : "48px"}
+                  isActive={isActive === "guests"}
                 />
               </article>
             </form>

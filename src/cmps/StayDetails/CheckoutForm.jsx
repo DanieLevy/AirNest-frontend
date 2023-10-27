@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { BarndedBtn2 } from "../branded-Btn-2";
+import { BrandedBtn } from "../BrandedBtn";
 
 import { format, set } from "date-fns";
 import { DayPicker } from "react-day-picker";
@@ -457,7 +457,7 @@ export function CheckoutForm({ onSubmit, price, reviews }) {
                 </div>
               )}
 
-              <BarndedBtn2 txt="Reserve" />
+              <BrandedBtn txt="Reserve" />
               {dateDiffDays ? (
                 <div className="reservation-footer">
                   <div style={{ width: "100%" }}>
@@ -504,7 +504,7 @@ export function CheckoutForm({ onSubmit, price, reviews }) {
                   - {selectedRange.to ? format(selectedRange.to, "dd MMM") : ""}
                 </span>
               </div>
-              <BarndedBtn2 txt="Reserve" className="stay-footer-btn" />
+              <BrandedBtn txt="Reserve" className="stay-footer-btn" />
             </div>
           </footer>
         </form>
@@ -591,7 +591,7 @@ export function CheckoutForm({ onSubmit, price, reviews }) {
               handleSubmit(ev);
             }}
           >
-            <BarndedBtn2 txt="Reserve" />
+            <BrandedBtn txt="Reserve" />
           </div>
         </div>
       </header>

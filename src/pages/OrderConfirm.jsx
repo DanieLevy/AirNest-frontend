@@ -6,7 +6,7 @@ import { showErrorMsg } from '../services/event-bus.service'
 import { Link, useNavigate } from 'react-router-dom'
 import { userService } from '../services/user.service'
 import { PiArrowLeft } from 'react-icons/pi'
-import { BarndedBtn } from '../cmps/barnded-btn'
+import { BrandedBtn } from '../cmps/BrandedBtn'
 import { AiFillStar } from 'react-icons/ai'
 
 export function OrderConfirm() {
@@ -116,10 +116,10 @@ export function OrderConfirm() {
             </h1>
           )}
           <div className='order-confirm-btn' onClick={!isConfirmed && loggedUser ? handleConfirmOrder : null}>
-            {!isConfirmed && loggedUser && <BarndedBtn txt='Confirm Order' />}
+            {!isConfirmed && loggedUser && <BrandedBtn txt='Confirm Order' />}
             {isConfirmed && (
               <Link to='/order'>
-                <BarndedBtn txt='Go to Orders' />
+                <BrandedBtn txt='Go to Orders' />
               </Link>
             )}
           </div>
