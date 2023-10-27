@@ -193,7 +193,6 @@ export function StayFilter() {
     filterBy.amenities = selectedAmmenties
 
     const resultLength = getResultLength(filterBy, stays)
-    console.log('resultLength:', resultLength)
     setResultLength(resultLength)
   }
 
