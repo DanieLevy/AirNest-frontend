@@ -204,6 +204,8 @@ export function ExploreBar({ onExpandChange }) {
   //   {!isExpanded && !isStayPage && !isMobile && ( 2
   //   {isExpanded && ( 3
 
+  let totalGuests = selectedGuests.adults + selectedGuests.children;
+
   return (
     <React.Fragment>
       {/* 1 */}
@@ -238,12 +240,12 @@ export function ExploreBar({ onExpandChange }) {
                 )} - ${utilService.getDayAndMonthFromDate(
                   searchParams.get([QUERY_KEYS.checkout])
                 )}`
-              : "Anyweek"}
+              : "Any week"}
           </button>
           <span className="splitter"></span>
           <button
             type="button"
-            className="guests-btn"
+            className={`guests-btn ${searchParams.get(QUERY_KEYS.adults) || searchParams.get(QUERY_KEYS.children) ? 'filled' : ''}`}
             onClick={() => setIsActive("guests")}
           >
             {+searchParams.get([QUERY_KEYS.adults]) +
@@ -450,7 +452,7 @@ export function ExploreBar({ onExpandChange }) {
                 onClick={() => setIsActive("check-in")}
               >
                 <div className="check-in-text flex">
-                  Check-in
+                  Check in
                   <input
                     type="text"
                     placeholder="Add dates"
@@ -473,7 +475,7 @@ export function ExploreBar({ onExpandChange }) {
                 onClick={() => setIsActive("check-out")}
               >
                 <div className="check-out-text flex">
-                  Check-out
+                  Check out
                   <input
                     type="text"
                     placeholder="Add dates"
@@ -515,14 +517,27 @@ export function ExploreBar({ onExpandChange }) {
                 <div className="guests-text flex">
                   Who
                   <input
-                    type="text"
-                    placeholder="Add guests"
-                    className="guests-input"
-                    value={`${
-                      selectedGuests.adults + selectedGuests.children
-                    } guests ${selectedGuests.infants} infants`}
-                    readOnly
-                  />
+  type="text"
+  placeholder="Add guests"
+  className="guests-input"
+  value={
+    totalGuests === 0
+      ? "Add guests"
+      : `${selectedGuests.adults + selectedGuests.children} ${
+          selectedGuests.adults + selectedGuests.children === 1
+            ? "guest"
+            : "guests"
+        }${
+          selectedGuests.infants > 0
+            ? `, ${selectedGuests.infants} ${
+                selectedGuests.infants === 1 ? "infant" : "infants"
+              }`
+            : ""
+        }`
+  }
+  readOnly
+/>
+
                   {isActive === "guests" && (
                     <div className="guests-modal">
                       {/* Adults */}
@@ -697,7 +712,7 @@ export function ExploreBar({ onExpandChange }) {
                   txt={isActive === "guests" ? "Search" : ""}
                   icon={<IoSearch className="search-icon" />}
                   borderRadius={isActive === "guests" ? "32px" : "50%"}
-                  width={isActive === "guests" ? "112px" : "48px"}
+                  width={isActive === "guests" ? "100px" : "48px"}
                   isActive={isActive === "guests"}
                 />
               </article>
@@ -721,7 +736,7 @@ export function ExploreBar({ onExpandChange }) {
                   <span>Anywhere</span>
                 </div>
                 <div className="ebm-search-dates">
-                  <span>Anyweek</span>
+                  <span>Any week</span>
                   <span className="dot">•</span>
                   <span>Add guests</span>
                 </div>

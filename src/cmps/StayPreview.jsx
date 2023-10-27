@@ -18,6 +18,11 @@ export function StayPreview({ stay }) {
 
   const stayLink = `/stay/${stay._id}?${searchParams.toString()}`;
   const user = useSelector((storeState) => storeState.userModule.user);
+  const stays = useSelector((storeState) => storeState.stayModule.stays);
+
+  const userLikedStays = stays.filter((stay) =>
+    stay.likedByUsers.some((likedUser) => likedUser._id === user._id)
+  );
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768);
@@ -32,7 +37,7 @@ export function StayPreview({ stay }) {
 
   const isLiked = () => {
     if (!user) return false;
-    return stay.likedByUsers.some((likedUser) => likedUser._id === user._id);
+    return userLikedStays.some((likedStay) => likedStay._id === stay._id);
   };
 
   async function handleLike(ev) {
@@ -121,7 +126,35 @@ export function StayPreview({ stay }) {
     </svg>
   );
 
-  console.log(isLiked());
+  const getRandomInt = (min, max) => {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  };
+  const getRandomDateRange = () => {
+    const months = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ];
+
+    const month = months[getRandomInt(0, 11)];
+
+    const startDay = getRandomInt(1, 25);
+    const days = getRandomInt(1, 7);
+    const endDay = startDay + days;
+
+    return `${month} ${startDay} - ${endDay}`;
+  };
 
   return (
     <article
@@ -138,7 +171,7 @@ export function StayPreview({ stay }) {
           showFullscreenButton={false}
           showBullets={true}
           loading={lazy}
-          showThumbnails={true}
+          // showThumbnails={true}
           stopPropagation={true}
           disableKeyDown={true}
           renderLeftNav={leftNav}
@@ -154,52 +187,56 @@ export function StayPreview({ stay }) {
               </div>
               <div className="preview-rating">
                 <i className="fa-solid fa-star"></i>
-                <span>{reviewsAvg.toFixed(2)}</span>
+                {reviewsAvg % 1 === 0
+                  ? reviewsAvg.toFixed(1)
+                  : reviewsAvg.toFixed(2)}
               </div>
             </div>
             <div className="preview-summary">
               <p>{stay.summary}</p>
             </div>
             <div className="preview-dates">
-              <p>Nov 10 - 15</p>
+              <p>{getRandomDateRange()}</p>
             </div>
             <div className="preview-price">
               <span className="price-span">₪{stay.price}</span>
-              <span> / night</span>
+              <span> night</span>
             </div>
           </div>
         </Link>
       ) : (
-          <div className="stay-card-details">
-            <div className="preview-header flex">
-              <div className="preview-name">
-                <h1>{stay.name}</h1>
-              </div>
-              <div className="preview-rating">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 32 32"
-                  className="star"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="m15.1 1.58-4.13 8.88-9.86 1.27a1 1 0 0 0-.54 1.74l7.3 6.57-1.97 9.85a1 1 0 0 0 1.48 1.06l8.62-5 8.63 5a1 1 0 0 0 1.48-1.06l-1.97-9.85 7.3-6.57a1 1 0 0 0-.55-1.73l-9.86-1.28-4.12-8.88a1 1 0 0 0-1.82 0z"
-                  ></path>
-                </svg>
-                <span>{reviewsAvg.toFixed(2)}</span>
-              </div>
+        <div className="stay-card-details">
+          <div className="preview-header flex">
+            <div className="preview-name">
+              <h1>{stay.name}</h1>
             </div>
-            <div className="preview-summary">
-              <p>{stay.summary}</p>
-            </div>
-            <div className="preview-dates">
-              <p>Nov 10 - 15</p>
-            </div>
-            <div className="preview-price">
-              <span className="price-span">₪{stay.price}</span>
-              <span> / night</span>
+            <div className="preview-rating">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 32 32"
+                className="star"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="m15.1 1.58-4.13 8.88-9.86 1.27a1 1 0 0 0-.54 1.74l7.3 6.57-1.97 9.85a1 1 0 0 0 1.48 1.06l8.62-5 8.63 5a1 1 0 0 0 1.48-1.06l-1.97-9.85 7.3-6.57a1 1 0 0 0-.55-1.73l-9.86-1.28-4.12-8.88a1 1 0 0 0-1.82 0z"
+                ></path>
+              </svg>
+              {reviewsAvg % 1 === 0
+                ? reviewsAvg.toFixed(1)
+                : reviewsAvg.toFixed(2)}
             </div>
           </div>
+          <div className="preview-summary">
+            <p>{stay.summary}</p>
+          </div>
+          <div className="preview-dates">
+            <p>{getRandomDateRange()}</p>
+          </div>
+          <div className="preview-price">
+            <span className="price-span">${stay.price}</span>
+            <span> night</span>
+          </div>
+        </div>
       )}
     </article>
   );

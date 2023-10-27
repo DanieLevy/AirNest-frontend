@@ -12,9 +12,6 @@ export function Wishlist() {
   const stays = useSelector((storeState) => storeState.stayModule.stays);
   const user = useSelector((storeState) => storeState.userModule.user);
 
-  console.log('stayskk', stays);
-  console.log('userkk', user);
-
   useEffect(() => {
     loadStays(searchParams);
   }, [searchParams]);
@@ -22,8 +19,6 @@ export function Wishlist() {
   const userLikedStays = stays.filter((stay) =>
     stay.likedByUsers.some((likedUser) => likedUser._id === user._id)
   );
-
-  console.log('userLikedStays', userLikedStays);
 
   return (
     <section className="main-layout wishlist-container">

@@ -365,11 +365,23 @@
 
 .filters-btn {
     position: relative;
+
+    div {
+        svg {
+            display: block;
+            fill: none;
+            height: 16px;
+            width: 16px;
+            stroke: currentColor;
+            stroke-width: 3;
+            overflow: "visible";
+        }
+    }
     & .filters-count {
         display: flex;
         align-items: center;
         justify-content: center;
-    
+
         background: #222222;
         border-radius: 50%;
         border: 1.5px solid #ffffff;
@@ -389,7 +401,6 @@
             font-size: 10px;
             font-weight: 800;
             line-height: 12px;
-            
         }
     }
 }
