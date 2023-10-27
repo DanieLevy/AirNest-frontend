@@ -30,8 +30,10 @@ async function query(params) {
   let staysToReturn = stays
 
   if (capacity) staysToReturn = staysToReturn.filter(stay => stay.capacity >= capacity)
-  if (paramsObj.region) staysToReturn = staysToReturn.filter(stay => stay.loc.country === paramsObj.region.split(',')[0])
-
+  if (paramsObj.region) {
+    const regionRegex = new RegExp(paramsObj.region, 'i');
+    staysToReturn = staysToReturn.filter(stay => regionRegex.test(stay.loc.country));
+  }
   return staysToReturn
 }
 
