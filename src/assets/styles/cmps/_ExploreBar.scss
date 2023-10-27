@@ -146,7 +146,7 @@
     scale: 0.5;
     // background-color: red;
     // translate down
-    translate: 0 -40px;
+    translate: 0 -80px;
   }
   100% {
     scale: 1;
@@ -167,7 +167,7 @@
     scale: 0.5;
     // background-color: red;
     // translate down
-    translate: 0 -40px;
+    translate: 0 -80px;
   }
 }
 
@@ -184,11 +184,11 @@
   padding-bottom: 0px;
   transition: all 0.5s ease-in-out;
   opacity: 0;
+  transition: all 0.5s ease-in-out;
 
   &.show {
     opacity: 1;
     top: 80px;
-    background-color: transparent;
     transition: all 0.5s ease-in-out;
   }
 }
@@ -251,11 +251,11 @@
     transition: all 0.3s ease-in-out;
 
     &.slideIn2 {
-      animation: slideIn2 0.3s ease-in-out;
+      animation: slideIn2 .5s ease-in-out;
     }
 
     &.slideOut2 {
-      animation: slideOut2 0.3s ease-in-out;
+      animation: slideOut2 .5s ease-in-out;
     }
 
     input {
