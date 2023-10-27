@@ -3,9 +3,26 @@
   top: 0;
   z-index: 100;
   background-color: $clr3;
+  height: 80px;
 
   &.relative {
     position: relative;
+  }
+}
+
+.helpme {
+  background-color: #ffffff;
+  width: 100%;
+  height: 1px;
+  position: fixed;
+  top: 0px;
+  z-index: 10;
+  border-block-end: 1px solid #dddddd;
+  transition: height .2s;
+  &.a {
+    transition: height .3s;
+    height: 96px;
+    top: 80px;
   }
 }
 
@@ -16,7 +33,6 @@
   align-items: center;
   color: #222222;
   height: 80px;
-
 
   img {
     width: 32px;
@@ -33,7 +49,6 @@
     font-weight: 600;
     letter-spacing: 0.1rem;
     cursor: pointer;
-
 
     .logo-txt {
       margin-inline-start: 5px;

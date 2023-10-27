@@ -2,7 +2,7 @@ import { useState, useEffect } from "react"
 import { userService } from "../services/user.service"
 
 import { ImgUploader } from "./ImgUploader"
-import { BarndedBtn } from "./barnded-btn"
+import { BrandedBtn } from "./BrandedBtn"
 import UploadButtonComponent from "./NewImgUploader"
 
 export function LoginSignup({ login, signup, onToggleLogin, isSignup, setSignupModal, closeModal }) {
@@ -122,7 +122,7 @@ export function LoginSignup({ login, signup, onToggleLogin, isSignup, setSignupM
           )}
 
           <button className="btn btn-primary">
-            <BarndedBtn txt={isSignup ? "Sign Up" : "Login"} />
+            <BrandedBtn txt={isSignup ? "Sign Up" : "Login"} />
           </button>
         </form>
 

@@ -30,10 +30,12 @@ export function LabelsCarousel({ onLabelClick }) {
       // the naming can be any, depends on you.
       breakpoint: { max: 4000, min: 3000 },
       items: 18,
+
     },
     desktop: {
       breakpoint: { max: 3000, min: 1024 },
-      items: itemCount,
+      items: 18,
+
     },
     tablet: {
       breakpoint: { max: 1024, min: 464 },
@@ -76,6 +78,7 @@ export function LabelsCarousel({ onLabelClick }) {
       centerMode={true}
       infinite={true}
       arrows={isMobile ? false : true}
+      rewind={false}
       
     >
       {labels.map((label) => item(label))}

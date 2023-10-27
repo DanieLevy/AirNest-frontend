@@ -1,87 +1,97 @@
-import React, { useEffect, useRef, useState } from "react"
-import { DayPicker } from "react-day-picker"
+import React, { useEffect, useRef, useState } from "react";
+import { DayPicker } from "react-day-picker";
 
-import { BarndedBtn } from "./barnded-btn"
-import { useLocation } from "react-router"
+import { BrandedBtn } from "./BrandedBtn";
+import { useLocation } from "react-router";
 
 /// Dont remove! - DatesModal is used in this component
-import { DatesModal } from "./DatesModal"
-import { FadeIn } from "react-slide-fade-in"
-import { set } from "date-fns"
-import { is } from "date-fns/locale"
+import { DatesModal } from "./DatesModal";
+import { FadeIn } from "react-slide-fade-in";
+import { set } from "date-fns";
+import { is } from "date-fns/locale";
 /// Dont remove! - DatesModal is used in this component
 
-import { IoSearch } from "react-icons/io5"
-import { AiOutlineMinus } from "react-icons/ai"
-import { AiOutlinePlus } from "react-icons/ai"
-import { CiLocationArrow1 } from "react-icons/ci"
-import { CgSearch } from "react-icons/cg"
-import { useSearchParams } from 'react-router-dom';
-import { QUERY_KEYS } from "../services/util.service"
-import { utilService } from "../services/util.service"
+import { IoSearch } from "react-icons/io5";
+import { AiOutlineMinus } from "react-icons/ai";
+import { AiOutlinePlus } from "react-icons/ai";
+import { CiLocationArrow1 } from "react-icons/ci";
+import { CgSearch } from "react-icons/cg";
+import { useSearchParams } from "react-router-dom";
+import { QUERY_KEYS } from "../services/util.service";
+import { utilService } from "../services/util.service";
+import { store } from "../store/store";
+import { useDispatch } from "react-redux";
 
-export function ExploreBar() {
+export function ExploreBar({ onExpandChange }) {
+  const dispatch = useDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
-  const [isExpanded, setIsExpanded] = useState(false)
-  const [isActive, setIsActive] = useState("location")
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 768)
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [isActive, setIsActive] = useState(null);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+  function handleExpandChange(value = null) {
+    const newValue = value === null ? !isExpanded : value;
+    console.log("newValue", newValue);
+    dispatch({ type: "SET_EXPLORE_EXPANDED", isExploreExpanded: newValue });
+    setIsExpanded(newValue);
+  }
 
   const [formData, setFormData] = useState({
     location: "",
     startDate: null,
     endDate: null,
-  })
+  });
 
   const [selectedRange, setSelectedRange] = useState({
     from: null,
     to: null,
-  })
+  });
 
   const [selectedGuests, setSelectedGuests] = useState({
     adults: 0,
     children: 0,
     infants: 0,
     pets: 0,
-  })
+  });
 
-  const expandedBarRef = useRef(null)
+  const expandedBarRef = useRef(null);
 
-  const location = useLocation()
-  const path = location.pathname
-  const isStayPage = path === "/" || path.startsWith("/?")
+  const location = useLocation();
+  const path = location.pathname;
+  const isStayPage = path === "/" || path.startsWith("/?");
 
   useEffect(() => {
-    window.addEventListener("resize", handleResize)
+    window.addEventListener("resize", handleResize);
 
     if (isExpanded) {
-      window.addEventListener("scroll", handleScroll)
-      document.addEventListener("click", handleDocumentClick)
+      window.addEventListener("scroll", handleScroll);
+      document.addEventListener("click", handleDocumentClick);
     } else {
-      window.removeEventListener("scroll", handleScroll)
-      document.removeEventListener("click", handleDocumentClick)
+      window.removeEventListener("scroll", handleScroll);
+      document.removeEventListener("click", handleDocumentClick);
     }
 
     return () => {
-      window.removeEventListener("scroll", handleScroll)
-      document.removeEventListener("click", handleDocumentClick)
-      window.removeEventListener("resize", handleResize)
-    }
-  }, [isExpanded])
+      window.removeEventListener("scroll", handleScroll);
+      document.removeEventListener("click", handleDocumentClick);
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [isExpanded]);
 
   const handleResize = () => {
-    setIsMobile(window.innerWidth < 768)
-  }
+    setIsMobile(window.innerWidth < 768);
+  };
 
   function handleDayClick(date) {
-    console.log("date", date)
+    console.log("date", date);
 
     if (selectedRange.from && selectedRange.to) {
       setSelectedRange({
         from: date,
         to: null,
-      })
-      setIsActive("check-out")
-      return
+      });
+      setIsActive("check-out");
+      return;
     }
 
     if (selectedRange.from && date < selectedRange.from) {
@@ -89,94 +99,92 @@ export function ExploreBar() {
       setSelectedRange({
         from: date,
         to: null,
-      })
+      });
       // setIsActive("check-out")
-      return
+      return;
     }
 
     if (!selectedRange.from) {
-      setIsActive("check-out")
-      setSelectedRange({ from: date, to: null })
+      setIsActive("check-out");
+      setSelectedRange({ from: date, to: null });
     }
 
     if (selectedRange.from && !selectedRange.to) {
-      setIsActive("guests")
-      setSelectedRange({ from: selectedRange.from, to: date })
+      setIsActive("guests");
+      setSelectedRange({ from: selectedRange.from, to: date });
 
       setFormData((prevState) => ({
         ...prevState,
         startDate: selectedRange.from,
         endDate: date,
-      }))
+      }));
     }
   }
 
   function handleScroll() {
-    setIsExpanded(false)
-    setIsActive(null)
+    handleExpandChange(false);
+    setIsActive(null);
   }
 
   function handleClick(ev) {
-    console.log("clicked")
-    ev.stopPropagation()
-    setIsExpanded(!isExpanded)
+    ev.stopPropagation();
+    console.log('isActive', isActive);
+    handleExpandChange(!isExpanded);
   }
 
   function handleDocumentClick(ev) {
-    console.log("clicked outside")
-    if (
-      expandedBarRef.current &&
-      !expandedBarRef.current.contains(ev.target) &&
-      isExpanded
-    ) {
-      setIsExpanded(false)
-      setIsActive(null)
+    console.log("clicked outside");
+    ev.stopPropagation();
+    if (expandedBarRef.current && !expandedBarRef.current.contains(ev.target)) {
+      setIsExpanded(false);
+      handleExpandChange(false);
+      setIsActive(null);
     }
   }
 
   function handleLocationClick(e) {
-    e.stopPropagation()
-    let locationText
+    e.stopPropagation();
+    let locationText;
     if (e.target.tagName === "IMG") {
-      locationText = e.target.nextSibling.innerText
+      locationText = e.target.nextSibling.innerText;
     } else {
-      locationText = e.target.innerText
+      locationText = e.target.innerText;
     }
 
     setFormData((prevState) => ({
       ...prevState,
       location: locationText,
-    }))
-    setIsActive("check-in")
+    }));
+    setIsActive("check-in");
   }
 
   const handleChange = (event) => {
-    const { name, type, value } = event.target
+    const { name, type, value } = event.target;
 
     switch (name) {
       case "location":
-        setFormData((prevState) => ({ ...prevState, location: value }))
-        break
+        setFormData((prevState) => ({ ...prevState, location: value }));
+        break;
       default:
-        break
+        break;
     }
-  }
+  };
 
   function handleSubmit(ev) {
     ev.preventDefault();
 
-    console.log('selectedRange', selectedRange.from);
-    console.log('selectedRange', selectedRange.to);
+    console.log("selectedRange", selectedRange.from);
+    console.log("selectedRange", selectedRange.to);
 
     if (selectedRange.from && !selectedRange.to) {
-      const inputDate = new Date(selectedRange.from)
-      inputDate.setDate(inputDate.getDate() + 1)
-      selectedRange.to = inputDate.toString()
+      const inputDate = new Date(selectedRange.from);
+      inputDate.setDate(inputDate.getDate() + 1);
+      selectedRange.to = inputDate.toString();
     }
     if (selectedRange.to && !selectedRange.from) {
-      const inputDate = new Date(selectedRange.to)
-      inputDate.setDate(inputDate.getDate() - 1)
-      selectedRange.from = inputDate.toString()
+      const inputDate = new Date(selectedRange.to);
+      inputDate.setDate(inputDate.getDate() - 1);
+      selectedRange.from = inputDate.toString();
     }
 
     setSearchParams({
@@ -188,14 +196,22 @@ export function ExploreBar() {
       [QUERY_KEYS.infants]: selectedGuests.infants,
       [QUERY_KEYS.pets]: selectedGuests.pets,
     });
-    setIsExpanded(false)
+
+    handleExpandChange(false);
   }
+
+  // {!isExpanded && isStayPage && !isMobile && ( 1
+  //   {!isExpanded && !isStayPage && !isMobile && ( 2
+  //   {isExpanded && ( 3
 
   return (
     <React.Fragment>
+      {/* 1 */}
       {!isExpanded && isStayPage && !isMobile && (
         <div
-          className={`explore-bar-preview`}
+          className={`explore-bar-preview ${
+            isExpanded ? "slideOut" : "slideIn"
+          }`}
           onClick={isExpanded ? null : handleClick}
         >
           <button
@@ -203,7 +219,9 @@ export function ExploreBar() {
             className="location-btn"
             onClick={() => setIsActive("location")}
           >
-            {searchParams.get([QUERY_KEYS.region]) ? `${searchParams.get([QUERY_KEYS.region])}`.split(',')[0] : 'Anywhere'}
+            {searchParams.get([QUERY_KEYS.region])
+              ? `${searchParams.get([QUERY_KEYS.region])}`.split(",")[0]
+              : "Anywhere"}
           </button>
           <span className="splitter"></span>
           <button
@@ -211,9 +229,16 @@ export function ExploreBar() {
             className="dates-btn"
             onClick={() => setIsActive("check-in")}
           >
-            {searchParams.get([QUERY_KEYS.checkin]) && searchParams.get([QUERY_KEYS.checkin]) !== 'null' && searchParams.get([QUERY_KEYS.checkout]) && searchParams.get([QUERY_KEYS.checkout]) !== 'null' ?
-              `${utilService.getDayAndMonthFromDate(searchParams.get([QUERY_KEYS.checkin]))} - ${utilService.getDayAndMonthFromDate(searchParams.get([QUERY_KEYS.checkout]))}`
-              : 'Anyweek'}
+            {searchParams.get([QUERY_KEYS.checkin]) &&
+            searchParams.get([QUERY_KEYS.checkin]) !== "null" &&
+            searchParams.get([QUERY_KEYS.checkout]) &&
+            searchParams.get([QUERY_KEYS.checkout]) !== "null"
+              ? `${utilService.getDayAndMonthFromDate(
+                  searchParams.get([QUERY_KEYS.checkin])
+                )} - ${utilService.getDayAndMonthFromDate(
+                  searchParams.get([QUERY_KEYS.checkout])
+                )}`
+              : "Anyweek"}
           </button>
           <span className="splitter"></span>
           <button
@@ -221,7 +246,14 @@ export function ExploreBar() {
             className="guests-btn"
             onClick={() => setIsActive("guests")}
           >
-            {(+searchParams.get([QUERY_KEYS.adults])) + (+searchParams?.get([QUERY_KEYS.children])) !== 0 ? `${(+searchParams.get([QUERY_KEYS.adults])) + (+searchParams?.get([QUERY_KEYS.children]))} guests` : 'Add guests'}
+            {+searchParams.get([QUERY_KEYS.adults]) +
+              +searchParams?.get([QUERY_KEYS.children]) !==
+            0
+              ? `${
+                  +searchParams.get([QUERY_KEYS.adults]) +
+                  +searchParams?.get([QUERY_KEYS.children])
+                } guests`
+              : "Add guests"}
           </button>
           <button type="button" className="search-btn">
             <IoSearch />
@@ -229,6 +261,7 @@ export function ExploreBar() {
         </div>
       )}
 
+      {/* 2 */}
       {!isExpanded && !isStayPage && !isMobile && (
         <div
           className={`explore-bar-preview short`}
@@ -241,20 +274,27 @@ export function ExploreBar() {
         </div>
       )}
 
-      {isExpanded && (
-        <React.Fragment>
+      {/* 3 */}
+      <React.Fragment>
+        {isExpanded && (
           <div
-            ref={expandedBarRef}
-            className="white-space"
-          // onClick={handleClick}
+            className={!isExpanded ? "explore-helper" : "explore-helper show"}
+            style={{ display: isExpanded ? "" : "none" }}
           >
             <form
-              className="explore-bar-preview expanded"
+              ref={expandedBarRef}
+              className={`explore-bar-preview expanded  ${
+                isExpanded ? "slideIn2" : "slideOut2"
+              }`}
               onSubmit={handleSubmit}
+              style={{
+                backgroundColor: isActive === null ? "white" : "#ebebeb",
+              }}
             >
               <article
-                className={`explore-bar location flex ${isActive === "location" ? "active" : ""
-                  }`}
+                className={`explore-bar location flex ${
+                  isActive === "location" ? "active" : ""
+                }`}
                 onClick={() => setIsActive("location")}
               >
                 <label htmlFor="location">Where</label>
@@ -404,8 +444,9 @@ export function ExploreBar() {
               <span className="splitter"></span>
 
               <article
-                className={`explore-bar check-in ${isActive === "check-in" ? "active" : ""
-                  }`}
+                className={`explore-bar check-in ${
+                  isActive === "check-in" ? "active" : ""
+                }`}
                 onClick={() => setIsActive("check-in")}
               >
                 <div className="check-in-text flex">
@@ -426,8 +467,9 @@ export function ExploreBar() {
               <span className="splitter"></span>
 
               <article
-                className={`explore-bar check-out ${isActive === "check-out" ? "active" : ""
-                  }`}
+                className={`explore-bar check-out ${
+                  isActive === "check-out" ? "active" : ""
+                }`}
                 onClick={() => setIsActive("check-out")}
               >
                 <div className="check-out-text flex">
@@ -465,8 +507,9 @@ export function ExploreBar() {
               <span className="splitter"></span>
 
               <article
-                className={`explore-bar guests ${isActive === "guests" ? "active" : ""
-                  }`}
+                className={`explore-bar guests ${
+                  isActive === "guests" ? "active" : ""
+                }`}
                 onClick={() => setIsActive("guests")}
               >
                 <div className="guests-text flex">
@@ -475,8 +518,9 @@ export function ExploreBar() {
                     type="text"
                     placeholder="Add guests"
                     className="guests-input"
-                    value={`${selectedGuests.adults + selectedGuests.children
-                      } guests ${selectedGuests.infants} infants`}
+                    value={`${
+                      selectedGuests.adults + selectedGuests.children
+                    } guests ${selectedGuests.infants} infants`}
                     readOnly
                   />
                   {isActive === "guests" && (
@@ -499,7 +543,7 @@ export function ExploreBar() {
                                 setSelectedGuests((prevState) => ({
                                   ...prevState,
                                   adults: prevState.adults - 1,
-                                }))
+                                }));
                             }}
                           >
                             <AiOutlineMinus />
@@ -514,7 +558,7 @@ export function ExploreBar() {
                               setSelectedGuests((prevState) => ({
                                 ...prevState,
                                 adults: prevState.adults + 1,
-                              }))
+                              }));
                             }}
                             disabled={selectedGuests.adults === 16}
                           >
@@ -541,7 +585,7 @@ export function ExploreBar() {
                                 setSelectedGuests((prevState) => ({
                                   ...prevState,
                                   children: prevState.children - 1,
-                                }))
+                                }));
                             }}
                           >
                             <AiOutlineMinus />
@@ -556,7 +600,7 @@ export function ExploreBar() {
                               setSelectedGuests((prevState) => ({
                                 ...prevState,
                                 children: prevState.children + 1,
-                              }))
+                              }));
                             }}
                             disabled={selectedGuests.children === 5}
                           >
@@ -581,7 +625,7 @@ export function ExploreBar() {
                                 setSelectedGuests((prevState) => ({
                                   ...prevState,
                                   infants: prevState.infants - 1,
-                                }))
+                                }));
                             }}
                           >
                             <AiOutlineMinus />
@@ -596,7 +640,7 @@ export function ExploreBar() {
                               setSelectedGuests((prevState) => ({
                                 ...prevState,
                                 infants: prevState.infants + 1,
-                              }))
+                              }));
                             }}
                             disabled={selectedGuests.infants === 5}
                           >
@@ -621,7 +665,7 @@ export function ExploreBar() {
                               setSelectedGuests((prevState) => ({
                                 ...prevState,
                                 pets: prevState.pets - 1,
-                              }))
+                              }));
                             }}
                             disabled={selectedGuests.pets === 0}
                           >
@@ -637,7 +681,7 @@ export function ExploreBar() {
                               setSelectedGuests((prevState) => ({
                                 ...prevState,
                                 pets: prevState.pets + 1,
-                              }))
+                              }));
                             }}
                             disabled={selectedGuests.pets === 5}
                           >
@@ -648,20 +692,22 @@ export function ExploreBar() {
                     </div>
                   )}
                 </div>
-
-                <BarndedBtn
+                <BrandedBtn
                   onClick={() => console.log("clicked")}
                   txt={isActive === "guests" ? "Search" : ""}
                   icon={<IoSearch className="search-icon" />}
                   borderRadius={isActive === "guests" ? "32px" : "50%"}
                   width={isActive === "guests" ? "112px" : "48px"}
+                  isActive={isActive === "guests"}
                 />
               </article>
             </form>
           </div>
-          <div className="explore-bar-backdrop"></div>
-        </React.Fragment>
-      )}
+        )}
+        <div
+          className={`explore-bar-backdrop ${isExpanded ? "show" : ""}`}
+        ></div>
+      </React.Fragment>
 
       {isMobile && (
         <div className="explore-bar-mobile flex">
@@ -690,5 +736,5 @@ export function ExploreBar() {
         </div>
       )}
     </React.Fragment>
-  )
+  );
 }
