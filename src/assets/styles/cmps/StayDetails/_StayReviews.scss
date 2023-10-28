@@ -35,7 +35,7 @@
 }
 
 .review {
-  max-width: 80%;
+  max-width: 100%;
   display: flex;
   flex-direction: column;
   font-size: 1rem;
@@ -104,15 +104,31 @@
   height: 100%;
   background-color: #0006;
   .reviews-modal {
+    padding: 24px 0 24px 24px!important;
     .close-modal-btn {
       position: absolute;
-      top: -5px;
-      right: 0px;
-      font-size: 1.75rem;
-      font-weight: 600;
-      padding: 0.5em;
-      cursor: pointer;
-      background: transparent;
+      top: 18px;
+      left: 18px;
+      right: unset;
+      padding:  0;
+      margin: 0;
+      background-color: transparent; 
+      padding: 5px;
+
+      &:hover {
+        background-color: rgb(222, 222, 222);
+        border-radius: 50%;
+      }
+
+      svg {
+        display: block;
+        fill: none;
+        height: 16px;
+        width: 16px;
+        stroke: currentcolor;
+        stroke-width: 3;
+        overflow: visible;
+      }
     }
 
     .divider {
@@ -139,30 +155,30 @@
 }
 
 .reviews-modal-list {
-  margin-top: 24px;
+  margin-top: 50px;
   display: grid;
   grid-template-columns: 1fr;
   grid-gap: 40px 1px;
 
-  padding: 0 15px;
+  // padding: 0 15px;
   overflow-x: auto;
   max-height: 75vh;
 
-  // design the scrollbar
-  &::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-  }
+  // // design the scrollbar
+  // &::-webkit-scrollbar {
+  //   width: 8px;
+  //   height: 8px;
+  // }
 
-  &::-webkit-scrollbar-track {
-    background: #f1f1f1;
-    border-radius: 8px;
-  }
+  // &::-webkit-scrollbar-track {
+  //   background: #f1f1f1;
+  //   border-radius: 8px;
+  // }
 
-  &::-webkit-scrollbar-thumb {
-    background: #888;
-    border-radius: 8px;
-  }
+  // &::-webkit-scrollbar-thumb {
+  //   background: #888;
+  //   border-radius: 8px;
+  // }
 
 }
 

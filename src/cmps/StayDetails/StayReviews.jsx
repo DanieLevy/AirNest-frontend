@@ -98,11 +98,11 @@ export function StayReviews({ data }) {
                 });
               }}
             >
-              &times;
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" aria-hidden="true" role="presentation" focusable="false"><path d="m6 6 20 20M26 6 6 26"></path></svg>
             </button>
-            <h1>Reviews</h1>
-            <div className="divider"></div>
+            {/* <div className="divider"></div> */}
             <div className="reviews-modal-list">
+            <h1>Reviews</h1>
             {reviews.map((review) => (
               <li className="review flex" key={review.by.id}>
                 <div className="review-title flex">

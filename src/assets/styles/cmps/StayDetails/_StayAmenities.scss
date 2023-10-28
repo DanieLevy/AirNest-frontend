@@ -44,6 +44,40 @@
   }
 
   & .reviews-modal-container {
+    &.amenities {
+      & .reviews-modal {
+        padding: 24px 0px 0px 24px;
+        & .close-modal-btn {
+          position: absolute;
+          top: 18px;
+          left: 18px;
+          right: unset;
+          margin: 0;
+
+          padding: 5px;
+
+          &:hover {
+            background-color: rgb(222, 222, 222);
+            border-radius: 50%;
+          }
+
+          svg {
+            display: block;
+            fill: none;
+            height: 16px;
+            width: 16px;
+            stroke: currentcolor;
+            stroke-width: 3;
+            overflow: visible;
+          }
+        }
+        & .reviews-modal-list {
+          margin-top: 60px;
+          margin-bottom: 0 !important;
+          gap: 15px;
+        }
+      }
+    }
 
     & .reviews-modal {
       h1 {
@@ -53,11 +87,10 @@
       }
 
       & .reviews-modal-list {
-        margin-bottom: 48px!important;
+        margin-bottom: 48px !important;
         padding: 0;
 
         & .amenities-section {
-
           & .amenities-section-title {
             font-size: 18px;
             line-height: 22px;
@@ -69,7 +102,7 @@
             display: flex;
             padding: 24px 0;
             align-items: center;
-            border-bottom: 1px solid #E0E0E0;
+            border-bottom: 1px solid #e0e0e0;
             & .amenity-icon {
               margin-right: 16px;
               width: 24px;
@@ -81,6 +114,8 @@
               align-items: center;
               text-decoration: line-through;
 
+              font-family: cereal-light;
+
               font-size: 16px;
               line-height: 20px;
               font-weight: 400;
@@ -91,7 +126,6 @@
             }
           }
         }
-
       }
     }
   }

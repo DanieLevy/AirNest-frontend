@@ -492,7 +492,7 @@ export function StayAmenities({ data }) {
           Show all {amenitiesArray.length} amenities
         </div>
         {showAllAmenities && (
-          <div className="reviews-modal-container">
+          <div className="reviews-modal-container amenities">
             <div className="reviews-modal">
               <button
                 className="close-modal-btn"
@@ -500,11 +500,12 @@ export function StayAmenities({ data }) {
                   setShowAllAmenities(false);
                 }}
               >
-                &times;
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" aria-hidden="true" role="presentation" focusable="false"><path d="m6 6 20 20M26 6 6 26"></path></svg>
               </button>
-              <h1>What this place offers</h1>
-              <div className="divider"></div>
+              {/* <div className="divider"></div> */}
+              
               <div className="reviews-modal-list">
+              <h1>What this place offers</h1>
                 {amenitiesCategories.map((category) => (
                   <section className="amenities-section" key={category.title}>
                     <div className="amenities-section-title">
