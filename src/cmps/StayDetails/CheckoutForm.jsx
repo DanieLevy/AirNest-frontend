@@ -10,32 +10,28 @@ import { AiOutlinePlus } from "react-icons/ai";
 import { is } from "date-fns/locale";
 import { useSearchParams } from "react-router-dom";
 import { useRef } from "react";
+import { QUERY_KEYS } from "../../services/util.service";
 
-export function CheckoutForm({ onSubmit, price, reviews }) {
+export function CheckoutForm({ onSubmit, price, reviews, capacity }) {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const [searchParams] = useSearchParams();
   const [isStayPage, setIsStayPage] = useState(
     location.pathname.startsWith("/stay")
   );
   const [selectedRange, setSelectedRange] = useState(
-    isStayPage && isMobile
-      ? {
-          from: new Date(),
-          to: addDays(new Date(), 3),
-        }
-      : {
-          from: null,
-          to: null,
-        }
+    {
+      from: searchParams.has(QUERY_KEYS.checkin) ? new Date(+searchParams.get(QUERY_KEYS.checkin)) : new Date(),
+      to: searchParams.has(QUERY_KEYS.checkout) ? new Date(+searchParams.get(QUERY_KEYS.checkout)) : addDays(new Date(), 7),
+    }
   );
 
   const [isDatesModal, setIsDatesModal] = useState(false);
   const [isGuestsModal, setIsGuestsModal] = useState(false);
   const [selectedGuests, setSelectedGuests] = useState({
-    adults: 1,
-    children: 0,
-    infants: 0,
-    pets: 0,
+    adults: +searchParams.get(QUERY_KEYS.adults) || 1,
+    children: +searchParams.get(QUERY_KEYS.children) || 0,
+    infants: +searchParams.get(QUERY_KEYS.infants) || 0,
+    pets: +searchParams.get(QUERY_KEYS.pets) || 0,
   });
 
   const [isCheckoutSum, setIsCheckoutSum] = useState(false);
@@ -184,7 +180,7 @@ export function CheckoutForm({ onSubmit, price, reviews }) {
   const getGuestsPlaceholder = () => {
     const { adults, children, infants, pets } = selectedGuests;
     let placeholder = "Add guests";
-  
+
     if (adults > 0) {
       placeholder = `${adults} ${adults === 1 ? "guest" : "guests"}`;
       if (children > 0) {
@@ -199,7 +195,7 @@ export function CheckoutForm({ onSubmit, price, reviews }) {
     } else {
       placeholder = "Add guests";
     }
-  
+
     return placeholder;
   };
 
@@ -309,7 +305,7 @@ export function CheckoutForm({ onSubmit, price, reviews }) {
                     </div>
                     <div className="guests-action flex">
                       <button
-                        disabled={selectedGuests.adults === 0}
+                        disabled={selectedGuests.adults === 1}
                         onClick={() =>
                           setSelectedGuests({
                             ...selectedGuests,
@@ -333,7 +329,7 @@ export function CheckoutForm({ onSubmit, price, reviews }) {
                             adults: selectedGuests.adults + 1,
                           })
                         }
-                        disabled={selectedGuests.adults === 16}
+                        disabled={selectedGuests.adults === 16 || selectedGuests.adults + selectedGuests.children === capacity}
                       >
                         <AiOutlinePlus />
                       </button>
@@ -372,7 +368,7 @@ export function CheckoutForm({ onSubmit, price, reviews }) {
                             children: selectedGuests.children + 1,
                           })
                         }
-                        disabled={selectedGuests.children === 5}
+                        disabled={selectedGuests.children === 16 || selectedGuests.adults + selectedGuests.children === capacity}
                       >
                         <AiOutlinePlus />
                       </button>
@@ -559,11 +555,11 @@ export function CheckoutForm({ onSubmit, price, reviews }) {
         </div>
         <div className="checkout-header-order">
           <div className="order-details"
-                      style={
-                        !asideInViewport
-                          ? { opacity: "1", minWidth: "110px" }
-                          : { opacity: "0", minWidth: "0px" }
-                      }
+            style={
+              !asideInViewport
+                ? { opacity: "1", minWidth: "110px" }
+                : { opacity: "0", minWidth: "0px" }
+            }
           >
             <div className="order-price">
               <span className="price">${price}</span>

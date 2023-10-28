@@ -7,7 +7,9 @@ export const utilService = {
     saveToStorage,
     loadFromStorage,
     getAssetSrc,
-    getDayAndMonthFromDate
+    getDayAndMonthFromDate,
+    getDayAndMonthNumber,
+    getDateString,
 }
 
 export const QUERY_KEYS = {
@@ -26,9 +28,18 @@ export const QUERY_KEYS = {
     amenities: 'amenities',
 }
 
-function getDayAndMonthFromDate(dateString) {
-    const dateObject = new Date(dateString)
+function getDayAndMonthFromDate(checkin, checkout) {
+    const checkinDate = getDayAndMonthNumber(checkin)
+    const checkoutDate = getDayAndMonthNumber(checkout)
 
+    if (checkinDate.monthNumber === checkoutDate.monthNumber) {
+        return `${checkinDate.monthNumber} ${checkinDate.day} - ${checkoutDate.day}`
+    }
+    return `${checkinDate.monthNumber} ${checkinDate.day} - ${checkoutDate.monthNumber} ${checkoutDate.day}`
+}
+
+function getDayAndMonthNumber(date) {
+    const dateObject = new Date(date)
     const day = dateObject.getDate()
     const monthNumber = dateObject.getMonth()
 
@@ -37,11 +48,13 @@ function getDayAndMonthFromDate(dateString) {
         'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
     ]
 
-    const month = monthNames[monthNumber]
-
-    return [month, day].toString().replace(',', ' ')
+    return { day, monthNumber: monthNames[monthNumber] }
 }
 
+function getDateString(date) {
+    const dateDayAndMonth = getDayAndMonthNumber(date)
+    return `${dateDayAndMonth.monthNumber} ${dateDayAndMonth.day}`
+}
 function makeId(length = 6) {
     var txt = ''
     var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'

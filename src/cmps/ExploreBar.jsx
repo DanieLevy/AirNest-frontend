@@ -61,6 +61,27 @@ export function ExploreBar({ onExpandChange }) {
   const isStayPage = path === "/" || path.startsWith("/?");
 
   useEffect(() => {
+    setSelectedGuests((prevState) => ({
+      ...prevState,
+      adults: +searchParams.get(QUERY_KEYS.adults) || 0,
+      children: +searchParams.get(QUERY_KEYS.children) || 0,
+      infants: +searchParams.get(QUERY_KEYS.infants) || 0,
+      pets: +searchParams.get(QUERY_KEYS.pets) || 0,
+    }));
+    setSelectedRange((prevState) => ({
+      ...prevState,
+      from: searchParams.has(QUERY_KEYS.checkin) ? new Date(+searchParams.get(QUERY_KEYS.checkin)) : null,
+      to: searchParams.has(QUERY_KEYS.checkout) ? new Date(+searchParams.get(QUERY_KEYS.checkout)) : null,
+    }));
+    setFormData((prevState) => ({
+      ...prevState,
+      location: searchParams.get(QUERY_KEYS.region) || "",
+      startDate: searchParams.has(QUERY_KEYS.checkin) ? new Date(+searchParams.get(QUERY_KEYS.checkin)) : null,
+      endDate: searchParams.has(QUERY_KEYS.checkout) ? new Date(+searchParams.get(QUERY_KEYS.checkout)) : null,
+    }));
+  }, [searchParams])
+
+  useEffect(() => {
     window.addEventListener("resize", handleResize);
 
     if (isExpanded) {
@@ -91,6 +112,7 @@ export function ExploreBar({ onExpandChange }) {
         to: null,
       });
       setIsActive("check-out");
+      console.log('selectedRange', selectedRange);
       return;
     }
 
@@ -173,9 +195,6 @@ export function ExploreBar({ onExpandChange }) {
   function handleSubmit(ev) {
     ev.preventDefault();
 
-    console.log("selectedRange", selectedRange.from);
-    console.log("selectedRange", selectedRange.to);
-
     if (selectedRange.from && !selectedRange.to) {
       const inputDate = new Date(selectedRange.from);
       inputDate.setDate(inputDate.getDate() + 1);
@@ -189,8 +208,8 @@ export function ExploreBar({ onExpandChange }) {
 
     setSearchParams({
       [QUERY_KEYS.region]: formData.location,
-      [QUERY_KEYS.checkin]: selectedRange.from,
-      [QUERY_KEYS.checkout]: selectedRange.to,
+      [QUERY_KEYS.checkin]: new Date(selectedRange.from).getTime(),
+      [QUERY_KEYS.checkout]: new Date(selectedRange.to).getTime(),
       [QUERY_KEYS.adults]: selectedGuests.adults,
       [QUERY_KEYS.children]: selectedGuests.children,
       [QUERY_KEYS.infants]: selectedGuests.infants,
@@ -211,9 +230,8 @@ export function ExploreBar({ onExpandChange }) {
       {/* 1 */}
       {!isExpanded && isStayPage && !isMobile && (
         <div
-          className={`explore-bar-preview ${
-            isExpanded ? "slideOut" : "slideIn"
-          }`}
+          className={`explore-bar-preview ${isExpanded ? "slideOut" : "slideIn"
+            }`}
           onClick={isExpanded ? null : handleClick}
         >
           <button
@@ -221,9 +239,7 @@ export function ExploreBar({ onExpandChange }) {
             className="location-btn"
             onClick={() => setIsActive("location")}
           >
-            {searchParams.get([QUERY_KEYS.region])
-              ? `${searchParams.get([QUERY_KEYS.region])}`.split(",")[0]
-              : "Anywhere"}
+            {formData.location ? formData.location : "Anywhere"}
           </button>
           <span className="splitter"></span>
           <button
@@ -231,31 +247,17 @@ export function ExploreBar({ onExpandChange }) {
             className="dates-btn"
             onClick={() => setIsActive("check-in")}
           >
-            {searchParams.get([QUERY_KEYS.checkin]) &&
-            searchParams.get([QUERY_KEYS.checkin]) !== "null" &&
-            searchParams.get([QUERY_KEYS.checkout]) &&
-            searchParams.get([QUERY_KEYS.checkout]) !== "null"
-              ? `${utilService.getDayAndMonthFromDate(
-                  searchParams.get([QUERY_KEYS.checkin])
-                )} - ${utilService.getDayAndMonthFromDate(
-                  searchParams.get([QUERY_KEYS.checkout])
-                )}`
-              : "Any week"}
+            {selectedRange.from ?
+              `${utilService.getDayAndMonthFromDate(selectedRange.from, selectedRange.to)}` :
+              "Any week"}
           </button>
           <span className="splitter"></span>
           <button
             type="button"
-            className={`guests-btn ${searchParams.get(QUERY_KEYS.adults) || searchParams.get(QUERY_KEYS.children) ? 'filled' : ''}`}
+            className={`guests-btn ${selectedGuests.adults || selectedGuests.children ? 'filled' : ''}`}
             onClick={() => setIsActive("guests")}
           >
-            {+searchParams.get([QUERY_KEYS.adults]) +
-              +searchParams?.get([QUERY_KEYS.children]) !==
-            0
-              ? `${
-                  +searchParams.get([QUERY_KEYS.adults]) +
-                  +searchParams?.get([QUERY_KEYS.children])
-                } guests`
-              : "Add guests"}
+            {selectedGuests.adults + selectedGuests.children !== 0 ? `${selectedGuests.adults + selectedGuests.children} guests` : "Add guests"}
           </button>
           <button type="button" className="search-btn">
             <IoSearch />
@@ -285,18 +287,16 @@ export function ExploreBar({ onExpandChange }) {
           >
             <form
               ref={expandedBarRef}
-              className={`explore-bar-preview expanded  ${
-                isExpanded ? "slideIn2" : "slideOut2"
-              }`}
+              className={`explore-bar-preview expanded  ${isExpanded ? "slideIn2" : "slideOut2"
+                }`}
               onSubmit={handleSubmit}
               style={{
                 backgroundColor: isActive === null ? "white" : "#ebebeb",
               }}
             >
               <article
-                className={`explore-bar location flex ${
-                  isActive === "location" ? "active" : ""
-                }`}
+                className={`explore-bar location flex ${isActive === "location" ? "active" : ""
+                  }`}
                 onClick={() => setIsActive("location")}
               >
                 <label htmlFor="location">Where</label>
@@ -446,20 +446,18 @@ export function ExploreBar({ onExpandChange }) {
               <span className="splitter"></span>
 
               <article
-                className={`explore-bar check-in ${
-                  isActive === "check-in" ? "active" : ""
-                }`}
+                className={`explore-bar check-in ${isActive === "check-in" ? "active" : ""
+                  }`}
                 onClick={() => setIsActive("check-in")}
               >
                 <div className="check-in-text flex">
                   Check in
                   <input
                     type="text"
-                    placeholder="Add dates"
+                    placeholder={selectedRange.from ? utilService.getDateString(selectedRange.from) : "Add dates"}
                     readOnly
                     value={
-                      formData.startDate
-                        ? `${formData.startDate.toLocaleDateString()}`
+                      selectedRange.from ? utilService.getDateString(selectedRange.from)
                         : ""
                     }
                   />
@@ -469,20 +467,18 @@ export function ExploreBar({ onExpandChange }) {
               <span className="splitter"></span>
 
               <article
-                className={`explore-bar check-out ${
-                  isActive === "check-out" ? "active" : ""
-                }`}
+                className={`explore-bar check-out ${isActive === "check-out" ? "active" : ""
+                  }`}
                 onClick={() => setIsActive("check-out")}
               >
                 <div className="check-out-text flex">
                   Check out
                   <input
                     type="text"
-                    placeholder="Add dates"
+                    placeholder={selectedRange.to ? utilService.getDateString(selectedRange.to) : "Add dates"}
                     readOnly
                     value={
-                      formData.endDate
-                        ? `${formData.endDate.toLocaleDateString()}`
+                      selectedRange.to ? utilService.getDateString(selectedRange.to)
                         : ""
                     }
                   />
@@ -509,34 +505,30 @@ export function ExploreBar({ onExpandChange }) {
               <span className="splitter"></span>
 
               <article
-                className={`explore-bar guests ${
-                  isActive === "guests" ? "active" : ""
-                }`}
+                className={`explore-bar guests ${isActive === "guests" ? "active" : ""
+                  }`}
                 onClick={() => setIsActive("guests")}
               >
                 <div className="guests-text flex">
                   Who
                   <input
-  type="text"
-  placeholder="Add guests"
-  className="guests-input"
-  value={
-    totalGuests === 0
-      ? "Add guests"
-      : `${selectedGuests.adults + selectedGuests.children} ${
-          selectedGuests.adults + selectedGuests.children === 1
-            ? "guest"
-            : "guests"
-        }${
-          selectedGuests.infants > 0
-            ? `, ${selectedGuests.infants} ${
-                selectedGuests.infants === 1 ? "infant" : "infants"
-              }`
-            : ""
-        }`
-  }
-  readOnly
-/>
+                    type="text"
+                    placeholder="Add guests"
+                    className="guests-input"
+                    value={
+                      totalGuests === 0
+                        ? "Add guests"
+                        : `${selectedGuests.adults + selectedGuests.children} ${selectedGuests.adults + selectedGuests.children === 1
+                          ? "guest"
+                          : "guests"
+                        }${selectedGuests.infants > 0
+                          ? `, ${selectedGuests.infants} ${selectedGuests.infants === 1 ? "infant" : "infants"
+                          }`
+                          : ""
+                        }`
+                    }
+                    readOnly
+                  />
 
                   {isActive === "guests" && (
                     <div className="guests-modal">
@@ -550,7 +542,7 @@ export function ExploreBar({ onExpandChange }) {
                         </div>
                         <div className="guests-action flex">
                           <button
-                            disabled={selectedGuests.adults === 0}
+                            disabled={selectedGuests.children || selectedGuests.infants ? selectedGuests.adults === 1 : selectedGuests.adults === 0}
                             type="button"
                             className="guests-modal-btn"
                             onClick={() => {
@@ -612,12 +604,20 @@ export function ExploreBar({ onExpandChange }) {
                             type="button"
                             className="guests-modal-btn"
                             onClick={() => {
+                              if (!selectedGuests.adults) {
+                                setSelectedGuests((prevState) => ({
+                                  ...prevState,
+                                  adults: prevState.adults + 1,
+                                  children: prevState.children + 1
+                                }));
+                                return
+                              }
                               setSelectedGuests((prevState) => ({
                                 ...prevState,
                                 children: prevState.children + 1,
                               }));
                             }}
-                            disabled={selectedGuests.children === 5}
+                            disabled={selectedGuests.children === 15}
                           >
                             <AiOutlinePlus />
                           </button>
@@ -652,6 +652,14 @@ export function ExploreBar({ onExpandChange }) {
                             type="button"
                             className="guests-modal-btn"
                             onClick={() => {
+                              if (!selectedGuests.adults) {
+                                setSelectedGuests((prevState) => ({
+                                  ...prevState,
+                                  adults: prevState.adults + 1,
+                                  infants: prevState.infants + 1
+                                }));
+                                return
+                              }
                               setSelectedGuests((prevState) => ({
                                 ...prevState,
                                 infants: prevState.infants + 1,
