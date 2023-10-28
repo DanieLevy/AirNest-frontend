@@ -1,13 +1,11 @@
-import { is } from "date-fns/locale"
-import { useEffect } from "react"
-import { useState } from "react"
+import { useEffect , useState} from "react"
 import Carousel from "react-multi-carousel"
 import "react-multi-carousel/lib/styles.css"
 import { stayService } from "../services/stay.service.local.js"
 
 export function LabelsCarousel({ onLabelClick }) {
-  const [isActive, setIsActive] = useState("OMG!")
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 768)
+  const [isActive, setIsActive] = useState("Countryside")
+  const [isMobile, setIsMobile] = useState(typeof window !== 'undefined' && window.innerWidth < 768)
   const labels = stayService.getCarouselLabels()
 
   useEffect(() => {
@@ -22,12 +20,9 @@ export function LabelsCarousel({ onLabelClick }) {
     };
   }, [])
   const itemCount = Math.max(10, labels.length);
-  console.log("🚀 ~ file: LabelsCarousel.jsx:25 ~ LabelsCarousel ~ labels.length:", labels.length)
-  console.log("🚀 ~ file: LabelsCarousel.jsx:25 ~ LabelsCarousel ~ itemCount:", itemCount)
 
   const responsive = {
     superLargeDesktop: {
-      // the naming can be any, depends on you.
       breakpoint: { max: 4000, min: 3000 },
       items: 18,
 
@@ -47,18 +42,18 @@ export function LabelsCarousel({ onLabelClick }) {
     },
   }
 
-  const item = (label) => {
-    return (
-      <div
-        className={`label ${isActive === label.name ? "active" : ""}`}
-        key={label}
-        onClick={() => handleClick(label)}
-      >
-        <img src={label.img} alt={label.name} />
-        <p>{label.name}</p>
-      </div>
-    )
-  }
+  // const item = (label) => {
+  //   return (
+  //     <div
+  //       className={`label ${isActive === label.name ? "active" : ""}`}
+  //       key={label}
+  //       onClick={() => handleClick(label)}
+  //     >
+  //       <img src={label.img} alt={label.name} />
+  //       <p>{label.name}</p>
+  //     </div>
+  //   )
+  // }
 
   function handleClick(label) {
     console.log("label:", label)
@@ -69,19 +64,30 @@ export function LabelsCarousel({ onLabelClick }) {
     <Carousel
       swipeable={isMobile ? true : false}
       draggable={isMobile ? true : false}
-      transitionDuration={1}
+      // transitionDuration={1}
       containerClass="carousel-container"
       responsive={responsive}
       dotListClass="custom-dot-list-style"
       itemClass="carousel-item"
       className="labels-carousel"
       centerMode={true}
-      infinite={true}
+      slidesToSlide={7}
+      // infinite={true}
       arrows={isMobile ? false : true}
       rewind={false}
       
     >
-      {labels.map((label) => item(label))}
+{labels.map(label => (
+    <div
+        className={`label ${isActive === label.name ? "active" : ""}`}
+        key={label.name} 
+        onClick={() => handleClick(label)}
+    >
+        <img src={label.img} alt={label.name} />
+        <p>{label.name}</p>
+    </div>
+))}
+
     </Carousel>
   )
 }
