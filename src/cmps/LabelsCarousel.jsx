@@ -1,16 +1,16 @@
-import { useEffect , useState} from "react"
-import Carousel from "react-multi-carousel"
-import "react-multi-carousel/lib/styles.css"
-import { stayService } from "../services/stay.service.local.js"
+import { useEffect, useState } from "react";
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
+import { stayService } from "../services/stay.service.local.js";
 
 export function LabelsCarousel({ onLabelClick }) {
-  const [isActive, setIsActive] = useState("Countryside")
-  const [isMobile, setIsMobile] = useState(typeof window !== 'undefined' && window.innerWidth < 768)
-  const labels = stayService.getCarouselLabels()
+  const [isActive, setIsActive] = useState("Countryside");
+  const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 0);
+  const labels = stayService.getCarouselLabels();
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
+      setWindowWidth(window.innerWidth);
     };
 
     window.addEventListener('resize', handleResize);
@@ -18,76 +18,55 @@ export function LabelsCarousel({ onLabelClick }) {
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-  }, [])
-  const itemCount = Math.max(10, labels.length);
+  }, []);
+
+  const getBreakpoint = () => {
+    if (windowWidth >= 3000) return "superLargeDesktop";
+    if (windowWidth >= 1024) return "desktop";
+    if (windowWidth >= 464) return "tablet";
+    return "mobile";
+  };
 
   const responsive = {
-    superLargeDesktop: {
-      breakpoint: { max: 4000, min: 3000 },
-      items: 18,
+    superLargeDesktop: { breakpoint: { max: 4000, min: 3000 }, items: 18 },
+    desktop: { breakpoint: { max: 3000, min: 1024 }, items: 19 },
+    tablet: { breakpoint: { max: 1024, min: 464 }, items: 10 },
+    mobile: { breakpoint: { max: 464, min: 0 }, items: 10 },
+  };
 
-    },
-    desktop: {
-      breakpoint: { max: 3000, min: 1024 },
-      items: 18,
+  const currentBreakpoint = getBreakpoint();
+  const visibleItems = responsive[currentBreakpoint].items;
+  const remainingLabels = labels.length % visibleItems;
 
-    },
-    tablet: {
-      breakpoint: { max: 1024, min: 464 },
-      items: itemCount,
-    },
-    mobile: {
-      breakpoint: { max: 464, min: 0 },
-      items: itemCount,
-    },
-  }
-
-  // const item = (label) => {
-  //   return (
-  //     <div
-  //       className={`label ${isActive === label.name ? "active" : ""}`}
-  //       key={label}
-  //       onClick={() => handleClick(label)}
-  //     >
-  //       <img src={label.img} alt={label.name} />
-  //       <p>{label.name}</p>
-  //     </div>
-  //   )
-  // }
-
-  function handleClick(label) {
-    console.log("label:", label)
-    setIsActive(label.name)
-  }
+  const handleClick = (label) => {
+    console.log("label:", label);
+    setIsActive(label.name);
+  };
 
   return (
     <Carousel
-      swipeable={isMobile ? true : false}
-      draggable={isMobile ? true : false}
-      // transitionDuration={1}
+      swipeable={windowWidth < 768}
+      draggable={windowWidth < 768}
       containerClass="carousel-container"
       responsive={responsive}
       dotListClass="custom-dot-list-style"
       itemClass="carousel-item"
       className="labels-carousel"
-      centerMode={true}
-      slidesToSlide={7}
-      // infinite={true}
-      arrows={isMobile ? false : true}
+      // centerMode={true}
+      slidesToSlide={remainingLabels > 0 ? remainingLabels : 7}
+      arrows={windowWidth >= 768}
       rewind={false}
-      
     >
-{labels.map(label => (
-    <div
-        className={`label ${isActive === label.name ? "active" : ""}`}
-        key={label.name} 
-        onClick={() => handleClick(label)}
-    >
-        <img src={label.img} alt={label.name} />
-        <p>{label.name}</p>
-    </div>
-))}
-
+      {labels.map((label) => (
+        <div
+          className={`label ${isActive === label.name ? "active" : ""}`}
+          key={label.name}
+          onClick={() => handleClick(label)}
+        >
+          <img src={label.img} alt={label.name} />
+          <p>{label.name}</p>
+        </div>
+      ))}
     </Carousel>
-  )
+  );
 }
