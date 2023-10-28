@@ -181,6 +181,29 @@ export function CheckoutForm({ onSubmit, price, reviews }) {
 
   const avgRate = calculateAverageRating(reviews);
 
+  const getGuestsPlaceholder = () => {
+    const { adults, children, infants, pets } = selectedGuests;
+    let placeholder = "Add guests";
+  
+    if (adults > 0) {
+      placeholder = `${adults} ${adults === 1 ? "guest" : "guests"}`;
+      if (children > 0) {
+        placeholder += `, ${children} ${children === 1 ? "child" : "children"}`;
+      }
+      if (infants > 0) {
+        placeholder += `, ${infants} ${infants === 1 ? "infant" : "infants"}`;
+      }
+      if (pets > 0) {
+        placeholder += `, ${pets} ${pets === 1 ? "pet" : "pets"}`;
+      }
+    } else {
+      placeholder = "Add guests";
+    }
+  
+    return placeholder;
+  };
+
+
   return (
     <React.Fragment>
       {isStayPage && !isMobile && (
@@ -200,6 +223,7 @@ export function CheckoutForm({ onSubmit, price, reviews }) {
                   onClick={(ev) => {
                     ev.stopPropagation();
                     setIsDatesModal(!isDatesModal);
+                    setIsGuestsModal(false);
                   }}
                 >
                   <div className="reservation-dates">
@@ -217,7 +241,7 @@ export function CheckoutForm({ onSubmit, price, reviews }) {
                     />
                   </div>
                   <div className="reservation-dates">
-                    <label className="reservation-dates-label">CHECK-OUT</label>
+                    <label className="reservation-dates-label">CHECKOUT</label>
                     <input
                       placeholder="Add date"
                       name="check-out"
@@ -264,31 +288,11 @@ export function CheckoutForm({ onSubmit, price, reviews }) {
                 >
                   <label className="reservation-guests-label">GUESTS</label>
                   <input
-                    placeholder={`${selectedGuests.adults} guests ${
-                      selectedGuests.children
-                        ? `, ${selectedGuests.children} children`
-                        : ""
-                    } ${
-                      selectedGuests.infants
-                        ? `, ${selectedGuests.infants} infants`
-                        : ""
-                    } ${
-                      selectedGuests.pets ? `, ${selectedGuests.pets} pets` : ""
-                    }`}
+                    placeholder={getGuestsPlaceholder()}
                     name="guests"
                     required
                     readOnly
-                    value={`${selectedGuests.adults} guests ${
-                      selectedGuests.children
-                        ? `, ${selectedGuests.children} children`
-                        : ""
-                    } ${
-                      selectedGuests.infants
-                        ? `, ${selectedGuests.infants} infants`
-                        : ""
-                    } ${
-                      selectedGuests.pets ? `, ${selectedGuests.pets} pets` : ""
-                    }`}
+                    value={getGuestsPlaceholder()}
                   />
                 </div>
               </div>

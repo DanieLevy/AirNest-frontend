@@ -59,7 +59,9 @@ export function StayReviews({ data }) {
         </div>
         <div className="reviews-list">
           {slicedReviews.map((review) => (
-            <li className="review flex" key={review.by.id}>
+            <li className="review flex" key={review.by.id}
+            style={{maxWidth: '80%'}}
+            >
               <div className="review-title flex">
                 <img src={review.by.imgUrl} alt="" />
                 <div className="reviewer-details flex">
@@ -104,7 +106,8 @@ export function StayReviews({ data }) {
             <div className="reviews-modal-list">
             <h1>Reviews</h1>
             {reviews.map((review) => (
-              <li className="review flex" key={review.by.id}>
+              <li className="review flex" key={review.by.id}
+              >
                 <div className="review-title flex">
                   <img src={review.by.imgUrl} alt="" />
                   <div className="reviewer-details flex">
