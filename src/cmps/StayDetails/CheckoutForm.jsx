@@ -12,7 +12,7 @@ import { useSearchParams } from "react-router-dom";
 import { useRef } from "react";
 import { QUERY_KEYS } from "../../services/util.service";
 
-export function CheckoutForm({ onSubmit, price, reviews }) {
+export function CheckoutForm({ onSubmit, price, reviews, capacity }) {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const [searchParams] = useSearchParams();
   const [isStayPage, setIsStayPage] = useState(
@@ -329,7 +329,7 @@ export function CheckoutForm({ onSubmit, price, reviews }) {
                             adults: selectedGuests.adults + 1,
                           })
                         }
-                        disabled={selectedGuests.adults === 16}
+                        disabled={selectedGuests.adults === 16 || selectedGuests.adults + selectedGuests.children === capacity}
                       >
                         <AiOutlinePlus />
                       </button>
@@ -368,7 +368,7 @@ export function CheckoutForm({ onSubmit, price, reviews }) {
                             children: selectedGuests.children + 1,
                           })
                         }
-                        disabled={selectedGuests.children === 5}
+                        disabled={selectedGuests.children === 16 || selectedGuests.adults + selectedGuests.children === capacity}
                       >
                         <AiOutlinePlus />
                       </button>
