@@ -52,8 +52,6 @@ export function StayDetails() {
     }
   }
   function handleCheckoutSubmit(formData) {
-    // console.log('🚀 ~ file: StayDetails.jsx:60 ~ handleCheckoutSubmit ~ formData:', formData)
-
     const orderDetails = {
       ...formData,
       stay: {
@@ -84,7 +82,7 @@ export function StayDetails() {
     bedrooms,
     beds,
     bathrooms,
-    room_type,
+    roomType,
     imgUrls,
     price,
     summary,
@@ -97,9 +95,13 @@ export function StayDetails() {
     likedByUsers,
   } = currStay
 
+  console.log('currStay', currStay);
+
   return (
     <section className={isMobile ? 'stay-details' : 'main-layout stayDetails stay-details'}>
-      <StayHeader name={name} imgUrls={imgUrls} />
+      <StayHeader name={name} imgUrls={imgUrls} loc={loc} host={host}
+      reviews={reviews} 
+       />
       <div className={isMobile ? 'main-layout small stay-details-desc' : 'stay-details-desc'}>
         <StayDescription
           type={type}
@@ -112,7 +114,7 @@ export function StayDetails() {
           beds={beds}
           bathrooms={bathrooms}
           capacity={capacity}
-          room_type={room_type}
+          roomType={roomType}
           name={name}
           amenities={amenities}
           onSubmit={handleCheckoutSubmit}

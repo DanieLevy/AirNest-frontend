@@ -24,6 +24,9 @@
       padding: 0 40px!important;
     }
     @include for-wide-layout {
+      padding: 0 80px!important;
+    }
+    @include for-extra-wide-layout {
       padding: 0 16vw!important;
     }
   }

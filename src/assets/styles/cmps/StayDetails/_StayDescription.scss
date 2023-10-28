@@ -4,6 +4,9 @@
   border-bottom: 1px solid rgb(221, 221, 221);
 
   .stay-details-preview {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     padding: 32px 0;
     border-bottom: 1px solid rgb(221, 221, 221);
 
@@ -22,31 +25,32 @@
       color: rgb(34, 34, 34);
     }
 
-    .stay-details-rating {
-      margin-top: 8px;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      color: rgb(34, 34, 34);
-      line-height: 20px;
+    & .stay-details-title {
 
-      .avg-rate {
-        font-size: 17px;
-        font-weight: 600;
+    }
+
+    & .user-img {
+      position: relative;
+      height: 56px;
+      width: 56px;
+      overflow: hidden;
+
+      img {
+        height: 100%;
+        width: 100%;
+        border-radius: 50%;
+        object-fit: cover;
       }
 
-      svg {
-        width: 16px;
-        height: 16px;
-      }
+      & .superhost-icon {
+        display: block;
+         height: 24px;
+          width: 24px;
 
-      a {
-        // font-family: cereal-light;
-        text-decoration: underline;
-        font-size: 16px;
-        color: rgb(34, 34, 34);
-        font-weight: 600;
-        line-height: 20px;
+          position: absolute;
+          bottom: 0;
+          right: -5px;
+          padding: 2px; /* Add padding to the icon for spacing */
       }
     }
   }

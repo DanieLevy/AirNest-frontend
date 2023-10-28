@@ -24,6 +24,13 @@
     }
 }
 
+@mixin for-extra-wide-layout {
+    @media (min-width: calc($extra-wide-breakpoint)) {
+        @content;
+    }
+
+}
+
 /* Media  Mixins */
 @mixin aspect-ratio($width, $height) {
     position: relative;

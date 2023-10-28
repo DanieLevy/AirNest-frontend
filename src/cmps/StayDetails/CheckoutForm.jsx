@@ -554,7 +554,13 @@ export function CheckoutForm({ onSubmit, price, reviews }) {
           </div>
         </div>
         <div className="checkout-header-order">
-          <div className="order-details">
+          <div className="order-details"
+                      style={
+                        !asideInViewport
+                          ? { opacity: "1", minWidth: "110px" }
+                          : { opacity: "0", minWidth: "0px" }
+                      }
+          >
             <div className="order-price">
               <span className="price">${price}</span>
               <span className="night"> night</span>
