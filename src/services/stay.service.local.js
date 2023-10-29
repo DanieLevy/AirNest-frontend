@@ -233,7 +233,7 @@ function _reviewDemoData() {
       by: {
         _id: 'u102',
         fullname: 'user2',
-        imgUrl: '/img/img2.jpg',
+        imgUrl: 'https://a0.muscache.com/im/pictures/user/e64c6384-8ee8-4896-a38f-586bfb360027.jpg?im_w=240',
       },
     },
     {
@@ -243,7 +243,7 @@ function _reviewDemoData() {
       by: {
         _id: 'u104',
         fullname: 'user3',
-        imgUrl: '/img/img3.jpg',
+        imgUrl: 'https://a0.muscache.com/im/pictures/user/03b37f8f-59eb-49e2-9744-de1c3dc1076f.jpg?im_w=240',
       },
     },
     {
@@ -253,7 +253,7 @@ function _reviewDemoData() {
       by: {
         _id: 'u106',
         fullname: 'user4',
-        imgUrl: '/img/img5.jpg',
+        imgUrl: 'https://a0.muscache.com/im/pictures/user/e95a58cc-949f-49c9-8bc3-0a24631af613.jpg?im_w=240',
       },
     },
     {
@@ -263,7 +263,7 @@ function _reviewDemoData() {
       by: {
         _id: 'u108',
         fullname: 'user5',
-        imgUrl: '/img/img7.jpg',
+        imgUrl: 'https://a0.muscache.com/im/pictures/user/2efcac84-368b-43c1-a408-0c92d23960d3.jpg?im_w=240',
       },
     },
     {
@@ -273,7 +273,7 @@ function _reviewDemoData() {
       by: {
         _id: 'u110',
         fullname: 'user6',
-        imgUrl: '/img/img4.jpg',
+        imgUrl: 'https://a0.muscache.com/im/pictures/user/8ed1ccb9-1f94-4e66-9309-e3ee03e449b7.jpg?im_w=240',
       },
     },
     {
@@ -283,7 +283,7 @@ function _reviewDemoData() {
       by: {
         _id: 'u112',
         fullname: 'user7',
-        imgUrl: '/img/img6.jpg',
+        imgUrl: 'https://a0.muscache.com/im/pictures/user/d7578fb4-9f5a-49aa-83d0-12124f39cc57.jpg?im_w=240',
       },
     },
   ]

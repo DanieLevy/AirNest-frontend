@@ -55,8 +55,7 @@
     font-size: 0.6rem;
   }
 
-  .location {
-    width: 240px;
+  & .location {
   }
 
   input[type="text"] {
@@ -302,6 +301,14 @@
     cursor: inherit;
     font-family: cereal-medium;
     padding: 5px 5px;
+  }
+
+  & .location {
+    min-width: 300px!important;
+  }
+
+  & .check-in, .check-out {
+    max-width: 130px!important;
   }
 
   .guests-btn {
