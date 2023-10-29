@@ -1,3 +1,6 @@
+$activeColor: $clr5;
+$hoverOpacity: 100%;
+
 .carousel-container {
     grid-column: 1;
     .carousel-item {
@@ -49,13 +52,13 @@
   
       img {
         box-sizing: border-box;
-        color: #717171;
-        font-size: 12px;
         height: 24px;
-        fill: #717171;
         opacity: 50%;
         transition: opacity 0.2s;
         object-fit: contain;
+      }
+      &.active img {
+        opacity: 100%;
       }
   
       p {
@@ -72,30 +75,37 @@
   .react-multi-carousel-track {
     max-height: inherit;
   
+
     li {
       display: flex;
-      padding: 4px 0 4px;
+      padding: 4px 0;
+  
+      &:nth-child(1) {
+        padding-left: 0;
+      }
+  
       &:hover {
-        .label {
-          border-bottom: 3px solid #222222;
-          color: #000;
+        .label:not(.active) {
+          border-bottom: 3px solid rgba($clr4, 0.5);
+          color: $clr4;
         }
-        img {
-          opacity: 100%;
+  
+        img:not(.active) {
+          opacity: $hoverOpacity;
         }
       }
   
-      .active {
-        border-bottom: 3px solid #222222;
-        color: #222222;
-        img {
-          opacity: 100%;
-        }
+      .label.active{
+        cursor: default; 
+        border-bottom: 3px solid $activeColor;
+        color: $activeColor;
+         & p {
+          font-family: cereal;
+         }
       }
-    }
   
-    li:nth-child(1) {
-      padding-left: 0;
+      img.active {
+        opacity: 100%;
+      }
     }
   }
-  
