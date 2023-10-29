@@ -4,11 +4,19 @@ import "react-multi-carousel/lib/styles.css";
 import { stayService } from "../services/stay.service.local.js";
 
 export function LabelsCarousel({ onLabelClick }) {
-  const [isActive, setIsActive] = useState("Countryside");
+  const [labels, setLabels] = useState([]);
+  const [isActive, setIsActive] = useState(null);
   const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 0);
-  const labels = stayService.getCarouselLabels();
+
 
   useEffect(() => {
+
+    const labelsFromService = stayService.getCarouselLabels();
+    setLabels(labelsFromService);
+    if (labelsFromService.length > 0) {
+      setIsActive(labelsFromService[0].name);
+    }
+
     const handleResize = () => {
       setWindowWidth(window.innerWidth);
     };
