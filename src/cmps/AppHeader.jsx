@@ -235,7 +235,7 @@ export function AppHeader() {
             )}
             {isMobile && <ExploreBar />}
           </section>
-          <div className={`helpme ${isExploreExpanded ? "a" : ""}`}></div>
+          <div className={`white-space ${isExploreExpanded ? "expanded" : ""}`}></div>
         </React.Fragment>
       ) : null}
 
