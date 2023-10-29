@@ -79,8 +79,11 @@ export function ListingList({ stays }) {
           {stays.map((stay, index) => (
             <React.Fragment key={index}>
               <tr key={index} className="listing-table-row">
-                <td className="listing-table-cell">
+                <td className="listing-table-cell cell-flex">
                   <img src={stay.imgUrls[0]} alt={stay.name} />
+                  <Link to={`/stay/${stay._id}`} className="listing-link">
+                    {stay.name}
+                  </Link>
                 </td>
                 <td className="listing-table-cell">
                   <Link to={`/edit/${stay._id}`} className="edit-link">

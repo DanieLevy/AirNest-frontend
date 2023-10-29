@@ -59,6 +59,26 @@
                     text-align: -webkit-center;
                     padding: 8px 0;
 
+                    &.cell-flex {
+                        display: flex;
+                        align-items: center;
+                        gap: 10px;
+
+                        a {
+                            font-family: cereal;
+                            color: #606266;
+                            text-decoration: none;
+                            cursor: pointer;
+                            font-weight: 600;
+                            font-size: 16px;
+                            transition: all 0.3s;
+                            &:hover {
+                                color: #409eff;
+                            }
+
+                        }
+                    }
+
                     img {
                         width: 100px;
                         border-radius: 5px;
