@@ -574,7 +574,7 @@ export function StayFilter() {
                   disabled={!resultLength}
                   
                 >
-                  {resultLength ? `show ${resultLength} places` : "No places"}
+                  {resultLength ? `Show ${resultLength} places` : "No places"}
                 </button>
               </div>
             </div>
