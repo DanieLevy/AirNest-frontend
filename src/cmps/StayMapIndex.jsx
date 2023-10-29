@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react"
-import GoogleMapReact from "google-map-react"
+import React, { useEffect, useState } from 'react'
+import GoogleMapReact from 'google-map-react'
 
-import { FaMapMarkerAlt } from "react-icons/fa"
-import { id } from "date-fns/locale"
-import { useNavigate } from "react-router-dom"
+import { FaMapMarkerAlt } from 'react-icons/fa'
+import { id } from 'date-fns/locale'
+import { useNavigate } from 'react-router-dom'
 
 export function StayMapIndex({ stays }) {
   const [tinyModal, setTinyModal] = useState(false)
@@ -12,13 +12,13 @@ export function StayMapIndex({ stays }) {
 
   useEffect(() => {
     const closeModal = (ev) => {
-      if (ev.target.classList.contains("tiny-modal")) {
+      if (ev.target.classList.contains('tiny-modal')) {
         setTinyModal(null)
       }
     }
-    window.addEventListener("click", closeModal)
+    window.addEventListener('click', closeModal)
     return () => {
-      window.removeEventListener("click", closeModal)
+      window.removeEventListener('click', closeModal)
     }
   }, [tinyModal])
 
@@ -37,8 +37,8 @@ export function StayMapIndex({ stays }) {
 
   const Marker = ({ id, price }) => {
     return (
-      <div className="price-label">
-        <div className="marker-icon" onClick={() => handleClick(id)}>
+      <div className='price-label'>
+        <div className='marker-icon' onClick={() => handleClick(id)}>
           ${price}
         </div>
       </div>
@@ -47,7 +47,7 @@ export function StayMapIndex({ stays }) {
 
   const markers = stays.map((stay) => {
     return (
-      <Marker 
+      <Marker
         key={stay._id}
         lat={stay.loc.lat}
         lng={stay.loc.lng}
@@ -59,32 +59,32 @@ export function StayMapIndex({ stays }) {
   })
 
   return (
-    <div className="map-container">
+    <div className='map-container'>
       <GoogleMapReact
-        bootstrapURLKeys={{ key: "AIzaSyCF6YSAF__0aiqIrTE2ZClywS74stbpWuE" }}
+        bootstrapURLKeys={{ key: 'AIzaSyCF6YSAF__0aiqIrTE2ZClywS74stbpWuE' }}
         defaultCenter={center}
         defaultZoom={zoom}
       >
         {markers}
 
         {tinyModal && selectedStay && (
-          <div className="tiny-modal">
-            <div className="tiny-modal-content">
-              <div className="tiny-modal-header">
-                <img src={selectedStay.imgUrls[0]} alt="stay" />
+          <div className='tiny-modal'>
+            <div className='tiny-modal-content'>
+              <div className='tiny-modal-header'>
+                <img src={selectedStay.imgUrls[0]} alt='stay' />
                 <button onClick={() => setTinyModal(null)}>&times;</button>
               </div>
               <div
-                className="tiny-modal-body"
+                className='tiny-modal-body'
                 onClick={() => navigate(`/stay/${selectedStay._id}`)}
               >
-                <div className="tiny-modal-title">
+                <div className='tiny-modal-title'>
                   {selectedStay.loc.city}, {selectedStay.loc.country}
                 </div>
-                <div className="tiny-modal-subtitle">
+                <div className='tiny-modal-subtitle'>
                   ${selectedStay.price}
-                  <span className="per-night"> night · </span>
-                  <span className="dates">Nov 10-15</span>
+                  <span className='per-night'> night · </span>
+                  <span className='dates'>Nov 10-15</span>
                 </div>
               </div>
             </div>

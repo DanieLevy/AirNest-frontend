@@ -19,7 +19,7 @@ export function StayDetails() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
-  const [searchParams] = useSearchParams();
+  const [searchParams] = useSearchParams()
 
   const isLoading = useSelector((state) => state.systemModule.isLoading)
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768)
@@ -39,7 +39,6 @@ export function StayDetails() {
       window.removeEventListener('resize', handleResize)
     }
   }, [stayId])
-
 
   async function loadStay() {
     try {
@@ -95,13 +94,11 @@ export function StayDetails() {
     likedByUsers,
   } = currStay
 
-  console.log('currStay', currStay);
+  console.log('currStay', currStay)
 
   return (
     <section className={isMobile ? 'stay-details' : 'main-layout stayDetails stay-details'}>
-      <StayHeader name={name} imgUrls={imgUrls} loc={loc} host={host}
-      reviews={reviews} 
-       />
+      <StayHeader name={name} imgUrls={imgUrls} loc={loc} host={host} reviews={reviews} />
       <div className={isMobile ? 'main-layout small stay-details-desc' : 'stay-details-desc'}>
         <StayDescription
           type={type}
