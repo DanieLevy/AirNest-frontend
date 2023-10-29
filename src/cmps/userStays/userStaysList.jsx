@@ -73,6 +73,7 @@ export function ListingList({ stays }) {
             <th className="listing-table-header-cell">BEDROOMS</th>
             <th className="listing-table-header-cell">PRICE</th>
             <th className="listing-table-header-cell">LOCATION</th>
+            <th className="listing-table-header-cell">DATE ADDED</th>
           </tr>
         </thead>
         <tbody className="listing-table-body">
@@ -98,6 +99,9 @@ export function ListingList({ stays }) {
                 <td className="listing-table-cell">${stay.price.toFixed(2)}</td>
                 <td className="listing-table-cell">
                   {stay.loc.formatedAddress}
+                </td>
+                <td className="listing-table-cell">
+                  {new Date(stay.createdAt).toLocaleDateString()}
                 </td>
               </tr>
             </React.Fragment>

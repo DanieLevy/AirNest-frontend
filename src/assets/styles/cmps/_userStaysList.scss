@@ -17,7 +17,7 @@
                     display: table-cell;
                     font-family: cereal;
                     text-align: center;
-                    min-width: 130px;
+                    // min-width: 130px;
                     color: rgb(144, 147, 153);
                     font-size: 14px;
                     font-weight: 600;
@@ -32,9 +32,13 @@
                     cursor: default;
                 }
 
+                & .listing-table-header-cell:last-child {
+                    text-align: right;
+                }
+
                 & .listing-table-header-cell:nth-child(1) {
                     text-align: left;
-                    min-width: 200px;
+                    min-width: 150px;
                 }
             }
         }
@@ -48,6 +52,10 @@
                 & .listing-table-cell:nth-child(1) {
                     display: table-cell;
                     text-align-last: start;
+                }
+
+                & .listing-table-cell:last-child {
+                    text-align: right;
                 }
 
                 & .listing-table-cell {
