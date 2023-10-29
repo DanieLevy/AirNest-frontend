@@ -366,13 +366,14 @@ export function StayFilter() {
                     handleStyle={{
                       backgroundColor: "white",
                       border: "none",
-                      backgroundColor: "#ff385c",
+                      backgroundColor: "#fff",
+
                       opacity: "1",
-                      outline: "none",
-                      boxShadow: "0 0 6px rgb(0 0 0 / 16%)",
-                      width: "20px",
-                      height: "20px",
-                      marginTop: "-9px",
+                      outline: "rgb(219 219 219) solid 1px",
+                      boxShadow: "rgba(0, 0, 0, 0.16) 0px 0px 20px 2px",
+                      width: "32px",
+                      height: "32px",
+                      marginTop: "-16px",
                     }}
                     railStyle={{ backgroundColor: "#e4e4e4", height: "2px" }}
                     onChange={onSliderChange}
