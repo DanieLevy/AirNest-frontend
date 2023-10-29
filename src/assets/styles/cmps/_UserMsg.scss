@@ -2,70 +2,70 @@ h3 {
     font-family: cereal-light;
     font-size: 1em;
 }
+
 .alert {
     display: flex;
     justify-content: space-between;
     align-items: center;
-
-    width: 30%;
+    max-width: 100%;
+    min-height: 50px;
     padding: 15px 10px;
     position: fixed;
-    top: 110px;
-    transform: translateX(-50%);
-    left: 50%;
+    bottom: 5vh;
+    left: 3vw;
     border-radius: 5px;
-    box-shadow: 0 0 15px 5px #ccc;
     z-index: 100;
-    animation:
-        slideIn 0.5s forwards,
-        slideOut 0.5s forwards 2.5s;
+    background-color: #ffffff;
+    box-shadow: 0 0 10px 0 #0000001a;
+
     transition: all 0.5s ease-in-out;
-}
-.close {
-    width: 30px;
-    height: 30px;
-    opacity: 0.5;
-    border-width: 1px;
-    border-style: solid;
-    border-radius: 50%;
-    text-align: center;
-    font-size: 1.6em;
-    cursor: pointer;
-    background-color: transparent;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-@mixin alert($name, $bgColor) {
-    $accentColor: darken($bgColor, 30);
-    $accentColor2: darken($bgColor, 80);
-    .#{$name} {
-        background-color: #{$bgColor};
-        border-left: 5px solid $accentColor;
-        .close {
-            border-color: $accentColor2;
-            color: $accentColor2;
+
+    & .alert-text {
+        font-size: 1em;
+        font-family: cereal-light;
+        font-weight: 400;
+        color: #222222a3;
+    }
+
+    & .icon {
+        span {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 5px;
+            border-radius: 50%;
+            background-color: #ffffff;
+            box-shadow: 0 0 10px 0 #0000001a;
+            margin-right: 10px;
+            &.success {
+                color: #ffffff;
+                background-color: #00c853cb;
+            }
+            &.error {
+                color: #ffffff;
+                background-color: #f30000c3;
+            }
         }
     }
-}
-@include alert(alert, #ebebeb);
-@include alert(success, #a8f0c6);
-@include alert(error, #f7a7a3);
 
-@keyframes slideIn {
-    from {
-        transform: translateX(-50%) translateY(-100%);
-    }
-    to {
-        transform: translateX(-50%) translateY(0) scale(1);
-    }
-}
+    & .close {
+        opacity: 0.5;
+        font-size: 1.6em;
+        cursor: pointer;
+        background-color: transparent;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0;
 
-@keyframes slideOut {
-    from {
-        transform: translateX(-50%) translateY(0);
-    }
-    to {
-        transform: translateX(-50%) translateY(-250px);
+        span {
+            display: flex;
+            align-items: center;
+
+            svg {
+                width: 20px;
+                height: 20px;
+            }
+        }
     }
 }

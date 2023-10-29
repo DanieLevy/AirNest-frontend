@@ -131,6 +131,7 @@ export function StayPreview({ stay }) {
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min;
   };
+  
   const getRandomDateRange = () => {
     const months = [
       "Jan",

@@ -4,6 +4,7 @@ import {
   socketService,
   SOCKET_EVENT_REVIEW_ABOUT_YOU,
 } from "../services/socket.service.js";
+import { IoCheckmark, IoClose, IoCloseOutline } from "react-icons/io5";
 
 export function UserMsg() {
   const [msg, setMsg] = useState(null);
@@ -33,11 +34,25 @@ export function UserMsg() {
   if (!msg) return <span></span>;
   return (
     <div className={`alert ${msg.type}`}>
+      <div className={`icon`}>
+        {msg.type === "success" && (
+          <span className={`${msg.type}`}>
+            <IoCheckmark />
+          </span>
+        )}
+        {msg.type === "error" && (
+          <span className={`${msg.type}`}>
+            <IoClose />
+          </span>
+        )}
+      </div>
       <div>
-        <h3>{msg.txt}</h3>
+        <h3 className="alert-text">{msg.txt}</h3>
       </div>
       <button className="close" onClick={closeMsg}>
-        <span>&times;</span>
+        <span>
+          <IoCloseOutline />
+        </span>
       </button>
     </div>
   );
