@@ -319,7 +319,7 @@ export function ExploreBar({ onExpandChange }) {
                           <CiLocationArrow1 />
                         </div>
                         <span className="location-list-text">
-                          Barcelona, Spain
+                          Spain, Madrid
                         </span>
                       </li>
                       <li
@@ -330,7 +330,7 @@ export function ExploreBar({ onExpandChange }) {
                           <CiLocationArrow1 />
                         </div>
                         <span className="location-list-text">
-                          Mauntain View, CA
+                          Portugal, Lisbon
                         </span>
                       </li>
                       <li
@@ -341,7 +341,7 @@ export function ExploreBar({ onExpandChange }) {
                           <CiLocationArrow1 />
                         </div>
                         <span className="location-list-text">
-                          New York, United States
+                          Turkey, Ankara
                         </span>
                       </li>
                       <li
@@ -352,7 +352,7 @@ export function ExploreBar({ onExpandChange }) {
                           <CiLocationArrow1 />
                         </div>
                         <span className="location-list-text">
-                          London, United Kingdom
+                          Australia ,Canberra
                         </span>
                       </li>
                       <li
@@ -363,7 +363,7 @@ export function ExploreBar({ onExpandChange }) {
                           <CiLocationArrow1 />
                         </div>
                         <span className="location-list-text">
-                          Paris, France
+                          Canada ,Ottawa
                         </span>
                       </li>
                       <li
@@ -373,7 +373,7 @@ export function ExploreBar({ onExpandChange }) {
                         <div className="location-list-icon">
                           <CiLocationArrow1 />
                         </div>
-                        <span className="location-list-text">Rome, Italy</span>
+                        <span className="location-list-text">United States</span>
                       </li>
                       <li
                         className="location-list-item"
@@ -382,7 +382,7 @@ export function ExploreBar({ onExpandChange }) {
                         <div className="location-list-icon">
                           <CiLocationArrow1 />
                         </div>
-                        <span className="location-list-text">Tokyo, Japan</span>
+                        <span className="location-list-text">Hong Kong</span>
                       </li>
                     </ul>
                     <section className="location-region">
