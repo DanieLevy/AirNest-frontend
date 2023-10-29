@@ -60,7 +60,7 @@ export function LabelsCarousel({ onLabelClick }) {
       dotListClass="custom-dot-list-style"
       itemClass="carousel-item"
       className="labels-carousel"
-      // centerMode={true}
+      centerMode={true}
       slidesToSlide={remainingLabels > 0 ? remainingLabels : 7}
       arrows={windowWidth >= 768}
       rewind={false}
