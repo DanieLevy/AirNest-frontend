@@ -1,6 +1,10 @@
-import { eventBus, showSuccessMsg } from '../services/event-bus.service.js'
-import { useState, useEffect, useRef } from 'react'
-import { socketService, SOCKET_EVENT_REVIEW_ABOUT_YOU } from '../services/socket.service.js'
+import { eventBus, showSuccessMsg } from "../services/event-bus.service.js";
+import { useState, useEffect, useRef } from "react";
+import {
+  socketService,
+  SOCKET_EVENT_REVIEW_ABOUT_YOU,
+} from "../services/socket.service.js";
+import { IoCheckmark, IoClose, IoCloseOutline } from "react-icons/io5";
 
 export function UserMsg() {
   const [msg, setMsg] = useState(null)
@@ -30,11 +34,25 @@ export function UserMsg() {
   if (!msg) return <span></span>
   return (
     <div className={`alert ${msg.type}`}>
-      <div>
-        <h3>{msg.txt}</h3>
+      <div className={`icon`}>
+        {msg.type === "success" && (
+          <span className={`${msg.type}`}>
+            <IoCheckmark />
+          </span>
+        )}
+        {msg.type === "error" && (
+          <span className={`${msg.type}`}>
+            <IoClose />
+          </span>
+        )}
       </div>
-      <button className='close' onClick={closeMsg}>
-        <span>&times;</span>
+      <div>
+        <h3 className="alert-text">{msg.txt}</h3>
+      </div>
+      <button className="close" onClick={closeMsg}>
+        <span>
+          <IoCloseOutline />
+        </span>
       </button>
     </div>
   )
