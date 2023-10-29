@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { addOrder, getActionClearStagedOrder } from '../store/actions/order.actions'
 import { showErrorMsg } from '../services/event-bus.service'
 import { Link, useNavigate } from 'react-router-dom'
-import { userService } from '../services/user.service'
+
 import { PiArrowLeft } from 'react-icons/pi'
 import { BrandedBtn } from '../cmps/BrandedBtn'
 import { AiFillStar } from 'react-icons/ai'
@@ -17,9 +17,6 @@ export function OrderConfirm() {
 
   const navigate = useNavigate()
 
-  // const loggedUser = userService.getLoggedinUser()
-
-  console.log('stagedOrder:', stagedOrder)
   const reviews = stagedOrder.stay.reviews
 
   const sumOfRatings = reviews.reduce((acc, review) => {
@@ -176,13 +173,4 @@ export function OrderConfirm() {
       </div>
     </section>
   )
-}
-
-{
-  /* <p>
-  Start Date: {new Date(stagedOrder.checkIn).toLocaleDateString()}
-</p>
-<p>End Date: {new Date(stagedOrder.checkOut).toLocaleDateString()}</p>
-<p>Adults: {stagedOrder.guests.adults}</p>
-<p>Children: {stagedOrder.guests.children}</p> */
 }
