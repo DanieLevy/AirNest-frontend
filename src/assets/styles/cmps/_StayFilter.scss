@@ -264,6 +264,42 @@
                         gap: 16px 16px;
                         padding: 12px 0;
 
+                        & .input-container {
+                            display: flex;  
+                            align-items: center;
+                            gap: 8px;
+
+                            & .input-icon {
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                width: 24px;
+                                height: 24px;
+                                cursor: pointer;
+                                vertical-align: top;
+                                overflow: hidden;
+                                border-width: 1px;
+                                border-style: solid;
+                                text-align: center;
+                                border-radius: 4px;
+                                border-color: #b0b0b0;
+                                transition: border-color 0.2s ease-in-out;
+
+                                svg {
+                                    // white fill
+                                    fill: #ffffff;
+                                    stroke: #ffffff;
+                                    stroke-width: 1px;
+                                    color: #ffffff;
+                                }
+                                &.selected {
+                                    background-color: #222222;
+                                    border-color: #222222;
+
+                                }
+                            }
+                        }
+
                         label {
                             font-size: 18px;
                             font-weight: 400;
@@ -284,6 +320,7 @@
                             border-radius: 4px;
                             border-color: #b0b0b0;
                             transition: border-color 0.2s ease-in-out;
+                            width: 0px;
                         }
                     }
                 }
@@ -342,6 +379,14 @@
                     font-size: 16px;
                     font-weight: 600;
                     color: #ffffff;
+
+                    // disabled
+                }
+
+                & .filter-modal-btn:disabled {
+                    background: #f7f7f7;
+                    color: #b0b0b0;
+                    cursor: not-allowed;
                 }
             }
         }
