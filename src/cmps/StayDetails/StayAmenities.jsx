@@ -458,6 +458,55 @@ export function StayAmenities({ data }) {
 
     return false
   }
+  function renderAmenitiesSection(category) {
+    const hasAmenitiesForCategory = category.amenities.some(checkIfAmenitiesExist)
+
+    if (!hasAmenitiesForCategory) return null
+
+    return (
+      <section className='amenities-section' key={category.title}>
+        <div className='amenities-section-title'>{category.title}</div>
+        <div className='amenities-section-list'>
+          {category.amenities.map((amenity) => {
+            if (checkIfAmenitiesExist(amenity)) {
+              return (
+                <div className='amenity' key={amenity}>
+                  <div className='amenity-icon'>{formatSVG(amenities[amenity].svg)}</div>
+                  <div className='amenity-name has'>{amenities[amenity].title}</div>
+                </div>
+              )
+            }
+            return null
+          })}
+        </div>
+      </section>
+    )
+  }
+
+  function renderNotIncludedAmenities(category) {
+    return category.amenities.map((amenity) => {
+      if (!checkIfAmenitiesExist(amenity)) {
+        return (
+          <div className='amenity' key={amenity}>
+            <div className='amenity-icon'>{formatSVG(amenities[amenity].svg)}</div>
+            <div className='amenity-name'>{amenities[amenity].title}</div>
+          </div>
+        )
+      }
+      return null
+    })
+  }
+  function sortAmenities(amenitiesList) {
+    return amenitiesList.sort((a, b) => {
+      if (checkIfAmenitiesExist(a.title) && !checkIfAmenitiesExist(b.title)) {
+        return -1
+      }
+      if (!checkIfAmenitiesExist(a.title) && checkIfAmenitiesExist(b.title)) {
+        return 1
+      }
+      return 0
+    })
+  }
 
   return (
     <React.Fragment>
@@ -466,20 +515,18 @@ export function StayAmenities({ data }) {
           <div>What this place offers</div>
         </div>
         <div className='stay-amenities-list'>
-          {amenitiesToShow.map((amenity, idx) => {
-            return (
-              <div className='amenity' key={idx}>
-                <div className='amenity-icon'>{formatSVG(amenity.svg)}</div>
-                <div
-                  className={
-                    checkIfAmenitiesExist(amenity.title) ? 'amenity-name has' : 'amenity-name'
-                  }
-                >
-                  {amenity.title}
-                </div>
+          {sortAmenities(amenitiesToShow).map((amenity, idx) => (
+            <div className='amenity' key={idx}>
+              <div className='amenity-icon'>{formatSVG(amenity.svg)}</div>
+              <div
+                className={
+                  checkIfAmenitiesExist(amenity.title) ? 'amenity-name has' : 'amenity-name'
+                }
+              >
+                {amenity.title}
               </div>
-            )
-          })}
+            </div>
+          ))}
         </div>
         <div
           className='show-all-reviews'
@@ -489,7 +536,6 @@ export function StayAmenities({ data }) {
         >
           Show all {amenitiesArray.length} amenities
         </div>
-
         {showAllAmenities && (
           <div className='reviews-modal-container amenities'>
             <div className='reviews-modal'>
@@ -513,44 +559,13 @@ export function StayAmenities({ data }) {
               <div className='reviews-modal-list'>
                 <h1>What this place offers</h1>
 
-                {/* Included Amenities */}
-                {amenitiesCategories.map((category) => (
-                  <section className='amenities-section' key={category.title}>
-                    <div className='amenities-section-title'>{category.title}</div>
-                    <div className='amenities-section-list'>
-                      {category.amenities.map((amenity) => {
-                        if (amenities[amenity] && checkIfAmenitiesExist(amenity)) {
-                          return (
-                            <div className='amenity' key={amenity}>
-                              <div className='amenity-icon'>
-                                {formatSVG(amenities[amenity].svg)}
-                              </div>
-                              <div className='amenity-name has'>{amenities[amenity].title}</div>
-                            </div>
-                          )
-                        }
-                      })}
-                    </div>
-                  </section>
-                ))}
+                {amenitiesCategories.map(renderAmenitiesSection)}
 
-                {/* Not Included Amenities */}
                 <div className='amenities-section-title'>Not Included</div>
                 {amenitiesCategories.map((category) => (
-                  <section className='amenities-section' key={category.title}>
+                  <section className='amenities-section' key={category.title + '-not-included'}>
                     <div className='amenities-section-list'>
-                      {category.amenities.map((amenity) => {
-                        if (amenities[amenity] && !checkIfAmenitiesExist(amenity)) {
-                          return (
-                            <div className='amenity' key={amenity}>
-                              <div className='amenity-icon'>
-                                {formatSVG(amenities[amenity].svg)}
-                              </div>
-                              <div className='amenity-name'>{amenities[amenity].title}</div>
-                            </div>
-                          )
-                        }
-                      })}
+                      {renderNotIncludedAmenities(category)}
                     </div>
                   </section>
                 ))}
@@ -562,114 +577,3 @@ export function StayAmenities({ data }) {
     </React.Fragment>
   )
 }
-
-// (
-//   <React.Fragment>
-//     <div className="stay-amenities">
-//       <div className="stay-amenities-title">
-//         <div>What this place offers</div>
-//       </div>
-//       <div className="stay-amenities-list">
-//         {amenitiesToShow.map((amenity, idx) => {
-//           return (
-//             <div className="amenity" key={idx}>
-//               <div className="amenity-icon">{formatSVG(amenity.svg)}</div>
-//               <div
-//                 className={
-//                   checkIfAmenitiesExist(amenity.title)
-//                     ? "amenity-name has"
-//                     : "amenity-name"
-//                 }
-//               >
-//                 {amenity.title}
-//               </div>
-//             </div>
-//           );
-//         })}
-//       </div>
-//       <div
-//         className="show-all-reviews"
-//         onClick={() => {
-//           setShowAllAmenities(!showAllAmenities);
-//         }}
-//       >
-//         Show all {amenitiesArray.length} amenities
-//       </div>
-
-//       {showAllAmenities && (
-//         <div className="reviews-modal-container amenities">
-//           <div className="reviews-modal">
-//           <button
-//                 className='close-modal-btn'
-//                 onClick={() => {
-//                   setShowAllAmenities(false)
-//                 }}
-//               >
-//                 <svg
-//                   xmlns='http://www.w3.org/2000/svg'
-//                   viewBox='0 0 32 32'
-//                   aria-hidden='true'
-//                   role='presentation'
-//                   focusable='false'
-//                 >
-//                   <path d='m6 6 20 20M26 6 6 26'></path>
-//                 </svg>
-//               </button>
-
-//             <div className="reviews-modal-list">
-//               <h1>What this place offers</h1>
-
-//               {/* Included Amenities */}
-//               {amenitiesCategories.map((category) => (
-//                 <section className="amenities-section" key={category.title}>
-//                   <div className="amenities-section-title">
-//                     {category.title}
-//                   </div>
-//                   <div className="amenities-section-list">
-//                     {category.amenities.map((amenity) => {
-//                       if (amenities[amenity] && checkIfAmenitiesExist(amenity)) {
-//                         return (
-//                           <div className="amenity" key={amenity}>
-//                             <div className="amenity-icon">
-//                               {formatSVG(amenities[amenity].svg)}
-//                             </div>
-//                             <div className="amenity-name has">
-//                               {amenities[amenity].title}
-//                             </div>
-//                           </div>
-//                         );
-//                       }
-//                     })}
-//                   </div>
-//                 </section>
-//               ))}
-
-//               {/* Not Included Amenities */}
-//               <div className="amenities-section-title">Not Included</div>
-//               {amenitiesCategories.map((category) => (
-//                 <section className="amenities-section" key={category.title}>
-//                   <div className="amenities-section-list">
-//                     {category.amenities.map((amenity) => {
-//                       if (amenities[amenity] && !checkIfAmenitiesExist(amenity)) {
-//                         return (
-//                           <div className="amenity" key={amenity}>
-//                             <div className="amenity-icon">
-//                               {formatSVG(amenities[amenity].svg)}
-//                             </div>
-//                             <div className="amenity-name">
-//                               {amenities[amenity].title}
-//                             </div>
-//                           </div>
-//                         );
-//                       }
-//                     })}
-//                   </div>
-//                 </section>
-//               ))}
-//             </div>
-//           </div>
-//         </div>
-//       )}
-//     </div>
-//   </React.Fragment>
-// );
