@@ -67,7 +67,13 @@ export function StayEdit() {
   function handleInputChange(e) {
     let { name, value } = e.target
 
-    if (name === 'price' || name === 'capacity' || name === 'bedrooms' || name === 'beds' || name === 'bathrooms') {
+    if (
+      name === 'price' ||
+      name === 'capacity' ||
+      name === 'bedrooms' ||
+      name === 'beds' ||
+      name === 'bathrooms'
+    ) {
       setStay({ ...stay, [name]: parseFloat(value) })
       console.log(stay)
       return

@@ -1,7 +1,7 @@
-import React, { useState } from "react"
-import { format } from "date-fns"
-import { DayPicker } from "react-day-picker"
-import "react-day-picker/dist/style.css"
+import React, { useState } from 'react'
+import { format } from 'date-fns'
+import { DayPicker } from 'react-day-picker'
+import 'react-day-picker/dist/style.css'
 
 export function DatesModal({ onSetDates }) {
   const [datesOpen, setDatesOpen] = useState(true)
@@ -26,10 +26,5 @@ export function DatesModal({ onSetDates }) {
     }
   }
 
-  return (
-<h1 className="dateos-modal">
-  dd </h1>
-  
-  )
+  return <h1 className='dateos-modal'>dd </h1>
 }
-

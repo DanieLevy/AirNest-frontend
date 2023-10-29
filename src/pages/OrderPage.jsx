@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { orderService } from '../services/order.service'
 import { useDispatch, useSelector } from 'react-redux'
-import { addOrder, getActionAddOrder, getActionClearStagedOrder, loadOrders } from '../store/actions/order.actions'
+import {
+  addOrder,
+  getActionAddOrder,
+  getActionClearStagedOrder,
+  loadOrders,
+} from '../store/actions/order.actions'
 import { showErrorMsg } from '../services/event-bus.service'
 
 export function OrderPage() {
@@ -41,7 +46,11 @@ export function OrderPage() {
       <p>Adults: {stagedOrder.adults}</p>
       <p>Children: {stagedOrder.children}</p>
 
-      {!isConfirmed ? <button onClick={handleConfirmOrder}>Confirm Order</button> : <div>Order Confirmed!</div>}
+      {!isConfirmed ? (
+        <button onClick={handleConfirmOrder}>Confirm Order</button>
+      ) : (
+        <div>Order Confirmed!</div>
+      )}
     </div>
   )
 }
