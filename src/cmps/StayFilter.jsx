@@ -37,6 +37,8 @@ export function StayFilter() {
   const [selectedBathrooms, setSelectedBathrooms] = useState("Any");
   const [selectedAmmenties, setSelectedAmmenties] = useState([]);
   const [resultLength, setResultLength] = useState(stays.length);
+  const [barHeights, setBarHeights] = useState([]);
+  const [barHeight, setBarHeight] = useState(0);
 
   const amenities = [
     {
@@ -227,6 +229,8 @@ export function StayFilter() {
   function onSliderChange(value) {
     setMinPrice(value[0]);
     setMaxPrice(value[1]);
+
+    // renderBars();
   }
 
   async function showResultLength() {
@@ -278,9 +282,51 @@ export function StayFilter() {
   }
 
   const numBars = 50;
-  const priceBucketSize = (maxPrice - minPrice) / numBars;
-  const barHeightPerStay = 6;
-  
+  const priceBucketSize = (1500 - 0) / numBars;
+  const barHeightPerStay = 10;
+  const staysCopy = [...stays];
+  const staysPrices = staysCopy.map((stay) => stay.price);
+
+  function renderBars() {
+    const bars = [];
+
+    for (let i = 0; i < numBars; i++) {
+      const min = i * priceBucketSize;
+      const max = (i + 1) * priceBucketSize;
+      const inRange = min >= minPrice && max <= maxPrice;
+      if (!staysPrices.some((price) => price >= min && price <= max)) {
+        bars.push(
+          <div
+            key={i}
+            className={`bar ${inRange ? "in-range" : "out-of-range"}`}
+            style={{ height: `${6}px` }}
+          ></div>
+        );
+        continue;
+      }
+
+      // const barHeight = inRange
+      //   ? barHeightPerStay *
+      //     staysPrices.filter((price) => price >= min && price <= max).length
+      //   : (barHeightPerStay *
+      //       staysPrices.filter((price) => price >= min && price <= max)
+      //         .length) /
+      //     10;
+
+      const height = barHeightPerStay * staysPrices.filter((price) => price >= min && price <= max).length;
+      const barHeight = Math.min(height, 108);
+
+      bars.push(
+        <div
+          key={i}
+          className={`bar ${inRange ? "in-range" : "out-of-range"}`}
+          style={{ height: `${barHeight}px` }}
+        ></div>
+      );
+    }
+
+    return bars;
+  }
 
   return (
     <React.Fragment>
@@ -360,38 +406,7 @@ export function StayFilter() {
               <div className="price-range">
                 <div className="price-range-title">Price range</div>
                 <div className="price-range-slider-container">
-                  <div className="price-range-bars">
-                    {Array(numBars)
-                      .fill()
-                      .map((_, i) => {
-                        const min = i * priceBucketSize + minPrice;
-                        const max = (i + 1) * priceBucketSize + minPrice;
-
-                        const staysInRange = stays.filter((stay) => {
-                          return stay.price >= min && stay.price < max;
-                        });
-
-                        if (staysInRange.length === 0) {
-                          return (
-                            <div
-                              className="bar"
-                              style={{ height: barHeightPerStay }}
-                              key={i}
-                            ></div>
-                          );
-                        }
-
-                        // Calculate height
-                        const height = staysInRange.length * barHeightPerStay;
-                        return (
-                          <div 
-                            className="bar"
-                            style={{ height }}
-                            key={i} 
-                          ></div>
-                        );
-                      })}
-                  </div>
+                  <div className="price-range-bars">{renderBars()}</div>
                   <Slider
                     range
                     className="price-range-slider"
@@ -555,7 +570,7 @@ export function StayFilter() {
                 </div> */}
                 <div className="ammenities-section">
                   {amenities.map((amenity) => (
-                    <div className="ammenities-input" key={amenity}>
+                    <div className="ammenities-input" key={amenity.title}>
                       <label htmlFor={amenity.title} className="flex">
                         <input
                           type="checkbox"

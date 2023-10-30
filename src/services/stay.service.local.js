@@ -209,7 +209,70 @@ function getLabels() {
 }
 
 function getAmenities() {
-  return ['TV', 'Wifi', 'Kitchen', 'Smoking allowed', 'Pets allowed', 'Cooking basics', 'Chair']
+  // return ['TV', 'Wifi', 'Kitchen', 'Smoking allowed', 'Pets allowed', 'Cooking basics', 'Chair']
+  return [
+    "firePlace",
+    "seaView",
+    "valleyView",
+    "bathtub",
+    "hairDryer",
+    "cleaningProducts",
+    "shampoo",
+    "bodySoap",
+    "outdoorShower",
+    "hotWater",
+    "washer",
+    "essentials",
+    "hangers",
+    "bedLinens",
+    "extraPillowsAndBlankets",
+    "roomDarkeningShades",
+    "mountainView",
+    "iron",
+    "dryingRack",
+    "mosquitoNet",
+    "tv",
+    "travelCrib",
+    "windowAC",
+    "heating",
+    "fireExtinguisher",
+    "wifi",
+    "dedicatedWorkspace",
+    "kitchen",
+    "refrigerator",
+    "microwave",
+    "cookingBasics",
+    "dishesAndSilverware",
+    "miniFridge",
+    "dishwasher",
+    "stove",
+    "hotWaterKettle",
+    "wineGlasses",
+    "toaster",
+    "bakingSheet",
+    "barbecueUtensils",
+    "diningTable",
+    "breadMaker",
+    "beachAccess",
+    "patioOrBalcony",
+    "backyard",
+    "firePit",
+    "outdoorFurniture",
+    "hammock",
+    "outdoorDiningArea",
+    "bbqGrill",
+    "freeParkingOnPremises",
+    "privateHotTub",
+    "singleLevelHome",
+    "petsAllowed",
+    "longTermStaysAllowed",
+    "selfCheckIn",
+    "lockbox",
+    "smokeAlarm",
+    "firstAidKit",
+    "privateEntrance",
+    "sharedPool"
+  ]
 }
 
 async function _createDemoData() {
@@ -233,7 +296,7 @@ function _reviewDemoData() {
       by: {
         _id: 'u102',
         fullname: 'user2',
-        imgUrl: 'https://a0.muscache.com/im/pictures/user/e64c6384-8ee8-4896-a38f-586bfb360027.jpg?im_w=240',
+        imgUrl: '/img/img2.jpg',
       },
     },
     {
@@ -243,7 +306,7 @@ function _reviewDemoData() {
       by: {
         _id: 'u104',
         fullname: 'user3',
-        imgUrl: 'https://a0.muscache.com/im/pictures/user/03b37f8f-59eb-49e2-9744-de1c3dc1076f.jpg?im_w=240',
+        imgUrl: '/img/img3.jpg',
       },
     },
     {
@@ -253,7 +316,7 @@ function _reviewDemoData() {
       by: {
         _id: 'u106',
         fullname: 'user4',
-        imgUrl: 'https://a0.muscache.com/im/pictures/user/e95a58cc-949f-49c9-8bc3-0a24631af613.jpg?im_w=240',
+        imgUrl: '/img/img5.jpg',
       },
     },
     {
@@ -263,7 +326,7 @@ function _reviewDemoData() {
       by: {
         _id: 'u108',
         fullname: 'user5',
-        imgUrl: 'https://a0.muscache.com/im/pictures/user/2efcac84-368b-43c1-a408-0c92d23960d3.jpg?im_w=240',
+        imgUrl: '/img/img7.jpg',
       },
     },
     {
@@ -273,7 +336,7 @@ function _reviewDemoData() {
       by: {
         _id: 'u110',
         fullname: 'user6',
-        imgUrl: 'https://a0.muscache.com/im/pictures/user/8ed1ccb9-1f94-4e66-9309-e3ee03e449b7.jpg?im_w=240',
+        imgUrl: '/img/img4.jpg',
       },
     },
     {
@@ -283,7 +346,7 @@ function _reviewDemoData() {
       by: {
         _id: 'u112',
         fullname: 'user7',
-        imgUrl: 'https://a0.muscache.com/im/pictures/user/d7578fb4-9f5a-49aa-83d0-12124f39cc57.jpg?im_w=240',
+        imgUrl: '/img/img6.jpg',
       },
     },
   ]
