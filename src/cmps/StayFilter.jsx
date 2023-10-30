@@ -37,8 +37,8 @@ export function StayFilter() {
   const [selectedBathrooms, setSelectedBathrooms] = useState("Any");
   const [selectedAmmenties, setSelectedAmmenties] = useState([]);
   const [resultLength, setResultLength] = useState(stays.length);
-  const [barHeights, setBarHeights] = useState([])
-  const [barHeight, setBarHeight] = useState(0)
+  const [barHeights, setBarHeights] = useState([]);
+  const [barHeight, setBarHeight] = useState(0);
 
   const amenities = [
     {
@@ -285,32 +285,33 @@ export function StayFilter() {
   const priceBucketSize = (1500 - 0) / numBars;
   const barHeightPerStay = 10;
   const staysCopy = [...stays];
-  const staysPrices = staysCopy.map(stay => stay.price)
+  const staysPrices = staysCopy.map((stay) => stay.price);
 
   function renderBars() {
     const bars = [];
 
     for (let i = 0; i < numBars; i++) {
-      const min = i * priceBucketSize
-      const max = (i + 1) * priceBucketSize
-      // if no stays in this price range, set height to 4px 
-      if (!staysPrices.some(price => price >= min && price <= max)) {
+      const min = i * priceBucketSize;
+      const max = (i + 1) * priceBucketSize;
+      const inRange = min >= minPrice && max <= maxPrice;
+      if (!staysPrices.some((price) => price >= min && price <= max)) {
         bars.push(
           <div
             key={i}
-            className={`bar out-of-range`}
-            style={{ height: `${4}px` }}
+            className={`bar ${inRange ? "in-range" : "out-of-range"}`}
+            style={{ height: `${6}px` }}
           ></div>
         );
-        continue
+        continue;
       }
 
-      const inRange = min >= minPrice && max <= maxPrice;
-
       const barHeight = inRange
-        ? barHeightPerStay * staysPrices.filter(price => price >= min && price <= max).length
-        : barHeightPerStay * staysPrices.filter(price => price >= min && price <= max).length / 2
-        
+        ? barHeightPerStay *
+          staysPrices.filter((price) => price >= min && price <= max).length
+        : (barHeightPerStay *
+            staysPrices.filter((price) => price >= min && price <= max)
+              .length) /
+          2;
 
       bars.push(
         <div
@@ -323,7 +324,6 @@ export function StayFilter() {
 
     return bars;
   }
-
 
   return (
     <React.Fragment>
@@ -380,9 +380,9 @@ export function StayFilter() {
           filterModal
             ? { transform: "translateY(0)", backgroundColor: "rgba(0,0,0,0.5)" }
             : {
-              transform: "translateY(100%)",
-              backgroundColor: "rgba(0,0,0,0)",
-            }
+                transform: "translateY(100%)",
+                backgroundColor: "rgba(0,0,0,0)",
+              }
         }
       >
         <form className="filter-by-form" onSubmit={handleSubmit}>
@@ -403,9 +403,7 @@ export function StayFilter() {
               <div className="price-range">
                 <div className="price-range-title">Price range</div>
                 <div className="price-range-slider-container">
-                  <div className="price-range-bars">
-                    {renderBars()}
-                  </div>
+                  <div className="price-range-bars">{renderBars()}</div>
                   <Slider
                     range
                     className="price-range-slider"
@@ -490,10 +488,11 @@ export function StayFilter() {
                       <div className="details-input" key={label}>
                         <button
                           type="button"
-                          className={`details-btn ${selectedBedrooms.toString() === label
-                            ? "selected"
-                            : ""
-                            }`}
+                          className={`details-btn ${
+                            selectedBedrooms.toString() === label
+                              ? "selected"
+                              : ""
+                          }`}
                           onClick={() => {
                             if (label === "Any") {
                               setSelectedBedrooms("Any");
@@ -516,8 +515,9 @@ export function StayFilter() {
                       <div className="details-input" key={label}>
                         <button
                           type="button"
-                          className={`details-btn ${selectedBeds.toString() === label ? "selected" : ""
-                            }`}
+                          className={`details-btn ${
+                            selectedBeds.toString() === label ? "selected" : ""
+                          }`}
                           onClick={() => {
                             if (label === "Any") {
                               setSelectedBeds("Any");
@@ -540,10 +540,11 @@ export function StayFilter() {
                       <div className="details-input" key={label}>
                         <button
                           type="button"
-                          className={`details-btn ${selectedBathrooms.toString() === label
-                            ? "selected"
-                            : ""
-                            }`}
+                          className={`details-btn ${
+                            selectedBathrooms.toString() === label
+                              ? "selected"
+                              : ""
+                          }`}
                           onClick={() => {
                             if (label === "Any") {
                               setSelectedBathrooms("Any");
@@ -577,10 +578,11 @@ export function StayFilter() {
                         />
                         <div className="input-container">
                           <span
-                            className={`input-icon ${selectedAmmenties.includes(amenity.title)
-                              ? "selected"
-                              : ""
-                              }`}
+                            className={`input-icon ${
+                              selectedAmmenties.includes(amenity.title)
+                                ? "selected"
+                                : ""
+                            }`}
                           >
                             <IoMdCheckmark />
                             {selectedAmmenties.includes(amenity.title)
@@ -629,4 +631,4 @@ export function StayFilter() {
       </section>
     </React.Fragment>
   );
-                }
+}
