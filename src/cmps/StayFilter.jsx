@@ -40,45 +40,45 @@ export function StayFilter() {
 
   const amenities = [
     {
-      title: 'wifi',
-      txt: 'Wifi',
+      title: "wifi",
+      txt: "Wifi",
     },
     {
-      title: 'washer',
-      txt: 'Washer',
+      title: "washer",
+      txt: "Washer",
     },
     {
-      title: 'air-conditioning',
-      txt: 'Air conditioning',
+      title: "air-conditioning",
+      txt: "Air conditioning",
     },
     {
-      title: 'dedicated-workspace',
-      txt: 'Dedicated workspace',
+      title: "dedicated-workspace",
+      txt: "Dedicated workspace",
     },
     {
-      title: 'hair-dryer',
-      txt: 'Hair dryer',
+      title: "hair-dryer",
+      txt: "Hair dryer",
     },
     {
-      title: 'kitchen',
-      txt: 'Kitchen',
+      title: "kitchen",
+      txt: "Kitchen",
     },
     {
-      title: 'dryer',
-      txt: 'Dryer',
+      title: "dryer",
+      txt: "Dryer",
     },
     {
-      title: 'heating',
-      txt: 'Heating',
+      title: "heating",
+      txt: "Heating",
     },
     {
-      title: 'tv',
-      txt: 'TV',
+      title: "tv",
+      txt: "TV",
     },
     {
-      title: 'iron',
-      txt: 'Iron',
-    }
+      title: "iron",
+      txt: "Iron",
+    },
   ];
 
   useEffect(() => {
@@ -277,6 +277,11 @@ export function StayFilter() {
     });
   }
 
+  const numBars = 50;
+  const priceBucketSize = (maxPrice - minPrice) / numBars;
+  const barHeightPerStay = 6;
+  
+
   return (
     <React.Fragment>
       <section className="filter-by">
@@ -355,6 +360,38 @@ export function StayFilter() {
               <div className="price-range">
                 <div className="price-range-title">Price range</div>
                 <div className="price-range-slider-container">
+                  <div className="price-range-bars">
+                    {Array(numBars)
+                      .fill()
+                      .map((_, i) => {
+                        const min = i * priceBucketSize + minPrice;
+                        const max = (i + 1) * priceBucketSize + minPrice;
+
+                        const staysInRange = stays.filter((stay) => {
+                          return stay.price >= min && stay.price < max;
+                        });
+
+                        if (staysInRange.length === 0) {
+                          return (
+                            <div
+                              className="bar"
+                              style={{ height: barHeightPerStay }}
+                              key={i}
+                            ></div>
+                          );
+                        }
+
+                        // Calculate height
+                        const height = staysInRange.length * barHeightPerStay;
+                        return (
+                          <div 
+                            className="bar"
+                            style={{ height }}
+                            key={i} 
+                          ></div>
+                        );
+                      })}
+                  </div>
                   <Slider
                     range
                     className="price-range-slider"
@@ -362,12 +399,11 @@ export function StayFilter() {
                     max={1500}
                     defaultValue={[minPrice, maxPrice]}
                     value={[minPrice, maxPrice]}
-                    trackStyle={{ backgroundColor: "#666666", height: "2px" }}
+                    trackStyle={{ backgroundColor: "#222222", height: "3px" }}
                     handleStyle={{
                       backgroundColor: "white",
                       border: "none",
                       backgroundColor: "#fff",
-
                       opacity: "1",
                       outline: "rgb(219 219 219) solid 1px",
                       boxShadow: "rgba(0, 0, 0, 0.16) 0px 0px 20px 2px",
@@ -514,37 +550,38 @@ export function StayFilter() {
               </div>
               <div className="stay-ammenities">
                 <div className="stay-ammenities-title">Amenities</div>
-                <div className="ammenities-section-title">
+                {/* <div className="ammenities-section-title">
                   <span>Essentials</span>
-                </div>
+                </div> */}
                 <div className="ammenities-section">
-{amenities.map((amenity) => (
-  <div className="ammenities-input" key={amenity}>
-    <label htmlFor={amenity.title}
-    className="flex"
-    >
-<input
-        type="checkbox"
-        id={amenity.title}
-        name={amenity.title}
-        onChange={handleCheckboxChange}
-        checked={selectedAmmenties.includes(amenity.title)}
-      />
-        <div className="input-container">
-          <span
-            className={`input-icon ${
-              selectedAmmenties.includes(amenity.title) ? "selected" : ""
-            }`}
-          >
-            <IoMdCheckmark />
-            {selectedAmmenties.includes(amenity.title) ? "" : ""}
-          </span>
-          <span className="input-title">{amenity.txt}</span>
-        </div>
-      </label>
-  </div>
-))}
-
+                  {amenities.map((amenity) => (
+                    <div className="ammenities-input" key={amenity}>
+                      <label htmlFor={amenity.title} className="flex">
+                        <input
+                          type="checkbox"
+                          id={amenity.title}
+                          name={amenity.title}
+                          onChange={handleCheckboxChange}
+                          checked={selectedAmmenties.includes(amenity.title)}
+                        />
+                        <div className="input-container">
+                          <span
+                            className={`input-icon ${
+                              selectedAmmenties.includes(amenity.title)
+                                ? "selected"
+                                : ""
+                            }`}
+                          >
+                            <IoMdCheckmark />
+                            {selectedAmmenties.includes(amenity.title)
+                              ? ""
+                              : ""}
+                          </span>
+                          <span className="input-title">{amenity.txt}</span>
+                        </div>
+                      </label>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
@@ -572,7 +609,6 @@ export function StayFilter() {
                     console.log("btn submit clicked ");
                   }}
                   disabled={!resultLength}
-                  
                 >
                   {resultLength ? `Show ${resultLength} places` : "No places"}
                 </button>
