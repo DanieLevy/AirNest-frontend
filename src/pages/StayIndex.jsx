@@ -52,7 +52,11 @@ export function StayIndex() {
             className={`show-map-btn-container ${isVisible && isMobile ? '' : 'hidden'}`}
             style={{ bottom: isMobile ? '75px' : '80px' }}
           >
-            <button className='show-map-btn' onClick={() => setListMode(!listMode)}>
+            <button className='show-map-btn' onClick={() => 
+            // scroll to top of page
+            window.scrollTo({ top: 80, behavior: 'smooth' }) &
+            setListMode(!listMode) 
+            }>
               {listMode ? (
                 <>
                   Show Map
