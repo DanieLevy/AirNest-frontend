@@ -295,8 +295,8 @@ renderBars();
     const heights = [];
 
     for (let i = 0; i < numBars; i++) {
-      const min = i * priceBucketSize + 0;
-      const max = (i + 1) * priceBucketSize + 0;
+      const min = i * priceBucketSize;
+      const max = (i + 1) * priceBucketSize;
 
       // if the min and max is not in the minPrice and maxPrice 
 
@@ -322,8 +322,8 @@ renderBars();
     const bars = [];
   
     for (let i = 0; i < numBars; i++) {
-      const min = i * priceBucketSize + 0
-      const max = (i + 1) * priceBucketSize + 0
+      const min = i * priceBucketSize
+      const max = (i + 1) * priceBucketSize
   
       const inRange = min >= minPrice && max <= maxPrice;
   
