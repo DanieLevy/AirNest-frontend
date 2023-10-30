@@ -1,7 +1,6 @@
 import { is } from 'date-fns/locale'
 import React, { lazy } from 'react'
-import { useState } from 'react'
-import { useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import ImageGallery from 'react-image-gallery'
 import 'react-image-gallery/styles/css/image-gallery.css'
 import { useSelector } from 'react-redux'
@@ -15,7 +14,7 @@ import { stayService } from '../services/stay.service.local'
 export function StayPreview({ stay }) {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768)
   const [searchParams] = useSearchParams()
-
+  const [currentSlideIndex, setCurrentSlideIndex] = useState(0)
   const stayLink = `/stay/${stay._id}?${searchParams.toString()}`
   const user = useSelector((storeState) => storeState.userModule.user)
   const stays = useSelector((storeState) => storeState.stayModule.stays)
@@ -66,6 +65,7 @@ export function StayPreview({ stay }) {
   const images = stay.imgUrls.map((imgUrl) => ({ original: imgUrl }))
 
   const leftNav = (onClick, disabled) => {
+    if (currentSlideIndex === 0) return null
     return (
       <button
         className='main-image-gallery left-nav'
@@ -82,6 +82,7 @@ export function StayPreview({ stay }) {
   }
 
   const rightNav = (onClick, disabled) => {
+    if (currentSlideIndex === images.length - 1) return null
     return (
       <button
         className='main-image-gallery right-nav'
@@ -172,6 +173,7 @@ export function StayPreview({ stay }) {
           disableKeyDown={true}
           renderLeftNav={leftNav}
           renderRightNav={rightNav}
+          onSlide={(currentIndex) => setCurrentSlideIndex(currentIndex)}
         />
       </div>
       {isMobile ? (
