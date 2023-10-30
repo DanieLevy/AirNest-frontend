@@ -41,7 +41,7 @@ export function StayFilter() {
 
   useEffect(() => {
     setBarHeights(calculateBarHeights());
-  }, [minPrice, maxPrice, stays]);
+  }, [stays]);
 
   const amenities = [
     {
@@ -286,16 +286,17 @@ renderBars();
 
   const numBars = 50;
   const priceBucketSize = (maxPrice - minPrice) / numBars;
-  const barHeightPerStay = 8;
+  const barHeightPerStay = 10;
   const staysPrices = stays.map((stay) => stay.price);
+  console.log(staysPrices);
   const maxPriceInStays = Math.max(...staysPrices);
 
   function calculateBarHeights() {
     const heights = [];
 
     for (let i = 0; i < numBars; i++) {
-      const min = i * priceBucketSize + minPrice;
-      const max = (i + 1) * priceBucketSize + minPrice;
+      const min = i * priceBucketSize + 0;
+      const max = (i + 1) * priceBucketSize + 0;
 
       // if the min and max is not in the minPrice and maxPrice 
 
@@ -316,12 +317,13 @@ renderBars();
   }
 
   function renderBars() {
+    console.log('minPrice', minPrice, 'maxPrice', maxPrice)
     console.log("renderBars");
     const bars = [];
   
     for (let i = 0; i < numBars; i++) {
-      const min = i * priceBucketSize + minPrice;
-      const max = (i + 1) * priceBucketSize + minPrice;
+      const min = i * priceBucketSize + 0
+      const max = (i + 1) * priceBucketSize + 0
   
       const inRange = min >= minPrice && max <= maxPrice;
   
