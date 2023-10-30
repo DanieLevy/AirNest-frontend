@@ -40,8 +40,8 @@ export function StayFilter() {
   const [barHeights, setBarHeights] = useState([]);
 
   useEffect(() => {
-    setBarHeights(calculateBarHeights());
-  }, [stays]);
+    renderBars()
+  }, [minPrice, maxPrice, stays]);
 
   const amenities = [
     {
@@ -233,7 +233,7 @@ export function StayFilter() {
     setMinPrice(value[0]);
     setMaxPrice(value[1]);
 
-renderBars();
+    renderBars();
   }
 
   async function showResultLength() {
@@ -286,49 +286,50 @@ renderBars();
 
   const numBars = 50;
   const priceBucketSize = (maxPrice - minPrice) / numBars;
-  const barHeightPerStay = 10;
+  const barHeightPerStay = 1;
   const staysPrices = stays.map((stay) => stay.price);
   console.log(staysPrices);
   const maxPriceInStays = Math.max(...staysPrices);
 
-  function calculateBarHeights() {
-    const heights = [];
+  // function calculateBarHeights() {
+  //   const heights = [];
 
     for (let i = 0; i < numBars; i++) {
       const min = i * priceBucketSize;
       const max = (i + 1) * priceBucketSize;
 
-      // if the min and max is not in the minPrice and maxPrice 
+  //     // if the min and max is not in the minPrice and maxPrice 
 
-      const staysInRange = stays.filter((stay) => {
-        return stay.price >= min && stay.price < max;
-      });
+  //     const staysInRange = stays.filter((stay) => {
+  //       return stay.price >= min && stay.price < max;
+  //     });
 
-      if (!staysInRange.length) {
-        heights.push(barHeightPerStay / 2);
-        continue;
-      }
+  //     if (!staysInRange.length) {
+  //       heights.push(barHeightPerStay / 2);
+  //       continue;
+  //     }
 
-      const height = staysInRange.length * barHeightPerStay;
-      heights.push(height);
-    }
+  //     const height = staysInRange.length * barHeightPerStay;
+  //     heights.push(height);
+  //   }
 
-    return heights;
-  }
+  //   return heights;
+  // }
 
   function renderBars() {
     console.log('minPrice', minPrice, 'maxPrice', maxPrice)
     console.log("renderBars");
     const bars = [];
-  
+    console.log('barHeights:', barHeights)
+
     for (let i = 0; i < numBars; i++) {
       const min = i * priceBucketSize
       const max = (i + 1) * priceBucketSize
   
       const inRange = min >= minPrice && max <= maxPrice;
-  
+
       const barClass = inRange ? "in-range" : "out-of-range"; // Add CSS class based on inRange
-  
+
       bars.push(
         <div
           key={i}
@@ -337,10 +338,10 @@ renderBars();
         ></div>
       );
     }
-  
+
     return bars;
   }
-  
+
   return (
     <React.Fragment>
       <section className="filter-by">
@@ -396,9 +397,9 @@ renderBars();
           filterModal
             ? { transform: "translateY(0)", backgroundColor: "rgba(0,0,0,0.5)" }
             : {
-                transform: "translateY(100%)",
-                backgroundColor: "rgba(0,0,0,0)",
-              }
+              transform: "translateY(100%)",
+              backgroundColor: "rgba(0,0,0,0)",
+            }
         }
       >
         <form className="filter-by-form" onSubmit={handleSubmit}>
@@ -420,7 +421,7 @@ renderBars();
                 <div className="price-range-title">Price range</div>
                 <div className="price-range-slider-container">
                   <div className="price-range-bars">
-                {renderBars()}
+                    {renderBars()}
                   </div>
                   <Slider
                     range
@@ -506,11 +507,10 @@ renderBars();
                       <div className="details-input" key={label}>
                         <button
                           type="button"
-                          className={`details-btn ${
-                            selectedBedrooms.toString() === label
-                              ? "selected"
-                              : ""
-                          }`}
+                          className={`details-btn ${selectedBedrooms.toString() === label
+                            ? "selected"
+                            : ""
+                            }`}
                           onClick={() => {
                             if (label === "Any") {
                               setSelectedBedrooms("Any");
@@ -533,9 +533,8 @@ renderBars();
                       <div className="details-input" key={label}>
                         <button
                           type="button"
-                          className={`details-btn ${
-                            selectedBeds.toString() === label ? "selected" : ""
-                          }`}
+                          className={`details-btn ${selectedBeds.toString() === label ? "selected" : ""
+                            }`}
                           onClick={() => {
                             if (label === "Any") {
                               setSelectedBeds("Any");
@@ -558,11 +557,10 @@ renderBars();
                       <div className="details-input" key={label}>
                         <button
                           type="button"
-                          className={`details-btn ${
-                            selectedBathrooms.toString() === label
-                              ? "selected"
-                              : ""
-                          }`}
+                          className={`details-btn ${selectedBathrooms.toString() === label
+                            ? "selected"
+                            : ""
+                            }`}
                           onClick={() => {
                             if (label === "Any") {
                               setSelectedBathrooms("Any");
@@ -596,11 +594,10 @@ renderBars();
                         />
                         <div className="input-container">
                           <span
-                            className={`input-icon ${
-                              selectedAmmenties.includes(amenity.title)
-                                ? "selected"
-                                : ""
-                            }`}
+                            className={`input-icon ${selectedAmmenties.includes(amenity.title)
+                              ? "selected"
+                              : ""
+                              }`}
                           >
                             <IoMdCheckmark />
                             {selectedAmmenties.includes(amenity.title)
