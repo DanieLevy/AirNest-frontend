@@ -37,11 +37,8 @@ export function StayFilter() {
   const [selectedBathrooms, setSelectedBathrooms] = useState("Any");
   const [selectedAmmenties, setSelectedAmmenties] = useState([]);
   const [resultLength, setResultLength] = useState(stays.length);
-  const [barHeights, setBarHeights] = useState([]);
-
-  useEffect(() => {
-    renderBars()
-  }, [minPrice, maxPrice, stays]);
+  const [barHeights, setBarHeights] = useState([])
+  const [barHeight, setBarHeight] = useState(0)
 
   const amenities = [
     {
@@ -233,7 +230,7 @@ export function StayFilter() {
     setMinPrice(value[0]);
     setMaxPrice(value[1]);
 
-    renderBars();
+    // renderBars();
   }
 
   async function showResultLength() {
@@ -285,11 +282,10 @@ export function StayFilter() {
   }
 
   const numBars = 50;
-  const priceBucketSize = (maxPrice - minPrice) / numBars;
+  const priceBucketSize = (1500 - 0) / numBars;
   const barHeightPerStay = 10;
-  const staysPrices = stays.map((stay) => stay.price);
-  console.log(staysPrices);
-  const maxPriceInStays = Math.max(...staysPrices);
+  const staysCopy = [...stays];
+  const staysPrices = staysCopy.map(stay => stay.price)
 
   function renderBars() {
     const bars = [];
@@ -297,28 +293,37 @@ export function StayFilter() {
     for (let i = 0; i < numBars; i++) {
       const min = i * priceBucketSize
       const max = (i + 1) * priceBucketSize
-      const numStaysInRange = staysPrices.filter((price) => price >= min && price < max).length
-      const barHeight = numStaysInRange * barHeightPerStay
-      barHeights[i] = barHeight
-      
-      if (!barHeight) barHeights[i] = 4
+      // if no stays in this price range, set height to 4px 
+      if (!staysPrices.some(price => price >= min && price <= max)) {
+        bars.push(
+          <div
+            key={i}
+            className={`bar out-of-range`}
+            style={{ height: `${4}px` }}
+          ></div>
+        );
+        continue
+      }
 
-  
       const inRange = min >= minPrice && max <= maxPrice;
 
-      const barClass = inRange ? "in-range" : "out-of-range"; // Add CSS class based on inRange
+      const barHeight = inRange
+        ? barHeightPerStay * staysPrices.filter(price => price >= min && price <= max).length
+        : barHeightPerStay * staysPrices.filter(price => price >= min && price <= max).length / 2
+        
 
       bars.push(
         <div
           key={i}
-          className={`bar ${barClass}`}
-          style={{ height: `${barHeights[i]}px` }}
+          className={`bar ${inRange ? "in-range" : "out-of-range"}`}
+          style={{ height: `${barHeight}px` }}
         ></div>
       );
     }
 
     return bars;
   }
+
 
   return (
     <React.Fragment>
