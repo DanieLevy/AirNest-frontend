@@ -8,6 +8,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { PiArrowLeft } from 'react-icons/pi'
 import { BrandedBtn } from '../cmps/BrandedBtn'
 import { AiFillStar } from 'react-icons/ai'
+import { ORDER_STATUS } from '../store/reducer/order.reducer'
 
 export function OrderConfirm() {
   const stagedOrder = useSelector((state) => state.orderModule.stagedOrder)
@@ -36,6 +37,7 @@ export function OrderConfirm() {
     try {
       const stagedOrderWithUser = {
         ...stagedOrder,
+        status: ORDER_STATUS.PENDING,
         buyer: {
           _id: loggedUser._id,
           fullname: loggedUser.fullname,

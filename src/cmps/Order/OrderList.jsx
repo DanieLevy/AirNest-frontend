@@ -60,14 +60,22 @@ export function OrderList() {
           return `$${total.toFixed(2)}`
         },
       },
+      {
+        Header: 'Status',
+        accessor: 'status',
+        Cell: ({ value }) => value,
+      },
     ],
     []
   )
 
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable({ columns, data })
+  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable({
+    columns,
+    data,
+  })
 
   return (
-    <div>
+    <div className='order-list'>
       <h1>My Orders</h1>
       <table {...getTableProps()} style={{ border: 'solid 1px black' }}>
         <thead>
@@ -76,7 +84,12 @@ export function OrderList() {
               {headerGroup.headers.map((column) => (
                 <th
                   {...column.getHeaderProps()}
-                  style={{ borderBottom: 'solid 2px black', background: 'aliceblue', color: 'black', fontWeight: 'bold' }}
+                  style={{
+                    borderBottom: 'solid 2px black',
+                    background: 'aliceblue',
+                    color: 'black',
+                    fontWeight: 'bold',
+                  }}
                 >
                   {column.render('Header')}
                 </th>
@@ -90,7 +103,10 @@ export function OrderList() {
             return (
               <tr {...row.getRowProps()}>
                 {row.cells.map((cell) => (
-                  <td {...cell.getCellProps()} style={{ padding: '10px', border: 'solid 1px gray' }}>
+                  <td
+                    {...cell.getCellProps()}
+                    style={{ padding: '10px', border: 'solid 1px gray' }}
+                  >
                     {cell.render('Cell')}
                   </td>
                 ))}

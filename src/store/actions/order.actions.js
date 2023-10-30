@@ -82,7 +82,7 @@ export async function updateOrderStatus(orderId, status) {
     await orderService.updateStatus(orderId, status)
     store.dispatch(getActionUpdateOrderStatus(orderId, status))
   } catch (err) {
-    console.log('OrderActions: err in updateOrderStatus', err)
+    console.error('OrderActions: err in updateOrderStatus', err)
     throw err
   } finally {
     store.dispatch({ type: LOADING_DONE })
