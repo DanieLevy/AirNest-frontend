@@ -372,9 +372,9 @@ export function StayAmenities({ data }) {
   }
 
   const [showAllAmenities, setShowAllAmenities] = useState(false)
-  const itemsToShow = 10
+  // const itemsToShow = 10
   const amenitiesArray = Object.values(amenities)
-  const amenitiesToShow = amenitiesArray.slice(0, itemsToShow)
+  const amenitiesToShow = getTopAmenities()
 
   const amenitiesCategories = [
     {
@@ -447,10 +447,29 @@ export function StayAmenities({ data }) {
       </svg>
     )
   }
+  function getTopAmenities() {
+    const dataLowerCase = data.map((item) => item.toLowerCase())
+
+    const availableAmenities = Object.keys(amenities)
+      .filter((amenityKey) => dataLowerCase.includes(amenities[amenityKey].title.toLowerCase()))
+      .map((amenityKey) => ({ key: amenityKey, ...amenities[amenityKey], available: true }))
+      .slice(0, 8)
+
+    const unavailableAmenities = Object.keys(amenities)
+      .filter((amenityKey) => !dataLowerCase.includes(amenities[amenityKey].title.toLowerCase()))
+      .map((amenityKey) => ({ key: amenityKey, ...amenities[amenityKey], available: false }))
+      .slice(0, 2)
+
+    return [...availableAmenities, ...unavailableAmenities]
+  }
 
   function checkIfAmenitiesExist(amenity) {
     amenity = amenity.toLowerCase()
     const dataLowerCase = data.map((item) => item.toLowerCase())
+    console.log(
+      '🚀 ~ file: StayAmenities.jsx:454 ~ checkIfAmenitiesExist ~ dataLowerCase:',
+      dataLowerCase
+    )
 
     if (dataLowerCase.includes(amenity)) {
       return true
@@ -458,6 +477,7 @@ export function StayAmenities({ data }) {
 
     return false
   }
+
   function renderAmenitiesSection(category) {
     const hasAmenitiesForCategory = category.amenities.some(checkIfAmenitiesExist)
 
@@ -496,17 +516,6 @@ export function StayAmenities({ data }) {
       return null
     })
   }
-  function sortAmenities(amenitiesList) {
-    return amenitiesList.sort((a, b) => {
-      if (checkIfAmenitiesExist(a.title) && !checkIfAmenitiesExist(b.title)) {
-        return -1
-      }
-      if (!checkIfAmenitiesExist(a.title) && checkIfAmenitiesExist(b.title)) {
-        return 1
-      }
-      return 0
-    })
-  }
 
   return (
     <React.Fragment>
@@ -515,14 +524,10 @@ export function StayAmenities({ data }) {
           <div>What this place offers</div>
         </div>
         <div className='stay-amenities-list'>
-          {sortAmenities(amenitiesToShow).map((amenity, idx) => (
+          {amenitiesToShow.map((amenity, idx) => (
             <div className='amenity' key={idx}>
               <div className='amenity-icon'>{formatSVG(amenity.svg)}</div>
-              <div
-                className={
-                  checkIfAmenitiesExist(amenity.title) ? 'amenity-name has' : 'amenity-name'
-                }
-              >
+              <div className={amenity.available ? 'amenity-name has' : 'amenity-name'}>
                 {amenity.title}
               </div>
             </div>
