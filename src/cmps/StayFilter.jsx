@@ -305,13 +305,16 @@ export function StayFilter() {
         continue;
       }
 
-      const barHeight = inRange
-        ? barHeightPerStay *
-          staysPrices.filter((price) => price >= min && price <= max).length
-        : (barHeightPerStay *
-            staysPrices.filter((price) => price >= min && price <= max)
-              .length) /
-          2;
+      // const barHeight = inRange
+      //   ? barHeightPerStay *
+      //     staysPrices.filter((price) => price >= min && price <= max).length
+      //   : (barHeightPerStay *
+      //       staysPrices.filter((price) => price >= min && price <= max)
+      //         .length) /
+      //     10;
+
+      const height = barHeightPerStay * staysPrices.filter((price) => price >= min && price <= max).length;
+      const barHeight = Math.min(height, 108);
 
       bars.push(
         <div
