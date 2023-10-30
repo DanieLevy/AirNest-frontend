@@ -286,45 +286,23 @@ export function StayFilter() {
 
   const numBars = 50;
   const priceBucketSize = (maxPrice - minPrice) / numBars;
-  const barHeightPerStay = 1;
+  const barHeightPerStay = 10;
   const staysPrices = stays.map((stay) => stay.price);
   console.log(staysPrices);
   const maxPriceInStays = Math.max(...staysPrices);
 
-  // function calculateBarHeights() {
-  //   const heights = [];
-
-    for (let i = 0; i < numBars; i++) {
-      const min = i * priceBucketSize;
-      const max = (i + 1) * priceBucketSize;
-
-  //     // if the min and max is not in the minPrice and maxPrice 
-
-  //     const staysInRange = stays.filter((stay) => {
-  //       return stay.price >= min && stay.price < max;
-  //     });
-
-  //     if (!staysInRange.length) {
-  //       heights.push(barHeightPerStay / 2);
-  //       continue;
-  //     }
-
-  //     const height = staysInRange.length * barHeightPerStay;
-  //     heights.push(height);
-  //   }
-
-  //   return heights;
-  // }
-
   function renderBars() {
-    console.log('minPrice', minPrice, 'maxPrice', maxPrice)
-    console.log("renderBars");
     const bars = [];
-    console.log('barHeights:', barHeights)
 
     for (let i = 0; i < numBars; i++) {
       const min = i * priceBucketSize
       const max = (i + 1) * priceBucketSize
+      const numStaysInRange = staysPrices.filter((price) => price >= min && price < max).length
+      const barHeight = numStaysInRange * barHeightPerStay
+      barHeights[i] = barHeight
+      
+      if (!barHeight) barHeights[i] = 4
+
   
       const inRange = min >= minPrice && max <= maxPrice;
 
@@ -646,4 +624,4 @@ export function StayFilter() {
       </section>
     </React.Fragment>
   );
-}
+                }
