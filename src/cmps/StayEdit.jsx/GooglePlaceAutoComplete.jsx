@@ -1,66 +1,70 @@
-import React, { useState } from 'react';
-import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
-import { geocodeByPlaceId } from 'react-google-places-autocomplete';
+import React, { useState } from "react";
+import GooglePlacesAutocomplete from "react-google-places-autocomplete";
+import { geocodeByPlaceId } from "react-google-places-autocomplete";
 
 export function Component({ setLocation, stayLocation }) {
-    console.log('stayLocation:', stayLocation)
-    const [value, setValue] = useState(null);
+  console.log("stayLocation:", stayLocation);
+  const [value, setValue] = useState(null);
 
+  async function getPlaceDetails(placeId) {
+    try {
+      console.log("value:", value);
+      const location = await geocodeByPlaceId(placeId);
 
+      const locationDetails = location[0].address_components.reduce(
+        (acc, curr) => {
+          if (curr.types.includes("route")) {
+            acc.address = curr.short_name;
+          }
+          if (curr.types.includes("locality")) {
+            acc.city = curr.long_name;
+          }
+          if (curr.types.includes("country")) {
+            acc.country = curr.long_name;
+            acc.countryCode = curr.short_name;
+          }
+          return acc;
+        },
+        {}
+      );
 
-    async function getPlaceDetails(placeId) {
-        try {
-            console.log('value:', value)
-            const location = await geocodeByPlaceId(placeId)
+      const streetNumber = location[0].address_components.find((address) =>
+        address.types.includes("street_number")
+      );
+      if (streetNumber)
+        locationDetails.address = `${locationDetails.address} ${streetNumber.short_name}`;
 
-            const locationDetails = location[0].address_components.reduce((acc, curr) => {
-                if (curr.types.includes('route')) {
-                    acc.address = curr.short_name
-                }
-                if (curr.types.includes('locality')) {
-                    acc.city = curr.long_name
-                }
-                if (curr.types.includes('country')) {
-                    acc.country = curr.long_name
-                    acc.countryCode = curr.short_name
-                }
-                return acc
-            }, {})
+      locationDetails.lat = location[0].geometry.location.lat();
+      locationDetails.lng = location[0].geometry.location.lng();
+      locationDetails.formatedAddress =
+        location[0].formatted_address.split(",");
+      locationDetails.placeId = placeId;
 
-            const streetNumber = location[0].address_components.find(address => address.types.includes('street_number'))
-            if (streetNumber) locationDetails.address = `${locationDetails.address} ${streetNumber.short_name}`
+      setLocation(locationDetails);
+      console.log("obj:", locationDetails);
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
-            locationDetails.lat = location[0].geometry.location.lat()
-            locationDetails.lng = location[0].geometry.location.lng()
-            locationDetails.formatedAddress = location[0].formatted_address.split(',')
-            locationDetails.placeId = placeId
-
-            setLocation(locationDetails)
-            console.log('obj:', locationDetails)
-        } catch (error) {
-            console.error(error)
+  return (
+    <div>
+      <GooglePlacesAutocomplete
+        apiKey="AIzaSyCF6YSAF__0aiqIrTE2ZClywS74stbpWuE"
+        debounce={300}
+        selectProps={{
+          value,
+          onChange: (newValue) => {
+            setValue(newValue);
+            if (newValue?.value.place_id) {
+              getPlaceDetails(newValue.value.place_id);
+            }
+          },
+        }}
+        onLoadFailed={(error) =>
+          console.error("Could not inject Google script", error)
         }
-    };
-
-    return (
-        <div>Property address
-            <GooglePlacesAutocomplete
-                apiKey='AIzaSyCF6YSAF__0aiqIrTE2ZClywS74stbpWuE'
-                debounce={300}
-                selectProps={{
-                    value,
-                    onChange: (newValue) => {
-                        setValue(newValue);
-                        if (newValue?.value.place_id) {
-                            getPlaceDetails(newValue.value.place_id);
-                        }
-                    },
-                }}
-                onLoadFailed={(error) => (
-                    console.error("Could not inject Google script", error)
-                )}
-            />
-        </div>
-    )
+      />
+    </div>
+  );
 }
-
