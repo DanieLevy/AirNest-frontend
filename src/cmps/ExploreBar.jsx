@@ -647,11 +647,17 @@ export function ExploreBar({ onExpandChange }) {
                 </div>
                 <BrandedBtn
                   onClick={() => console.log('clicked')}
-                  txt={isActive === 'guests' ? 'Search' : ''}
-                  icon={<IoSearch className='search-icon' />}
-                  borderRadius={isActive === 'guests' ? '32px' : '50%'}
-                  width={isActive === 'guests' ? '100px' : '48px'}
-                  isActive={isActive === 'guests'}
+                  txt={isActive !== null ? 'Search' : ''}
+                  icon={
+                  // <IoSearch className='search-icon' />
+                  <div className='search-icon'>
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" aria-hidden="true" role="presentation" focusable="false"><path fill="none" d="M13 24a11 11 0 1 0 0-22 11 11 0 0 0 0 22zm8-3 9 9"></path></svg>
+                  </div>
+                }
+
+                  borderRadius={isActive !== null ? '32px' : '50%'}
+                  width={isActive !== null ? '100px' : '48px'}
+                  isActive={isActive !== null}
                 />
               </article>
             </form>
