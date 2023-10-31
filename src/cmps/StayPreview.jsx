@@ -1,5 +1,5 @@
 import { is } from 'date-fns/locale'
-import React, { lazy } from 'react'
+import React, { lazy, useRef } from 'react'
 import { useState, useEffect } from 'react'
 import ImageGallery from 'react-image-gallery'
 import 'react-image-gallery/styles/css/image-gallery.css'
@@ -18,6 +18,8 @@ export function StayPreview({ stay }) {
   const stayLink = `/stay/${stay._id}?${searchParams.toString()}`
   const user = useSelector((storeState) => storeState.userModule.user)
   const stays = useSelector((storeState) => storeState.stayModule.stays)
+
+  const randomDateRangeRef = useRef()
 
   const userLikedStays = stays.filter((stay) =>
     stay.likedByUsers.some((likedUser) => likedUser._id === user._id)
@@ -154,8 +156,10 @@ export function StayPreview({ stay }) {
     const startDay = getRandomInt(1, 25)
     const days = getRandomInt(1, 7)
     const endDay = startDay + days
-
     return `${month} ${startDay} - ${endDay}`
+  }
+  if (!randomDateRangeRef.current) {
+    randomDateRangeRef.current = getRandomDateRange()
   }
 
   return (
@@ -192,7 +196,7 @@ export function StayPreview({ stay }) {
               <p>{stay.summary}</p>
             </div>
             <div className='preview-dates'>
-              <p>{getRandomDateRange()}</p>
+              <p>{randomDateRangeRef.current}</p>
             </div>
             <div className='preview-price'>
               <span className='price-span'>₪{stay.price}</span>
@@ -220,7 +224,7 @@ export function StayPreview({ stay }) {
             <p>{stay.summary}</p>
           </div>
           <div className='preview-dates'>
-            <p>{getRandomDateRange()}</p>
+            <p>{randomDateRangeRef.current}</p>
           </div>
           <div className='preview-price'>
             <span className='price-span'>${stay.price}</span>
