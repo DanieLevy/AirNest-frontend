@@ -280,10 +280,14 @@ function getPropertyType() {
 }
 
 async function _createDemoData() {
-  let getStays = await storageService.query(STORAGE_KEY)
+  let getStays = await storageService.query(STORAGE_KEY);
   if (!getStays || getStays.length < 1) {
     for (let stay of stays) {
-      await storageService.post(STORAGE_KEY, stay)
+      for (let review of stay.reviews) {
+        let randomNum = utilService.getRandomIntInclusive(1,200)
+        review.by.imgUrl = `https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/${randomNum}.jpg`;
+      }
+      await storageService.post(STORAGE_KEY, stay);
     }
   }
 }

@@ -52,7 +52,7 @@
   @include aspect-ratio(9, 16);
 }
 
-.divider {
+.divider2 {
   height: 1px;
   background-color: $clr2;
   position: sticky;
@@ -68,4 +68,12 @@
   &.unset {
     position: unset;
   }
+}
+
+.divider {
+  height: 1px;
+  background-color: $clr2;
+  // position: sticky;
+  opacity: 0.5;
+  transition: opacity .4s;
 }
