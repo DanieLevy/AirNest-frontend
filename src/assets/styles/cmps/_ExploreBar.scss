@@ -276,13 +276,18 @@
       font-size: 0.875rem;
       color: #717171;
       font-family: cereal-light;
-      margin-bottom: 4px;
+      // margin-bottom: 4px;
 
       &.branded-btn-txt {
         color: white;
         display: flex;
         justify-content: center;
         align-items: center;
+        font-family: cereal-medium;
+        font-size: 1rem;
+        font-weight: 200;
+        // latter spacing
+        letter-spacing: .3px;
       }
     }
 
@@ -389,9 +394,23 @@
 }
 
 .search-icon {
-  vertical-align: top;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   color: #fff;
   font-size: 1.5rem;
+
+  svg {
+    display: block;
+     fill: none;
+      height: 16px;
+       width: 16px;
+        stroke: currentcolor;
+         stroke-width: 4;
+          overflow: visible;
+          // margin-inline-end: 4px;
+  }
 }
 
 .location-modal {

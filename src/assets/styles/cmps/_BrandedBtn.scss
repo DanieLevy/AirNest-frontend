@@ -43,15 +43,17 @@
   border-radius: 8px;
   transition: all 0.3s ease 0s;
 
-  background-image: radial-gradient(
-    circle at calc((0 + var(--positionX, 0)) * 10%) calc((0 + var(--positionY, 0)) * 5%),
-    rgb(241, 37, 75) 0%,
-    rgb(230, 30, 77) 27.5%,
-    rgb(227, 28, 95) 40%,
-    rgb(215, 4, 102) 57.5%,
-    rgb(189, 30, 89) 75%,
-    rgb(189, 30, 89) 100%
-  );
+background-image: radial-gradient(
+  circle at calc((0 + var(--positionX, 0)) * 10%) calc((0 + var(--positionY, 0)) * 5%),
+  rgb(247, 42, 80) 0%,
+  rgb(236, 35, 82) 27.5%,
+  rgb(233, 33, 100) 40%,
+  rgb(221, 9, 107) 57.5%,
+  rgb(195, 35, 94) 75%,
+  rgb(195, 35, 94) 100%
+);
+
+  
 }
 
 .action-btn {
