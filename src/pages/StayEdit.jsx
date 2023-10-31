@@ -1,38 +1,38 @@
-import { useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
-import { stayService } from '../services/stay.service.local'
-import { FormEditor } from '../cmps/StayEdit.jsx/FormEditor'
+import { stayService } from "../services/stay.service.local";
+import { FormEditor } from "../cmps/StayEdit.jsx/FormEditor";
 
 export function StayEdit() {
-  const [stay, setStay] = useState(stayService.getEmptyStay())
-  const { stayId } = useParams()
+  const [stay, setStay] = useState(stayService.getEmptyStay());
+  const { stayId } = useParams();
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (stayId) {
-      loadStay()
+      loadStay();
     }
-  }, [stayId])
+  }, [stayId]);
 
   async function loadStay() {
     try {
-      const stay = await stayService.getById(stayId)
-      setStay(stay)
+      const stay = await stayService.getById(stayId);
+      setStay(stay);
     } catch (err) {
-      console.log('loadToy err:', err)
+      console.log("loadToy err:", err);
     }
   }
 
   async function handleSubmit(e) {
-    e.preventDefault()
-    console.log(stay)
+    e.preventDefault();
+    console.log(stay);
     try {
-      await stayService.save(stay)
-      navigate('/')
+      await stayService.save(stay);
+      navigate("/");
     } catch (err) {
-      console.log('handleSubmit err:', err)
+      console.log("handleSubmit err:", err);
     }
   }
 
@@ -40,54 +40,61 @@ export function StayEdit() {
     setStay((prev) => ({
       ...prev,
       imgUrls,
-    }))
+    }));
   }
 
   function setLabels(labels) {
     setStay((prev) => ({
       ...prev,
       labels,
-    }))
+    }));
   }
 
   function setAmenities(amenities) {
     setStay((prev) => ({
       ...prev,
       amenities,
-    }))
+    }));
   }
 
   function setLocation(loc) {
     setStay((prev) => ({
       ...prev,
       loc,
-    }))
+    }));
+  }
+
+  function setPropertyType(propertyType) {
+    setStay((prev) => ({
+      ...prev,
+      propertyType,
+    }));
   }
 
   function handleInputChange(e) {
-    let { name, value } = e.target
+    let { name, value } = e.target;
 
     if (
-      name === 'price' ||
-      name === 'capacity' ||
-      name === 'bedrooms' ||
-      name === 'beds' ||
-      name === 'bathrooms'
+      name === "price" ||
+      name === "capacity" ||
+      name === "bedrooms" ||
+      name === "beds" ||
+      name === "bathrooms"
     ) {
-      setStay({ ...stay, [name]: parseFloat(value) })
-      console.log(stay)
-      return
+      setStay({ ...stay, [name]: parseFloat(value) });
+      console.log(stay);
+      return;
     }
-    if (name === 'country' || name === 'city' || name === 'address') {
-      setStay({ ...stay, loc: { ...stay.loc, [name]: value } })
-      console.log(stay)
-      return
+    if (name === "country" || name === "city" || name === "address") {
+      setStay({ ...stay, loc: { ...stay.loc, [name]: value } });
+      console.log(stay);
+      return;
     }
-    setStay({ ...stay, [name]: value })
-    console.log(stay)
+    setStay({ ...stay, [name]: value });
+    console.log(stay);
   }
 
-  if (!stay) return <div>loading...</div>
+  if (!stay) return <div>loading...</div>;
   return (
     <main>
       <FormEditor
@@ -98,7 +105,8 @@ export function StayEdit() {
         handleSubmit={handleSubmit}
         onUrlsChange={setImgUrl}
         onAmenitiesChange={setAmenities}
+        onPropertyChange={setPropertyType}
       />
     </main>
-  )
+  );
 }

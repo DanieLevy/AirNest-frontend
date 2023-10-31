@@ -17,7 +17,7 @@ export const stayService = {
   getResultLength,
   getCarouselLabels,
   filterStays,
-
+  getPropertyType,
 }
 
 window.cs = stayService
@@ -273,6 +273,10 @@ function getAmenities() {
     "privateEntrance",
     "sharedPool"
   ]
+}
+
+function getPropertyType() {
+  return ['home', 'apartment', 'guesthouse', 'hotel']
 }
 
 async function _createDemoData() {
