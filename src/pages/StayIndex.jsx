@@ -72,9 +72,11 @@ export function StayIndex() {
               )}
             </button>
           </div>
-          {/* {isLoading && <div>Loading...</div>} */}
-          {listMode && <StayList stays={stays} />}
-          {!listMode && <StayMapIndex stays={stays} />}
+          {listMode ? (
+            <StayList stays={stays} isLoading={isLoading} />
+          ) : (
+            <StayMapIndex stays={stays} />
+          )}
         </section>
       </main>
     </React.Fragment>
