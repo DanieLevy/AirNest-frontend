@@ -52,11 +52,13 @@ export function StayIndex() {
             className={`show-map-btn-container ${isVisible && isMobile ? '' : 'hidden'}`}
             style={{ bottom: isMobile ? '75px' : '80px' }}
           >
-            <button className='show-map-btn' onClick={() => 
-            // scroll to top of page
-            window.scrollTo({ top: 80, behavior: 'smooth' }) &
-            setListMode(!listMode) 
-            }>
+            <button
+              className='show-map-btn'
+              onClick={() =>
+                // scroll to top of page
+                window.scrollTo({ top: 80, behavior: 'smooth' }) & setListMode(!listMode)
+              }
+            >
               {listMode ? (
                 <>
                   Show Map
@@ -70,9 +72,9 @@ export function StayIndex() {
               )}
             </button>
           </div>
-          {isLoading && <div>Loading...</div>}
-          {!isLoading && listMode && <StayList stays={stays} />}
-          {!isLoading && !listMode && <StayMapIndex stays={stays} />}
+          {/* {isLoading && <div>Loading...</div>} */}
+          {listMode && <StayList stays={stays} />}
+          {!listMode && <StayMapIndex stays={stays} />}
         </section>
       </main>
     </React.Fragment>
