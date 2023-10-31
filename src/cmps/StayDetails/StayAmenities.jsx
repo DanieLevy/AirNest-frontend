@@ -566,7 +566,9 @@ export function StayAmenities({ data }) {
 
                 {amenitiesCategories.map(renderAmenitiesSection)}
 
-                <div className='amenities-section-title'>Not Included</div>
+                <div className='amenities-section-title'
+                style={{marginTop: '48px', fontWeight: 'bold', textDecoration: 'underline'}}
+                >Not Included</div>
                 {amenitiesCategories.map((category) => (
                   <section className='amenities-section' key={category.title + '-not-included'}>
                     <div className='amenities-section-list'>
