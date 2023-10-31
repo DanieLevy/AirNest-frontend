@@ -43,7 +43,7 @@ export function StayHeader({ name, imgUrls, reviews, loc, host }) {
   }, 0)
 
   const rawAvg = sumOfRatings / reviews.length
-  const avgRating = rawAvg % 1 === 0 ? Math.floor(rawAvg) : rawAvg.toFixed(2)
+  const avgRating = rawAvg % 1 === 0 ? rawAvg.toFixed(1) : rawAvg.toFixed(2)
 
   const isSuperhost = host.isSuperhost ? 'Superhost' : ''
 

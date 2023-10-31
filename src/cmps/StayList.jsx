@@ -7,16 +7,6 @@ export function StayList({ stays }) {
   // const [isLoading, setIsLoading] = useState(true);
   const isLoading = useSelector((storeState) => storeState.systemModule.isLoading)
 
-  // useEffect(() => {
-  //   const timeoutId = setTimeout(() => {
-  //     setIsLoading(false)
-  //   }, 1000)
-
-  //   return () => {
-  //     clearTimeout(timeoutId)
-  //   }
-  // }, [])
-
   const StayElement = (props) => (
     <ContentLoader
       speed={2}
