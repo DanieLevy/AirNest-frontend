@@ -89,11 +89,22 @@ export async function updateStay(stay) {
 }
 
 export function filterStays(properties, params) {
-  const stays = stayService.filterStays(properties, params)
-  store.dispatch({
-    type: SET_FILTERED_STAYS,
-    stays,
-  })
+  store.dispatch({ type: LOADING_START })
+  try{
+    const stays = stayService.filterStays(properties, params)
+    store.dispatch({
+      type: SET_FILTERED_STAYS,
+      stays,
+    })
+
+  }catch (err){
+    showErrorMsg('Cannot filter stays')
+    throw err
+
+  } finally{
+  store.dispatch({ type: LOADING_DONE })
+
+  }
 }
 //was Cart
 // export function addToStay(stay) {
