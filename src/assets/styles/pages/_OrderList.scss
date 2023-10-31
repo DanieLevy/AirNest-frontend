@@ -1,6 +1,91 @@
-.order-list{
+.order-list {
     // width: 100%;
-    table{
-        width: 100%;
+    & .order-list-container {
+        & .order-list-header {
+            margin: 32px 0;
+        }
+
+        & .order-list-body {
+            // width: 100%;
+
+            * {
+                list-style: none;
+            }
+
+            th,
+            td {
+                text-align: center;
+            }
+
+            & .order-list-table {
+                width: 100%;
+                
+                & .order-list-table-header {
+                    border-bottom: 1px solid rgb(221, 221, 221);
+                    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 0px 0px;
+
+                    & .order-list-table-row {
+
+                        & .table-header {
+                            font-size: 16px;
+                            color: rgb(96, 98, 102);
+                            padding: 16px 15px 16px 0;
+                            &.destination {
+                                text-align: start;
+                            }
+                            &.status {
+                                text-align: end;
+                                padding: 16px 0 16px 5px;
+                            }
+
+                            &.host {
+                                text-align: start;
+                            }
+                        }
+                    }
+                }
+
+                & .order-list-table-row {
+                    & .table-row {
+                        font-size: 14px;
+                        padding: 16px 0;
+                        color: rgb(96, 98, 102);
+                        border-bottom: 1px solid rgb(221, 221, 221);
+
+                        &.destination {
+                            white-space: nowrap;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+
+                            text-align: start;
+                            font-size: 14px;
+                            font-weight: 600;
+                            color: #333333;
+                            display: flex;
+                            align-items: center;
+                            
+                            & .order-list-img {
+                                width: 100px;
+                                margin-inline-end: 10px;
+
+                                img {
+                                    width: 100%;
+                                    object-fit: cover;
+                                    border-radius: 5px;
+                                }
+                            }
+                        }
+
+                        &.status {
+                            text-align: end;
+                        }
+
+                        &.host {
+                            text-align: start;
+                        }
+                    }
+                }
+            }
+        }
     }
 }

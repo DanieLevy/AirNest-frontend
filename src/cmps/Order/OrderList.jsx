@@ -1,120 +1,66 @@
-import React, { useMemo } from 'react'
-import { useSelector } from 'react-redux'
-import { useTable } from 'react-table'
+import { useSelector } from "react-redux";
 
 export function OrderList() {
-  const data = useSelector((storeState) => storeState.orderModule.orders)
-
-  //   const orders = useMemo(
-  //     () => [
-  //       {
-  //         itemName: 'Laptop',
-  //         quantity: 1,
-  //         price: 1000,
-  //         startDate: new Date('2023-10-05').getTime(),
-  //         endDate: new Date('2023-10-07').getTime(),
-  //       },
-  //     ],
-  //     []
-  //   )
-
-  const columns = useMemo(
-    () => [
-      {
-        Header: 'Name',
-        accessor: 'stay.name',
-      },
-      {
-        Header: 'Price per Night',
-        accessor: 'stay.price',
-        Cell: ({ value }) => `$${value.toFixed(2)}`,
-      },
-      {
-        Header: 'Host Id',
-        accessor: 'hostId',
-      },
-      {
-        Header: 'Start Date',
-        accessor: 'checkIn',
-        Cell: ({ value }) => new Date(value).toLocaleDateString(),
-      },
-      {
-        Header: 'End Date',
-        accessor: 'checkOut',
-        Cell: ({ value }) => new Date(value).toLocaleDateString(),
-      },
-      {
-        Header: 'Total Price',
-        accessor: 'totalPrice',
-        Cell: ({ row }) => {
-          const checkInDate = new Date(row.original.checkIn)
-          const checkOutDate = new Date(row.original.checkOut)
-          const differenceInTime = checkOutDate.getTime() - checkInDate.getTime()
-          let differenceInDays = Math.ceil(differenceInTime / (1000 * 3600 * 24))
-
-          if (differenceInDays === 0) {
-            differenceInDays = 1
-          }
-
-          const total = differenceInDays * row.original.stay.price
-          return `$${total.toFixed(2)}`
-        },
-      },
-      {
-        Header: 'Status',
-        accessor: 'status',
-        Cell: ({ value }) => value,
-      },
-    ],
-    []
-  )
-
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable({
-    columns,
-    data,
-  })
+  const data = useSelector((storeState) => storeState.orderModule.orders);
+  console.log("data", data);
 
   return (
-    <div className='order-list'>
-      <h1>My Orders</h1>
-      <table {...getTableProps()} style={{ border: 'solid 1px black' }}>
-        <thead>
-          {headerGroups.map((headerGroup) => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map((column) => (
-                <th
-                  {...column.getHeaderProps()}
-                  style={{
-                    borderBottom: 'solid 2px black',
-                    background: 'aliceblue',
-                    color: 'black',
-                    fontWeight: 'bold',
-                  }}
-                >
-                  {column.render('Header')}
-                </th>
-              ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody {...getTableBodyProps()}>
-          {rows.map((row) => {
-            prepareRow(row)
-            return (
-              <tr {...row.getRowProps()}>
-                {row.cells.map((cell) => (
-                  <td
-                    {...cell.getCellProps()}
-                    style={{ padding: '10px', border: 'solid 1px gray' }}
-                  >
-                    {cell.render('Cell')}
-                  </td>
-                ))}
+    <section className="order-list">
+      <div className="order-list-container">
+        <div className="order-list-header">
+          <h1>Order List</h1>
+        </div>
+        <div className="order-list-body">
+          <table className="order-list-table">
+            <thead className="order-list-table-header">
+              <tr className="order-list-table-row">
+                <th className="table-header destination"
+                >Destination</th>
+                <th className="table-header host"
+                >Host</th>
+                <th className="table-header checkin"
+                >Checkin</th>
+                <th className="table-header checkout"
+                >Checkout</th>
+                <th className="table-header date"
+                >Booked</th>
+                <th className="table-header price"
+                >Total Price</th>
+                <th className="table-header status"
+                >Status</th>
               </tr>
-            )
-          })}
-        </tbody>
-      </table>
-    </div>
-  )
+            </thead>
+            <tbody>
+              {data.map((order) => (
+                <tr key={order._id} className="order-list-table-row">
+                  <td className="table-row destination"
+                  >
+                    <div className="order-list-img">
+                      {/* <img src={order.stay.imgUrls[0]} alt="" /> */}
+                      <img src="http://res.cloudinary.com/dmtlr2viw/image/upload/v1663436975/hx9ravtjop3uqv4giupt.jpg" alt="" />
+                    </div>
+                    <div className="order-list-name">
+                    {order.stay.name}
+                    </div>
+                    </td>
+                  <td className="table-row host"
+                  >{order.hostName}</td>
+                  <td className="table-row checkin"
+                  >{new Date(order.checkIn).toLocaleDateString()}</td>
+                  <td className="table-row checkout"
+                  >{new Date(order.checkOut).toLocaleDateString()}</td>
+                  <td className="table-row date"
+                  >{order.buyer.fullname}</td>
+                  <td className="table-row price"
+                  >${order.stay.price}</td>
+                  <td className="table-row status"
+                  >{order.status}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  );
 }
