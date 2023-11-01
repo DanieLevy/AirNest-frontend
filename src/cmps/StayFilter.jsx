@@ -105,7 +105,7 @@ export function StayFilter() {
     setSelectedAmmenties(amenities);
 
     filterStays(stays, searchParams);
-  }, [searchParams]);
+  }, [searchParams, stays.length]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -313,7 +313,9 @@ export function StayFilter() {
       //         .length) /
       //     10;
 
-      const height = barHeightPerStay * staysPrices.filter((price) => price >= min && price <= max).length;
+      const height =
+        barHeightPerStay *
+        staysPrices.filter((price) => price >= min && price <= max).length;
       const barHeight = Math.min(height, 108);
 
       bars.push(
