@@ -1,8 +1,8 @@
-import { storageService } from './async-storage.service.js'
-import { utilService } from './util.service.js'
-import { userService } from './user.service.js'
-import { staysDemonData } from './stayDemoData.js'
-const STORAGE_KEY = 'stayDB'
+import { storageService } from "./async-storage.service.js";
+import { utilService } from "./util.service.js";
+import { userService } from "./user.service.js";
+import { staysDemonData } from "./stayDemoData.js";
+const STORAGE_KEY = "stayDB";
 
 export const stayService = {
   query,
@@ -18,194 +18,233 @@ export const stayService = {
   getCarouselLabels,
   filterStays,
   getPropertyType,
-}
+};
 
-window.cs = stayService
+window.cs = stayService;
 
 async function query(params) {
-  const paramsObj = getParams(params)
+  const paramsObj = getParams(params);
 
-  let capacity = +paramsObj?.adults + +paramsObj?.children
-  let stays = await storageService.query(STORAGE_KEY)
-  let staysToReturn = stays
+  let capacity = +paramsObj?.adults + +paramsObj?.children;
+  let stays = await storageService.query(STORAGE_KEY);
+  let staysToReturn = stays;
 
-  if (capacity) staysToReturn = staysToReturn.filter(stay => stay.capacity >= capacity)
-  if (paramsObj.region) {
-    const regionRegex = new RegExp(paramsObj.region.split(',')[0], 'i');
-    staysToReturn = staysToReturn.filter(stay => regionRegex.test(stay.loc.country));
+  if (capacity)
+    staysToReturn = staysToReturn.filter((stay) => stay.capacity >= capacity);
+  if (paramsObj.region && paramsObj.region !== "") {
+    const regionRegex = new RegExp(paramsObj.region.split(",")[0], "i");
+    staysToReturn = staysToReturn.filter((stay) =>
+      regionRegex.test(stay.loc.country)
+    );
   }
-  return staysToReturn
+  if (paramsObj.label)
+    staysToReturn = staysToReturn.filter((stay) =>
+      stay.labels.includes(paramsObj.label)
+    );
+
+  return staysToReturn;
 }
 
 function getParams(params) {
-  const paramsObject = {}
+  const paramsObject = {};
   for (const key of params.keys()) {
-    paramsObject[key] = params.get(key)
+    paramsObject[key] = params.get(key);
   }
-  return paramsObject
+  return paramsObject;
 }
 
 function filterStaysByPrice(stays, minPrice, maxPrice) {
-  const hasNumberPrices = !isNaN(minPrice) && !isNaN(maxPrice)
-  const isNotDefaultPrices = hasNumberPrices && (minPrice > 0 || maxPrice < 1500)
+  const hasNumberPrices = !isNaN(minPrice) && !isNaN(maxPrice);
+  const isNotDefaultPrices =
+    hasNumberPrices && (minPrice > 0 || maxPrice < 1500);
 
   if (isNotDefaultPrices)
-    return stays.filter(stay => {
-      const max = maxPrice >= 1500 ? Infinity : maxPrice
-      const min = minPrice || 0
-      return stay.price >= min && stay.price <= max
-    })
+    return stays.filter((stay) => {
+      const max = maxPrice >= 1500 ? Infinity : maxPrice;
+      const min = minPrice || 0;
+      return stay.price >= min && stay.price <= max;
+    });
 
-  return stays
+  return stays;
 }
 
 function filterStays(stays, params) {
-  const paramsObj = getParams(params)
-  let staysToReturn = stays
+  const paramsObj = getParams(params);
+  let staysToReturn = stays;
 
-  const minPrice = +paramsObj.minPrice
-  const maxPrice = +paramsObj.maxPrice
-  staysToReturn = filterStaysByPrice(staysToReturn, minPrice, maxPrice)
+  const minPrice = +paramsObj.minPrice;
+  const maxPrice = +paramsObj.maxPrice;
+  staysToReturn = filterStaysByPrice(staysToReturn, minPrice, maxPrice);
 
-  if (paramsObj.bedrooms) staysToReturn = staysToReturn.filter(stay => stay.bedrooms >= +paramsObj.bedrooms)
-  if (paramsObj.beds) staysToReturn = staysToReturn.filter(stay => stay.beds >= +paramsObj.beds)
-  if (paramsObj.bathrooms) staysToReturn = staysToReturn.filter(stay => stay.bathrooms >= +paramsObj.bathrooms)
-  if (paramsObj.amenities) staysToReturn = staysToReturn.filter(stay => paramsObj.amenities.split(',').every(amenity => stay.amenities.some((item) => new RegExp(amenity, 'i').test(item))))
+  if (paramsObj.bedrooms)
+    staysToReturn = staysToReturn.filter(
+      (stay) => stay.bedrooms >= +paramsObj.bedrooms
+    );
+  if (paramsObj.beds)
+    staysToReturn = staysToReturn.filter(
+      (stay) => stay.beds >= +paramsObj.beds
+    );
+  if (paramsObj.bathrooms)
+    staysToReturn = staysToReturn.filter(
+      (stay) => stay.bathrooms >= +paramsObj.bathrooms
+    );
+  if (paramsObj.amenities)
+    staysToReturn = staysToReturn.filter((stay) =>
+      paramsObj.amenities
+        .split(",")
+        .every((amenity) =>
+          stay.amenities.some((item) => new RegExp(amenity, "i").test(item))
+        )
+    );
 
-  return staysToReturn
+  return staysToReturn;
 }
 
 function getResultLength(filterBy, properties) {
-  let stays = filterStaysByPrice(properties, filterBy.minPrice, filterBy.maxPrice)
+  let stays = filterStaysByPrice(
+    properties,
+    filterBy.minPrice,
+    filterBy.maxPrice
+  );
 
-  if (filterBy.bedrooms && filterBy.bedrooms !== 'Any') stays = stays.filter(stay => stay.bedrooms >= filterBy.bedrooms)
-  if (filterBy.beds && filterBy.beds !== 'Any') stays = stays.filter(stay => stay.beds >= filterBy.beds)
-  if (filterBy.bathrooms && filterBy.bathrooms !== 'Any') stays = stays.filter(stay => stay.bathrooms >= filterBy.bathrooms)
-  if (filterBy.amenities.length) stays = stays.filter(stay => filterBy.amenities.every(amenity => stay.amenities.some((item) => new RegExp(amenity, 'i').test(item))))
+  if (filterBy.bedrooms && filterBy.bedrooms !== "Any")
+    stays = stays.filter((stay) => stay.bedrooms >= filterBy.bedrooms);
+  if (filterBy.beds && filterBy.beds !== "Any")
+    stays = stays.filter((stay) => stay.beds >= filterBy.beds);
+  if (filterBy.bathrooms && filterBy.bathrooms !== "Any")
+    stays = stays.filter((stay) => stay.bathrooms >= filterBy.bathrooms);
+  if (filterBy.amenities.length)
+    stays = stays.filter((stay) =>
+      filterBy.amenities.every((amenity) =>
+        stay.amenities.some((item) => new RegExp(amenity, "i").test(item))
+      )
+    );
 
-  return stays.length
+  return stays.length;
 }
 
 function getById(stayId) {
-  return storageService.get(STORAGE_KEY, stayId)
+  return storageService.get(STORAGE_KEY, stayId);
 }
 async function getStaysByUserId(userId) {
-  let stays = await storageService.query(STORAGE_KEY)
+  let stays = await storageService.query(STORAGE_KEY);
 
-  stays = stays.filter((stay) => stay.host._id === userId)
+  stays = stays.filter((stay) => stay.host._id === userId);
 
-  return stays
+  return stays;
   // if (filterBy.logginUser) {
   //   return stays.filter((stay) => stay.host._id === filterBy.logginUser._id)
   // }
 }
 
 async function remove(stayId) {
-  await storageService.remove(STORAGE_KEY, stayId)
+  await storageService.remove(STORAGE_KEY, stayId);
 }
 
 async function save(stay) {
-  console.log('stay:', stay)
-  let savedStay
-  const { _id, fullname, imgUrl } = await userService.getLoggedinUser()
-  stay.imgUrls = stay.imgUrls.filter((url) => url)
+  console.log("stay:", stay);
+  let savedStay;
+  const { _id, fullname, imgUrl } = await userService.getLoggedinUser();
+  stay.imgUrls = stay.imgUrls.filter((url) => url);
 
   if (stay._id) {
-    savedStay = await storageService.put(STORAGE_KEY, stay)
+    savedStay = await storageService.put(STORAGE_KEY, stay);
   } else {
-    stay._id = utilService.makeId()
+    stay._id = utilService.makeId();
     stay.host = {
-      _id: _id || '',
-      fullname: fullname || '',
-      imgUrl: imgUrl || '',
-    }
-    stay.reviews = _reviewDemoData()
-    savedStay = await storageService.post(STORAGE_KEY, stay)
+      _id: _id || "",
+      fullname: fullname || "",
+      imgUrl: imgUrl || "",
+    };
+    stay.reviews = _reviewDemoData();
+    savedStay = await storageService.post(STORAGE_KEY, stay);
   }
-  return savedStay
+  return savedStay;
 }
 
 async function addStayMsg(stayId, txt) {
   // Later, this is all done by the backend
-  const stay = await getById(stayId)
-  if (!stay.msgs) stay.msgs = []
+  const stay = await getById(stayId);
+  if (!stay.msgs) stay.msgs = [];
 
   const msg = {
     id: utilService.makeId(),
     by: userService.getLoggedinUser(),
     txt,
-  }
-  stay.msgs.push(msg)
-  await storageService.put(STORAGE_KEY, stay)
+  };
+  stay.msgs.push(msg);
+  await storageService.put(STORAGE_KEY, stay);
 
-  return msg
+  return msg;
 }
 
 async function _getStayLatLang(address, city, countryCode) {
   const response = await fetch(
-    `https://maps.googleapis.com/maps/api/geocode/json?address=${_joinString(address)},+${_joinString(
+    `https://maps.googleapis.com/maps/api/geocode/json?address=${_joinString(
+      address
+    )},+${_joinString(
       city
     )},+${countryCode}&key=AIzaSyB0XrNIJmg5sZqYETs7D_1d2qfIIwy1fkY`
-  )
-  const { results } = await response.json()
-  return results[0].geometry.location
+  );
+  const { results } = await response.json();
+  return results[0].geometry.location;
 }
 
 async function _getCountryCode(name) {
-  const response = await fetch(`https://restcountries.com/v3.1/name/${name}`)
-  const country = await response.json()
-  return country[0].cca2
+  const response = await fetch(`https://restcountries.com/v3.1/name/${name}`);
+  const country = await response.json();
+  return country[0].cca2;
 }
 
 function _joinString(string) {
-  return string.split(' ').join('+')
+  return string.split(" ").join("+");
 }
 
 function getEmptyStay() {
   return {
-    name: '',
-    type: '',
-    bedrooms: '',
-    beds: '',
-    bathrooms: '',
+    name: "",
+    type: "",
+    bedrooms: "",
+    beds: "",
+    bathrooms: "",
     imgUrls: [],
-    price: '',
-    summary: '',
-    room_type: '',
-    capacity: '',
+    price: "",
+    summary: "",
+    room_type: "",
+    capacity: "",
     amenities: [],
     labels: [],
     loc: {
-      country: '',
-      countryCode: '',
-      city: '',
-      address: '',
+      country: "",
+      countryCode: "",
+      city: "",
+      address: "",
       lat: 0,
       lng: 0,
     },
     reviews: [
       {
-        id: '',
-        txt: '',
+        id: "",
+        txt: "",
         rate: 0,
         by: {
-          _id: '',
-          fullname: '',
-          imgUrl: '',
+          _id: "",
+          fullname: "",
+          imgUrl: "",
         },
       },
     ],
-    likedByUsers: [''],
-  }
+    likedByUsers: [""],
+  };
 }
 
 function getLabels() {
   return [
-    { value: 'Top of the world', label: 'Top of the world' },
-    { value: 'Trending', label: 'Trending' },
-    { value: 'Play', label: 'Play' },
-    { value: 'Tropical', label: 'Tropical' },
-  ]
+    { value: "Top of the world", label: "Top of the world" },
+    { value: "Trending", label: "Trending" },
+    { value: "Play", label: "Play" },
+    { value: "Tropical", label: "Tropical" },
+  ];
 }
 
 function getAmenities() {
@@ -271,12 +310,12 @@ function getAmenities() {
     "smokeAlarm",
     "firstAidKit",
     "privateEntrance",
-    "sharedPool"
-  ]
+    "sharedPool",
+  ];
 }
 
 function getPropertyType() {
-  return ['home', 'apartment', 'guesthouse', 'hotel']
+  return ["home", "apartment", "guesthouse", "hotel"];
 }
 
 async function _createDemoData() {
@@ -284,80 +323,86 @@ async function _createDemoData() {
   if (!getStays || getStays.length < 1) {
     for (let stay of stays) {
       for (let review of stay.reviews) {
-        let randomNum = utilService.getRandomIntInclusive(1,200)
+        let randomNum = utilService.getRandomIntInclusive(1, 200);
         review.by.imgUrl = `https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/${randomNum}.jpg`;
       }
       await storageService.post(STORAGE_KEY, stay);
     }
   }
 }
-_createDemoData()
+_createDemoData();
 
-const stays = staysDemonData
+const stays = staysDemonData;
 
 function _reviewDemoData() {
   return [
     {
-      id: 'madeId',
-      txt: 'Very helpful hosts. Cooked traditional...',
+      id: "madeId",
+      txt: "Very helpful hosts. Cooked traditional...",
       rate: 4,
       by: {
-        _id: 'u102',
-        fullname: 'user2',
-        imgUrl: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/1.jpg',
+        _id: "u102",
+        fullname: "user2",
+        imgUrl:
+          "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/1.jpg",
       },
     },
     {
-      id: 'madeId2',
-      txt: 'Amazing location and very cozy space...',
+      id: "madeId2",
+      txt: "Amazing location and very cozy space...",
       rate: 5,
       by: {
-        _id: 'u104',
-        fullname: 'user3',
-        imgUrl: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/2.jpg',
+        _id: "u104",
+        fullname: "user3",
+        imgUrl:
+          "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/2.jpg",
       },
     },
     {
-      id: 'madeId3',
-      txt: 'Stylish place in the heart of the action...',
+      id: "madeId3",
+      txt: "Stylish place in the heart of the action...",
       rate: 5,
       by: {
-        _id: 'u106',
-        fullname: 'user4',
-        imgUrl: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/3.jpg',
+        _id: "u106",
+        fullname: "user4",
+        imgUrl:
+          "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/3.jpg",
       },
     },
     {
-      id: 'madeId4',
-      txt: 'Peaceful location with stunning views...',
+      id: "madeId4",
+      txt: "Peaceful location with stunning views...",
       rate: 4,
       by: {
-        _id: 'u108',
-        fullname: 'user5',
-        imgUrl: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/4.jpg',
+        _id: "u108",
+        fullname: "user5",
+        imgUrl:
+          "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/4.jpg",
       },
     },
     {
-      id: 'madeId5',
-      txt: 'A charming space with a vintage touch...',
+      id: "madeId5",
+      txt: "A charming space with a vintage touch...",
       rate: 4,
       by: {
-        _id: 'u110',
-        fullname: 'user6',
-        imgUrl: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/5.jpg',
+        _id: "u110",
+        fullname: "user6",
+        imgUrl:
+          "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/5.jpg",
       },
     },
     {
-      id: 'madeId6',
-      txt: 'Great location and very comfortable...',
+      id: "madeId6",
+      txt: "Great location and very comfortable...",
       rate: 5,
       by: {
-        _id: 'u112',
-        fullname: 'user7',
-        imgUrl: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/6.jpg',
+        _id: "u112",
+        fullname: "user7",
+        imgUrl:
+          "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/6.jpg",
       },
     },
-  ]
+  ];
 }
 
 function getCarouselLabels() {
@@ -462,6 +507,5 @@ function getCarouselLabels() {
       img: "https://a0.muscache.com/pictures/33dd714a-7b4a-4654-aaf0-f58ea887a688.jpg",
       name: "Historical homes",
     },
-  ]
-
+  ];
 }
