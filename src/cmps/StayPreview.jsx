@@ -10,6 +10,8 @@ import { userService } from '../services/user.service'
 
 import { store } from '../store/store'
 import { stayService } from '../services/stay.service.local'
+import { utilService } from '../services/util.service'
+import { StayLoader } from './StayLoader'
 
 export function StayPreview({ stay }) {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768)
@@ -18,6 +20,7 @@ export function StayPreview({ stay }) {
   const stayLink = `/stay/${stay._id}?${searchParams.toString()}`
   const user = useSelector((storeState) => storeState.userModule.user)
   const stays = useSelector((storeState) => storeState.stayModule.stays)
+  const [isLoading, setIsLoading] = useState(true)
 
   const randomDateRangeRef = useRef()
 
@@ -57,6 +60,9 @@ export function StayPreview({ stay }) {
     }
     await stayService.save(stay)
     store.dispatch({ type: 'UPDATE_STAY', stay })
+  }
+  const handleImageLoad = () => {
+    setIsLoading(false)
   }
 
   const reviewsAvg =
@@ -128,13 +134,6 @@ export function StayPreview({ stay }) {
       ></path>
     </svg>
   )
-
-  const getRandomInt = (min, max) => {
-    min = Math.ceil(min)
-    max = Math.floor(max)
-    return Math.floor(Math.random() * (max - min + 1)) + min
-  }
-
   const getRandomDateRange = () => {
     const months = [
       'Jan',
@@ -151,10 +150,10 @@ export function StayPreview({ stay }) {
       'Dec',
     ]
 
-    const month = months[getRandomInt(0, 11)]
+    const month = months[utilService.getRandomIntInclusive(0, 11)]
 
-    const startDay = getRandomInt(1, 25)
-    const days = getRandomInt(1, 7)
+    const startDay = utilService.getRandomIntInclusive(1, 25)
+    const days = utilService.getRandomIntInclusive(1, 7)
     const endDay = startDay + days
     return `${month} ${startDay} - ${endDay}`
   }
@@ -164,6 +163,11 @@ export function StayPreview({ stay }) {
 
   return (
     <article className='stay-preview' onClick={() => window.open(stayLink, '_blank')}>
+      {isLoading && (
+        <div className='loader-overlay'>
+          <StayLoader />
+        </div>
+      )}
       <div className='preview-img'>
         <div onClick={handleLike}>{isLiked() ? <HeartFillIcon /> : <HeartOutlineIcon />}</div>
         <ImageGallery
@@ -172,12 +176,14 @@ export function StayPreview({ stay }) {
           showFullscreenButton={false}
           showBullets={true}
           loading={lazy}
-          // showThumbnails={true}
           stopPropagation={true}
           disableKeyDown={true}
           renderLeftNav={leftNav}
           renderRightNav={rightNav}
           onSlide={(currentIndex) => setCurrentSlideIndex(currentIndex)}
+          onImageLoad={() => {
+            setIsLoading(false)
+          }}
         />
       </div>
       {isMobile ? (
