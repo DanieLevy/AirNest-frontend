@@ -13,6 +13,7 @@ import { getActionAddOrder, getActionStageOrder } from '../store/actions/order.a
 import { LOADING_DONE, LOADING_START } from '../store/reducer/system.reducer.js'
 import { StayMap } from '../cmps/StayDetails/StayMap.jsx'
 import { is } from 'date-fns/locale'
+import { StayLoader } from '../cmps/StayLoader.jsx'
 
 export function StayDetails() {
   const { stayId } = useParams()
@@ -42,12 +43,15 @@ export function StayDetails() {
 
   async function loadStay() {
     try {
+      dispatch({ type: LOADING_START })
       const stay = await stayService.getById(stayId)
       setCurrStay(stay)
     } catch (err) {
       console.log('Had issues in stay details', err)
       showErrorMsg('Cannot load stay')
       navigate('/')
+    } finally {
+      dispatch({ type: LOADING_DONE })
     }
   }
   function handleCheckoutSubmit(formData) {
@@ -73,7 +77,12 @@ export function StayDetails() {
     navigate('/order/confirm')
   }
 
-  if (isLoading) return <div className='main-layout'>Loading...</div>
+  if (isLoading)
+    return (
+      <div className='main-layout'>
+        <StayLoader />
+      </div>
+    )
   if (!currStay) return <div className='main-layout'>no stay or user</div>
 
   const {
