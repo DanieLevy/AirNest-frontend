@@ -78,7 +78,7 @@ export function FormEditor({
       case 2:
         return isValidPropertyType(propertyType);
       case 3:
-        return !stay.loc.formatedAddress;
+        return false;
       case 4:
         return !capacity || !beds;
       case 5:
