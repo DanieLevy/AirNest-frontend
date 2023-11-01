@@ -65,9 +65,12 @@ export function StayEdit() {
   }
 
   function setPropertyType(propertyType) {
+    console.log('ddd',propertyType.target);
+    const propName = propertyType.target.name
+    const propValue = propertyType.target.value
     setStay((prev) => ({
       ...prev,
-      propertyType,
+      [propName]: propValue,
     }));
   }
 

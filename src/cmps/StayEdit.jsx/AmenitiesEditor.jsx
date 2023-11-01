@@ -28,38 +28,17 @@ export function AmenitiesEditor({ stay, onAmenitiesChange }) {
     onAmenitiesChange(names);
   };
 
+
   if (!amenities) return;
   return (
     <section
-      style={{
-        display: "grid",
-        gridTemplateColumns: "repeat( auto-fit, minmax(320px, 1fr) )",
-        gap: "0.6rem",
-      }}
+      className="amenities-editor"
     >
       {amenities.map((ament, i) => (
         <label
           key={ament}
-          style={{
-            userSelect: "none",
-            padding: "8px 16px",
-            // background: selectedAmenities[i] ? '#FF385C' : '#ebebeb80',
-            border: `${
-              selectedAmenities[i] ? "2px solid black" : "2px solid #ebebeb80"
-            }`,
-            // flex: '1 1 320px',
-            backgroundColor: selectedAmenities[i] ? "#F7F7F7" : "",
-            borderRadius: "12px",
-            display: "flex",
-            alignItems: "center",
-            gap: "0.3125rem",
-            cursor: "pointer",
-            fontSize: "0.85rem",
-            fontWeight: "bold",
-            // color: selectedAmenities[i] ? 'white' : '',
-            // fill: selectedAmenities[i] ? 'white' : '',
-            // fill: selectedAmenities[i] ? "#FF385C" : "",
-          }}
+          htmlFor={ament}
+          className={`amenity ${selectedAmenities[i] ? "selected" : ""}`}
         >
           <input
             style={{
@@ -71,24 +50,16 @@ export function AmenitiesEditor({ stay, onAmenitiesChange }) {
             id={ament}
             checked={selectedAmenities[i]}
           />
+          <div className="amenity-logo">
           {
             <svg width="32" height="32" stroke="">
               {amenitiesData[ament].svg}
             </svg>
           }
-          {amenitiesData[ament].title}
+          </div>
+          <div className="amenity-title">{amenitiesData[ament].title}</div>
         </label>
       ))}
     </section>
   );
 }
-// return (
-//     (<section>
-//         {amenities.map((ament, index) =>
-//             <div key={ament}>
-//                 <input onChange={() => handleInputChange(index)} name={ament} type="checkbox" id={ament} checked={selectedAmenities[index]} />
-//                 <label htmlFor={ament}>{ament}</label>
-//             </div>)
-//         }
-//     </section >)
-// );

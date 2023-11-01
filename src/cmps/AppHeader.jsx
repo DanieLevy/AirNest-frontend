@@ -247,7 +247,7 @@ export function AppHeader() {
           className={`divider2 ${isStayPage ? "unset" : ""} ${
             isExploreExpanded ? "expanded" : ""
           }`}
-          style={{ position: "block" }}
+          // style={{ position: "block" }}
         ></div>
       ) : (
         <div className="divider"></div>

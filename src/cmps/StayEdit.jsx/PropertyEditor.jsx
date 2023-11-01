@@ -26,7 +26,8 @@ export function PropertyEditor({
   selectProperty,
   properties = defaultProperties,
   onPropertyChange,
-}) {
+})
+ {
   return (
     <section style={{ display: "flex", gap: 10 }}>
       {properties.map((property) => (
@@ -56,7 +57,14 @@ export function PropertyEditor({
               type="radio"
               id={property.value}
               value={property.value}
-              onChange={(ev) => onPropertyChange(ev.target.value)}
+              onChange={(ev) =>
+                onPropertyChange({
+                  target: {
+                    name: "propertyType",
+                    value: ev.target.value,
+                  },
+                })
+                }
               checked={selectProperty === property.value}
             />
             <property.icon
