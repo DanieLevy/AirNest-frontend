@@ -33,7 +33,7 @@ export function UserMsg() {
 
   if (!msg) return <span></span>
   return (
-    <div className={`alert ${msg.type}`}>
+    <div className={`alert ${msg ? 'slideIn' : ''} ${msg?.type}`}>
       <div className={`icon`}>
         {msg.type === "success" && (
           <span className={`${msg.type}`}>

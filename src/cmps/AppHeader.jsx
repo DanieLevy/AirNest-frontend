@@ -241,17 +241,19 @@ export function AppHeader() {
         </React.Fragment>
       ) : null}
 
-      {!(isMobile && isExploreExpanded) && isStayPage ? (
+      {!isMobile && !isStayPage && !isOrderPage ? (
         // <div className={isStayPage ? "divider unset" : "divider"}></div>
-        <div
-          className={`divider2 ${isStayPage ? "unset" : ""} ${
-            isExploreExpanded ? "expanded" : ""
-          }`}
-          // style={{ position: "block" }}
+        // <div
+        //   className={`divider2 ${isStayPage ? "unset" : ""} ${
+        //     isExploreExpanded ? "expanded" : ""
+        //   }`}
+        //   // style={{ position: "block" }}
+        // ></div>
+        <div className="divider"
+        style={{ position: "sticky", top: "80px", opacity: "1", zIndex: "10" }}
         ></div>
       ) : (
         <div className="divider"
-        style={{ position: "sticky", top: "80px", opacity: "1", zIndex: "10" }}
         ></div>
       )}
     </React.Fragment>

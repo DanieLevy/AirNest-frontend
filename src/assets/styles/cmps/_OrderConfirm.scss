@@ -109,6 +109,7 @@
       display: grid;
       grid-template-columns: minmax(350px, 650px) minmax(250px, 400px);
       gap: 50px;
+      justify-content: space-between;
 
       & .order-confirm-summary {
         //   background-color: blue;

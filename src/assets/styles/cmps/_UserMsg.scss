@@ -11,17 +11,18 @@ h3 {
     min-height: 50px;
     padding: 15px 10px;
     position: fixed;
-    bottom: 5vh;
-    left: 3vw;
+    top: 100px;
+    right: 15px;
     border-radius: 5px;
     z-index: 100;
     background-color: #ffffff;
     box-shadow: 0 0 10px 0 #0000001a;
+    animation: slideInj 0.3s ease-in-out;
+    animation-fill-mode: both;
 
-    transition: all 0.5s ease-in-out;
 
     & .alert-text {
-        font-size: 1em;
+        font-size: 16px;
         font-family: cereal-light;
         font-weight: 400;
         color: #222222a3;
@@ -68,4 +69,30 @@ h3 {
             }
         }
     }
+}
+
+@keyframes slideInJ {
+    0% {
+        transform: translateY(250%);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideOutJ {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+.slideIn {
+    animation: slideInJ 0.3s ease-in-out;
+}
+
+.slideOut {
+    animation: slideOutJ 0.3s ease-in-out;
 }
