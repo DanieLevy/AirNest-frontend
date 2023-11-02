@@ -5,7 +5,8 @@
     right: 0;
     top: 80px;
     width: 100%;
-    height: 89vh;
+    height: calc(100vh - 80px);
+    max-height: 100%;
   }
 
   .show-map-btn-container {
