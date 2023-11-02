@@ -41,10 +41,18 @@ export function StayIndex() {
 
     let prevScrollY = 0;
 
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      currentScrollY > prevScrollY ? setIsVisible(false) : setIsVisible(true);
+      prevScrollY = currentScrollY;
+    };
+
+    window.addEventListener("scroll", handleScroll);
     window.addEventListener("resize", handleResize);
 
     return () => {
       window.removeEventListener("resize", handleResize);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
@@ -57,7 +65,7 @@ export function StayIndex() {
             className={`show-map-btn-container ${
               isVisible && isMobile ? "" : "hidden"
             }`}
-            style={{ bottom: isMobile ? "75px" : "80px" }}
+            style={{ bottom: isMobile ? "75px" : "90px" }}
           >
             <button
               className="show-map-btn"

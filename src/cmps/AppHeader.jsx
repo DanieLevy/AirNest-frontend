@@ -250,7 +250,9 @@ export function AppHeader() {
           // style={{ position: "block" }}
         ></div>
       ) : (
-        <div className="divider"></div>
+        <div className="divider"
+        style={{ position: "sticky", top: "80px", opacity: "1", zIndex: "10" }}
+        ></div>
       )}
     </React.Fragment>
   );
