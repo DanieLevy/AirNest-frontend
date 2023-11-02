@@ -6,9 +6,10 @@ import MultiSelectLabels from "./MultiSelectLabels";
 import { PropertyEditor } from "./PropertyEditor";
 import { GiBunkBeds } from "react-icons/gi";
 import { BrandedBtn } from "../BrandedBtn";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AiFillStar, AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
 import { is } from "date-fns/locale";
+import { showErrorMsg } from "../../services/event-bus.service";
 
 export function FormEditor({
   stay,
@@ -34,11 +35,16 @@ export function FormEditor({
     price,
   } = stay;
 
-  console.log("stay:", stay);
-  console.log("propertyType:", propertyType);
+  console.log("stayFromFormEditor", stay);
+
   const [pageIdx, setPageIdx] = useState(0);
-  const [propertyTypeEle, setPropertyTypeEle] = useState(null);
-  const [propertyType2, setPropertyType2] = useState(null);
+  const [propertyTypeEle, setPropertyTypeEle] = useState(stay.roomType);
+
+  useEffect(() => {
+    if (stay._id) {
+      setPropertyTypeEle(stay.roomType);
+    }
+  }, [stay._id]);
 
   function formatNumberWithCommas(number) {
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -96,6 +102,29 @@ export function FormEditor({
     }
   }
 
+  function isSaveBtnDisabled() {
+    if (!stay._id) {
+      showErrorMsg("You must save your stay before you can exit");
+      return true;
+    }
+
+    if (
+      !propertyTypeEle ||
+      isValidPropertyType(propertyType) ||
+      !capacity ||
+      !beds ||
+      !amenities.length ||
+      !imgUrls.length ||
+      !imgUrls[0] ||
+      !name ||
+      !summary
+    ) {
+      showErrorMsg("You must save your stay before you can exit");
+      return true;
+    }
+    return false;
+  }
+
   return (
     <section className="stay-edit main-layout">
       <header className="stay-edit-header">
@@ -112,7 +141,13 @@ export function FormEditor({
             </svg>
           </div>
           <div className="header-btns">
-            <button className="header-btn" onClick={handleSubmit}>
+            <button
+              className="header-btn"
+              onClick={() => {
+                if (isSaveBtnDisabled()) return;
+                handleSubmit();
+              }}
+            >
               Save & Exit
             </button>
           </div>
@@ -154,12 +189,15 @@ export function FormEditor({
             <div className="property-type">
               <div
                 className={`property-type-btn ${
-                  propertyTypeEle === "An Entire place" ? "selected" : ""
+                  propertyTypeEle === "An Entire place" ||
+                  propertyTypeEle === "Entire home/apt"
+                    ? "selected"
+                    : ""
                 }`}
                 onClick={(ev) => {
                   onPropertyChange({
                     target: {
-                      name: "room_type",
+                      name: "roomType",
                       value: "An Entire place",
                     },
                   });
@@ -180,12 +218,15 @@ export function FormEditor({
               </div>
               <div
                 className={`property-type-btn ${
-                  propertyTypeEle === "A Private room" ? "selected" : ""
+                  propertyTypeEle === "A Private room" ||
+                  propertyTypeEle === "Private room"
+                    ? "selected"
+                    : ""
                 }`}
                 onClick={(ev) => {
                   onPropertyChange({
                     target: {
-                      name: "room_type",
+                      name: "roomType",
                       value: "A Private room",
                     },
                   });
@@ -211,7 +252,7 @@ export function FormEditor({
                 onClick={() => {
                   onPropertyChange({
                     target: {
-                      name: "room_type",
+                      name: "roomType",
                       value: "A Shared room",
                     },
                   });
@@ -253,10 +294,7 @@ export function FormEditor({
             </div>
 
             <article className="location">
-              <Component
-                setLocation={setLocation}
-                stayLocation={stay.loc.formatedAddress}
-              />
+              <Component setLocation={setLocation} stayLocation={stay.loc} />
 
               <StayMap loc={stay.loc} />
             </article>

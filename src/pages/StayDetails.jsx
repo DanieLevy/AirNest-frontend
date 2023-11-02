@@ -63,7 +63,7 @@ export function StayDetails() {
         price: currStay.price,
         imgUrls: currStay.imgUrls,
         reviews: currStay.reviews,
-        type: currStay.room_type,
+        type: currStay.roomType,
         summary: currStay.summary,
         nights: formData.nights,
       },

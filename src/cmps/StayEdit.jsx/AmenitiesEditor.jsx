@@ -3,8 +3,8 @@ import { stayService } from "../../services/stay.service.local";
 import { amenitiesData } from "../StayDetails/amenities";
 
 export function AmenitiesEditor({ stay, onAmenitiesChange }) {
-  const [selectedAmenities, setSelectedAmenities] = useState([]);
-  const [amenities, setAmenities] = useState(null);
+  const [selectedAmenities, setSelectedAmenities] = useState(stay.amenities);
+  const [amenities, setAmenities] = useState(stay.amenities);
 
   useEffect(() => {
     const amenities = stayService.getAmenities();
@@ -18,7 +18,7 @@ export function AmenitiesEditor({ stay, onAmenitiesChange }) {
     } else {
       setSelectedAmenities(amenities.map(() => false));
     }
-  }, []);
+  }, [stay]);
 
   const handleInputChange = (index) => {
     const copy = selectedAmenities.slice();

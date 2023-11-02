@@ -210,8 +210,8 @@ function getEmptyStay() {
     imgUrls: [],
     price: '',
     summary: '',
-    room_type: '',
-    capacity: '',
+    roomType: '',
+    capacity: 1,
     amenities: [],
     labels: [],
     loc: {

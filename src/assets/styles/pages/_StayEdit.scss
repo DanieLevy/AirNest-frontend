@@ -1123,3 +1123,44 @@
         transform: translateX(100%);
     }
 }
+
+.location-clear {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    z-index: 100;
+    width: 40px!important;
+    height: 40px!important;
+    margin: 10px!important;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+    border-radius: 2px!important;
+
+    padding: 0!important;
+
+    svg {
+        width: 24px;
+        height: 24px;
+        fill: #717171;
+        transition: all .3s ease-in-out!important;
+    }
+
+    &:hover {
+        background-color: #ffffff!important;
+        svg {
+            fill: #222222;
+            transition: all .3s ease-in-out!important;
+        }
+    }
+
+}
+
+#react-select-3-input {
+
+}
+
+.css-1jqq78o-placeholder {
+    color:#717171!important;
+    font-family: cereal-light!important;
+    font-weight: 400!important;
+}

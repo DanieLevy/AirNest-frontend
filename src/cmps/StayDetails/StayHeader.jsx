@@ -80,21 +80,22 @@ export function StayHeader({ name, imgUrls, reviews, loc, host }) {
                   </div>
                 )}
                 <div className='location flex align-center' onClick={scrollToLocation}>
-                  {loc.city && (
+                  {/* {loc.street && (
                     <span className='location-text'>
-                      {loc.city}
+                      {loc.street}
                       <span>,</span>
                     </span>
                   )}
 
-                  {loc.country && (
+                  {loc.streetNum && (
                     <span className='location-text'>
-                      {loc.country}
+                      {loc.streetNum}
                       <span>,</span>
                     </span>
                   )}
 
-                  {loc.countryCode && <span className='location-text'>{loc.countryCode}</span>}
+                  {loc.city && <span className='location-text'>{loc.city}</span>} */}
+                  <span className='location-text'>{loc.address}</span>
                 </div>
               </div>
               <div className='details-action-buttons flex'>
