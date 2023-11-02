@@ -18,7 +18,7 @@ export function AmenitiesEditor({ stay, onAmenitiesChange }) {
     } else {
       setSelectedAmenities(amenities.map(() => false));
     }
-  }, [stay]);
+  }, []);
 
   const handleInputChange = (index) => {
     const copy = selectedAmenities.slice();

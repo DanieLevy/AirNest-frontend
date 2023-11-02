@@ -28,8 +28,8 @@ export function Component({ setLocation, stayLocation }) {
       const lat = location[0]?.geometry?.location?.lat() ?? "";
       const lng = location[0].geometry.location.lng() ?? "";
 
-      const street = location[0].address_components[0].long_name ?? "";
-      const streetNum = location[0].address_components[1].long_name ?? "";
+      const streetNum = location[0].address_components[0].long_name ?? "";
+      const street = location[0].address_components[1].long_name ?? "";
 
       const locationObj = {
         address,
