@@ -219,17 +219,7 @@ function getEmptyStay() {
   }
 }
 
-// function getLabels() {
-//   return [
-//     { value: 'Top of the world', label: 'Top of the world' },
-//     { value: 'Trending', label: 'Trending' },
-//     { value: 'Play', label: 'Play' },
-//     { value: 'Tropical', label: 'Tropical' },
-//   ]
-// }
-
 function getAmenities() {
-  // return ['TV', 'Wifi', 'Kitchen', 'Smoking allowed', 'Pets allowed', 'Cooking basics', 'Chair']
   return [
     'firePlace',
     'seaView',
