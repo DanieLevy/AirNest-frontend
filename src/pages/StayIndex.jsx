@@ -71,7 +71,7 @@ export function StayIndex() {
               className="show-map-btn"
               onClick={() =>
                 // scroll to top of page
-                window.scrollTo({ top: 80, behavior: "smooth" }) &
+                window.scrollTo({ top: 0, behavior: "smooth" }) &
                 setListMode(!listMode)
               }
             >
