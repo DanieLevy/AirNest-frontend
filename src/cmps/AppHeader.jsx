@@ -241,7 +241,7 @@ export function AppHeader() {
         </React.Fragment>
       ) : null}
 
-      {!isMobile && !isStayPage && !isOrderPage ? (
+      {!isMobile && !isStayPage && !isOrderPage && !isExploreExpanded ? (
         // <div className={isStayPage ? "divider unset" : "divider"}></div>
         // <div
         //   className={`divider2 ${isStayPage ? "unset" : ""} ${
