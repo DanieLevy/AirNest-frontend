@@ -434,7 +434,9 @@
                             border-radius: 50%;
 
                             &:disabled {
-                                background-color: #e2e2e2;
+                                color: #ebebeb;
+                                background-color: rgb(255, 255, 255);
+                                border-color: #ebebeb;
                                 cursor: not-allowed;
                             }
                         }
