@@ -6,7 +6,7 @@ import Chart from "chart.js/auto";
 import { useEffect } from "react";
 
 export function Dashboard() {
-  
+
   const data = [
     {
       id: 1,
@@ -236,9 +236,9 @@ export function Dashboard() {
         <div className="dashboard-table-content">
           <div className="table-header">
             <h2>Recent orders</h2>
-            <div className="table-header-actions">
+            {/* <div className="table-header-actions">
               <button className="btn-primary">View all</button>
-            </div>
+            </div> */}
           </div>
           <div className="table-body">
             <table>
