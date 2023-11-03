@@ -59,6 +59,7 @@ export function ExploreBar({ onExpandChange }) {
   const location = useLocation()
   const path = location.pathname
   const isStayPage = path === '/' || path.startsWith('/?')
+  const isDashboardPage = path === '/dashboard'
 
   useEffect(() => {
     setSelectedGuests((prevState) => ({
@@ -269,7 +270,7 @@ export function ExploreBar({ onExpandChange }) {
       )}
 
       {/* 2 */}
-      {!isExpanded && !isStayPage && !isMobile && (
+      {!isExpanded && !isStayPage && !isMobile && isDashboardPage && (
         <div className={`explore-bar-preview short`} onClick={isExpanded ? null : handleClick}>
           <div className='title'>Start your search</div>
           <button type='button' className='search-btn'>
@@ -277,6 +278,11 @@ export function ExploreBar({ onExpandChange }) {
           </button>
         </div>
       )}
+      
+      {!isExpanded && !isStayPage && !isMobile && !isDashboardPage && (
+          <div className='dashboard-header'>Dashboard</div>
+      )}
+
 
       {/* 3 */}
       <React.Fragment>

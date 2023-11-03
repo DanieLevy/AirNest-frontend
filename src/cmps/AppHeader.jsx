@@ -198,7 +198,13 @@ export function AppHeader() {
                             <li>Trip</li>
                           </Link>
                           <div className="divider"></div>
+                          <Link
+                            to={`/dashboard/${user._id}`}
+                            style={{ textDecorationLine: "none" }}
+                            onClick={() => setUserModal(false)}
+                          >
                           <li>DashBoard</li>
+                          </Link>
                           <Link
                             to={`/user/${user._id}`}
                             style={{ textDecorationLine: "none" }}
