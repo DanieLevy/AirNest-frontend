@@ -26,31 +26,15 @@ export function PropertyEditor({
   selectProperty,
   properties = defaultProperties,
   onPropertyChange,
-})
- {
+}) {
   return (
     <section style={{ display: "flex", gap: 10 }}>
       {properties.map((property) => (
-        <label htmlFor={property.value}>
+        <label htmlFor={property.value} key={property.value}>
           <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              backgroundColor:
-                selectProperty === property.value ? "#F7F7F7" : "",
-              border: `${
-                // selectProperty === property.value ? "#FF385C" : "#95969845"
-                selectProperty === property.value
-                  ? "2px solid black"
-                  : "1px solid #95969845"
-              }`,
-              width: "170px",
-              padding: "24px",
-              borderRadius: "10px",
-              justifyContent: "space-between",
-              cursor: "pointer",
-              height: "125px",
-            }}
+            className={`property-place ${
+              selectProperty === property.value ? "selected" : ""
+            }`}
           >
             <input
               hidden
@@ -64,13 +48,10 @@ export function PropertyEditor({
                     value: ev.target.value,
                   },
                 })
-                }
+              }
               checked={selectProperty === property.value}
             />
-            <property.icon
-              size={30}
-              // color={selectProperty === property.value ? "#FF385C" : ""}
-            />
+            <property.icon size={30} />
             <h1 style={{ fontSize: "18px", textTransform: "capitalize" }}>
               {property.value}
             </h1>

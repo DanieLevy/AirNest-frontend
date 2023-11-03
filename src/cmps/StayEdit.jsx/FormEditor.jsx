@@ -84,7 +84,7 @@ export function FormEditor({
       case 2:
         return isValidPropertyType(propertyType);
       case 3:
-        return false;
+        return !stay.loc.country || !stay.loc.city || !stay.loc.street;
       case 4:
         return !capacity || !beds;
       case 5:
@@ -500,7 +500,7 @@ export function FormEditor({
               </span>
             </div>
             <AmenitiesEditor
-              stay={stay}
+              selectedAmenities={stay.amenities}
               onAmenitiesChange={onAmenitiesChange}
             />
           </section>
