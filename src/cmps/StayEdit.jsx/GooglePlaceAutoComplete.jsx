@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
 import { geocodeByPlaceId } from "react-google-places-autocomplete";
-import { showErrorMsg } from "../../services/event-bus.service";
+import { showErrorMsg, showSuccessMsg } from "../../services/event-bus.service";
 import { add } from "date-fns";
 import { AiOutlineClear } from "react-icons/ai";
 
@@ -17,36 +17,43 @@ export function Component({ setLocation, stayLocation }) {
 
   async function getPlaceDetails(placeId) {
     try {
-      const location = await geocodeByPlaceId(placeId, "en");
+      const location = await geocodeByPlaceId(placeId);
 
-      const address = location[0].formatted_address ?? "";
-      const city = location[0]?.address_components[3]?.long_name ?? "";
-      const country = location[0]?.address_components[5]?.long_name ?? "";
-      const countryCode = location[0]?.address_components[5]?.short_name ?? "";
-      const state = location[0]?.address_components[4]?.long_name ?? "";
+      const locationDetails = location[0].address_components.reduce(
+        (acc, curr) => {
+          if (curr.types.includes("route")) {
+            acc.street = curr.short_name;
+          }
+          if (curr.types.includes("locality")) {
+            acc.city = curr.long_name;
+          }
+          if (curr.types.includes("country")) {
+            acc.country = curr.long_name;
+            acc.countryCode = curr.short_name;
+          }
+          if (curr.types.includes("administrative_area_level_1")) {
+            acc.state = curr.long_name;
+          }
+          return acc;
+        },
+        {}
+      );
 
-      const lat = location[0]?.geometry?.location?.lat() ?? "";
-      const lng = location[0].geometry.location.lng() ?? "";
+      const streetNumber = location[0].address_components.find((address) =>
+        address.types.includes("street_number")
+      );
+      if (streetNumber) locationDetails.streetNum = streetNumber.short_name;
 
-      const streetNum = location[0].address_components[0].long_name ?? "";
-      const street = location[0].address_components[1].long_name ?? "";
+      locationDetails.address = location[0].formatted_address;
+      locationDetails.lat = location[0].geometry.location.lat();
+      locationDetails.lng = location[0].geometry.location.lng();
+      locationDetails.placeId = placeId;
+      setLocation(locationDetails);
 
-      const locationObj = {
-        address,
-        city,
-        country,
-        countryCode,
-        state,
-        lat,
-        lng,
-        street,
-        streetNum,
-      };
-
-      setLocation(locationObj);
-    } catch (err) {
-      showErrorMsg("Cannot load location");
-      console.log(err);
+      if (!locationDetails.street)
+        showErrorMsg("Please provide a street address.");
+    } catch (error) {
+      console.error(error);
     }
   }
 
@@ -56,13 +63,14 @@ export function Component({ setLocation, stayLocation }) {
   }
   return (
     <section className="google-autocomplete">
-      <button className="btn location-clear"
+      <button
+        className="btn location-clear"
         hidden={!address}
         aria-label="Clear address"
         title="Clear address"
         name="Clear address"
-
-       onClick={clearAddress} type="button"
+        onClick={clearAddress}
+        type="button"
       >
         <AiOutlineClear />
       </button>

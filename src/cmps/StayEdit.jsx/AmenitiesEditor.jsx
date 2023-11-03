@@ -2,64 +2,50 @@ import { useState, useEffect } from "react";
 import { stayService } from "../../services/stay.service.local";
 import { amenitiesData } from "../StayDetails/amenities";
 
-export function AmenitiesEditor({ stay, onAmenitiesChange }) {
-  const [selectedAmenities, setSelectedAmenities] = useState(stay.amenities);
-  const [amenities, setAmenities] = useState(stay.amenities);
+const allAmenities = stayService.getAmenities();
 
-  useEffect(() => {
-    const amenities = stayService.getAmenities();
-    setAmenities(amenities);
-
-    if (stay._id) {
-      const stayAmenities = stay.amenities.map((ament) => ament.toLowerCase());
-      setSelectedAmenities(
-        amenities.map((ament) => stayAmenities.includes(ament.toLowerCase()))
-      );
+export function AmenitiesEditor({ selectedAmenities, onAmenitiesChange }) {
+  const handleInputChange = (ament) => {
+    if (selectedAmenities.includes(ament)) {
+      const withoutAment = selectedAmenities.filter((a) => a != ament);
+      onAmenitiesChange(withoutAment);
     } else {
-      setSelectedAmenities(amenities.map(() => false));
+      onAmenitiesChange([...selectedAmenities, ament]);
     }
-  }, []);
-
-  const handleInputChange = (index) => {
-    const copy = selectedAmenities.slice();
-    copy[index] = !copy[index];
-    setSelectedAmenities(copy);
-    const names = amenities.filter((_, i) => copy[i]);
-    onAmenitiesChange(names);
   };
 
-
-  if (!amenities) return;
+  if (!allAmenities) return;
   return (
-    <section
-      className="amenities-editor"
-    >
-      {amenities.map((ament, i) => (
-        <label
-          key={ament}
-          htmlFor={ament}
-          className={`amenity ${selectedAmenities[i] ? "selected" : ""}`}
-        >
-          <input
-            style={{
-              display: "none",
-            }}
-            onChange={() => handleInputChange(i)}
-            name={ament}
-            type="checkbox"
-            id={ament}
-            checked={selectedAmenities[i]}
-          />
-          <div className="amenity-logo">
-          {
-            <svg width="32" height="32" stroke="">
-              {amenitiesData[ament].svg}
-            </svg>
-          }
-          </div>
-          <div className="amenity-title">{amenitiesData[ament].title}</div>
-        </label>
-      ))}
+    <section className="amenities-editor">
+      {allAmenities.map((ament, i) => {
+        const isChecked = selectedAmenities.includes(ament);
+        return (
+          <label
+            key={ament}
+            htmlFor={ament}
+            className={`amenity ${isChecked ? "selected" : ""}`}
+          >
+            <input
+              style={{
+                display: "none",
+              }}
+              onChange={() => handleInputChange(ament, i)}
+              name={ament}
+              type="checkbox"
+              id={ament}
+              checked={isChecked}
+            />
+            <div className="amenity-logo">
+              {
+                <svg width="32" height="32" stroke="">
+                  {amenitiesData[ament].svg}
+                </svg>
+              }
+            </div>
+            <div className="amenity-title">{amenitiesData[ament].title}</div>
+          </label>
+        );
+      })}
     </section>
   );
 }
