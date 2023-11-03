@@ -1,8 +1,10 @@
-import { storageService } from './async-storage.service.js'
+// import { storageService } from './async-storage.service.js'
+
 import { utilService } from './util.service.js'
 import { userService } from './user.service.js'
 import { staysDemonData } from './stayDemoData.js'
-const STORAGE_KEY = 'stayDB'
+import { httpService } from './http.service.js'
+const STORAGE_KEY = 'stay'
 
 export const stayService = {
   query,
@@ -26,7 +28,7 @@ async function query(params) {
   const paramsObj = getParams(params)
 
   let capacity = +paramsObj?.adults + +paramsObj?.children
-  let stays = await storageService.query(STORAGE_KEY)
+  let stays = await httpService.get(STORAGE_KEY)
   let staysToReturn = stays
 
   if (capacity) staysToReturn = staysToReturn.filter((stay) => stay.capacity >= capacity)
@@ -105,10 +107,10 @@ function getResultLength(filterBy, properties) {
 }
 
 function getById(stayId) {
-  return storageService.get(STORAGE_KEY, stayId)
+  return httpService.get(STORAGE_KEY, stayId)
 }
 async function getStaysByUserId(userId) {
-  let stays = await storageService.query(STORAGE_KEY)
+  let stays = await httpService.get(STORAGE_KEY)
 
   stays = stays.filter((stay) => stay.host._id === userId)
 
@@ -119,17 +121,17 @@ async function getStaysByUserId(userId) {
 }
 
 async function remove(stayId) {
-  await storageService.remove(STORAGE_KEY, stayId)
+  await httpService.remove(STORAGE_KEY, stayId)
 }
 
 async function save(stay) {
   console.log('stay:', stay)
   let savedStay
   const { _id, fullname, imgUrl } = await userService.getLoggedinUser()
-  stay.imgUrls = stay.imgUrls.filter((url) => url)
+  stay.imgUrls = stay.imgUrls.httpService((url) => url)
 
   if (stay._id) {
-    savedStay = await storageService.put(STORAGE_KEY, stay)
+    savedStay = await httpService.put(STORAGE_KEY, stay)
   } else {
     stay._id = utilService.makeId()
     stay.host = {
@@ -138,26 +140,26 @@ async function save(stay) {
       imgUrl: imgUrl || '',
     }
     stay.reviews = _reviewDemoData()
-    savedStay = await storageService.post(STORAGE_KEY, stay)
+    savedStay = await httpService.post(STORAGE_KEY, stay)
   }
   return savedStay
 }
 
-async function addStayMsg(stayId, txt) {
-  // Later, this is all done by the backend
-  const stay = await getById(stayId)
-  if (!stay.msgs) stay.msgs = []
+// async function addStayMsg(stayId, txt) {
+//   // Later, this is all done by the backend
+//   const stay = await getById(stayId)
+//   if (!stay.msgs) stay.msgs = []
 
-  const msg = {
-    id: utilService.makeId(),
-    by: userService.getLoggedinUser(),
-    txt,
-  }
-  stay.msgs.push(msg)
-  await storageService.put(STORAGE_KEY, stay)
+//   const msg = {
+//     id: utilService.makeId(),
+//     by: userService.getLoggedinUser(),
+//     txt,
+//   }
+//   stay.msgs.push(msg)
+//   await storageService.put(STORAGE_KEY, stay)
 
-  return msg
-}
+//   return msg
+// }
 
 async function _getStayLatLang(address, city, countryCode) {
   const response = await fetch(
@@ -217,14 +219,14 @@ function getEmptyStay() {
   }
 }
 
-function getLabels() {
-  return [
-    { value: 'Top of the world', label: 'Top of the world' },
-    { value: 'Trending', label: 'Trending' },
-    { value: 'Play', label: 'Play' },
-    { value: 'Tropical', label: 'Tropical' },
-  ]
-}
+// function getLabels() {
+//   return [
+//     { value: 'Top of the world', label: 'Top of the world' },
+//     { value: 'Trending', label: 'Trending' },
+//     { value: 'Play', label: 'Play' },
+//     { value: 'Tropical', label: 'Tropical' },
+//   ]
+// }
 
 function getAmenities() {
   // return ['TV', 'Wifi', 'Kitchen', 'Smoking allowed', 'Pets allowed', 'Cooking basics', 'Chair']
@@ -297,21 +299,21 @@ function getPropertyType() {
   return ['home', 'apartment', 'guesthouse', 'hotel']
 }
 
-async function _createDemoData() {
-  let getStays = await storageService.query(STORAGE_KEY)
-  if (!getStays || getStays.length < 1) {
-    for (let stay of stays) {
-      for (let review of stay.reviews) {
-        let randomNum = utilService.getRandomIntInclusive(1, 200)
-        review.by.imgUrl = `https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/${randomNum}.jpg`
-      }
-      await storageService.post(STORAGE_KEY, stay)
-    }
-  }
-}
-_createDemoData()
+// async function _createDemoData() {
+//   let getStays = await storageService.query(STORAGE_KEY)
+//   if (!getStays || getStays.length < 1) {
+//     for (let stay of stays) {
+//       for (let review of stay.reviews) {
+//         let randomNum = utilService.getRandomIntInclusive(1, 200)
+//         review.by.imgUrl = `https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/${randomNum}.jpg`
+//       }
+//       await storageService.post(STORAGE_KEY, stay)
+//     }
+//   }
+// }
+// _createDemoData()
 
-const stays = staysDemonData
+// const stays = staysDemonData
 
 function _reviewDemoData() {
   return [
