@@ -18,12 +18,14 @@ export function CheckoutForm({ onSubmit, price, reviews, capacity }) {
   const [isStayPage, setIsStayPage] = useState(
     location.pathname.startsWith("/stay")
   );
-  const [selectedRange, setSelectedRange] = useState(
-    {
-      from: searchParams.has(QUERY_KEYS.checkin) ? new Date(+searchParams.get(QUERY_KEYS.checkin)) : new Date(),
-      to: searchParams.has(QUERY_KEYS.checkout) ? new Date(+searchParams.get(QUERY_KEYS.checkout)) : addDays(new Date(), 7),
-    }
-  );
+  const [selectedRange, setSelectedRange] = useState({
+    from: searchParams.has(QUERY_KEYS.checkin)
+      ? new Date(+searchParams.get(QUERY_KEYS.checkin))
+      : new Date(),
+    to: searchParams.has(QUERY_KEYS.checkout)
+      ? new Date(+searchParams.get(QUERY_KEYS.checkout))
+      : addDays(new Date(), 7),
+  });
 
   const [isDatesModal, setIsDatesModal] = useState(false);
   const [isGuestsModal, setIsGuestsModal] = useState(false);
@@ -49,48 +51,47 @@ export function CheckoutForm({ onSubmit, price, reviews, capacity }) {
   const stayGalleryRef = useRef(null);
 
   useEffect(() => {
-    const stayDetailsAsideElement = document.querySelector(
-      ".stay-details-aside"
-    );
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          setAsideInViewport(true);
-        } else {
-          setAsideInViewport(false);
-        }
+    if (!isMobile) {
+      const stayDetailsAsideElement = document.querySelector(".stay-details-aside");
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setAsideInViewport(true);
+          } else {
+            setAsideInViewport(false);
+          }
+        });
       });
-    });
-
-    observer.observe(stayDetailsAsideElement);
-
-    return () => {
-      observer.unobserve(stayDetailsAsideElement);
-    };
-  }, []);
-
+  
+      observer.observe(stayDetailsAsideElement);
+  
+      return () => {
+        observer.unobserve(stayDetailsAsideElement);
+      };
+    }
+  }, [isMobile]);
+  
   useEffect(() => {
-    const stayGalleryElement = document.querySelector(
-      ".images-editor-container"
-    );
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          setGalleryInViewport(true);
-        } else {
-          setGalleryInViewport(false);
-        }
+    if (!isMobile) {
+      const stayGalleryElement = document.querySelector(".images-editor-container");
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setGalleryInViewport(true);
+          } else {
+            setGalleryInViewport(false);
+          }
+        });
       });
-    });
+  
+      observer.observe(stayGalleryElement);
+  
+      return () => {
+        observer.unobserve(stayGalleryElement);
+      };
+    }
+  }, [isMobile]);
 
-    observer.observe(stayGalleryElement);
-
-    return () => {
-      observer.unobserve(stayGalleryElement);
-    };
-  }, []);
 
   useEffect(() => {
     dateDiffDays ? setIsCheckoutSum(true) : setIsCheckoutSum(false);
@@ -198,7 +199,6 @@ export function CheckoutForm({ onSubmit, price, reviews, capacity }) {
 
     return placeholder;
   };
-
 
   return (
     <React.Fragment>
@@ -329,7 +329,11 @@ export function CheckoutForm({ onSubmit, price, reviews, capacity }) {
                             adults: selectedGuests.adults + 1,
                           })
                         }
-                        disabled={selectedGuests.adults === 16 || selectedGuests.adults + selectedGuests.children === capacity}
+                        disabled={
+                          selectedGuests.adults === 16 ||
+                          selectedGuests.adults + selectedGuests.children ===
+                            capacity
+                        }
                       >
                         <AiOutlinePlus />
                       </button>
@@ -368,7 +372,11 @@ export function CheckoutForm({ onSubmit, price, reviews, capacity }) {
                             children: selectedGuests.children + 1,
                           })
                         }
-                        disabled={selectedGuests.children === 16 || selectedGuests.adults + selectedGuests.children === capacity}
+                        disabled={
+                          selectedGuests.children === 16 ||
+                          selectedGuests.adults + selectedGuests.children ===
+                            capacity
+                        }
                       >
                         <AiOutlinePlus />
                       </button>
@@ -468,11 +476,15 @@ export function CheckoutForm({ onSubmit, price, reviews, capacity }) {
                           <span className="link">
                             ${price} x {dateDiffDays.toFixed(0)} nights
                           </span>
-                          <span className="price">${price * dateDiffDays.toFixed(2)}</span>
+                          <span className="price">
+                            ${price * dateDiffDays.toFixed(2)}
+                          </span>
                         </div>
                         <div className="footer-price-fee">
                           <span className="link">Airbnb service fee</span>
-                          <span className="price">${(totalSum * 0.125).toFixed(2)}</span>
+                          <span className="price">
+                            ${(totalSum * 0.125).toFixed(2)}
+                          </span>
                         </div>
                       </div>
                       <div className="footer-price-sum">
@@ -504,103 +516,114 @@ export function CheckoutForm({ onSubmit, price, reviews, capacity }) {
                   - {selectedRange.to ? format(selectedRange.to, "dd MMM") : ""}
                 </span>
               </div>
-              <BrandedBtn txt="Reserve" className="stay-footer-btn" />
+                    <div className="stay-footer-btn-c"
+                    style={{width: "100px", height: "48px", alignSelf: "center"}}
+                    // width: 100px;
+                    // height: 48px;
+                    // align-self: center;
+                    >
+              <BrandedBtn txt="Reserve" className="stay-footer-btn" width={100} />
+              </div>
             </div>
           </footer>
         </form>
       )}
-
-      <header
-        className="main-layout stayDetails
+      {!isMobile && !isStayPage && (
+        <header
+          className="main-layout stayDetails
         checkout-header"
-        style={
-          !galleryInViewport
-            ? { position: "fixed", top: "0" }
-            : { position: "fixed", top: "-90px" }
-        }
-      >
-        <div className="checkout-header-container flex">
-          <div
-            className="checkout-header-btn"
-            onClick={() => {
-              scrollToElement("images-editor-container");
-            }}
-          >
-            <div className="checkout-header-btn-title">Photos</div>
-          </div>
-          <div
-            className="checkout-header-btn"
-            onClick={() => {
-              scrollToElement("stay-amenities");
-            }}
-          >
-            <div className="checkout-header-btn-title">Amenities</div>
-          </div>
-          <div
-            className="checkout-header-btn"
-            onClick={() => {
-              scrollToElement("reviews-container");
-            }}
-          >
-            <div className="checkout-header-btn-title">Reviews</div>
-          </div>
-          <div
-            className="checkout-header-btn"
-            onClick={() => {
-              scrollToElement("details-map");
-            }}
-          >
-            <div className="checkout-header-btn-title">Location</div>
-          </div>
-        </div>
-        <div className="checkout-header-order">
-          <div className="order-details"
-            style={
-              !asideInViewport
-                ? { opacity: "1", minWidth: "110px" }
-                : { opacity: "0", minWidth: "0px" }
-            }
-          >
-            <div className="order-price">
-              <span className="price">${price}</span>
-              <span className="night"> night</span>
+          style={
+            !galleryInViewport
+              ? { position: "fixed", top: "0" }
+              : { position: "fixed", top: "-90px" }
+          }
+        >
+          <div className="checkout-header-container flex">
+            <div
+              className="checkout-header-btn"
+              onClick={() => {
+                scrollToElement("images-editor-container");
+              }}
+            >
+              <div className="checkout-header-btn-title">Photos</div>
             </div>
-            <div className="order-rating">
-              <span className="star">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 32 32"
-                  aria-hidden="true"
-                  role="presentation"
-                  focusable="false"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="m15.1 1.58-4.13 8.88-9.86 1.27a1 1 0 0 0-.54 1.74l7.3 6.57-1.97 9.85a1 1 0 0 0 1.48 1.06l8.62-5 8.63 5a1 1 0 0 0 1.48-1.06l-1.97-9.85 7.3-6.57a1 1 0 0 0-.55-1.73l-9.86-1.28-4.12-8.88a1 1 0 0 0-1.82 0z"
-                  ></path>
-                </svg>
-              </span>
-              <span className="avg-rate">{avgRate.toFixed(2)} ·</span>
-              <span className="reviews">{reviews.length} reviews</span>
+            <div
+              className="checkout-header-btn"
+              onClick={() => {
+                scrollToElement("stay-amenities");
+              }}
+            >
+              <div className="checkout-header-btn-title">Amenities</div>
+            </div>
+            <div
+              className="checkout-header-btn"
+              onClick={() => {
+                scrollToElement("reviews-container");
+              }}
+            >
+              <div className="checkout-header-btn-title">Reviews</div>
+            </div>
+            <div
+              className="checkout-header-btn"
+              onClick={() => {
+                scrollToElement("details-map");
+              }}
+            >
+              <div className="checkout-header-btn-title">Location</div>
             </div>
           </div>
-          <div
-            className="order-btn"
-            style={
-              !asideInViewport
-                ? { opacity: "1", minWidth: "110px" }
-                : { opacity: "0", minWidth: "0px" }
-            }
-            onClick={(ev) => {
-              ev.stopPropagation();
-              !selectedRange.from || !selectedRange.to ? scrollToElement("stay-details-aside") : console.log('nope');
-              handleSubmit(ev);
-            }}
-          >
-            <BrandedBtn txt="Reserve" />
+          <div className="checkout-header-order">
+            <div
+              className="order-details"
+              style={
+                !asideInViewport
+                  ? { opacity: "1", minWidth: "110px" }
+                  : { opacity: "0", minWidth: "0px" }
+              }
+            >
+              <div className="order-price">
+                <span className="price">${price}</span>
+                <span className="night"> night</span>
+              </div>
+              <div className="order-rating">
+                <span className="star">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 32 32"
+                    aria-hidden="true"
+                    role="presentation"
+                    focusable="false"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="m15.1 1.58-4.13 8.88-9.86 1.27a1 1 0 0 0-.54 1.74l7.3 6.57-1.97 9.85a1 1 0 0 0 1.48 1.06l8.62-5 8.63 5a1 1 0 0 0 1.48-1.06l-1.97-9.85 7.3-6.57a1 1 0 0 0-.55-1.73l-9.86-1.28-4.12-8.88a1 1 0 0 0-1.82 0z"
+                    ></path>
+                  </svg>
+                </span>
+                <span className="avg-rate">{avgRate.toFixed(2)} ·</span>
+                <span className="reviews">{reviews.length} reviews</span>
+              </div>
+            </div>
+            <div
+              className="order-btn"
+              style={
+                !asideInViewport
+                  ? { opacity: "1", minWidth: "110px" }
+                  : { opacity: "0", minWidth: "0px" }
+              }
+              onClick={(ev) => {
+                ev.stopPropagation();
+                !selectedRange.from || !selectedRange.to
+                  ? scrollToElement("stay-details-aside")
+                  : console.log("nope");
+                handleSubmit(ev);
+              }}
+            >
+              <BrandedBtn txt="Reserve" />
+            </div>
           </div>
-        </div>
-      </header>
+        </header>
+      )}
     </React.Fragment>
   );
 }
