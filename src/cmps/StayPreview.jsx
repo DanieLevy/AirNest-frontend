@@ -24,9 +24,9 @@ export function StayPreview({ stay }) {
 
   const randomDateRangeRef = useRef()
 
-  const userLikedStays = stays.filter((stay) =>
-    stay.likedByUsers.some((likedUser) => likedUser._id === user._id)
-  )
+  const userLikedStays = user
+    ? stays.filter((stay) => stay.likedByUsers.some((likedUser) => likedUser._id === user._id))
+    : []
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768)
