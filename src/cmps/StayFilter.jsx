@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { LabelsCarousel } from "./LabelsCarousel";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -39,6 +39,7 @@ export function StayFilter() {
   const [resultLength, setResultLength] = useState(stays.length);
   const [barHeights, setBarHeights] = useState([]);
   const [barHeight, setBarHeight] = useState(0);
+  const backdropRef = useRef(null);
 
   const amenities = [
     {
@@ -112,6 +113,12 @@ export function StayFilter() {
       setIsMobile(window.innerWidth < 768);
     };
 
+    const handleBackdropClick = (event) => {
+      if (event.target === backdropRef.current) {
+        setFilterModal(false);
+      }
+    };
+    document.addEventListener("click", handleBackdropClick);
     window.addEventListener("resize", handleResize);
     window.addEventListener("scroll", handleScroll);
     window.addEventListener("click", (e) => {
@@ -121,6 +128,7 @@ export function StayFilter() {
     });
 
     return () => {
+      document.removeEventListener("click", handleBackdropClick);
       window.removeEventListener("resize", handleResize);
       window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("click", (e) => {
@@ -381,6 +389,7 @@ export function StayFilter() {
 
       <section
         className="filter-modal-container"
+        ref={backdropRef}
         style={
           filterModal
             ? { transform: "translateY(0)", backgroundColor: "rgba(0,0,0,0.5)" }
