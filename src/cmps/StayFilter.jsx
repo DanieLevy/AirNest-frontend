@@ -17,6 +17,7 @@ export function StayFilter() {
   const [paddingTop, setPaddingTop] = useState(15);
   const [paddingBottom, setPaddingBottom] = useState(15);
   const [boxShadow, setBoxShadow] = useState("none");
+  const [isScrolled, setIsScrolled] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const [filterModal, setFilterModal] = useState(false);
   const [inputBoxShadow1, setInputBoxShadow1] = useState(
@@ -224,9 +225,11 @@ export function StayFilter() {
       setPaddingTop(10);
       setPaddingBottom(10);
       setBoxShadow("rgb(0 0 0 / 16%) 0 0 6px");
+      setIsScrolled(true);
     } else {
       setPaddingTop(15);
       setBoxShadow("none");
+      setIsScrolled(false);
     }
   };
 
@@ -344,7 +347,7 @@ export function StayFilter() {
         <section
           className="main-layout header-content"
           style={{
-            paddingTop: `${paddingTop}px`,
+            paddingTop: isScrolled ? `8px` : "25px",
             boxShadow: `${boxShadow}`,
             paddingBottom: `${paddingBottom}px`,
           }}
