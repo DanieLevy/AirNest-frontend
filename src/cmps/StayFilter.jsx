@@ -418,6 +418,7 @@ export function StayFilter() {
                     value={[minPrice, maxPrice]}
                     trackStyle={{ backgroundColor: "#222222", height: "3px" }}
                     handleStyle={{
+                      cursor: "pointer",
                       backgroundColor: "white",
                       border: "none",
                       backgroundColor: "#fff",
