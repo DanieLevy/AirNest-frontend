@@ -274,6 +274,58 @@
                 }
             }
 
+            & .stay-property {
+                min-width: 400px;
+                padding: 32px 0;
+                border-top: 1px solid #e0e0e0;
+
+                & .stay-property-title {
+                    font-size: 22px;
+                    font-weight: 600;
+                    line-height: 26px;
+
+                    padding: 0 0 24px 0;
+                }
+
+                & .property-place {
+                    display: flex;
+                    flex-direction: column;
+                    outline: 1px solid #95969845;
+                    width: 170px;
+                    padding: 15px;
+                    border-radius: 10px;
+                    justify-content: space-between;
+                    cursor: pointer;
+                    height: 125px;
+                    transition: all 100ms ease-in-out;
+                    user-select: none;
+
+                    &:hover {
+                        outline: 1px solid #222222 !important;
+                    }
+
+                    &:active {
+                        scale: 0.94;
+                    }
+
+                    &.selected {
+                        outline: 2px solid #222222 !important;
+                        background-color: #F7F7F7 !important;
+                    }
+
+                    .property-title {
+                        font-size: 1rem;
+                        font-weight: 600;
+                    }
+
+                    .property-title::first-letter {
+                        text-transform: uppercase;
+                    }
+
+                }
+
+            }
+
             & .stay-ammenities {
                 min-width: 400px;
                 padding: 32px 0;
