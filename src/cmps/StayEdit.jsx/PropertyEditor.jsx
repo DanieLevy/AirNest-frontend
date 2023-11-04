@@ -1,24 +1,24 @@
-import { LuHotel } from "react-icons/lu";
-import { HiOutlineHome } from "react-icons/hi2";
-import { BsHouses } from "react-icons/bs";
-import { MdApartment } from "react-icons/md";
+import { LuHotel } from 'react-icons/lu';
+import { HiOutlineHome } from 'react-icons/hi2';
+import { BsHouses } from 'react-icons/bs';
+import { MdApartment } from 'react-icons/md';
 
 const defaultProperties = [
   {
-    value: "home",
+    value: 'house',
     icon: HiOutlineHome,
   },
   {
-    value: "hotel",
-    icon: LuHotel,
+    value: 'apartment',
+    icon: MdApartment,
   },
   {
-    value: "guesthouse",
+    value: 'guesthouse',
     icon: BsHouses,
   },
   {
-    value: "apartment",
-    icon: MdApartment,
+    value: 'hotel',
+    icon: LuHotel,
   },
 ];
 
@@ -28,23 +28,19 @@ export function PropertyEditor({
   onPropertyChange,
 }) {
   return (
-    <section style={{ display: "flex", gap: 10 }}>
+    <section style={{ display: 'flex', gap: 10 }}>
       {properties.map((property) => (
         <label htmlFor={property.value} key={property.value}>
-          <div
-            className={`property-place ${
-              selectProperty === property.value ? "selected" : ""
-            }`}
-          >
+          <div className={`property-place ${selectProperty === property.value ? 'selected' : ''}`}>
             <input
               hidden
-              type="radio"
+              type='radio'
               id={property.value}
               value={property.value}
               onChange={(ev) =>
                 onPropertyChange({
                   target: {
-                    name: "propertyType",
+                    name: 'propertyType',
                     value: ev.target.value,
                   },
                 })
@@ -52,9 +48,7 @@ export function PropertyEditor({
               checked={selectProperty === property.value}
             />
             <property.icon size={30} />
-            <h1 style={{ fontSize: "18px", textTransform: "capitalize" }}>
-              {property.value}
-            </h1>
+            <h1 style={{ fontSize: '18px', textTransform: 'capitalize' }}>{property.value}</h1>
           </div>
         </label>
       ))}
