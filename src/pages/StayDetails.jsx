@@ -54,6 +54,7 @@ export function StayDetails() {
       dispatch({ type: LOADING_DONE })
     }
   }
+
   function handleCheckoutSubmit(formData) {
     const orderDetails = {
       ...formData,

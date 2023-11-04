@@ -29,14 +29,12 @@ async function remove(orderId) {
 }
 
 async function add(orderDetails) {
-  const { checkIn, checkOut, adults, children, stay, buyer, hostId, hostName, status } =
-    orderDetails
+  const { checkIn, checkOut, guests, stay, buyer, hostId, hostName, status } = orderDetails
 
   const orderToAdd = {
     checkIn,
     checkOut,
-    adults,
-    children,
+    guests,
     status,
     stay: {
       _id: stay._id,
@@ -52,8 +50,8 @@ async function add(orderDetails) {
   }
 
   try {
-    const addedOrder = await storageService.post('order', orderToAdd)
-    // const addedOrder = await httpService.post('orders', {orderDetails})
+    // const addedOrder = await storageService.post('order', orderToAdd)
+    const addedOrder = await httpService.post('orders', orderToAdd)
     return addedOrder
   } catch (err) {
     console.log('problem adding order!', err)
