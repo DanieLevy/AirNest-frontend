@@ -9,8 +9,10 @@ export const orderService = {
 }
 
 async function query(filterBy = {}) {
+  console.log('🚀 ~ file: order.service.js:12 ~ query ~ filterBy:', filterBy)
   try {
-    const orders = await storageService.query('order')
+    // const orders = await storageService.query('order')
+    const orders = await httpService.get('order', filterBy)
 
     if (filterBy.logginUser) {
       return orders.filter((order) => order.buyer._id === filterBy.logginUser._id)
@@ -29,29 +31,29 @@ async function remove(orderId) {
 }
 
 async function add(orderDetails) {
-  const { checkIn, checkOut, guests, stay, buyer, hostId, hostName, status } = orderDetails
+  // const { checkIn, checkOut, guests, stay, buyer, hostId, hostName, status } = orderDetails
 
-  const orderToAdd = {
-    checkIn,
-    checkOut,
-    guests,
-    status,
-    stay: {
-      _id: stay._id,
-      name: stay.name,
-      price: stay.price,
-    },
-    buyer: {
-      _id: buyer._id,
-      fullname: buyer.fullname,
-    },
-    hostId,
-    hostName,
-  }
+  // const orderToAdd = {
+  //   checkIn,
+  //   checkOut,
+  //   guests,
+  //   status,
+  //   stay: {
+  //     _id: stay._id,
+  //     name: stay.name,
+  //     price: stay.price,
+  //   },
+  //   buyer: {
+  //     _id: buyer._id,
+  //     fullname: buyer.fullname,
+  //   },
+  //   hostId,
+  //   hostName,
+  // }
 
   try {
     // const addedOrder = await storageService.post('order', orderToAdd)
-    const addedOrder = await httpService.post('orders', orderToAdd)
+    const addedOrder = await httpService.post('orders', orderDetails)
     return addedOrder
   } catch (err) {
     console.log('problem adding order!', err)

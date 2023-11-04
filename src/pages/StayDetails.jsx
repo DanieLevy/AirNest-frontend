@@ -73,7 +73,7 @@ export function StayDetails() {
     }
 
     dispatch(getActionStageOrder(orderDetails))
-    showSuccessMsg('Order staged for confirmation.')
+    showSuccessMsg('Yay! please confirm the order.')
     // showErrorMsg('Order staged for confirmation.')
     navigate('/order/confirm')
   }
