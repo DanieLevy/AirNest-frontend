@@ -1,65 +1,65 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { DayPicker } from 'react-day-picker'
+import React, { useEffect, useRef, useState } from 'react';
+import { DayPicker } from 'react-day-picker';
 
-import { BrandedBtn } from './BrandedBtn'
-import { useLocation } from 'react-router'
+import { BrandedBtn } from './BrandedBtn';
+import { useLocation } from 'react-router';
 
 /// Dont remove! - DatesModal is used in this component
-import { DatesModal } from './DatesModal'
-import { FadeIn } from 'react-slide-fade-in'
-import { set } from 'date-fns'
-import { is } from 'date-fns/locale'
+import { DatesModal } from './DatesModal';
+import { FadeIn } from 'react-slide-fade-in';
+import { set } from 'date-fns';
+import { is } from 'date-fns/locale';
 /// Dont remove! - DatesModal is used in this component
 
-import { IoSearch } from 'react-icons/io5'
-import { AiOutlineMinus } from 'react-icons/ai'
-import { AiOutlinePlus } from 'react-icons/ai'
-import { CiLocationArrow1 } from 'react-icons/ci'
-import { CgSearch } from 'react-icons/cg'
-import { useSearchParams } from 'react-router-dom'
-import { QUERY_KEYS } from '../services/util.service'
-import { utilService } from '../services/util.service'
-import { store } from '../store/store'
-import { useDispatch } from 'react-redux'
+import { IoSearch } from 'react-icons/io5';
+import { AiOutlineMinus } from 'react-icons/ai';
+import { AiOutlinePlus } from 'react-icons/ai';
+import { CiLocationArrow1 } from 'react-icons/ci';
+import { CgSearch } from 'react-icons/cg';
+import { useSearchParams } from 'react-router-dom';
+import { QUERY_KEYS } from '../services/util.service';
+import { utilService } from '../services/util.service';
+import { store } from '../store/store';
+import { useDispatch } from 'react-redux';
 
 export function ExploreBar({ onExpandChange }) {
-  const dispatch = useDispatch()
-  const [searchParams, setSearchParams] = useSearchParams()
-  const [isExpanded, setIsExpanded] = useState(false)
-  const [isActive, setIsActive] = useState(null)
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 768)
+  const dispatch = useDispatch();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [isActive, setIsActive] = useState(null);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
   function handleExpandChange(value = null) {
-    const newValue = value === null ? !isExpanded : value
-    console.log('newValue', newValue)
-    dispatch({ type: 'SET_EXPLORE_EXPANDED', isExploreExpanded: newValue })
-    setIsExpanded(newValue)
+    const newValue = value === null ? !isExpanded : value;
+    console.log('newValue', newValue);
+    dispatch({ type: 'SET_EXPLORE_EXPANDED', isExploreExpanded: newValue });
+    setIsExpanded(newValue);
   }
 
   const [formData, setFormData] = useState({
     location: '',
     startDate: null,
     endDate: null,
-  })
+  });
 
   const [selectedRange, setSelectedRange] = useState({
     from: null,
     to: null,
-  })
+  });
 
   const [selectedGuests, setSelectedGuests] = useState({
     adults: 0,
     children: 0,
     infants: 0,
     pets: 0,
-  })
+  });
 
-  const expandedBarRef = useRef(null)
+  const expandedBarRef = useRef(null);
 
-  const location = useLocation()
-  const path = location.pathname
-  const isStayPage = path === '/' || path.startsWith('/?')
-  const isDashboardPage = path === '/dashboard'
+  const location = useLocation();
+  const path = location.pathname;
+  const isStayPage = path === '/' || path.startsWith('/?');
+  const isDashboardPage = path === '/dashboard';
 
   useEffect(() => {
     setSelectedGuests((prevState) => ({
@@ -68,7 +68,7 @@ export function ExploreBar({ onExpandChange }) {
       children: +searchParams.get(QUERY_KEYS.children) || 0,
       infants: +searchParams.get(QUERY_KEYS.infants) || 0,
       pets: +searchParams.get(QUERY_KEYS.pets) || 0,
-    }))
+    }));
     setSelectedRange((prevState) => ({
       ...prevState,
       from: searchParams.has(QUERY_KEYS.checkin)
@@ -77,7 +77,7 @@ export function ExploreBar({ onExpandChange }) {
       to: searchParams.has(QUERY_KEYS.checkout)
         ? new Date(+searchParams.get(QUERY_KEYS.checkout))
         : null,
-    }))
+    }));
     setFormData((prevState) => ({
       ...prevState,
       location: searchParams.get(QUERY_KEYS.region) || '',
@@ -87,42 +87,42 @@ export function ExploreBar({ onExpandChange }) {
       endDate: searchParams.has(QUERY_KEYS.checkout)
         ? new Date(+searchParams.get(QUERY_KEYS.checkout))
         : null,
-    }))
-  }, [searchParams])
+    }));
+  }, [searchParams]);
 
   useEffect(() => {
-    window.addEventListener('resize', handleResize)
+    window.addEventListener('resize', handleResize);
 
     if (isExpanded) {
-      window.addEventListener('scroll', handleScroll)
-      document.addEventListener('click', handleDocumentClick)
+      window.addEventListener('scroll', handleScroll);
+      document.addEventListener('click', handleDocumentClick);
     } else {
-      window.removeEventListener('scroll', handleScroll)
-      document.removeEventListener('click', handleDocumentClick)
+      window.removeEventListener('scroll', handleScroll);
+      document.removeEventListener('click', handleDocumentClick);
     }
 
     return () => {
-      window.removeEventListener('scroll', handleScroll)
-      document.removeEventListener('click', handleDocumentClick)
-      window.removeEventListener('resize', handleResize)
-    }
-  }, [isExpanded])
+      window.removeEventListener('scroll', handleScroll);
+      document.removeEventListener('click', handleDocumentClick);
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [isExpanded]);
 
   const handleResize = () => {
-    setIsMobile(window.innerWidth < 768)
-  }
+    setIsMobile(window.innerWidth < 768);
+  };
 
   function handleDayClick(date) {
-    console.log('date', date)
+    console.log('date', date);
 
     if (selectedRange.from && selectedRange.to) {
       setSelectedRange({
         from: date,
         to: null,
-      })
-      setIsActive('check-out')
-      console.log('selectedRange', selectedRange)
-      return
+      });
+      setIsActive('check-out');
+      console.log('selectedRange', selectedRange);
+      return;
     }
 
     if (selectedRange.from && date < selectedRange.from) {
@@ -130,89 +130,89 @@ export function ExploreBar({ onExpandChange }) {
       setSelectedRange({
         from: date,
         to: null,
-      })
+      });
       // setIsActive("check-out")
-      return
+      return;
     }
 
     if (!selectedRange.from) {
-      setIsActive('check-out')
-      setSelectedRange({ from: date, to: null })
+      setIsActive('check-out');
+      setSelectedRange({ from: date, to: null });
     }
 
     if (selectedRange.from && !selectedRange.to) {
-      setIsActive('guests')
-      setSelectedRange({ from: selectedRange.from, to: date })
+      setIsActive('guests');
+      setSelectedRange({ from: selectedRange.from, to: date });
 
       setFormData((prevState) => ({
         ...prevState,
         startDate: selectedRange.from,
         endDate: date,
-      }))
+      }));
     }
   }
 
   function handleScroll() {
-    handleExpandChange(false)
-    setIsActive(null)
+    handleExpandChange(false);
+    setIsActive(null);
   }
 
   function handleClick(ev) {
-    ev.stopPropagation()
-    console.log('isActive', isActive)
-    handleExpandChange(!isExpanded)
+    ev.stopPropagation();
+    console.log('isActive', isActive);
+    handleExpandChange(!isExpanded);
   }
 
   function handleDocumentClick(ev) {
-    console.log('clicked outside')
-    ev.stopPropagation()
+    console.log('clicked outside');
+    ev.stopPropagation();
     if (expandedBarRef.current && !expandedBarRef.current.contains(ev.target)) {
-      setIsExpanded(false)
-      handleExpandChange(false)
-      setIsActive(null)
+      setIsExpanded(false);
+      handleExpandChange(false);
+      setIsActive(null);
     }
   }
 
   function handleLocationClick(e) {
-    e.stopPropagation()
-    let locationText
+    e.stopPropagation();
+    let locationText;
     if (e.target.tagName === 'IMG') {
-      locationText = e.target.nextSibling.innerText
+      locationText = e.target.nextSibling.innerText;
     } else {
-      locationText = e.target.innerText
+      locationText = e.target.innerText;
     }
 
     setFormData((prevState) => ({
       ...prevState,
       location: locationText,
-    }))
-    setIsActive('check-in')
+    }));
+    setIsActive('check-in');
   }
 
   const handleChange = (event) => {
-    const { name, type, value } = event.target
+    const { name, type, value } = event.target;
 
     switch (name) {
       case 'location':
-        setFormData((prevState) => ({ ...prevState, location: value }))
-        break
+        setFormData((prevState) => ({ ...prevState, location: value }));
+        break;
       default:
-        break
+        break;
     }
-  }
+  };
 
   function handleSubmit(ev) {
-    ev.preventDefault()
+    ev.preventDefault();
 
     if (selectedRange.from && !selectedRange.to) {
-      const inputDate = new Date(selectedRange.from)
-      inputDate.setDate(inputDate.getDate() + 1)
-      selectedRange.to = inputDate.toString()
+      const inputDate = new Date(selectedRange.from);
+      inputDate.setDate(inputDate.getDate() + 1);
+      selectedRange.to = inputDate.toString();
     }
     if (selectedRange.to && !selectedRange.from) {
-      const inputDate = new Date(selectedRange.to)
-      inputDate.setDate(inputDate.getDate() - 1)
-      selectedRange.from = inputDate.toString()
+      const inputDate = new Date(selectedRange.to);
+      inputDate.setDate(inputDate.getDate() - 1);
+      selectedRange.from = inputDate.toString();
     }
 
     setSearchParams({
@@ -223,16 +223,16 @@ export function ExploreBar({ onExpandChange }) {
       [QUERY_KEYS.children]: selectedGuests.children,
       [QUERY_KEYS.infants]: selectedGuests.infants,
       [QUERY_KEYS.pets]: selectedGuests.pets,
-    })
+    });
 
-    handleExpandChange(false)
+    handleExpandChange(false);
   }
 
   // {!isExpanded && isStayPage && !isMobile && ( 1
   //   {!isExpanded && !isStayPage && !isMobile && ( 2
   //   {isExpanded && ( 3
 
-  let totalGuests = selectedGuests.adults + selectedGuests.children
+  let totalGuests = selectedGuests.adults + selectedGuests.children;
 
   return (
     <React.Fragment>
@@ -243,7 +243,7 @@ export function ExploreBar({ onExpandChange }) {
           onClick={isExpanded ? null : handleClick}
         >
           <button type='button' className='location-btn' onClick={() => setIsActive('location')}>
-            {formData.location ? formData.location : 'Anywhere'}
+            {formData.location ? formData.location.split(',')[0] : 'Anywhere'}
           </button>
           <span className='splitter'></span>
           <button type='button' className='dates-btn' onClick={() => setIsActive('check-in')}>
@@ -260,7 +260,11 @@ export function ExploreBar({ onExpandChange }) {
             onClick={() => setIsActive('guests')}
           >
             {selectedGuests.adults + selectedGuests.children !== 0
-              ? `${selectedGuests.adults + selectedGuests.children} guests`
+              ? `${
+                  selectedGuests.adults + selectedGuests.children === 1
+                    ? `${selectedGuests.adults + selectedGuests.children} guest`
+                    : `${selectedGuests.adults + selectedGuests.children} guests`
+                } `
               : 'Add guests'}
           </button>
           <button type='button' className='search-btn'>
@@ -278,11 +282,10 @@ export function ExploreBar({ onExpandChange }) {
           </button>
         </div>
       )}
-      
-      {!isExpanded && !isStayPage && !isMobile && !isDashboardPage && (
-          <div className='dashboard-header'>Dashboard</div>
-      )}
 
+      {!isExpanded && !isStayPage && !isMobile && !isDashboardPage && (
+        <div className='dashboard-header'>Dashboard</div>
+      )}
 
       {/* 3 */}
       <React.Fragment>
@@ -496,7 +499,7 @@ export function ExploreBar({ onExpandChange }) {
                                 setSelectedGuests((prevState) => ({
                                   ...prevState,
                                   adults: prevState.adults - 1,
-                                }))
+                                }));
                             }}
                           >
                             <AiOutlineMinus />
@@ -509,7 +512,7 @@ export function ExploreBar({ onExpandChange }) {
                               setSelectedGuests((prevState) => ({
                                 ...prevState,
                                 adults: prevState.adults + 1,
-                              }))
+                              }));
                             }}
                             disabled={selectedGuests.adults === 16}
                           >
@@ -534,7 +537,7 @@ export function ExploreBar({ onExpandChange }) {
                                 setSelectedGuests((prevState) => ({
                                   ...prevState,
                                   children: prevState.children - 1,
-                                }))
+                                }));
                             }}
                           >
                             <AiOutlineMinus />
@@ -549,13 +552,13 @@ export function ExploreBar({ onExpandChange }) {
                                   ...prevState,
                                   adults: prevState.adults + 1,
                                   children: prevState.children + 1,
-                                }))
-                                return
+                                }));
+                                return;
                               }
                               setSelectedGuests((prevState) => ({
                                 ...prevState,
                                 children: prevState.children + 1,
-                              }))
+                              }));
                             }}
                             disabled={selectedGuests.children === 15}
                           >
@@ -580,7 +583,7 @@ export function ExploreBar({ onExpandChange }) {
                                 setSelectedGuests((prevState) => ({
                                   ...prevState,
                                   infants: prevState.infants - 1,
-                                }))
+                                }));
                             }}
                           >
                             <AiOutlineMinus />
@@ -595,13 +598,13 @@ export function ExploreBar({ onExpandChange }) {
                                   ...prevState,
                                   adults: prevState.adults + 1,
                                   infants: prevState.infants + 1,
-                                }))
-                                return
+                                }));
+                                return;
                               }
                               setSelectedGuests((prevState) => ({
                                 ...prevState,
                                 infants: prevState.infants + 1,
-                              }))
+                              }));
                             }}
                             disabled={selectedGuests.infants === 5}
                           >
@@ -626,7 +629,7 @@ export function ExploreBar({ onExpandChange }) {
                               setSelectedGuests((prevState) => ({
                                 ...prevState,
                                 pets: prevState.pets - 1,
-                              }))
+                              }));
                             }}
                             disabled={selectedGuests.pets === 0}
                           >
@@ -640,7 +643,7 @@ export function ExploreBar({ onExpandChange }) {
                               setSelectedGuests((prevState) => ({
                                 ...prevState,
                                 pets: prevState.pets + 1,
-                              }))
+                              }));
                             }}
                             disabled={selectedGuests.pets === 5}
                           >
@@ -655,14 +658,27 @@ export function ExploreBar({ onExpandChange }) {
                   onClick={() => console.log('clicked')}
                   txt={isActive !== null ? 'Search' : ''}
                   icon={
-                  // <IoSearch className='search-icon' />
-                  <div className='search-icon'
-                  style={{marginInlineEnd: isActive !== null ? '4px' : '0px'}}
-                  >
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" aria-hidden="true" role="presentation" focusable="false"><path fill="none" d="M13 24a11 11 0 1 0 0-22 11 11 0 0 0 0 22zm8-3 9 9"></path></svg>
-                  </div>
-                }
-
+                    // <IoSearch className='search-icon' />
+                    <div
+                      className='search-icon'
+                      style={{
+                        marginInlineEnd: isActive !== null ? '4px' : '0px',
+                      }}
+                    >
+                      <svg
+                        xmlns='http://www.w3.org/2000/svg'
+                        viewBox='0 0 32 32'
+                        aria-hidden='true'
+                        role='presentation'
+                        focusable='false'
+                      >
+                        <path
+                          fill='none'
+                          d='M13 24a11 11 0 1 0 0-22 11 11 0 0 0 0 22zm8-3 9 9'
+                        ></path>
+                      </svg>
+                    </div>
+                  }
                   borderRadius={isActive !== null ? '32px' : '50%'}
                   width={isActive !== null ? '100px' : '48px'}
                   isActive={isActive !== null}
@@ -701,5 +717,5 @@ export function ExploreBar({ onExpandChange }) {
         </div>
       )}
     </React.Fragment>
-  )
+  );
 }
