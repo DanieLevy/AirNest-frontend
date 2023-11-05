@@ -25,19 +25,19 @@ window.cs = stayService
 async function query(params) {
   const paramsObj = getParams(params)
 
-  let capacity = +paramsObj?.adults + +paramsObj?.children
-  let stays = await storageService.query(STORAGE_KEY)
-  let staysToReturn = stays
+  // let capacity = +paramsObj?.adults + +paramsObj?.children
+  const stays = await storageService.query(STORAGE_KEY, paramsObj)
+  // let staysToReturn = stays
 
-  if (capacity) staysToReturn = staysToReturn.filter((stay) => stay.capacity >= capacity)
-  if (paramsObj.region && paramsObj.region !== '') {
-    const regionRegex = new RegExp(paramsObj.region.split(',')[0], 'i')
-    staysToReturn = staysToReturn.filter((stay) => regionRegex.test(stay.loc.country))
-  }
-  if (paramsObj.label)
-    staysToReturn = staysToReturn.filter((stay) => stay.labels.includes(paramsObj.label))
+  // if (capacity) staysToReturn = staysToReturn.filter((stay) => stay.capacity >= capacity)
+  // if (paramsObj.region && paramsObj.region !== '') {
+  //   const regionRegex = new RegExp(paramsObj.region.split(',')[0], 'i')
+  //   staysToReturn = staysToReturn.filter((stay) => regionRegex.test(stay.loc.country))
+  // }
+  // if (paramsObj.label)
+  //   staysToReturn = staysToReturn.filter((stay) => stay.labels.includes(paramsObj.label))
 
-  return staysToReturn
+  return stays
 }
 
 function getParams(params) {

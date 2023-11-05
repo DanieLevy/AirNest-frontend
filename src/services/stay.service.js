@@ -2,7 +2,7 @@
 
 import { utilService } from './util.service.js'
 import { userService } from './user.service.js'
-import { staysDemonData } from './stayDemoData.js'
+// import { staysDemonData } from './stayDemoData.js'
 import { httpService } from './http.service.js'
 const STORAGE_KEY = 'stay'
 
@@ -12,8 +12,8 @@ export const stayService = {
   save,
   remove,
   getEmptyStay,
-  addStayMsg,
-  getLabels,
+  // addStayMsg,
+  // getLabels,
   getAmenities,
   getStaysByUserId,
   getResultLength,
@@ -107,8 +107,10 @@ function getResultLength(filterBy, properties) {
 }
 
 function getById(stayId) {
-  return httpService.get(STORAGE_KEY, stayId)
+  console.log('🚀 ~ file: stay.service.js:110 ~ getById ~ stayId:', stayId)
+  return httpService.get(`stay/${stayId}`)
 }
+
 async function getStaysByUserId(userId) {
   let stays = await httpService.get(STORAGE_KEY)
 
@@ -121,7 +123,7 @@ async function getStaysByUserId(userId) {
 }
 
 async function remove(stayId) {
-  await httpService.remove(STORAGE_KEY, stayId)
+  await httpService.remove(`stay/${stayId}`)
 }
 
 async function save(stay) {

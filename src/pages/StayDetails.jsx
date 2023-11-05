@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
-import { stayService } from '../services/stay.service.local.js'
+import { stayService } from '../services/stay.service.js'
 import { StayDescription } from '../cmps/StayDetails/StayDescription.jsx'
 import { StayHeader } from '../cmps/StayDetails/StayHeader.jsx'
 import { StayAmenities } from '../cmps/StayDetails/StayAmenities.jsx'
@@ -45,6 +45,8 @@ export function StayDetails() {
     try {
       dispatch({ type: LOADING_START })
       const stay = await stayService.getById(stayId)
+      console.log('🚀 ~ file: StayDetails.jsx:48 ~ loadStay ~ stayId:', stayId)
+      console.log('🚀 ~ file: StayDetails.jsx:48 ~ loadStay ~ stay:', stay)
       setCurrStay(stay)
     } catch (err) {
       console.log('Had issues in stay details', err)
