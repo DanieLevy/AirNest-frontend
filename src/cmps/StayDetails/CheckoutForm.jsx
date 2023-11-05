@@ -528,7 +528,8 @@ export function CheckoutForm({ onSubmit, price, reviews, capacity }) {
           </footer>
         </form>
       )}
-      {!isMobile && !isStayPage && (
+
+      {!isMobile && isStayPage && (
         <header
           className="main-layout stayDetails
         checkout-header"
