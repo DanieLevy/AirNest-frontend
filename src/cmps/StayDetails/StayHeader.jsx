@@ -31,7 +31,6 @@ export function StayHeader({ name, imgUrls, reviews, loc, host }) {
   }, []);
 
   const handleGoBack = () => {
-    // If there is back in history go back else go to home
     if (window.history.length > 2) window.history.go(-1);
     else navigate("/");
   };
