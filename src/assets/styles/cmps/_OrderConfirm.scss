@@ -21,7 +21,7 @@
       padding-bottom: 48px;
       gap: 32px;
       align-items: center;
-      
+
       @media (max-width: 768px) {
         padding-top: 32px;
         padding-bottom: 32px;
@@ -75,6 +75,7 @@
           flex-direction: column;
           justify-content: space-between;
           padding-left: 12px;
+
 
           .stay-details-title-body {
             font-family: cereal;
@@ -361,3 +362,4 @@
     text-decoration: underline;
   }
 }
+ 

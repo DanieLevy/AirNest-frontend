@@ -31,13 +31,17 @@
     transition: transform 0.5s ease-in-out;
     transition: background-color 0.5s ease-in-out;
 
+    & .filter-by-form {
+
+        // mobile
+        @media (max-width: 768px) {
+        }
+
     & .filter-modal {
         display: flex;
         background-color: white;
         justify-content: center;
         align-items: center;
-        min-width: 700px;
-        max-height: 100%;
         flex-direction: column;
         border-radius: 12px;
         box-shadow:
@@ -46,6 +50,22 @@
             0 8px 24px rgb(0 0 0 / 10%);
         min-width: 780px;
         max-height: 792px;
+
+        @media (max-width: 768px) {
+            min-width: 100%;
+            max-width: 100%;
+            max-height: 100%;
+            border-radius: 0;
+            margin: 30px 0 0 0;
+            border-top-right-radius: 12px;
+            border-top-left-radius: 12px;
+
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+
+        }
 
         & .filter-modal-header {
             display: flex;
@@ -77,6 +97,12 @@
             padding: 32px 24px;
             overflow-y: scroll;
 
+            @media (max-width: 768px) {
+                padding: 32px 0;
+                max-width: 400px;
+                overflow-x: hidden;
+            }
+
             & .price-range {
                 display: flex;
                 flex-direction: column;
@@ -87,6 +113,7 @@
 
                 & .price-range-title {
                     padding-block-end: 24px;
+                    padding-inline-start: 24px;
                     line-height: 26px;
                     font-size: 22px;
                     font-weight: 600;
@@ -188,6 +215,11 @@
                         max-height: 100px;
                         min-height: 100px;
 
+                        // mobile
+                        @media (max-width: 768px) {
+                            max-width: 100%;
+                        }
+
                         & .bar {
                             background-color: rgb(0, 0, 0);
                             width: 11px;
@@ -210,6 +242,11 @@
             & .stay-details {
                 padding: 32px 0;
 
+                // mobile
+                @media (max-width: 768px) {
+                    padding: 24px 0 24px 24px;
+                }
+
                 & .stay-details-title {
                     padding-block-end: 8px;
                     line-height: 26px;
@@ -231,6 +268,20 @@
                     display: flex;
                     justify-content: flex-start;
                     align-items: center;
+
+                    // mobile
+                    @media (max-width: 768px) {
+                        max-width: 90%;
+                        flex-wrap: nowrap;
+                        overflow-x: scroll;
+                        // padding: 0 0 0 24px;
+
+                        // hide the scrollbar
+                        &::-webkit-scrollbar {
+                            display: none;
+                        }
+
+                    }
 
                     & .details-input {
                         padding-right: 10px;
@@ -285,6 +336,12 @@
                     line-height: 26px;
 
                     padding: 0 0 24px 0;
+
+                    // mobile
+                    @media (max-width: 768px) {
+                        padding: 0 0 16px 24px;
+                    }
+
                 }
 
                 & .property-place {
@@ -331,6 +388,11 @@
                 padding: 32px 0;
                 border-top: 1px solid #e0e0e0;
 
+                // mobile
+                @media (max-width: 768px) {
+                    padding: 32px 0 0 24px;
+                }
+
                 & .stay-ammenities-title {
                     font-size: 22px;
                     font-weight: 600;
@@ -365,6 +427,13 @@
                         padding: 12px 0;
                         user-select: none;
 
+                        // mobile
+                        @media (max-width: 768px) {
+                            display: flex;
+                            padding: 12px 0 0 0;
+                            gap: 0 16px;
+                        }
+
                         &:hover .input-icon {
                             border-color: black !important
                         }
@@ -376,7 +445,7 @@
                         & .input-container {
                             display: flex;
                             align-items: center;
-                            gap: 8px;
+                            gap: 10px;
 
                             & .input-icon {
                                 display: flex;
@@ -518,6 +587,7 @@
         }
     }
 }
+}
 
 .custom-checkbox {
     display: inline-block;
@@ -581,3 +651,11 @@
 .rc-slider {
     padding: 0;
 }
+
+.property-filter {
+    // mobile
+    @media (max-width: 768px) {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+  }

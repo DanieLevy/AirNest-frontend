@@ -26,7 +26,10 @@
     }
 
     & .stay-details-title {
-
+      // mobile
+      @media (max-width: 768px) {
+        max-width: 85%;
+      }
     }
 
     & .user-img {

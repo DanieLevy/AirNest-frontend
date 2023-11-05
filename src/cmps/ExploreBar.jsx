@@ -112,6 +112,13 @@ export function ExploreBar({ onExpandChange }) {
     setIsMobile(window.innerWidth < 768);
   };
 
+  function handleFilterModal(action = "close") {
+    store.dispatch({
+      type: "SET_FILTER_MODAL",
+      filterModal: action === "open" ? true : false,
+    });
+  }
+
   function handleDayClick(date) {
     console.log('date', date);
 
@@ -708,7 +715,11 @@ export function ExploreBar({ onExpandChange }) {
                 </div>
               </div>
             </div>
-            <div className='ebm-filter-btn flex'>
+            <div className='ebm-filter-btn flex'
+              onClick={() => {
+                handleFilterModal("open");
+              }}
+            >
               <svg xmlns='http://www.w3.org/2000/svg'>
                 <path d='M5 8a3 3 0 0 1 2.83 2H14v2H7.83A3 3 0 1 1 5 8zm0 2a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm6-8a3 3 0 1 1-2.83 4H2V4h6.17A3 3 0 0 1 11 2zm0 2a1 1 0 1 0 0 2 1 1 0 0 0 0-2z'></path>
               </svg>
