@@ -203,7 +203,7 @@ export function AppHeader() {
                             style={{ textDecorationLine: "none" }}
                             onClick={() => setUserModal(false)}
                           >
-                          <li>DashBoard</li>
+                            <li>DashBoard</li>
                           </Link>
                           <Link
                             to={`/user/${user._id}`}
@@ -227,17 +227,17 @@ export function AppHeader() {
                   </section>
                 )}
 
-                {loginModal && (
-                  <LoginSignup
-                    login={onLogin}
-                    signup={onSignup}
-                    onToggleLogin={onToggleLogin}
-                    closeModal={closeModal}
-                    isSignup={signupModal}
-                    setSignupModal={setSignupModal}
-                  />
-                )}
               </header>
+            )}
+            {loginModal && (
+              <LoginSignup
+                login={onLogin}
+                signup={onSignup}
+                onToggleLogin={onToggleLogin}
+                closeModal={closeModal}
+                isSignup={signupModal}
+                setSignupModal={setSignupModal}
+              />
             )}
             {isMobile && <ExploreBar />}
           </section>
@@ -248,18 +248,19 @@ export function AppHeader() {
       ) : null}
 
       {!isMobile && !isStayPage && !isOrderPage && !isExploreExpanded ? (
-        // <div className={isStayPage ? "divider unset" : "divider"}></div>
-        // <div
-        //   className={`divider2 ${isStayPage ? "unset" : ""} ${
-        //     isExploreExpanded ? "expanded" : ""
-        //   }`}
-        //   // style={{ position: "block" }}
-        // ></div>
-        <div className="divider"
-        style={{ position: "sticky", top: "80px", opacity: "1", zIndex: "10" }}
+        <div
+          className="divider"
+          style={{
+            position: "sticky",
+            top: "80px",
+            opacity: "1",
+            zIndex: "10",
+          }}
         ></div>
       ) : (
-        <div className="divider"
+        <div
+          className="divider"
+          style={isMobile ? { display: "none" } : { display: block }}
         ></div>
       )}
     </React.Fragment>
