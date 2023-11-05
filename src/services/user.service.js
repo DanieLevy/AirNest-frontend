@@ -116,8 +116,8 @@ function getEmptyCredentials() {
 
 async function demoUser() {
   return {
-    username: 'puki',
-    password: '111',
+    username: 'test',
+    password: 'test',
   }
 }
 // ; (async () => {

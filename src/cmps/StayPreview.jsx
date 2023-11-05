@@ -9,9 +9,10 @@ import { HiMiniChevronLeft, HiMiniChevronRight } from 'react-icons/hi2'
 import { userService } from '../services/user.service'
 
 import { store } from '../store/store'
-import { stayService } from '../services/stay.service.local'
+import { stayService } from '../services/stay.service'
 import { utilService } from '../services/util.service'
 import { StayLoader } from './StayLoader'
+import { showErrorMsg } from '../services/event-bus.service'
 
 export function StayPreview({ stay }) {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768)
@@ -21,12 +22,18 @@ export function StayPreview({ stay }) {
   const user = useSelector((storeState) => storeState.userModule.user)
   const stays = useSelector((storeState) => storeState.stayModule.stays)
   const [isLoading, setIsLoading] = useState(true)
-
-  const randomDateRangeRef = useRef()
-
   const userLikedStays = user
     ? stays.filter((stay) => stay.likedByUsers.some((likedUser) => likedUser._id === user._id))
     : []
+  const isLiked = () => {
+    if (!user) return false
+    return userLikedStays.some((likedStay) => likedStay._id === stay._id)
+  }
+
+  const [liked, setLiked] = useState(isLiked())
+
+  const randomDateRangeRef = useRef()
+
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768)
@@ -39,30 +46,31 @@ export function StayPreview({ stay }) {
     }
   }, [])
 
-  const isLiked = () => {
-    if (!user) return false
-    return userLikedStays.some((likedStay) => likedStay._id === stay._id)
-  }
-
   async function handleLike(ev) {
     ev.stopPropagation()
     if (!user) {
-      alert('Please login to like a stay')
+      showErrorMsg('Please login to add stay to wishlist')
       return
     }
-    if (isLiked()) {
-      const idx = stay.likedByUsers.findIndex(
-        (user) => user._id === userService.getLoggedinUser()._id
-      )
-      stay.likedByUsers.splice(idx, 1)
-    } else {
-      stay.likedByUsers.push(user)
+
+    const wasLiked = liked // Store the current liked state to revert back if needed
+    setLiked(!liked) // Optimistically update the UI
+
+    try {
+      if (wasLiked) {
+        const idx = stay.likedByUsers.findIndex(
+          (user) => user._id === userService.getLoggedinUser()._id
+        )
+        stay.likedByUsers.splice(idx, 1)
+      } else {
+        stay.likedByUsers.push(user)
+      }
+      await stayService.save(stay)
+      store.dispatch({ type: 'UPDATE_STAY', stay })
+    } catch (error) {
+      setLiked(wasLiked)
+      showErrorMsg('Failed to update wishlist. Please try again.')
     }
-    await stayService.save(stay)
-    store.dispatch({ type: 'UPDATE_STAY', stay })
-  }
-  const handleImageLoad = () => {
-    setIsLoading(false)
   }
 
   const reviewsAvg =
@@ -172,7 +180,7 @@ export function StayPreview({ stay }) {
         </div>
       )}
       <div className='preview-img'>
-        <div onClick={handleLike}>{isLiked() ? <HeartFillIcon /> : <HeartOutlineIcon />}</div>
+        <div onClick={handleLike}>{liked ? <HeartFillIcon /> : <HeartOutlineIcon />}</div>
         <ImageGallery
           items={images}
           showPlayButton={false}
