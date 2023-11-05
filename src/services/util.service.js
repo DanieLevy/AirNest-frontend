@@ -13,20 +13,21 @@ export const utilService = {
 };
 
 export const QUERY_KEYS = {
-  region: "region",
-  checkin: "checkin",
-  checkout: "checkout",
-  adults: "adults",
-  children: "children",
-  infants: "infants",
-  pets: "pets",
-  minPrice: "minPrice",
-  maxPrice: "maxPrice",
-  bedrooms: "bedrooms",
-  beds: "beds",
-  bathrooms: "bathrooms",
-  amenities: "amenities",
-  label: "label",
+  region: 'region',
+  checkin: 'checkin',
+  checkout: 'checkout',
+  adults: 'adults',
+  children: 'children',
+  infants: 'infants',
+  pets: 'pets',
+  minPrice: 'minPrice',
+  maxPrice: 'maxPrice',
+  bedrooms: 'bedrooms',
+  beds: 'beds',
+  bathrooms: 'bathrooms',
+  amenities: 'amenities',
+  label: 'label',
+  properties: 'properties',
 };
 
 function getDayAndMonthFromDate(checkin, checkout) {
@@ -45,18 +46,18 @@ function getDayAndMonthNumber(date) {
   const monthNumber = dateObject.getMonth();
 
   const monthNames = [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec",
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec',
   ];
 
   return { day, monthNumber: monthNames[monthNumber] };
@@ -67,9 +68,8 @@ function getDateString(date) {
   return `${dateDayAndMonth.monthNumber} ${dateDayAndMonth.day}`;
 }
 function makeId(length = 6) {
-  var txt = "";
-  var possible =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  var txt = '';
+  var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
   for (var i = 0; i < length; i++) {
     txt += possible.charAt(Math.floor(Math.random() * possible.length));
@@ -80,43 +80,43 @@ function makeId(length = 6) {
 
 function makeLorem(size = 100) {
   var words = [
-    "The sky",
-    "above",
-    "the port",
-    "was",
-    "the color of television",
-    "tuned",
-    "to",
-    "a dead channel",
-    ".",
-    "All",
-    "this happened",
-    "more or less",
-    ".",
-    "I",
-    "had",
-    "the story",
-    "bit by bit",
-    "from various people",
-    "and",
-    "as generally",
-    "happens",
-    "in such cases",
-    "each time",
-    "it",
-    "was",
-    "a different story",
-    ".",
-    "It",
-    "was",
-    "a pleasure",
-    "to",
-    "burn",
+    'The sky',
+    'above',
+    'the port',
+    'was',
+    'the color of television',
+    'tuned',
+    'to',
+    'a dead channel',
+    '.',
+    'All',
+    'this happened',
+    'more or less',
+    '.',
+    'I',
+    'had',
+    'the story',
+    'bit by bit',
+    'from various people',
+    'and',
+    'as generally',
+    'happens',
+    'in such cases',
+    'each time',
+    'it',
+    'was',
+    'a different story',
+    '.',
+    'It',
+    'was',
+    'a pleasure',
+    'to',
+    'burn',
   ];
-  var txt = "";
+  var txt = '';
   while (size > 0) {
     size--;
-    txt += words[Math.floor(Math.random() * words.length)] + " ";
+    txt += words[Math.floor(Math.random() * words.length)] + ' ';
   }
   return txt;
 }
@@ -158,7 +158,7 @@ function loadFromStorage(key) {
 // util function
 function getAssetSrc(name) {
   const path = `/src/assets/${name}`;
-  const modules = import.meta.glob("/src/assets/*", { eager: true });
+  const modules = import.meta.glob('/src/assets/*', { eager: true });
   const mod = modules[path];
   return mod.default;
 }

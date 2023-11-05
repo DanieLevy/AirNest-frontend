@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { LabelsCarousel } from "./LabelsCarousel";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -12,13 +12,17 @@ import { QUERY_KEYS } from "../services/util.service";
 import { useSelector } from "react-redux";
 import { filterStays, getResultLength } from "../store/actions/stay.actions";
 import { IoMdCheckmark } from "react-icons/io";
+import { PropertyFilter } from "./PropertyFilter";
+import { store } from "../store/store";
 
 export function StayFilter() {
   const [paddingTop, setPaddingTop] = useState(15);
   const [paddingBottom, setPaddingBottom] = useState(15);
   const [boxShadow, setBoxShadow] = useState("none");
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
-  const [filterModal, setFilterModal] = useState(false);
+  const filterModal = useSelector(
+    (storeState) => storeState.userModule.filterModal
+  );
   const [inputBoxShadow1, setInputBoxShadow1] = useState(
     "inset 0 0 0 1px #b0b0b0"
   );
@@ -36,9 +40,9 @@ export function StayFilter() {
   const [selectedBeds, setSelectedBeds] = useState("Any");
   const [selectedBathrooms, setSelectedBathrooms] = useState("Any");
   const [selectedAmmenties, setSelectedAmmenties] = useState([]);
+  const [selectedProperties, setSelectedProperties] = useState([]);
   const [resultLength, setResultLength] = useState(stays.length);
-  const [barHeights, setBarHeights] = useState([]);
-  const [barHeight, setBarHeight] = useState(0);
+  const backdropRef = useRef(null);
 
   const amenities = [
     {
@@ -93,6 +97,9 @@ export function StayFilter() {
     const bedrooms = +searchParams.get(QUERY_KEYS.bedrooms) || "Any";
     const beds = +searchParams.get(QUERY_KEYS.beds) || "Any";
     const bathrooms = +searchParams.get(QUERY_KEYS.bathrooms) || "Any";
+    const properties = searchParams.get(QUERY_KEYS.properties)
+      ? searchParams.get(QUERY_KEYS.properties).split(",")
+      : [];
     const amenities = searchParams.get(QUERY_KEYS.amenities)
       ? searchParams.get(QUERY_KEYS.amenities).split(",")
       : [];
@@ -103,29 +110,44 @@ export function StayFilter() {
     setSelectedBeds(beds);
     setSelectedBathrooms(bathrooms);
     setSelectedAmmenties(amenities);
+    setSelectedProperties(properties);
 
     filterStays(stays, searchParams);
   }, [searchParams, stays.length]);
+
+  function handleFilterModal(action = "close") {
+    store.dispatch({
+      type: "SET_FILTER_MODAL",
+      filterModal: action === "open" ? true : false,
+    });
+  }
 
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768);
     };
 
+    const handleBackdropClick = (event) => {
+      if (event.target === backdropRef.current) {
+        handleFilterModal("close");
+      }
+    };
+    document.addEventListener("click", handleBackdropClick);
     window.addEventListener("resize", handleResize);
     window.addEventListener("scroll", handleScroll);
     window.addEventListener("click", (e) => {
       if (e.target.classList.contains("modal")) {
-        setFilterModal(false);
+       handleFilterModal("close");
       }
     });
 
     return () => {
+      document.removeEventListener("click", handleBackdropClick);
       window.removeEventListener("resize", handleResize);
       window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("click", (e) => {
         if (e.target.classList.contains("modal")) {
-          setFilterModal(false);
+          handleFilterModal("close");
         }
       });
     };
@@ -187,7 +209,19 @@ export function StayFilter() {
         return prevAppliedFilters.filter((filter) => filter !== "Bathrooms");
       });
     }
-
+    if (selectedProperties.length > 0) {
+      setAppliedFilters((prevAppliedFilters) => {
+        if (prevAppliedFilters.includes("Properties")) {
+          return prevAppliedFilters;
+        } else {
+          return [...prevAppliedFilters, "Properties"];
+        }
+      });
+    } else {
+      setAppliedFilters((prevAppliedFilters) => {
+        return prevAppliedFilters.filter((filter) => filter !== "Properties");
+      });
+    }
     if (selectedAmmenties.length > 0) {
       setAppliedFilters((prevAppliedFilters) => {
         if (prevAppliedFilters.includes("Ammenities")) {
@@ -209,15 +243,16 @@ export function StayFilter() {
     selectedBeds,
     selectedBathrooms,
     selectedAmmenties,
+    selectedProperties,
   ]);
 
   const handleScroll = () => {
     if (window.scrollY > 0) {
-      setPaddingTop(10);
+      setPaddingTop(8);
       setPaddingBottom(10);
       setBoxShadow("rgb(0 0 0 / 16%) 0 0 6px");
     } else {
-      setPaddingTop(15);
+      setPaddingTop(25);
       setBoxShadow("none");
     }
   };
@@ -241,6 +276,7 @@ export function StayFilter() {
     filterBy.beds = selectedBeds;
     filterBy.bathrooms = selectedBathrooms;
     filterBy.amenities = selectedAmmenties;
+    filterBy.properties = selectedProperties;
 
     const resultLength = getResultLength(filterBy, stays);
     setResultLength(resultLength);
@@ -255,6 +291,8 @@ export function StayFilter() {
     if (selectedBeds) searchParams.set(QUERY_KEYS.beds, selectedBeds);
     if (selectedBathrooms)
       searchParams.set(QUERY_KEYS.bathrooms, selectedBathrooms);
+    if (selectedProperties)
+      searchParams.set(QUERY_KEYS.properties, selectedProperties);
     if (selectedAmmenties)
       searchParams.set(QUERY_KEYS.amenities, selectedAmmenties);
 
@@ -266,6 +304,8 @@ export function StayFilter() {
       searchParams.delete(QUERY_KEYS.beds);
     if (searchParams.has(QUERY_KEYS.bathrooms) && selectedBathrooms === "Any")
       searchParams.delete(QUERY_KEYS.bathrooms);
+    if (searchParams.has(QUERY_KEYS.properties) && !selectedProperties.length)
+      searchParams.delete(QUERY_KEYS.properties);
 
     setSearchParams(searchParams);
   }
@@ -351,7 +391,7 @@ export function StayFilter() {
                   : { border: "1px solid #b0b0b0" }
               }
               onClick={() => {
-                setFilterModal(!filterModal);
+                handleFilterModal(!filterModal ? "open" : "close");
               }}
             >
               <div className="flex align-center justify-center">
@@ -381,6 +421,7 @@ export function StayFilter() {
 
       <section
         className="filter-modal-container"
+        ref={backdropRef}
         style={
           filterModal
             ? { transform: "translateY(0)", backgroundColor: "rgba(0,0,0,0.5)" }
@@ -396,7 +437,7 @@ export function StayFilter() {
               <div
                 className="close-btn"
                 onClick={() => {
-                  setFilterModal(false);
+                  handleFilterModal("close");
                 }}
               >
                 &#10005;
@@ -566,6 +607,15 @@ export function StayFilter() {
                   )}
                 </div>
               </div>
+
+              <div className="stay-property">
+                <div className="stay-property-title">Property Type</div>
+                <PropertyFilter
+                  selectedProperty={selectedProperties}
+                  onPropertyChange={setSelectedProperties}
+                />
+              </div>
+
               <div className="stay-ammenities">
                 <div className="stay-ammenities-title">Amenities</div>
                 {/* <div className="ammenities-section-title">
@@ -614,6 +664,7 @@ export function StayFilter() {
                   setSelectedBathrooms("Any");
                   setSelectedAmmenties([]);
                   setAppliedFilters([]);
+                  setSelectedProperties([]);
                 }}
               >
                 Clear all
@@ -623,7 +674,7 @@ export function StayFilter() {
                   type="submit"
                   className="filter-modal-btn"
                   onClick={() => {
-                    setFilterModal(false);
+                    handleFilterModal("close");
                     console.log("btn submit clicked ");
                   }}
                   disabled={!resultLength}

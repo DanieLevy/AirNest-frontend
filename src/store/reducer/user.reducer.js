@@ -11,6 +11,7 @@ export const SET_SCORE = 'SET_SCORE'
 export const SET_LOGIN_MODAL = 'SET_LOGIN_MODAL'
 export const SET_REVIEWS_MODAL = 'SET_REVIEWS_MODAL'
 export const SET_EXPLORE_EXPANDED = 'SET_EXPLORE_EXPANDED'
+export const SET_FILTER_MODAL = 'SET_FILTER_MODAL'
 
 const initialState = {
     count: 10,
@@ -19,7 +20,8 @@ const initialState = {
     watchedUser : null,
     loginModal: false,
     reviewsModal: false,
-    isExploreExpanded: false
+    isExploreExpanded: false,
+    filterModal: false
 }
 
 export function userReducer(state = initialState, action) {
@@ -55,6 +57,10 @@ export function userReducer(state = initialState, action) {
 
         case SET_LOGIN_MODAL:
             newState = { ...state, loginModal: action.loginModal }
+            break
+
+        case SET_FILTER_MODAL:
+            newState = { ...state, filterModal: action.filterModal }
             break
         
         case SET_REVIEWS_MODAL:

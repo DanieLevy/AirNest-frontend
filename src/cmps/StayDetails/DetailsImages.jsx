@@ -32,10 +32,6 @@ export function DetailsImages({ urls }) {
 
     return (
         <div className='images-editor-container'
-        style={{
-            paddingTop: '24px',
-        }}
-
         >
             {imageHtml(urls[0], 'main')}
             <div className='rest'>
