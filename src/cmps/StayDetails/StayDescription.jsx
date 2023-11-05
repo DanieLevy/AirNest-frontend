@@ -24,6 +24,9 @@ export function StayDescription({
   name,
   amenities,
   onSubmit,
+  stayDetailsAsideElement,
+  isAsideInViewport,
+  isGalleryInViewport,
 }) {
   const isSuperhost = host.isSuperhost
 
@@ -143,8 +146,17 @@ export function StayDescription({
 
           <StayAmenities data={amenities} />
         </main>
+
         <aside className='stay-details-aside'>
-          <CheckoutForm onSubmit={onSubmit} price={price} reviews={reviews} capacity={capacity} />
+          <CheckoutForm
+            onSubmit={onSubmit}
+            price={price}
+            reviews={reviews}
+            capacity={capacity}
+            stayDetailsAsideRef={stayDetailsAsideElement}
+            isAsideInViewport={isAsideInViewport}
+            isGalleryInViewport={isGalleryInViewport}
+          />
         </aside>
       </div>
     </React.Fragment>

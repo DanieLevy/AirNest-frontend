@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { stayService } from '../services/stay.service.js'
 import { StayDescription } from '../cmps/StayDetails/StayDescription.jsx'
@@ -24,6 +24,11 @@ export function StayDetails() {
 
   const isLoading = useSelector((state) => state.systemModule.isLoading)
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768)
+  const [isAsideInViewport, setAsideInViewport] = useState(false)
+  const [isGalleryInViewport, setGalleryInViewport] = useState(false)
+
+  const stayDetailsAsideRef = useRef(null)
+  const stayGalleryRef = useRef(null)
 
   const [currStay, setCurrStay] = useState(null)
 
@@ -56,6 +61,40 @@ export function StayDetails() {
       dispatch({ type: LOADING_DONE })
     }
   }
+
+  useEffect(() => {
+    if (!isMobile) {
+      const stayDetailsAsideElement = stayDetailsAsideRef.current
+      const stayGalleryElement = stayGalleryRef.current
+
+      if (stayDetailsAsideElement && stayGalleryElement) {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.target === stayDetailsAsideElement) {
+              setAsideInViewport(entry.isIntersecting)
+            }
+            if (entry.target === stayGalleryElement) {
+              setGalleryInViewport(entry.isIntersecting)
+            }
+          })
+        })
+
+        observer.observe(stayDetailsAsideElement)
+        observer.observe(stayGalleryElement)
+
+        return () => {
+          observer.unobserve(stayDetailsAsideElement)
+          observer.unobserve(stayGalleryElement)
+        }
+      } else {
+        console.log('One or both elements are not available for intersection observing')
+        console.log('One or both elements are not available:', {
+          asideElement: stayDetailsAsideElement,
+          galleryElement: stayGalleryElement,
+        })
+      }
+    }
+  }, [isMobile, stayDetailsAsideRef, stayGalleryRef])
 
   function handleCheckoutSubmit(formData) {
     const orderDetails = {
@@ -111,7 +150,14 @@ export function StayDetails() {
 
   return (
     <section className={isMobile ? 'stay-details' : 'main-layout stayDetails stay-details'}>
-      <StayHeader name={name} imgUrls={imgUrls} loc={loc} host={host} reviews={reviews} />
+      <StayHeader
+        name={name}
+        imgUrls={imgUrls}
+        loc={loc}
+        host={host}
+        reviews={reviews}
+        stayGalleryRef={stayGalleryRef}
+      />
       <div className={isMobile ? 'main-layout small stay-details-desc' : 'stay-details-desc'}>
         <StayDescription
           type={type}
@@ -128,6 +174,10 @@ export function StayDetails() {
           name={name}
           amenities={amenities}
           onSubmit={handleCheckoutSubmit}
+          stayDetailsAsideElement={stayDetailsAsideRef}
+          isAsideInViewport={isAsideInViewport}
+          isGalleryInViewport={isGalleryInViewport}
+          // stayGalleryRef={stayGalleryRef}
         />
       </div>
       <StayReviews data={currStay.reviews} />

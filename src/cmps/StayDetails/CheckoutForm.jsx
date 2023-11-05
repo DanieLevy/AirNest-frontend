@@ -12,10 +12,20 @@ import { useSearchParams } from 'react-router-dom'
 import { useRef } from 'react'
 import { QUERY_KEYS } from '../../services/util.service'
 
-export function CheckoutForm({ onSubmit, price, reviews, capacity }) {
+export function CheckoutForm({
+  onSubmit,
+  price,
+  reviews,
+  capacity,
+  isGalleryInViewport,
+  isAsideInViewport,
+  stayDetailsAsideRef,
+}) {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768)
   const [searchParams] = useSearchParams()
   const [isStayPage, setIsStayPage] = useState(location.pathname.startsWith('/stay'))
+  const hey = 0
+
   const [selectedRange, setSelectedRange] = useState({
     from: searchParams.has(QUERY_KEYS.checkin)
       ? new Date(+searchParams.get(QUERY_KEYS.checkin))
@@ -42,37 +52,6 @@ export function CheckoutForm({ onSubmit, price, reviews, capacity }) {
   const dateDiffDays = dateDiff / (1000 * 60 * 60 * 24)
   const totalSum = price * dateDiffDays
   const totalPlusFee = totalSum + totalSum * 0.125
-
-  const [galleryInViewport, setGalleryInViewport] = useState(true)
-  const [asideInViewport, setAsideInViewport] = useState(true)
-  const stayDetailsAsideRef = useRef(null)
-  const stayGalleryRef = useRef(null)
-
-  useEffect(() => {
-    if (!isMobile) {
-      const stayDetailsAsideElement = document.querySelector('.reservation-guests')
-      const stayGalleryElement = document.querySelector('.images-editor-container')
-
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.target === stayDetailsAsideElement) {
-            setAsideInViewport(entry.isIntersecting)
-          }
-          if (entry.target === stayGalleryElement) {
-            setGalleryInViewport(entry.isIntersecting)
-          }
-        })
-      })
-
-      if (stayDetailsAsideElement) observer.observe(stayDetailsAsideElement)
-      if (stayGalleryElement) observer.observe(stayGalleryElement)
-
-      return () => {
-        if (stayDetailsAsideElement) observer.unobserve(stayDetailsAsideElement)
-        if (stayGalleryElement) observer.unobserve(stayGalleryElement)
-      }
-    }
-  }, [isMobile])
 
   useEffect(() => {
     dateDiffDays ? setIsCheckoutSum(true) : setIsCheckoutSum(false)
@@ -184,7 +163,7 @@ export function CheckoutForm({ onSubmit, price, reviews, capacity }) {
   return (
     <React.Fragment>
       {isStayPage && !isMobile && (
-        <div className='checkout-form-container flex' ref={stayDetailsAsideRef}>
+        <div className='checkout-form-container flex'>
           <form onSubmit={handleSubmit} className='checkout-form'>
             <div className='helped-container'>
               <div className='form-header'>
@@ -249,6 +228,7 @@ export function CheckoutForm({ onSubmit, price, reviews, capacity }) {
                 )}
 
                 <div
+                  ref={stayDetailsAsideRef}
                   className='reservation-guests'
                   onClick={(ev) => {
                     ev.stopPropagation()
@@ -490,7 +470,7 @@ export function CheckoutForm({ onSubmit, price, reviews, capacity }) {
           className='main-layout stayDetails
         checkout-header'
           style={
-            !galleryInViewport
+            !isGalleryInViewport
               ? { position: 'fixed', top: '0' }
               : { position: 'fixed', top: '-90px' }
           }
@@ -533,7 +513,7 @@ export function CheckoutForm({ onSubmit, price, reviews, capacity }) {
             <div
               className='order-details'
               style={
-                !asideInViewport
+                !isAsideInViewport
                   ? { opacity: '1', minWidth: '110px' }
                   : { opacity: '0', minWidth: '0px' }
               }
@@ -564,7 +544,7 @@ export function CheckoutForm({ onSubmit, price, reviews, capacity }) {
             <div
               className='order-btn'
               style={
-                !asideInViewport
+                !isAsideInViewport
                   ? { opacity: '1', minWidth: '110px' }
                   : { opacity: '0', minWidth: '0px' }
               }
