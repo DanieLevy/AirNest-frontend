@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 
 export function StayAmenities({ data }) {
+  console.log('data:', data);
   const amenities = {
     firePlace: {
       title: 'Indoor fireplace: wood-burning',
@@ -369,12 +370,13 @@ export function StayAmenities({ data }) {
         <path d='M24 26c.99 0 1.95.35 2.67 1 .3.29.71.45 1.14.5H28v2h-.23a3.96 3.96 0 0 1-2.44-1A1.98 1.98 0 0 0 24 28c-.5 0-.98.17-1.33.5a3.98 3.98 0 0 1-2.67 1 3.98 3.98 0 0 1-2.67-1A1.98 1.98 0 0 0 16 28c-.5 0-.98.17-1.33.5a3.98 3.98 0 0 1-2.67 1 3.98 3.98 0 0 1-2.67-1A1.98 1.98 0 0 0 8 28c-.5 0-.98.17-1.33.5a3.96 3.96 0 0 1-2.44 1H4v-2h.19a1.95 1.95 0 0 0 1.14-.5A3.98 3.98 0 0 1 8 26c.99 0 1.95.35 2.67 1 .35.33.83.5 1.33.5.5 0 .98-.17 1.33-.5A3.97 3.97 0 0 1 16 26c.99 0 1.95.35 2.67 1 .35.33.83.5 1.33.5.5 0 .98-.17 1.33-.5A3.98 3.98 0 0 1 24 26zm0-5c.99 0 1.95.35 2.67 1 .3.29.71.45 1.14.5H28v2h-.23a3.96 3.96 0 0 1-2.44-1A1.98 1.98 0 0 0 24 23c-.5 0-.98.17-1.33.5a3.98 3.98 0 0 1-2.67 1 3.98 3.98 0 0 1-2.67-1A1.98 1.98 0 0 0 16 23c-.5 0-.98.17-1.33.5a3.98 3.98 0 0 1-2.67 1 3.98 3.98 0 0 1-2.67-1A1.98 1.98 0 0 0 8 23c-.5 0-.98.17-1.33.5a3.96 3.96 0 0 1-2.44 1H4v-2h.19a1.95 1.95 0 0 0 1.14-.5A3.98 3.98 0 0 1 8 21c.99 0 1.95.35 2.67 1 .35.33.83.5 1.33.5.5 0 .98-.17 1.33-.5A3.97 3.97 0 0 1 16 21c.99 0 1.95.35 2.67 1 .35.33.83.5 1.33.5.5 0 .98-.17 1.33-.5A3.98 3.98 0 0 1 24 21zM20 3a4 4 0 0 1 4 3.8V9h4v2h-4v5a4 4 0 0 1 2.5.86l.17.15c.3.27.71.44 1.14.48l.19.01v2h-.23a3.96 3.96 0 0 1-2.44-1A1.98 1.98 0 0 0 24 18c-.5 0-.98.17-1.33.5a3.98 3.98 0 0 1-2.67 1 3.98 3.98 0 0 1-2.67-1A1.98 1.98 0 0 0 16 18c-.5 0-.98.17-1.33.5a3.98 3.98 0 0 1-2.67 1 3.98 3.98 0 0 1-2.67-1A1.98 1.98 0 0 0 8 18c-.5 0-.98.17-1.33.5a3.96 3.96 0 0 1-2.44 1H4v-2h.19a1.95 1.95 0 0 0 1.14-.5A3.98 3.98 0 0 1 8 16c.99 0 1.95.35 2.67 1 .35.33.83.5 1.33.5.5 0 .98-.17 1.33-.5a3.96 3.96 0 0 1 2.44-1H16v-5H4V9h12V7a2 2 0 0 0-4-.15V7h-2a4 4 0 0 1 7-2.65A3.98 3.98 0 0 1 20 3zm-2 13.52.46.31.21.18c.35.31.83.49 1.33.49a2 2 0 0 0 1.2-.38l.13-.11c.2-.19.43-.35.67-.49V11h-4zM20 5a2 2 0 0 0-2 1.85V9h4V7a2 2 0 0 0-2-2z'></path>
       ),
     },
-  }
+  };
 
-  const [showAllAmenities, setShowAllAmenities] = useState(false)
+  const [showAllAmenities, setShowAllAmenities] = useState(false);
+  const [notIncluded, setNotIncluded] = useState([]);
+  const [amenitiesToShow, setAmenitiesToShow] = useState(() => getTopAmenities());
   // const itemsToShow = 10
-  const amenitiesArray = Object.values(amenities)
-  const amenitiesToShow = getTopAmenities()
+  const amenitiesArray = Object.values(amenities);
 
   const amenitiesCategories = [
     {
@@ -432,7 +434,7 @@ export function StayAmenities({ data }) {
         'bbqGrill',
       ],
     },
-  ]
+  ];
 
   function formatSVG(svg) {
     return (
@@ -445,47 +447,76 @@ export function StayAmenities({ data }) {
       >
         {svg}
       </svg>
-    )
+    );
   }
   function getTopAmenities() {
-    const dataLowerCase = data.map((item) => item.toLowerCase())
+    const dataLowerCase = data.map((item) => item.toLowerCase());
 
     const availableAmenities = Object.keys(amenities)
-      .filter((amenityKey) => dataLowerCase.includes(amenities[amenityKey].title.toLowerCase()))
-      .map((amenityKey) => ({ key: amenityKey, ...amenities[amenityKey], available: true }))
-      .slice(0, 8)
+      .filter((amenityKey) =>
+        // dataLowerCase.includes(amenities[amenityKey].title.toLowerCase())
+        dataLowerCase.includes(amenityKey.toLowerCase())
+      )
+      .map((amenityKey) => ({
+        key: amenityKey,
+        ...amenities[amenityKey],
+        available: true,
+      }));
+    console.log('availableAmenities:', availableAmenities);
 
     const unavailableAmenities = Object.keys(amenities)
-      .filter((amenityKey) => !dataLowerCase.includes(amenities[amenityKey].title.toLowerCase()))
-      .map((amenityKey) => ({ key: amenityKey, ...amenities[amenityKey], available: false }))
-      .slice(0, 2)
-
-    return [...availableAmenities, ...unavailableAmenities]
+      .filter(
+        (amenityKey) =>
+          // !dataLowerCase.includes(amenities[amenityKey].title.toLowerCase())
+          !dataLowerCase.includes(amenityKey.toLowerCase())
+      )
+      .map((amenityKey) => ({
+        key: amenityKey,
+        ...amenities[amenityKey],
+        available: false,
+      }))
+      .slice(0, 2);
+    console.log('unavailableAmenities:', unavailableAmenities);
+    console.log('notIncluded', notIncluded);
+    if (!unavailableAmenities.length) {
+      return [...availableAmenities.slice(0, 10), ...unavailableAmenities];
+    } else {
+      setNotIncluded(unavailableAmenities);
+      return [
+        ...availableAmenities.slice(
+          0,
+          unavailableAmenities.length <= 2 ? 10 - unavailableAmenities.length : 8
+        ),
+        ...unavailableAmenities,
+      ];
+    }
   }
 
   function checkIfAmenitiesExist(amenity) {
-    amenity = amenity.toLowerCase()
-    const dataLowerCase = data.map((item) => item.toLowerCase())
+    amenity = amenity.toLowerCase();
+    const dataLowerCase = data.map((item) => item.toLowerCase());
     console.log(
       '🚀 ~ file: StayAmenities.jsx:454 ~ checkIfAmenitiesExist ~ dataLowerCase:',
       dataLowerCase
-    )
+    );
 
     if (dataLowerCase.includes(amenity)) {
-      return true
+      return true;
     }
 
-    return false
+    return false;
   }
 
   function renderAmenitiesSection(category) {
-    const hasAmenitiesForCategory = category.amenities.some(checkIfAmenitiesExist)
+    const hasAmenitiesForCategory = category.amenities.some(checkIfAmenitiesExist);
 
-    if (!hasAmenitiesForCategory) return null
+    if (!hasAmenitiesForCategory) return null;
 
     return (
       <section className='amenities-section' key={category.title}>
-        <div className='amenities-section-title'>{category.title}</div>
+        <div className='amenities-section-title' style={{ marginTop: '32px' }}>
+          {category.title}
+        </div>
         <div className='amenities-section-list'>
           {category.amenities.map((amenity) => {
             if (checkIfAmenitiesExist(amenity)) {
@@ -494,13 +525,13 @@ export function StayAmenities({ data }) {
                   <div className='amenity-icon'>{formatSVG(amenities[amenity].svg)}</div>
                   <div className='amenity-name has'>{amenities[amenity].title}</div>
                 </div>
-              )
+              );
             }
-            return null
+            return null;
           })}
         </div>
       </section>
-    )
+    );
   }
 
   function renderNotIncludedAmenities(category) {
@@ -511,10 +542,10 @@ export function StayAmenities({ data }) {
             <div className='amenity-icon'>{formatSVG(amenities[amenity].svg)}</div>
             <div className='amenity-name'>{amenities[amenity].title}</div>
           </div>
-        )
+        );
       }
-      return null
-    })
+      return null;
+    });
   }
 
   return (
@@ -536,7 +567,7 @@ export function StayAmenities({ data }) {
         <div
           className='show-all-reviews'
           onClick={() => {
-            setShowAllAmenities(!showAllAmenities)
+            setShowAllAmenities(!showAllAmenities);
           }}
         >
           Show all {amenitiesArray.length} amenities
@@ -547,7 +578,7 @@ export function StayAmenities({ data }) {
               <button
                 className='close-modal-btn'
                 onClick={() => {
-                  setShowAllAmenities(false)
+                  setShowAllAmenities(false);
                 }}
               >
                 <svg
@@ -566,21 +597,33 @@ export function StayAmenities({ data }) {
 
                 {amenitiesCategories.map(renderAmenitiesSection)}
 
-                <div className='amenities-section-title'
-                style={{marginTop: '48px', fontWeight: 'bold', textDecoration: 'underline'}}
-                >Not Included</div>
-                {amenitiesCategories.map((category) => (
-                  <section className='amenities-section' key={category.title + '-not-included'}>
-                    <div className='amenities-section-list'>
+                {notIncluded.length > 0 && (
+                  <div
+                    className='amenities-section-title'
+                    style={{
+                      marginTop: '48px',
+                      fontWeight: 'bold',
+                      textDecoration: 'underline',
+                    }}
+                  >
+                    Not Included
+                  </div>
+                )}
+                <section
+                  className='amenities-section'
+                  // key={category.title + "-not-included"}
+                >
+                  {amenitiesCategories.map((category) => (
+                    <div key={category.title + '-not-included'} className='amenities-section-list'>
                       {renderNotIncludedAmenities(category)}
                     </div>
-                  </section>
-                ))}
+                  ))}
+                </section>
               </div>
             </div>
           </div>
         )}
       </div>
     </React.Fragment>
-  )
+  );
 }

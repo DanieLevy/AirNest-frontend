@@ -162,7 +162,10 @@ export function StayPreview({ stay }) {
   }
 
   return (
-    <article className='stay-preview' onClick={() => window.open(stayLink, '_blank')}>
+    <article
+      className='stay-preview'
+      onClick={isMobile ? navigate.bind(null, stayLink) : () => window.open(stayLink, '_blank')}
+    >
       {isLoading && (
         <div className='loader-overlay'>
           <StayLoader />

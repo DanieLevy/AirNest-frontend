@@ -5,6 +5,7 @@ import { StayEdit } from './pages/StayEdit.jsx'
 import { StayIndex } from './pages/StayIndex.jsx'
 import { UserDetails } from './pages/UserDetails.jsx'
 import { Wishlist } from './pages/WishList.jsx'
+import { Dashboard } from './pages/Dashboard.jsx'
 
 // Routes accesible from the main navigation (in AppHeader)
 const routes = [
@@ -53,6 +54,11 @@ const routes = [
     component: <OrderIndex />,
     label: 'Order Index',
   },
+  {
+    path: '/dashboard/:userId',
+    component: <Dashboard />,
+    label: 'order',
+  }
 ]
 
 export default routes

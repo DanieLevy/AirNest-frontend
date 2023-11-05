@@ -2,110 +2,119 @@ $activeColor: $clr5;
 $hoverOpacity: 100%;
 
 .carousel-container {
-    grid-column: 1;
-    .carousel-item {
-      min-height: 67px;
-      padding: 0 15px;
-      max-width: max-content;
-      width: 100%!important;
-      // margin: 10px;
-    }
-  
-    .react-multiple-carousel__arrow--left {
-      position: absolute;
-      left: 0px;
-    }
-  
-    .react-multiple-carousel__arrow {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      opacity: 1;
-      transition: opacity 0.5s;
-      border-radius: 50%;
-      border: 1px solid rgba(0, 0, 0, 0.3);
-      background-color: #fff;
-      box-shadow: 0px 0px 10px 20px #fff;
-      text-align: center;
-      height: 26px !important;
-      width: 26px !important;
-      margin: 0;
-      position: absolute;
-      right: 0px;
-      min-width: unset;
-      min-height: unset;
-      z-index: 1;
-      padding: 14px;
-  
-      &::before {
-        font-size: 0.875rem;
-        color: #222222;
-      }
-    }
-  
-    .label {
-      cursor: pointer;
-      white-space: nowrap;
-      text-align: center;
-      color: #717171;
-      align-self: self-end;
-  
-      img {
-        box-sizing: border-box;
-        height: 24px;
-        opacity: 50%;
-        transition: opacity 0.2s;
-        object-fit: contain;
-      }
-      &.active img {
-        opacity: 100%;
-      }
-  
-      p {
-        margin-bottom: 4px;
-        font-size: 12px;
-        font-weight: 600;
-        line-height: 1.25rem;
-        letter-spacing: 0.2px;
-        font-family: cereal-light;
-      }
-    }
-  }
-  
-  .react-multi-carousel-track {
-    max-height: inherit;
-  
+  grid-column: 1;
 
-    li {
-      display: flex;
-      padding: 4px 0;
-  
-      &:nth-child(1) {
-        padding-left: 0;
-      }
-  
-      &:hover {
-        .label:not(.active) {
-          border-bottom: 3px solid rgba($clr4, 0.5);
-          color: $clr4;
-        }
-  
-        img:not(.active) {
-          opacity: $hoverOpacity;
-        }
-      }
-  
-      .label.active{
-        cursor: default; 
-        border-bottom: 3px solid $activeColor;
-        color: $activeColor;
-         & p {
-          font-family: cereal;
-         }
-      }
-  
-      img.active {
-        opacity: 100%;
-      }
+  .carousel-item {
+    min-height: 67px;
+    padding: 0 15px;
+    max-width: max-content;
+    width: 100% !important;
+    // margin: 10px;
+  }
+
+  .react-multiple-carousel__arrow--left {
+    position: absolute;
+    left: 0px;
+  }
+
+  .react-multiple-carousel__arrow {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 1;
+    transition: opacity 0.5s;
+    border-radius: 50%;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    background-color: #fff;
+    box-shadow: 0px 0px 10px 20px #fff;
+    text-align: center;
+    height: 26px !important;
+    width: 26px !important;
+    margin: 0;
+    position: absolute;
+    right: 0px;
+    min-width: unset;
+    min-height: unset;
+    z-index: 1;
+    padding: 14px;
+
+    &::before {
+      font-size: 0.875rem;
+      color: #222222;
     }
   }
+
+  .label {
+    cursor: pointer;
+    white-space: nowrap;
+    text-align: center;
+    color: #717171;
+    align-self: self-end;
+    border-bottom: 2px solid rgba($clr4, 0);
+    transition: scale 150ms;
+
+    img {
+      box-sizing: border-box;
+      height: 24px;
+      opacity: 50%;
+      transition: opacity 0.2s;
+      object-fit: contain;
+    }
+
+    &.active img {
+      opacity: 100%;
+    }
+
+    p {
+      margin-bottom: 4px;
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 1.25rem;
+      letter-spacing: 0.2px;
+      font-family: cereal-light;
+    }
+  }
+}
+
+.react-multi-carousel-track {
+  max-height: inherit;
+
+  li {
+    display: flex;
+    padding: 4px 0;
+    position: relative;
+
+    &:nth-child(1) {
+      padding-left: 0;
+    }
+
+    &:hover {
+      .label:not(.active) {
+        border-color:rgba($clr4, 0.5);
+        color: black;
+      }
+
+      img:not(.active) {
+        opacity: $hoverOpacity;
+      }
+    }
+
+    .label:active {
+      scale: 0.98;
+    }
+
+    .label.active {
+      border-color: $activeColor;
+      color: $activeColor;
+
+      & p {
+        font-family: cereal;
+        color: black;
+      }
+    }
+
+    img.active {
+      opacity: 100%;
+    }
+  }
+}
