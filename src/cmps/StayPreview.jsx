@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
 import { useSelector } from "react-redux";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { HiMiniChevronLeft, HiMiniChevronRight } from "react-icons/hi2";
 import { userService } from "../services/user.service";
 
@@ -22,6 +22,7 @@ export function StayPreview({ stay }) {
   const user = useSelector((storeState) => storeState.userModule.user);
   const stays = useSelector((storeState) => storeState.stayModule.stays);
   const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
 
   const randomDateRangeRef = useRef();
 
@@ -165,7 +166,8 @@ export function StayPreview({ stay }) {
   return (
     <article
       className="stay-preview"
-      onClick={() => window.open(stayLink, "_blank")}
+      onClick={isMobile ? navigate.bind(null, stayLink) :
+         () => window.open(stayLink, "_blank")}
     >
       {isLoading && (
         <div className="loader-overlay">
@@ -195,7 +197,6 @@ export function StayPreview({ stay }) {
         </div>
       </div>
       {isMobile ? (
-        <Link to={stayLink} className="stay-card">
           <div className="stay-card-details">
             <div className="preview-header flex">
               <div className="preview-name">
@@ -219,7 +220,6 @@ export function StayPreview({ stay }) {
               <span> night</span>
             </div>
           </div>
-        </Link>
       ) : (
         <div className="stay-card-details">
           <div className="preview-header flex">

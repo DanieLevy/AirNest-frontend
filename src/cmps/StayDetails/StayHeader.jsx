@@ -18,7 +18,6 @@ import { useDispatch } from 'react-redux'
 export function StayHeader({ name, imgUrls, reviews, loc, host }) {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768)
   const navigate = useNavigate()
-  const dispatch = useDispatch()
 
   useEffect(() => {
     const handleResize = () => {
@@ -31,6 +30,12 @@ export function StayHeader({ name, imgUrls, reviews, loc, host }) {
       window.removeEventListener('resize', handleResize)
     }
   }, [])
+
+  const handleGoBack = () => {
+    // if there is back in history go back else go to home
+    if (window.history.length > 2) window.history.go(-1)
+    else navigate('/')
+  }
 
   const scrollToLocation = () => {
     const element = document.querySelector('.details-map')
@@ -128,7 +133,7 @@ export function StayHeader({ name, imgUrls, reviews, loc, host }) {
             slideInterval={3000}
           />
           <div className='stay-header-buttons'>
-            <button className='back-btn flex align-center' onClick={() => navigate(-1)}>
+            <button className='back-btn flex align-center' onClick={handleGoBack}>
               <PiArrowLeftLight />
             </button>
             <div className='action-btns flex'>

@@ -23,7 +23,7 @@ export function AppFooter() {
   );
 
   useEffect(() => {
-    getStay();
+    // getStay();
 
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768);
@@ -46,11 +46,11 @@ export function AppFooter() {
     };
   }, []);
 
-  function getStay() {
-    loadStay(stayId).then((stay) => {
-      setStay(stay);
-    });
-  }
+  // function getStay() {
+  //   loadStay(stayId).then((stay) => {
+  //     setStay(stay);
+  //   });
+  // }
 
   function handleLoginModal() {
     console.log("loginModal", loginModal);
@@ -170,7 +170,7 @@ export function AppFooter() {
                       <path d="M16.67 24.94c2.1-2.8 3.34-5.09 3.7-6.84.52-2.63-1.06-4.83-3.7-4.83s-4.23 2.2-3.7 4.83c.35 1.75 1.59 4.03 3.7 6.84z"></path>
                     </g>
                   </svg>
-                  <Link to="/trips">Trips</Link>
+                  <Link to="/order">Trips</Link>
                 </div>
 
                 <div
