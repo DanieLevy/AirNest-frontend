@@ -59,7 +59,7 @@ export function ExploreBar({ onExpandChange }) {
   const location = useLocation();
   const path = location.pathname;
   const isStayPage = path === '/' || path.startsWith('/?');
-  const isDashboardPage = path === '/dashboard';
+  const isDashboardPage = path === path.startsWith('/dashboard');
 
   useEffect(() => {
     setSelectedGuests((prevState) => ({
@@ -120,8 +120,6 @@ export function ExploreBar({ onExpandChange }) {
   }
 
   function handleDayClick(date) {
-    console.log('date', date);
-
     if (selectedRange.from && selectedRange.to) {
       setSelectedRange({
         from: date,
@@ -171,7 +169,6 @@ export function ExploreBar({ onExpandChange }) {
   }
 
   function handleDocumentClick(ev) {
-    console.log('clicked outside');
     ev.stopPropagation();
     if (expandedBarRef.current && !expandedBarRef.current.contains(ev.target)) {
       setIsExpanded(false);
@@ -233,6 +230,9 @@ export function ExploreBar({ onExpandChange }) {
     });
 
     handleExpandChange(false);
+    if (path !== '/' && !path.startsWith('/?')) {
+      window.location.href = '/';
+    }
   }
 
   // {!isExpanded && isStayPage && !isMobile && ( 1
@@ -281,7 +281,7 @@ export function ExploreBar({ onExpandChange }) {
       )}
 
       {/* 2 */}
-      {!isExpanded && !isStayPage && !isMobile && isDashboardPage && (
+      {!isExpanded && !isStayPage && !isMobile && !isDashboardPage && (
         <div className={`explore-bar-preview short`} onClick={isExpanded ? null : handleClick}>
           <div className='title'>Start your search</div>
           <button type='button' className='search-btn'>
@@ -290,7 +290,7 @@ export function ExploreBar({ onExpandChange }) {
         </div>
       )}
 
-      {!isExpanded && !isStayPage && !isMobile && !isDashboardPage && (
+      {!isExpanded && !isStayPage && !isMobile && isDashboardPage && (
         <div className='dashboard-header'>Dashboard</div>
       )}
 
