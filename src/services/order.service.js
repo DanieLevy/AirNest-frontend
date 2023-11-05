@@ -29,13 +29,12 @@ async function remove(orderId) {
 }
 
 async function add(orderDetails) {
-  const { checkIn, checkOut, adults, children, stay, buyer, hostId, hostName, status } = orderDetails
+  const { checkIn, checkOut, guests, stay, buyer, hostId, hostName, status } = orderDetails
 
   const orderToAdd = {
     checkIn,
     checkOut,
-    adults,
-    children,
+    guests,
     status,
     stay: {
       _id: stay._id,
