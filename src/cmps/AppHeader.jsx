@@ -34,6 +34,7 @@ export function AppHeader() {
   const path = location.pathname;
   const isStayPage = location.pathname.startsWith("/stay");
   const isOrderPage = location.pathname.startsWith("/order");
+  const isWishlistPage = path === '/wishlist';
 
   useEffect(() => {
     const handleResize = () => {
@@ -88,14 +89,15 @@ export function AppHeader() {
   }
   return (
     <React.Fragment>
-      {!(isMobile && isStayPage) ? (
+      {!(isMobile && isStayPage ) ? (
         <React.Fragment>
           <section
             className={`header-container main-layout ${
               isStayPage ? "stayDetails relative" : ""
             }
           ${isOrderPage ? "medium relative" : ""}
-          `}
+          `
+        }
           >
             {!isMobile && (
               <header className="main-header flex">
@@ -260,7 +262,7 @@ export function AppHeader() {
       ) : (
         <div
           className="divider"
-          style={isMobile ? { display: "none" } : { display: block }}
+          style={isMobile ? { display: "none" } : { display: "block" }}
         ></div>
       )}
     </React.Fragment>

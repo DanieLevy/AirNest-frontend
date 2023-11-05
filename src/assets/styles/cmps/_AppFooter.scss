@@ -12,7 +12,7 @@
   z-index: 10;
   transition: all 0.3s ease-in-out;
 
-  border-top: .5px solid #c5c5c5b0;
+  border-top: 0.5px solid #c5c5c5b0;
 
   &.hidden {
     transform: translateY(60px);
@@ -27,7 +27,10 @@
 
     & .footer-explore,
     .footer-wishlist,
-    .footer-login {
+    .footer-login,
+    .footer-trips,
+    .footer-inbox,
+    .footer-profile {
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -37,19 +40,38 @@
       cursor: pointer !important;
       text-align: center !important;
 
-      font-size: 12px !important;
+      font-size: 10px !important;
+      font-weight: 600 !important;
+      font-family: cereal;
+
+      color: #6a6a6a !important;
+      &.selected {
+        color: #e81948 !important;
+      }
 
       a {
-        color: #838383;
         text-decoration: none;
+        color: inherit;
+      }
+
+      // when click on, trasparent background]
+      &.selected {
+        background-color: transparent !important;
+        color: white;
       }
 
       svg {
-        width: 24px;
+        display: block;
+        fill: none;
         height: 24px;
-        margin-bottom: 5px;
-        fill: #838383;
-        cursor: pointer;
+        width: 24px;
+        stroke: #6a6a6a;
+        stroke-width: 2;
+        overflow: visible;
+
+        &.selected {
+          stroke: #e81948;
+        }
       }
     }
   }
@@ -61,12 +83,22 @@
 }
 
 .wishlist-svg {
-    stroke-width: 2;
-    stroke: #838383;
+  stroke-width: 2;
+  stroke: #838383;
+}
+
+.trips-svg, .inbox-svg, .profile-svg {
+  display: block;
+  fill: none;
+  height: 24px;
+  width: 24px;
+  stroke: currentcolor;
+  stroke-width: 2;
+  overflow: visible;
 }
 
 .stay-footer-mobile {
- position: fixed;
+  position: fixed;
   bottom: -1px;
   left: 0;
   width: 100%;
