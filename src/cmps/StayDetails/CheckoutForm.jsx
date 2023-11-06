@@ -12,7 +12,7 @@ import { useSearchParams } from 'react-router-dom'
 import { useRef } from 'react'
 import { QUERY_KEYS } from '../../services/util.service'
 
-export function CheckoutForm({ onSubmit, price, reviews, capacity }) {
+export function CheckoutForm({ onSubmit, price, reviews, capacity, stayGalleryRef }) {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768)
   const [searchParams] = useSearchParams()
   const [isStayPage, setIsStayPage] = useState(location.pathname.startsWith('/stay'))
@@ -34,7 +34,6 @@ export function CheckoutForm({ onSubmit, price, reviews, capacity }) {
     pets: +searchParams.get(QUERY_KEYS.pets) || 0,
   })
 
-  const [isCheckoutSum, setIsCheckoutSum] = useState(false)
   const dateDiff =
     selectedRange.to && selectedRange.from
       ? selectedRange.to.getTime() - selectedRange.from.getTime()
@@ -43,29 +42,44 @@ export function CheckoutForm({ onSubmit, price, reviews, capacity }) {
   const totalSum = price * dateDiffDays
   const totalPlusFee = totalSum + totalSum * 0.125
 
+  // Intersection observer
   const [galleryInViewport, setGalleryInViewport] = useState(true)
   const [asideInViewport, setAsideInViewport] = useState(true)
   const stayDetailsAsideRef = useRef(null)
-  const stayGalleryRef = useRef(null)
 
   useEffect(() => {
     if (!isMobile) {
-      const stayDetailsAsideElement = document.querySelector('.reservation-guests')
-      const stayGalleryElement = document.querySelector('.images-editor-container')
-
+      const stayDetailsAsideElement = stayDetailsAsideRef.current
       const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
           if (entry.target === stayDetailsAsideElement) {
             setAsideInViewport(entry.isIntersecting)
           }
-          if (entry.target === stayGalleryElement) {
-            setGalleryInViewport(entry.isIntersecting)
+        })
+      })
+
+      observer.observe(stayDetailsAsideElement)
+
+      return () => {
+        observer.unobserve(stayDetailsAsideElement)
+      }
+    }
+  }, [isMobile])
+
+  useEffect(() => {
+    if (!isMobile) {
+      const stayGalleryElement = stayGalleryRef.current
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setGalleryInViewport(true)
+          } else {
+            setGalleryInViewport(false)
           }
         })
       })
 
-      if (stayDetailsAsideElement) observer.observe(stayDetailsAsideElement)
-      if (stayGalleryElement) observer.observe(stayGalleryElement)
+      observer.observe(stayGalleryElement)
 
       return () => {
         if (stayDetailsAsideElement) observer.unobserve(stayDetailsAsideElement)
@@ -73,10 +87,6 @@ export function CheckoutForm({ onSubmit, price, reviews, capacity }) {
       }
     }
   }, [isMobile])
-
-  useEffect(() => {
-    dateDiffDays ? setIsCheckoutSum(true) : setIsCheckoutSum(false)
-  }, [selectedRange])
 
   useEffect(() => {
     const handleResize = () => {
@@ -184,7 +194,7 @@ export function CheckoutForm({ onSubmit, price, reviews, capacity }) {
   return (
     <React.Fragment>
       {isStayPage && !isMobile && (
-        <div className='checkout-form-container flex' ref={stayDetailsAsideRef}>
+        <div className='checkout-form-container flex'>
           <form onSubmit={handleSubmit} className='checkout-form'>
             <div className='helped-container'>
               <div className='form-header'>
@@ -196,6 +206,7 @@ export function CheckoutForm({ onSubmit, price, reviews, capacity }) {
               </div>
               <div className='form-header-reservation'>
                 <div
+                  ref={stayDetailsAsideRef}
                   className='reservation-dates-container'
                   onClick={(ev) => {
                     ev.stopPropagation()

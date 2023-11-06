@@ -84,6 +84,10 @@ $hoverOpacity: 100%;
     padding: 4px 0;
     position: relative;
 
+    & .label {
+      // padding: 5px 0;
+    }
+
     &:nth-child(1) {
       padding-left: 0;
     }

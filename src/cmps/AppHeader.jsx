@@ -14,11 +14,8 @@ import { FaCircleUser } from "react-icons/fa6";
 import { is } from "date-fns/locale";
 import { store } from "../store/store.js";
 
-import { HiOutlineSearch } from "react-icons/hi";
-
 export function AppHeader() {
   const user = useSelector((storeState) => storeState.userModule.user);
-  const [a, setA] = useState(false);
   const [userModal, setUserModal] = useState(false);
   const loginModal = useSelector(
     (storeState) => storeState.userModule.loginModal
@@ -34,7 +31,7 @@ export function AppHeader() {
   const path = location.pathname;
   const isStayPage = location.pathname.startsWith("/stay");
   const isOrderPage = location.pathname.startsWith("/order");
-  const isWishlistPage = path === '/wishlist';
+  const isWishlistPage = path === "/wishlist";
 
   useEffect(() => {
     const handleResize = () => {
@@ -51,7 +48,7 @@ export function AppHeader() {
   async function onLogin(credentials) {
     try {
       const user = await login(credentials);
-      showSuccessMsg(`Welcome: ${user.fullname}`);
+      showSuccessMsg(`Welcome back ${user.fullname}`);
       closeModal();
     } catch (err) {
       showErrorMsg("Cannot login");
@@ -60,7 +57,7 @@ export function AppHeader() {
   async function onSignup(credentials) {
     try {
       const user = await signup(credentials);
-      showSuccessMsg(`Welcome new user: ${user.fullname}`);
+      showSuccessMsg(`Welcome ${user.fullname}`);
       closeModal();
     } catch (err) {
       showErrorMsg("Cannot signup");
@@ -69,7 +66,7 @@ export function AppHeader() {
   async function onLogout() {
     try {
       await logout();
-      showSuccessMsg(`Bye now`);
+      showSuccessMsg(`Goodbye ${user.fullname}`);
     } catch (err) {
       showErrorMsg("Cannot logout");
     }
@@ -89,15 +86,14 @@ export function AppHeader() {
   }
   return (
     <React.Fragment>
-      {!(isMobile && isStayPage ) ? (
+      {!isMobile ? (
         <React.Fragment>
           <section
             className={`header-container main-layout ${
               isStayPage ? "stayDetails relative" : ""
             }
           ${isOrderPage ? "medium relative" : ""}
-          `
-        }
+          `}
           >
             {!isMobile && (
               <header className="main-header flex">
@@ -205,7 +201,7 @@ export function AppHeader() {
                             style={{ textDecorationLine: "none" }}
                             onClick={() => setUserModal(false)}
                           >
-                            <li>DashBoard</li>
+                            <li>Dashboard</li>
                           </Link>
                           <Link
                             to={`/user/${user._id}`}
@@ -228,7 +224,6 @@ export function AppHeader() {
                     </ul>
                   </section>
                 )}
-
               </header>
             )}
             {loginModal && (
@@ -241,13 +236,30 @@ export function AppHeader() {
                 setSignupModal={setSignupModal}
               />
             )}
-            {isMobile && <ExploreBar />}
           </section>
           <div
             className={`white-space ${isExploreExpanded ? "expanded" : ""}`}
           ></div>
         </React.Fragment>
-      ) : null}
+      ) : (
+        <React.Fragment>
+          {isMobile && path === "/" && (
+            <section className={`header-container main-layout`}>
+              <ExploreBar />
+            </section>
+          )}
+                      {loginModal && (
+              <LoginSignup
+                login={onLogin}
+                signup={onSignup}
+                onToggleLogin={onToggleLogin}
+                closeModal={closeModal}
+                isSignup={signupModal}
+                setSignupModal={setSignupModal}
+              />
+            )}
+        </React.Fragment>
+      )}
 
       {!isMobile && !isStayPage && !isOrderPage && !isExploreExpanded ? (
         <div
