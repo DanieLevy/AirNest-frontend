@@ -29,19 +29,19 @@ window.cs = stayService
 async function query(params) {
   const paramsObj = getParams(params)
 
-  let capacity = +paramsObj?.adults + +paramsObj?.children
-  let stays = await httpService.get(STORAGE_KEY)
-  let staysToReturn = stays
+  // let capacity = +paramsObj?.adults + +paramsObj?.children
+  const stays = await httpService.get(STORAGE_KEY, paramsObj)
+  // let staysToReturn = stays
 
-  if (capacity) staysToReturn = staysToReturn.filter((stay) => stay.capacity >= capacity)
-  if (paramsObj.region && paramsObj.region !== '') {
-    const regionRegex = new RegExp(paramsObj.region.split(',')[0], 'i')
-    staysToReturn = staysToReturn.filter((stay) => regionRegex.test(stay.loc.country))
-  }
-  if (paramsObj.label)
-    staysToReturn = staysToReturn.filter((stay) => stay.labels.includes(paramsObj.label))
+  // if (capacity) staysToReturn = staysToReturn.filter((stay) => stay.capacity >= capacity)
+  // if (paramsObj.region && paramsObj.region !== '') {
+  //   const regionRegex = new RegExp(paramsObj.region.split(',')[0], 'i')
+  //   staysToReturn = staysToReturn.filter((stay) => regionRegex.test(stay.loc.country))
+  // }
+  // if (paramsObj.label)
+  //   staysToReturn = staysToReturn.filter((stay) => stay.labels.includes(paramsObj.label))
 
-  return staysToReturn
+  return stays
 }
 
 function getParams(params) {
@@ -132,7 +132,7 @@ async function save(stay) {
   console.log('stay:', stay)
   let savedStay
   const { _id, fullname, imgUrl } = await userService.getLoggedinUser()
-  stay.imgUrls = stay.imgUrls.httpService((url) => url)
+  stay.imgUrls = stay.imgUrls.filter((url) => url)
 
   if (stay._id) {
     savedStay = await httpService.put(`stay/${stay._id}`, stay)
@@ -163,26 +163,6 @@ async function save(stay) {
 
 //   return msg
 // }
-
-async function _getStayLatLang(address, city, countryCode) {
-  const response = await fetch(
-    `https://maps.googleapis.com/maps/api/geocode/json?address=${_joinString(
-      address
-    )},+${_joinString(city)},+${countryCode}&key=AIzaSyB0XrNIJmg5sZqYETs7D_1d2qfIIwy1fkY`
-  )
-  const { results } = await response.json()
-  return results[0].geometry.location
-}
-
-async function _getCountryCode(name) {
-  const response = await fetch(`https://restcountries.com/v3.1/name/${name}`)
-  const country = await response.json()
-  return country[0].cca2
-}
-
-function _joinString(string) {
-  return string.split(' ').join('+')
-}
 
 function getEmptyStay() {
   return {

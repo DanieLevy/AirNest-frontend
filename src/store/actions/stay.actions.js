@@ -11,6 +11,7 @@ import {
   SET_FILTERED_STAYS,
 } from '../reducer/stay.reducer.js'
 import { LOADING_DONE, LOADING_START } from '../reducer/system.reducer'
+import { httpService } from '../../services/http.service.js'
 // import { SET_SCORE } from "../user.reducer.js";
 
 // Action Creators:
@@ -41,10 +42,10 @@ export async function loadStays(params) {
       type: SET_STAYS,
       stays,
     })
-    store.dispatch({
-      type: SET_FILTERED_STAYS,
-      stays,
-    })
+    // store.dispatch({
+    //   type: SET_FILTERED_STAYS,
+    //   stays,
+    // })
   } catch (err) {
     console.log('Cannot load stays', err)
     throw err
@@ -52,6 +53,16 @@ export async function loadStays(params) {
     store.dispatch({ type: LOADING_DONE })
   }
 }
+
+// export async function loadAllStays() {
+//   try {
+//     const stays = await httpService.get(`stay`)
+//     return stays
+//   } catch (err) {
+//     console.log('Cannot load stays', err)
+//     throw err
+//   }
+// }
 
 export async function loadStay(stayId) {
   try {
@@ -131,26 +142,6 @@ export function filterStays(properties, params) {
 
 // Demo for Optimistic Mutation
 // (IOW - Assuming the server call will work, so updating the UI first)
-export function onRemoveStayOptimistic(stayId) {
-  store.dispatch({
-    type: REMOVE_STAY,
-    stayId,
-  })
-  showSuccessMsg('Stay removed')
-
-  stayService
-    .remove(stayId)
-    .then(() => {
-      console.log('Server Reported - Deleted Succesfully')
-    })
-    .catch((err) => {
-      showErrorMsg('Cannot remove stay')
-      console.log('Cannot load stays', err)
-      store.dispatch({
-        type: UNDO_REMOVE_STAY,
-      })
-    })
-}
 
 export function getResultLength(filter, stays) {
   return stayService.getResultLength(filter, stays)

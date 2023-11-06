@@ -50,8 +50,6 @@ export function StayDetails() {
     try {
       dispatch({ type: LOADING_START })
       const stay = await stayService.getById(stayId)
-      console.log('🚀 ~ file: StayDetails.jsx:48 ~ loadStay ~ stayId:', stayId)
-      console.log('🚀 ~ file: StayDetails.jsx:48 ~ loadStay ~ stay:', stay)
       setCurrStay(stay)
     } catch (err) {
       console.log('Had issues in stay details', err)

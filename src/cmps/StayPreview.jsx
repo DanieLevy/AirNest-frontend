@@ -53,8 +53,8 @@ export function StayPreview({ stay }) {
       return
     }
 
-    const wasLiked = liked // Store the current liked state to revert back if needed
-    setLiked(!liked) // Optimistically update the UI
+    const wasLiked = liked
+    setLiked(!liked)
 
     try {
       if (wasLiked) {
