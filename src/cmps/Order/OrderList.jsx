@@ -5,7 +5,6 @@ import { useSelector } from "react-redux";
 export function OrderList() {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const data = useSelector((storeState) => storeState.orderModule.orders);
-  console.log("data", data);
 
   useEffect(() => {
     window.addEventListener("resize", () => {
@@ -63,8 +62,8 @@ export function OrderList() {
           </div>
         ) : (
           <div className="order-list-body">
-            {data.map((order) => (
-              <div className="order-list-table-row">
+            {data.map((order, key) => (
+              <div className="order-list-table-row" key={key}>
                 <div className="order-list-img">
                   {/* <img src={order.stay.imgUrls[0]} alt="" /> */}
                   <img

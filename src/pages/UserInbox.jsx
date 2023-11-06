@@ -111,7 +111,7 @@ export function UserInbox() {
         {/* NOTIFICATION */}
         {inboxType === "notifications" &&
           notifications.map((notifications) => (
-            <div className="notification-item">
+            <div className="notification-item" key={notifications.id}>
               <div
                 className={`notification-icon ${
                   notifications.isRead ? "" : "unread"

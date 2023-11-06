@@ -27,7 +27,6 @@ export function Wishlist() {
   );
 
   function handleLoginModal() {
-    console.log("loginModal", loginModal);
     store.dispatch({
       type: "SET_LOGIN_MODAL",
       loginModal: true,
