@@ -82,8 +82,7 @@ export function CheckoutForm({ onSubmit, price, reviews, capacity, stayGalleryRe
       observer.observe(stayGalleryElement)
 
       return () => {
-        if (stayDetailsAsideElement) observer.unobserve(stayDetailsAsideElement)
-        if (stayGalleryElement) observer.unobserve(stayGalleryElement)
+        observer.unobserve(stayGalleryElement)
       }
     }
   }, [isMobile])
