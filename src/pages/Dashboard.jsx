@@ -13,14 +13,11 @@ export function Dashboard() {
   useEffect(() => {
     window.addEventListener("resize", () => {
       setIsMobile(window.innerWidth < 768);
-    });
-
-    return () => {
-      window.removeEventListener("resize", () => {
-        setIsMobile(window.innerWidth < 768);
-      });
-    };
-  }, [window.innerWidth]);
+    }
+    );
+  }
+  , [window.innerWidth]);
+  
 
   const data = [
     {

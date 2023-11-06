@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux'
 import { Link, useSearchParams } from 'react-router-dom'
 import { HiMiniChevronLeft, HiMiniChevronRight } from 'react-icons/hi2'
 import { userService } from '../services/user.service'
+import { useNavigate } from 'react-router-dom'
 
 import { store } from '../store/store'
 import { stayService } from '../services/stay.service.local'
@@ -22,6 +23,7 @@ export function StayPreview({ stay }) {
   const user = useSelector((storeState) => storeState.userModule.user)
   const stays = useSelector((storeState) => storeState.stayModule.stays)
   const [isLoading, setIsLoading] = useState(true)
+  const navigate = useNavigate()
 
   const randomDateRangeRef = useRef()
 
