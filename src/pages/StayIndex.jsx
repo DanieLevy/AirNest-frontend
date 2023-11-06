@@ -60,40 +60,73 @@ export function StayIndex() {
     <React.Fragment>
       <StayFilter />
       <main className="main-layout stay-index">
-        <section>
-          <div
-            className={`show-map-btn-container ${
-              isVisible && isMobile ? "" : "hidden"
-            }`}
-            style={{ bottom: isMobile ? "75px" : "90px" }}
-          >
-            <button
-              className="show-map-btn"
-              onClick={() =>
-                // scroll to top of page
-                window.scrollTo({ top: 0, behavior: "smooth" }) &
-                setListMode(!listMode)
-              }
+        {isMobile ? (
+          <section>
+            <div
+              className={`show-map-btn-container ${
+                isVisible && isMobile ? "" : "hidden"
+              }`}
+              style={{ bottom: isMobile ? "70px" : "90px" }}
             >
-              {listMode ? (
-                <>
-                  Show Map
-                  <HiMiniMap className="map-icon" />
-                </>
-              ) : (
-                <>
-                  Show List
-                  <HiMiniListBullet className="map-icon" />
-                </>
-              )}
-            </button>
-          </div>
-          {listMode ? (
-            <StayList stays={stays} isLoading={isLoading} />
-          ) : (
-            <StayMapIndex stays={stays} />
-          )}
-        </section>
+              <button
+                className="show-map-btn"
+                onClick={() =>
+                  // scroll to top of page
+                  window.scrollTo({ top: 0, behavior: "smooth" }) &
+                  setListMode(!listMode)
+                }
+              >
+                {listMode ? (
+                  <>
+                    Show Map
+                    <HiMiniMap className="map-icon" />
+                  </>
+                ) : (
+                  <>
+                    Show List
+                    <HiMiniListBullet className="map-icon" />
+                  </>
+                )}
+              </button>
+            </div>
+            {listMode ? (
+              <StayList stays={stays} isLoading={isLoading} />
+            ) : (
+              <StayMapIndex stays={stays} />
+            )}
+          </section>
+        ) : (
+          <section>
+            <div
+              className={`show-map-btn-container`}
+            >
+              <button
+                className="show-map-btn"
+                onClick={() =>
+                  window.scrollTo({ top: 0, behavior: "smooth" }) &
+                  setListMode(!listMode)
+                }
+              >
+                {listMode ? (
+                  <>
+                    Show Map
+                    <HiMiniMap className="map-icon" />
+                  </>
+                ) : (
+                  <>
+                    Show List
+                    <HiMiniListBullet className="map-icon" />
+                  </>
+                )}
+              </button>
+            </div>
+            {listMode ? (
+              <StayList stays={stays} isLoading={isLoading} />
+            ) : (
+              <StayMapIndex stays={stays} />
+            )}
+          </section>
+        )}
       </main>
     </React.Fragment>
   );

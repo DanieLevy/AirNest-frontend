@@ -12,11 +12,16 @@
   .show-map-btn-container {
     width: fit-content;
     position: fixed;
-    bottom: 50px;
+    bottom: 70px;
     z-index: 10;
     left: 50%;
     transform: translateX(-50%);
     transition: all 0.3s ease-in-out;
+
+    // mobile
+    @media (max-width: 768px) {
+      bottom: 60px;
+    }
 
     &.hidden {
       transform: translateX(-50%) translateY(60px);
