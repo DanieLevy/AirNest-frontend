@@ -40,6 +40,7 @@
     "react-router-dom": "^6.16.0",
     "react-select": "^5.7.7",
     "react-slide-fade-in": "^1.0.9",
+    "react-spinners": "^0.13.8",
     "react-svg": "^16.1.27",
     "react-table": "^7.8.0",
     "react-transition-group": "^4.4.5",
