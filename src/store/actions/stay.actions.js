@@ -11,7 +11,6 @@ import {
   SET_FILTERED_STAYS,
 } from '../reducer/stay.reducer.js'
 import { LOADING_DONE, LOADING_START } from '../reducer/system.reducer'
-import { httpService } from '../../services/http.service.js'
 // import { SET_SCORE } from "../user.reducer.js";
 
 // Action Creators:
@@ -53,16 +52,6 @@ export async function loadStays(params) {
     store.dispatch({ type: LOADING_DONE })
   }
 }
-
-// export async function loadAllStays() {
-//   try {
-//     const stays = await httpService.get(`stay`)
-//     return stays
-//   } catch (err) {
-//     console.log('Cannot load stays', err)
-//     throw err
-//   }
-// }
 
 export async function loadStay(stayId) {
   try {
@@ -113,76 +102,7 @@ export function filterStays(properties, params) {
     stays,
   })
 }
+
 export function getResultLength(filter, stays) {
   return stayService.getResultLength(filter, stays)
 }
-
-// export function filterStays(params) {
-//   return (dispatch, getState) => {
-//     const { allStays } = getState() // Assuming `allStays` holds the unfiltered list
-
-//     // Convert the incoming parameters to a params object, similar to `getParams`
-//     const paramsObj = getParams(params)
-
-//     // Start with all stays and apply filters as needed
-//     let staysToReturn = allStays
-
-//     const minPrice = +paramsObj.minPrice
-//     const maxPrice = +paramsObj.maxPrice
-//     staysToReturn = stayService.filterStaysByPrice(staysToReturn, minPrice, maxPrice)
-
-//     // Apply other filters based on the presence of parameters
-//     if (paramsObj.bedrooms) {
-//       staysToReturn = staysToReturn.filter((stay) => stay.bedrooms >= +paramsObj.bedrooms)
-//     }
-//     if (paramsObj.beds) {
-//       staysToReturn = staysToReturn.filter((stay) => stay.beds >= +paramsObj.beds)
-//     }
-//     if (paramsObj.bathrooms) {
-//       staysToReturn = staysToReturn.filter((stay) => stay.bathrooms >= +paramsObj.bathrooms)
-//     }
-//     if (paramsObj.amenities) {
-//       staysToReturn = staysToReturn.filter((stay) =>
-//         paramsObj.amenities
-//           .split(',')
-//           .every((amenity) => stay.amenities.some((item) => new RegExp(amenity, 'i').test(item)))
-//       )
-//     }
-
-//     // Dispatch the action to set the filtered stays in the store
-//     dispatch({
-//       type: SET_FILTERED_STAYS,
-//       payload: staysToReturn,
-//     })
-//   }
-// }
-
-//was Cart
-// export function addToStay(stay) {
-//     store.dispatch({
-//         type: ADD_STAY,
-//         stay
-//     })
-// }
-
-// export function removeFromStay(stayId) {
-//     store.dispatch({
-//         type: REMOVE_STAY,
-//         stayId
-//     })
-// }
-
-// export async function checkout(total) {
-//     try {
-//         const score = await userService.changeScore(-total)
-//         store.dispatch({ type: SET_SCORE, score })
-//         store.dispatch({ type: CLEAR_STAY })
-//         return score
-//     } catch (err) {
-//         console.log('StayActions: err in checkout', err)
-//         throw err
-//     }
-// }
-
-// Demo for Optimistic Mutation
-// (IOW - Assuming the server call will work, so updating the UI first)

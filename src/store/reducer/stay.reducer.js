@@ -4,7 +4,6 @@ export const ADD_STAY = 'ADD_STAY'
 export const UPDATE_STAY = 'UPDATE_STAY'
 export const UNDO_REMOVE_STAY = 'UNDO_REMOVE_STAY'
 export const SET_FILTERED_STAYS = 'SET_FILTERED_STAYS'
-export const APPEND_STAYS = 'APPEND_STAYS'
 
 const initialState = {
   stays: [],
@@ -43,12 +42,6 @@ export function stayReducer(state = initialState, action) {
     case SET_FILTERED_STAYS:
       newState = { ...state, filteredStays: action.stays }
       break
-
-    case APPEND_STAYS:
-      newState = {
-        ...state,
-        filteredStays: [...state.filteredStays, ...action.stays],
-      }
     default:
   }
   return newState

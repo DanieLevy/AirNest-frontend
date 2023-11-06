@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 
 import { StayList } from '../cmps/StayList.jsx'
@@ -10,10 +10,9 @@ import { HiMiniListBullet } from 'react-icons/hi2'
 import { StayFilter } from '../cmps/StayFilter.jsx'
 import { useSearchParams } from 'react-router-dom'
 import { QUERY_KEYS } from '../services/util.service.js'
-import { httpService } from '../services/http.service.js'
 
 export function StayIndex() {
-  const [listMode, setListMode] = useState(true)
+  const [listMode, setListMode] = useState(true) // true = list, false = map
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768)
   const [isVisible, setIsVisible] = useState(true)
   const [searchParams] = useSearchParams()
@@ -22,84 +21,14 @@ export function StayIndex() {
   const adults = searchParams.get(QUERY_KEYS.adults)
   const children = searchParams.get(QUERY_KEYS.children)
   const label = searchParams.get(QUERY_KEYS.label)
-  const beds = searchParams.get(QUERY_KEYS.beds)
 
-  const [currentIndex, setCurrentIndex] = useState(0)
-  const staysPerPage = 20
-  const [renderedStays, setRenderedStays] = useState([])
-
-  const loader = useRef(null)
-
-  const filteredStays = useSelector((storeState) => storeState.stayModule.filteredStays)
+  const stays = useSelector((storeState) => storeState.stayModule.filteredStays)
 
   const isLoading = useSelector((storeState) => storeState.systemModule.isLoading)
 
   useEffect(() => {
-    setCurrentIndex(0)
-
     loadStays(searchParams)
-
-    setRenderedStays(removeDuplicates(filteredStays))
-    console.log('🚀 ~ file: StayIndex.jsx:39 ~ useEffect ~ filteredStays:', filteredStays)
-    console.log('🚀 ~ file: StayIndex.jsx:39 ~ useEffect ~ currentIndex:', currentIndex)
-
-    return () => {
-      setCurrentIndex(0)
-      setRenderedStays([])
-    }
-  }, [region, adults, children, label, beds])
-  // useEffect(() => {
-  //   loadStays(searchParams)
-  //   console.log('🚀 ~ file: loadStays.jsx:39 ~ useEffect ~ filteredStays:', filteredStays)
-  //   console.log('🚀 ~ file: loadStays.jsx:39 ~ useEffect ~ currentIndex:', currentIndex)
-  // }, [loadStays, region, adults, children, label])
-
-  // useEffect(() => {
-  //   setRenderedStays(removeDuplicates(filteredStays))
-  //   console.log('🚀 ~ file: setRenderedStays.jsx:39 ~ useEffect ~ filteredStays:', filteredStays)
-  //   console.log('🚀 ~ file: setRenderedStays.jsx:39 ~ useEffect ~ currentIndex:', currentIndex)
-  // }, [filteredStays])
-
-  const removeDuplicates = (array) => {
-    return [...new Set(array)]
-  }
-
-  const loadMoreStays = () => {
-    if (currentIndex < filteredStays.length) {
-      const nextStays = filteredStays.slice(currentIndex, currentIndex + staysPerPage)
-      console.log('🚀 ~ file: StayIndex.jsx:39 ~ useEffect ~ filteredStays:', filteredStays)
-      console.log('🚀 ~ file: StayIndex.jsx:39 ~ useEffect ~ currentIndex:', currentIndex)
-      if (nextStays) {
-        setRenderedStays((prevStays) => removeDuplicates([...prevStays, ...nextStays]))
-        setCurrentIndex((prevIndex) => prevIndex + staysPerPage)
-      }
-    }
-  }
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting) {
-          loadMoreStays()
-        }
-      },
-      {
-        root: null,
-        rootMargin: '20px',
-        threshold: 0.2,
-      }
-    )
-
-    if (loader.current) {
-      observer.observe(loader.current)
-    }
-
-    return () => {
-      if (loader.current) {
-        observer.unobserve(loader.current)
-      }
-    }
-  }, [currentIndex, filteredStays.length])
+  }, [region, adults, children, label])
 
   useEffect(() => {
     const handleResize = () => {
@@ -127,34 +56,67 @@ export function StayIndex() {
     <React.Fragment>
       <StayFilter />
       <main className='main-layout stay-index'>
-        <section>
-          <div
-            className={`show-map-btn-container ${isVisible && isMobile ? '' : 'hidden'}`}
-            style={{ bottom: isMobile ? '75px' : '90px' }}
-          >
-            <button
-              className='show-map-btn'
-              onClick={() =>
-                // scroll to top of page
-                window.scrollTo({ top: 0, behavior: 'smooth' }) & setListMode(!listMode)
-              }
+        {isMobile ? (
+          <section>
+            <div
+              className={`show-map-btn-container ${isVisible && isMobile ? '' : 'hidden'}`}
+              style={{ bottom: isMobile ? '75px' : '90px' }}
             >
-              {listMode ? (
-                <>
-                  Show Map
-                  <HiMiniMap className='map-icon' />
-                </>
-              ) : (
-                <>
-                  Show List
-                  <HiMiniListBullet className='map-icon' />
-                </>
-              )}
-            </button>
-          </div>
-          {listMode ? <StayList stays={renderedStays} /> : <StayMapIndex stays={renderedStays} />}
-        </section>
-        <div ref={loader} style={{ height: '1px', width: '100%' }} />
+              <button
+                className='show-map-btn'
+                onClick={() =>
+                  // scroll to top of page
+                  window.scrollTo({ top: 0, behavior: 'smooth' }) & setListMode(!listMode)
+                }
+              >
+                {listMode ? (
+                  <>
+                    Show Map
+                    <HiMiniMap className='map-icon' />
+                  </>
+                ) : (
+                  <>
+                    Show List
+                    <HiMiniListBullet className='map-icon' />
+                  </>
+                )}
+              </button>
+            </div>
+            {listMode ? (
+              <StayList stays={stays} isLoading={isLoading} />
+            ) : (
+              <StayMapIndex stays={stays} />
+            )}
+          </section>
+        ) : (
+          <section>
+            <div className={`show-map-btn-container`}>
+              <button
+                className='show-map-btn'
+                onClick={() =>
+                  window.scrollTo({ top: 0, behavior: 'smooth' }) & setListMode(!listMode)
+                }
+              >
+                {listMode ? (
+                  <>
+                    Show Map
+                    <HiMiniMap className='map-icon' />
+                  </>
+                ) : (
+                  <>
+                    Show List
+                    <HiMiniListBullet className='map-icon' />
+                  </>
+                )}
+              </button>
+            </div>
+            {listMode ? (
+              <StayList stays={stays} isLoading={isLoading} />
+            ) : (
+              <StayMapIndex stays={stays} />
+            )}
+          </section>
+        )}
       </main>
     </React.Fragment>
   )
