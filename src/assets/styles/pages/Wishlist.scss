@@ -4,8 +4,7 @@
 
         // mobile 
         @media (max-width: 768px) {
-            margin: 24px 0;
-            border-bottom: 1px solid #ebebeb;
+            margin: 48px 0;
         }
 
         h1 {
@@ -13,7 +12,29 @@
             margin-bottom: 15px;
             font-size: 2rem;
             font-weight: 600;
-            line-height: 2.25rem;
         }
     }
+
+    & .wishlist-not-logged-in {
+        margin: 36px 0;
+
+        & .wishlist-not-logged-in-header {
+            margin-bottom: 15px;
+            font-size: 1.375rem;
+            font-weight: 600;
+        }
+
+            & .wishlist-not-logged-in-subtitle {
+                margin-top: 10px;
+                font-size: .875rem;
+                font-weight: 400;
+                color: rgb(113, 113, 113);
+                margin-block-end: 20px;
+            }
+
+
+                & .wishlist-not-logged-in-button {
+                }
+    }
+    
 }

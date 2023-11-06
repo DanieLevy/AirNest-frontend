@@ -127,9 +127,9 @@ export function LoginSignup({
             <UploadButtonComponent onComplete={handleUploadComplete} />
           )}
 
-          <button className='btn btn-primary'>
+          <div className='btn btn-primary'>
             <BrandedBtn txt={isSignup ? 'Sign Up' : 'Login'} />
-          </button>
+          </div>
         </form>
 
         <div className='divider-container'>

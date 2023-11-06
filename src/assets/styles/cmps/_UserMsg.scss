@@ -4,6 +4,8 @@ h3 {
 }
 
 .alert {
+    font-family: cereal-light;
+    font-size: 1em;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -18,14 +20,17 @@ h3 {
     background-color: #f6f6f6;
     box-shadow: 0 0 10px 0 #0000001a;
     border: 1px solid #e0e0e0;
-    animation: fadeIn 0.3s ease-in-out;
+    animation: fadeIn 0.5s, fadeOut 0.5s 2.5s;
 
-
-
+    // mobile
+    @media (max-width: 768px) {
+        font-size: 14px;
+        height: 40px;
+        bottom: 65px;
+        left: 10px;
+    }
 
     & .alert-text {
-        font-size: 16px;
-        font-family: cereal-light;
         font-weight: 400;
         color: #222222a3;
     }
@@ -71,6 +76,7 @@ h3 {
             }
         }
     }
+
 }
 
 @keyframes fadeOut {
@@ -91,4 +97,12 @@ h3 {
     100% {
         opacity: 1;
     }
+}
+
+.fadeIn {
+    animation: fadeIn 0.5s;
+}
+
+.fadeOut {
+    animation: fadeOut 0.5s;
 }

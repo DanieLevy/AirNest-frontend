@@ -201,7 +201,7 @@ export function AppHeader() {
                             style={{ textDecorationLine: "none" }}
                             onClick={() => setUserModal(false)}
                           >
-                            <li>DashBoard</li>
+                            <li>Dashboard</li>
                           </Link>
                           <Link
                             to={`/user/${user._id}`}
@@ -248,6 +248,16 @@ export function AppHeader() {
               <ExploreBar />
             </section>
           )}
+                      {loginModal && (
+              <LoginSignup
+                login={onLogin}
+                signup={onSignup}
+                onToggleLogin={onToggleLogin}
+                closeModal={closeModal}
+                isSignup={signupModal}
+                setSignupModal={setSignupModal}
+              />
+            )}
         </React.Fragment>
       )}
 

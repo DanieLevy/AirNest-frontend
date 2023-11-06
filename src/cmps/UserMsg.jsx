@@ -33,7 +33,7 @@ export function UserMsg() {
 
   if (!msg) return <span></span>;
   return (
-    <div className={`alert ${msg ? "fadeIn" : ""} ${msg?.type}`}>
+    <div className={`alert ${msg ? "fadeIn" : "fadeOut"} ${msg?.type}`}>
       <div className="alert-content flex align-center">
         <div className={`icon`}>
           {msg.type === "success" && (

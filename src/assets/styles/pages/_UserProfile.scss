@@ -49,6 +49,47 @@
             }
         }
 
+        & .user-profile-block {
+            margin: 24px;
+            box-shadow:
+                rgba(0, 0, 0, 0.12) 0px 6px 16px 0px,
+                rgba(0, 0, 0, 0.04) 0px 0px 0px 1px;
+            border: 1px solid rgb(221, 221, 221);
+            border-radius: 12px;
+            padding: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 24px;
+
+            & .block-content {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: flex-start;
+                gap: 8px;
+
+                & .block-content-title {
+                    font-size: 1rem;
+                    line-height: 1.5rem;
+                    font-weight: 600;
+                    color: rgb(34, 34, 34);
+                }
+
+                & .block-content-text {
+                    font-size: 0.875rem;
+                    line-height: 1.25rem;
+                    font-weight: 400;
+                }
+            }
+
+            & .block-content-image {
+                img {
+                    width: 100px;
+                }
+            }
+        }
+
         & .user-profile-links {
             padding-top: 24px;
             padding-bottom: 24px;
@@ -68,12 +109,40 @@
                     flex-direction: row;
                     align-items: center;
                     justify-content: flex-start;
-                    gap: 24px;
-                    padding-left: 24px;
-                    padding-right: 24px;
-                    padding-top: 24px;
-                    padding-bottom: 24px;
+                    gap: 16px;
+
+                    width: 100%;
+                    padding: 16px 24px;
                     cursor: pointer;
+
+                    & .link-img {
+                        &.wishlist {
+                            svg {
+                                display: block;
+                                height: 24px;
+                                width: 24px;
+                                fill: currentcolor;
+                                stroke-width: 0;
+                            }
+                        }
+                        svg {
+                            display: block;
+                            fill: none;
+                            height: 24px;
+                            width: 24px;
+                            stroke: currentcolor;
+                            stroke-width: 2;
+                            overflow: visible;
+                        }
+                    }
+
+                    a {
+                        text-decoration: none;
+                        color: rgb(34, 34, 34);
+                        font-size: 1rem;
+                        line-height: 1.5rem;
+                        font-weight: 600;
+                    }
 
                     &:hover {
                         background-color: rgb(247, 247, 247);
@@ -85,7 +154,6 @@
 }
 
 .logout-btn {
-
     color: rgb(34, 34, 34);
     font-size: 1rem;
     line-height: 1.5rem;
@@ -102,6 +170,14 @@
     transition: all 0.3s ease-in-out;
     width: 100px;
 
+    a {
+        text-decoration: none;
+        color: rgb(34, 34, 34);
+        font-size: 1rem;
+        line-height: 1.5rem;
+        font-weight: 600;
+    }
+
     &:hover {
         background-color: rgb(247, 247, 247);
     }
@@ -113,6 +189,4 @@
     &:focus {
         outline: none;
     }
-
-
 }

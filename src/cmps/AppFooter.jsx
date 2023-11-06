@@ -31,9 +31,7 @@ export function AppFooter() {
     }
   }, [location.pathname]);
 
-
   useEffect(() => {
-
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768);
     };
@@ -55,11 +53,11 @@ export function AppFooter() {
     };
   }, []);
 
-  function handleLoginModal() {
+  function handleLoginModal(value = true) {
     console.log("loginModal", loginModal);
     store.dispatch({
       type: "SET_LOGIN_MODAL",
-      loginModal: true,
+      loginModal: value,
     });
   }
 
@@ -82,6 +80,7 @@ export function AppFooter() {
               onClick={() => {
                 scrollToTop();
                 setSelected("explore");
+                handleLoginModal(false);
               }}
             >
               <svg
@@ -108,6 +107,7 @@ export function AppFooter() {
               onClick={() => {
                 scrollToTop();
                 setSelected("wishlist");
+                handleLoginModal(false);
               }}
             >
               <svg
