@@ -5,7 +5,7 @@ import { MdApartment } from 'react-icons/md';
 
 const defaultProperties = [
     {
-      value: 'home',
+      value: 'house',
       icon: HiOutlineHome,
     },
     {

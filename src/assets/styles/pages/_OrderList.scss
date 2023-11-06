@@ -1,12 +1,106 @@
 .order-list {
-    // width: 100%;
+    @media screen and (max-width: 768px) {
+        padding: 16px;
+    }
+
     & .order-list-container {
+        // mobile
+        @media screen and (max-width: 768px) {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
         & .order-list-header {
             margin: 32px 0;
+            h1 {
+                font-size: 2rem;
+                font-weight: 600;
+                color: #333333;
+            }
+            padding-bottom: 16px;
+
         }
 
         & .order-list-body {
-            // width: 100%;
+            & .order-list-table-row {
+                @media screen and (max-width: 768px) {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: flex-start;
+
+                    border: 1px solid rgb(221, 221, 221);
+                    border-radius: 5px;
+                    margin-bottom: 16px;
+                    box-shadow: rgb(166 166 166 / 25%) 0px 1px 3px 1px;
+
+                    & .order-list-img {
+                        width: 100%;
+                        margin-bottom: 10px;
+
+                        img {
+                            width: 100%;
+                            object-fit: cover;
+                            border-radius: 5px;
+                            border-bottom-left-radius: 0;
+                            border-bottom-right-radius: 0;
+                        }
+                    }
+
+                    & .table-row.destination {
+                        display: flex;
+                        align-items: flex-start;
+                        flex-direction: column;
+                        justify-content: center;
+                        padding: 16px;
+
+                        & .name {
+                            font-size: 16px;
+                            font-weight: 600;
+                            color: #333333;
+                            margin-bottom: 5px;
+                        }
+
+                        & .host,
+                        & .dates,
+                        & .checkin,
+                        & .checkout,
+                        & .buyer,
+                        & .price,
+                        & .status {
+                            font-size: 14px;
+                            color: rgb(96, 98, 102);
+                        }
+
+                        & .status {
+                            &.pending {
+                                color: #ff6b6b;
+                            }
+
+                            &.paid {
+                                color: #ff922b;
+                            }
+
+                            &.refunded {
+                                color: #a0a0a0;
+                            }
+                        }
+
+                        & .dates {
+                            flex-direction: column;
+                            border-bottom: 1px solid rgb(221, 221, 221);
+                            width: 100%;
+                            padding: 10px 0;
+                        }
+
+                        & .buyer {
+                            width: 100%;
+                            padding-top: 10px;
+                        }
+                    }
+                }
+            }
 
             * {
                 list-style: none;
@@ -19,13 +113,12 @@
 
             & .order-list-table {
                 width: 100%;
-                
+
                 & .order-list-table-header {
                     border-bottom: 1px solid rgb(221, 221, 221);
                     box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 0px 0px;
 
                     & .order-list-table-row {
-
                         & .table-header {
                             font-size: 16px;
                             color: rgb(96, 98, 102);
@@ -63,7 +156,7 @@
                             color: #333333;
                             display: flex;
                             align-items: center;
-                            
+
                             & .order-list-img {
                                 width: 100px;
                                 margin-inline-end: 10px;

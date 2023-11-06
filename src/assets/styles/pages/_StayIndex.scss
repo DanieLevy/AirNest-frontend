@@ -12,7 +12,7 @@
   .show-map-btn-container {
     width: fit-content;
     position: fixed;
-    bottom: 50px;
+    bottom: 70px;
     z-index: 10;
     left: 50%;
     transform: translateX(-50%);
@@ -166,12 +166,12 @@
   font-size: 14px;
   font-weight: 600;
   font-family: cereal-bold;
-  border: 1px solid #717171;
+  border: 1px solid rgba(26, 26, 26, 0.29);
+
   border-radius: 28px;
   height: 24px;
   padding: 0px 12px;
   width: max-content;
-  box-shadow: 0px 0px 5px 0px rgba(255, 255, 255, 0.75);
 
   &:hover {
     background-color: $clr1;

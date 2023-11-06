@@ -65,7 +65,7 @@ export function FormEditor({
   ]
 
   function isValidPropertyType(propertyType) {
-    const validTypes = ['apartment', 'guesthouse', 'hotel', 'home']
+    const validTypes = ['apartment', 'guesthouse', 'hotel', 'house']
 
     if (!validTypes.includes(propertyType)) {
       return true

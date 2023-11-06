@@ -23,6 +23,7 @@ export function StayPreview({ stay }) {
   const stays = useSelector((storeState) => storeState.stayModule.stays)
   const [isLoading, setIsLoading] = useState(true)
   const navigate = useNavigate()
+
   const userLikedStays = user
     ? stays.filter((stay) => stay.likedByUsers.some((likedUser) => likedUser._id === user._id))
     : []

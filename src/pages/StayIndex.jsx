@@ -60,7 +60,7 @@ export function StayIndex() {
           <section>
             <div
               className={`show-map-btn-container ${isVisible && isMobile ? '' : 'hidden'}`}
-              style={{ bottom: isMobile ? '75px' : '90px' }}
+              style={{ bottom: isMobile ? '70px' : '90px' }}
             >
               <button
                 className='show-map-btn'

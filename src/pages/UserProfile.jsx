@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import { login, logout, signup } from "../store/actions/user.actions.js";
 import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service.js";
 
-
 export function UserProfile() {
   const { userId } = useParams();
   const user = useSelector((storeState) => storeState.userModule.user);
@@ -19,9 +18,7 @@ export function UserProfile() {
     }
   }
 
-
   if (!isUser) return <div>Not your profile</div>;
-
 
   return (
     <section className="user-profile">
@@ -117,7 +114,9 @@ export function UserProfile() {
         <div className="user-profile-link logout-btn">
           <div className="link-img"></div>
           <div className="link-text">
-          <Link onClick={onLogout} to={`/`}>Logout</Link>
+            <Link onClick={onLogout} to={`/`}>
+              Logout
+            </Link>
           </div>
         </div>
       </div>
