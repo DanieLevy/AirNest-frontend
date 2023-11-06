@@ -42,10 +42,10 @@ export async function loadStays(params) {
       type: SET_STAYS,
       stays,
     })
-    // store.dispatch({
-    //   type: SET_FILTERED_STAYS,
-    //   stays,
-    // })
+    store.dispatch({
+      type: SET_FILTERED_STAYS,
+      stays,
+    })
   } catch (err) {
     console.log('Cannot load stays', err)
     throw err
@@ -54,15 +54,15 @@ export async function loadStays(params) {
   }
 }
 
-// export async function loadAllStays() {
-//   try {
-//     const stays = await httpService.get(`stay`)
-//     return stays
-//   } catch (err) {
-//     console.log('Cannot load stays', err)
-//     throw err
-//   }
-// }
+export async function loadAllStays() {
+  try {
+    const stays = await stayService.query()
+    return stays
+  } catch (err) {
+    console.log('Cannot load stays', err)
+    throw err
+  }
+}
 
 export async function loadStay(stayId) {
   try {

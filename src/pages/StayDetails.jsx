@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
-import { stayService } from '../services/stay.service.local.js'
+import { stayService } from '../services/stay.service.js'
 import { StayDescription } from '../cmps/StayDetails/StayDescription.jsx'
 import { StayHeader } from '../cmps/StayDetails/StayHeader.jsx'
 import { StayReviews } from '../cmps/StayDetails/StayReviews.jsx'

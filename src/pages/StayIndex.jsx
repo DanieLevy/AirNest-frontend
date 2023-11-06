@@ -24,10 +24,13 @@ export function StayIndex() {
   const children = searchParams.get(QUERY_KEYS.children)
   const label = searchParams.get(QUERY_KEYS.label)
 
-  const [page, setPage] = useState(0)
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const staysPerPage = 20
+  const [renderedStays, setRenderedStays] = useState([])
+
   const loader = useRef(null)
 
-  const stays = useSelector((storeState) => storeState.stayModule.filteredStays)
+  const filteredStays = useSelector((storeState) => storeState.stayModule.filteredStays)
 
   const isLoading = useSelector((storeState) => storeState.systemModule.isLoading)
 
@@ -35,9 +38,38 @@ export function StayIndex() {
     loadStays(searchParams)
   }, [region, adults, children, label])
 
-  // useEffect(() => {
-  //   loadAllStays({})
-  // })
+  const loadMoreStays = () => {
+    if (currentIndex < filteredStays.length) {
+      const nextStays = filteredStays.slice(currentIndex, currentIndex + staysPerPage)
+      setRenderedStays((prevStays) => [...prevStays, ...nextStays])
+      setCurrentIndex((prevIndex) => prevIndex + staysPerPage)
+    }
+  }
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          loadMoreStays()
+        }
+      },
+      {
+        root: null,
+        rootMargin: '20px',
+        threshold: 0.1,
+      }
+    )
+
+    if (loader.current) {
+      observer.observe(loader.current)
+    }
+
+    return () => {
+      if (loader.current) {
+        observer.unobserve(loader.current)
+      }
+    }
+  }, [currentIndex, filteredStays.length])
 
   useEffect(() => {
     const handleResize = () => {
@@ -60,44 +92,6 @@ export function StayIndex() {
       window.removeEventListener('scroll', handleScroll)
     }
   }, [])
-
-  // useEffect(() => {
-  //   const options = {
-  //     root: null,
-  //     rootMargin: '20px',
-  //     threshold: 1.0,
-  //   }
-
-  //   const observer = new IntersectionObserver(handleObserver, options)
-  //   if (loader.current) {
-  //     observer.observe(loader.current)
-  //   }
-
-  //   return () => {
-  //     if (loader.current) {
-  //       observer.unobserve(loader.current)
-  //     }
-  //   }
-  // }, [])
-
-  // // Handle observer trigger
-  // const handleObserver = (entities) => {
-  //   const target = entities[0]
-  //   if (target.isIntersecting) {
-  //     setPage((prev) => prev + 1)
-  //   }
-  // }
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     const response = await httpService.get(`/api/stay?pageIdx=${page}`)
-  //     if (response.length) {
-  //       loadStays({ ...searchParams, pageIdx: page })
-  //     }
-  //   }
-
-  //   fetchData()
-  // }, [page])
 
   return (
     <React.Fragment>
@@ -128,14 +122,8 @@ export function StayIndex() {
               )}
             </button>
           </div>
-          {listMode ? (
-            <StayList stays={stays} isLoading={isLoading} />
-          ) : (
-            <StayMapIndex stays={stays} />
-          )}
-          {/* <div ref={loader} style={{ height: '100px', margin: '0 auto' }}>
-            {isLoading && <p>Loading more stays...</p>}
-          </div> */}
+          {listMode ? <StayList stays={renderedStays} /> : <StayMapIndex stays={renderedStays} />}
+          <div ref={loader} style={{ height: '1px', width: '100%' }} />
         </section>
       </main>
     </React.Fragment>
