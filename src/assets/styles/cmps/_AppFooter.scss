@@ -182,8 +182,6 @@
           svg {
             width: 100%;
             height: 100%;
-
-            // fill: #222222;
           }
         }
       }
@@ -195,7 +193,6 @@
       justify-content: flex-end;
       width: 50%;
       font-family: cereal-medium;
-
       font-weight: 400;
 
       gap: 1rem;
@@ -230,9 +227,6 @@
               fill: currentcolor;
             }
           }
-
-          & .footer-lang-text {
-          }
         }
 
         & .footer-curr {
@@ -246,13 +240,6 @@
           &:hover {
             text-decoration: underline;
             cursor: pointer;
-          }
-
-          & .footer-curr-icon {
-            font-weight: 400;
-          }
-
-          & .footer-curr-text {
           }
         }
       }
@@ -270,11 +257,7 @@
           flex-direction: row;
           align-items: center;
           justify-content: center;
-
           gap: 0.2rem;
-
-          & .support-text-title {
-          }
 
           & .support-text-icon {
             svg {

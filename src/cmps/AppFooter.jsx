@@ -46,16 +46,6 @@ export function AppFooter() {
       const currentScrollY = window.scrollY;
       currentScrollY > prevScrollY ? setIsVisible(false) : setIsVisible(true);
       prevScrollY = currentScrollY;
-
-      // if user get to the bottom of the page, show footer
-      // if (
-      //   window.innerHeight + window.scrollY >=
-      //   document.body.offsetHeight - 2
-      // ) {
-      //   setIsVisible(true);
-      //   prevScrollY = 0;
-      // }
-
     };
 
     window.addEventListener("scroll", handleScroll);

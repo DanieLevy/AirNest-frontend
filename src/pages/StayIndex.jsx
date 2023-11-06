@@ -97,9 +97,7 @@ export function StayIndex() {
           </section>
         ) : (
           <section>
-            <div
-              className={`show-map-btn-container`}
-            >
+            <div className={`show-map-btn-container`}>
               <button
                 className="show-map-btn"
                 onClick={() =>
