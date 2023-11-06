@@ -1,11 +1,26 @@
+import Chart from "chart.js/auto";
+import { useEffect } from "react";
+import { useState } from "react";
+
 import { GiReceiveMoney } from "react-icons/gi";
 import { PiUsersBold } from "react-icons/pi";
 import { MdMoneyOffCsred, MdPercent } from "react-icons/md";
-// import line from chartjs
-import Chart from "chart.js/auto";
-import { useEffect } from "react";
+import { is } from "date-fns/locale";
 
 export function Dashboard() {
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+  useEffect(() => {
+    window.addEventListener("resize", () => {
+      setIsMobile(window.innerWidth < 768);
+    });
+
+    return () => {
+      window.removeEventListener("resize", () => {
+        setIsMobile(window.innerWidth < 768);
+      });
+    };
+  }, [window.innerWidth]);
 
   const data = [
     {
@@ -244,10 +259,10 @@ export function Dashboard() {
             <table>
               <thead>
                 <tr>
-                  <th>Order ID</th>
+                  {isMobile ? <th>ID</th> : <th>Order ID</th>}
                   <th>Product</th>
-                  <th>Customer</th>
-                  <th>Date</th>
+                  {isMobile ? null : <th>Customer</th>}
+                  {isMobile ? null : <th>Date</th>}
                   <th>Price</th>
                   <th>Status</th>
                   <th>Action</th>
@@ -259,11 +274,11 @@ export function Dashboard() {
                   <tr key={row.id} className="table-row">
                     <td>{row.id}</td>
                     <td>{row.stayName}</td>
-                    <td>{row.customer}</td>
-                    <td>{row.date}</td>
+                    {isMobile ? null : <td>{row.customer}</td>}
+                    {isMobile ? null : <td>{row.date}</td>}
                     <td>{row.price}</td>
                     <td
-                      className={row.status.toLowerCase()}
+                      className={`status ${row.status.toLowerCase()}}`}
                       style={{
                         color:
                           row.status === "PAID"
