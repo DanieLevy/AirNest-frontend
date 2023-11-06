@@ -444,7 +444,6 @@ export function StayFilter() {
                     trackStyle={{ backgroundColor: '#222222', height: '3px' }}
                     handleStyle={{
                       cursor: 'pointer',
-                      backgroundColor: 'white',
                       border: 'none',
                       backgroundColor: '#fff',
                       opacity: '1',
