@@ -16,7 +16,7 @@ import { PropertyFilter } from "./PropertyFilter";
 import { store } from "../store/store";
 
 export function StayFilter() {
-  const [paddingTop, setPaddingTop] = useState(10);
+  const [paddingTop, setPaddingTop] = useState(5);
   // const [paddingBottom, setPaddingBottom] = useState(15);
   const [boxShadow, setBoxShadow] = useState("none");
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
@@ -256,7 +256,7 @@ export function StayFilter() {
       setBoxShadow("rgb(228, 228, 228) 0px 0.5px 1px 0px");
     }
     if (window.scrollY <= 0) {
-      setPaddingTop(10);
+      setPaddingTop(5);
       setBoxShadow("none");
     }
 
@@ -373,7 +373,7 @@ export function StayFilter() {
         <section
           className="main-layout header-content"
           style={{
-            paddingTop: `${paddingTop}px`,
+            // paddingTop: `${paddingTop}px`,
             boxShadow: `${boxShadow}`,
             // paddingBottom: `${paddingBottom}px`,
           }}
