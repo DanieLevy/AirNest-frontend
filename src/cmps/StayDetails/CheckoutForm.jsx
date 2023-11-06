@@ -203,7 +203,7 @@ export function CheckoutForm({
   return (
     <React.Fragment>
       {isStayPage && !isMobile && (
-        <div className="checkout-form-container flex" ref={stayDetailsAsideRef}>
+        <div className="checkout-form-container flex">
           <form onSubmit={handleSubmit} className="checkout-form">
             <div className="helped-container">
               <div className="form-header">
@@ -215,6 +215,7 @@ export function CheckoutForm({
               </div>
               <div className="form-header-reservation">
                 <div
+                  ref={stayDetailsAsideRef}
                   className="reservation-dates-container"
                   onClick={(ev) => {
                     ev.stopPropagation();
