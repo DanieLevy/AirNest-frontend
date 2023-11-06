@@ -9,8 +9,9 @@ import { HiMiniMap } from 'react-icons/hi2'
 import { HiMiniListBullet } from 'react-icons/hi2'
 import { StayFilter } from '../cmps/StayFilter.jsx'
 import { useSearchParams } from 'react-router-dom'
-import { QUERY_KEYS } from '../services/util.service.js'
+import { QUERY_KEYS, utilService } from '../services/util.service.js'
 import { httpService } from '../services/http.service.js'
+import { StayLoader } from '../cmps/StayLoader.jsx'
 
 export function StayIndex() {
   const [listMode, setListMode] = useState(true)
@@ -48,17 +49,21 @@ export function StayIndex() {
       setRenderedStays([])
     }
   }, [region, adults, children, label, beds])
-  // useEffect(() => {
-  //   loadStays(searchParams)
-  //   console.log('🚀 ~ file: loadStays.jsx:39 ~ useEffect ~ filteredStays:', filteredStays)
-  //   console.log('🚀 ~ file: loadStays.jsx:39 ~ useEffect ~ currentIndex:', currentIndex)
-  // }, [loadStays, region, adults, children, label])
 
   // useEffect(() => {
-  //   setRenderedStays(removeDuplicates(filteredStays))
-  //   console.log('🚀 ~ file: setRenderedStays.jsx:39 ~ useEffect ~ filteredStays:', filteredStays)
-  //   console.log('🚀 ~ file: setRenderedStays.jsx:39 ~ useEffect ~ currentIndex:', currentIndex)
-  // }, [filteredStays])
+  //   loadStays(searchParams)
+
+  //   return () => {
+  //     setCurrentIndex(0)
+  //     setRenderedStays([])
+  //   }
+  // }, [region, adults, children, label])
+
+  // useEffect(() => {
+  //   if (!isLoading) {
+  //     setRenderedStays(removeDuplicates(filteredStays))
+  //   }
+  // }, [filteredStays, region, adults, children, label])
 
   const removeDuplicates = (array) => {
     return [...new Set(array)]
@@ -66,10 +71,16 @@ export function StayIndex() {
 
   const loadMoreStays = () => {
     if (currentIndex < filteredStays.length) {
+      console.log(
+        '🚀 ~ file: StayIndex.jsx:76 ~ loadMoreStays ~ filteredStays.length:',
+        filteredStays.length
+      )
+      console.log('🚀 ~ file: StayIndex.jsx:76 ~ loadMoreStays ~ currentIndex:', currentIndex)
+
       const nextStays = filteredStays.slice(currentIndex, currentIndex + staysPerPage)
-      console.log('🚀 ~ file: StayIndex.jsx:39 ~ useEffect ~ filteredStays:', filteredStays)
-      console.log('🚀 ~ file: StayIndex.jsx:39 ~ useEffect ~ currentIndex:', currentIndex)
-      if (nextStays) {
+      console.log('🚀 ~ file: StayIndex.jsx:80 ~ loadMoreStays ~ nextStays:', nextStays)
+
+      if (nextStays.length > 0) {
         setRenderedStays((prevStays) => removeDuplicates([...prevStays, ...nextStays]))
         setCurrentIndex((prevIndex) => prevIndex + staysPerPage)
       }
@@ -80,6 +91,7 @@ export function StayIndex() {
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting) {
+          console.log('Fetching more data')
           loadMoreStays()
         }
       },
@@ -102,26 +114,31 @@ export function StayIndex() {
   }, [currentIndex, filteredStays.length])
 
   useEffect(() => {
+    let prevScrollY = window.scrollY
+
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768)
     }
 
-    let prevScrollY = 0
-
     const handleScroll = () => {
       const currentScrollY = window.scrollY
-      currentScrollY > prevScrollY ? setIsVisible(false) : setIsVisible(true)
+      setIsVisible(prevScrollY >= currentScrollY)
       prevScrollY = currentScrollY
     }
 
-    window.addEventListener('scroll', handleScroll)
-    window.addEventListener('resize', handleResize)
+    const debouncedHandleResize = utilService.debounce(handleResize)
+    const debouncedHandleScroll = utilService.debounce(handleScroll)
+
+    window.addEventListener('scroll', debouncedHandleScroll)
+    window.addEventListener('resize', debouncedHandleResize)
 
     return () => {
-      window.removeEventListener('resize', handleResize)
-      window.removeEventListener('scroll', handleScroll)
+      window.removeEventListener('scroll', debouncedHandleScroll)
+      window.removeEventListener('resize', debouncedHandleResize)
     }
   }, [])
+
+  if (isLoading) return <StayLoader />
 
   return (
     <React.Fragment>
@@ -154,7 +171,16 @@ export function StayIndex() {
           </div>
           {listMode ? <StayList stays={renderedStays} /> : <StayMapIndex stays={renderedStays} />}
         </section>
-        <div ref={loader} style={{ height: '1px', width: '100%' }} />
+        <div
+          ref={loader}
+          style={{
+            height: '1px',
+            width: '1px',
+            margin: '-1px',
+            overflow: 'hidden',
+            position: 'absolute',
+          }}
+        />
       </main>
     </React.Fragment>
   )

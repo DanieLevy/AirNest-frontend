@@ -10,7 +10,7 @@ export const utilService = {
   getDayAndMonthFromDate,
   getDayAndMonthNumber,
   getDateString,
-};
+}
 
 export const QUERY_KEYS = {
   region: 'region',
@@ -28,22 +28,22 @@ export const QUERY_KEYS = {
   amenities: 'amenities',
   label: 'label',
   properties: 'properties',
-};
+}
 
 function getDayAndMonthFromDate(checkin, checkout) {
-  const checkinDate = getDayAndMonthNumber(checkin);
-  const checkoutDate = getDayAndMonthNumber(checkout);
+  const checkinDate = getDayAndMonthNumber(checkin)
+  const checkoutDate = getDayAndMonthNumber(checkout)
 
   if (checkinDate.monthNumber === checkoutDate.monthNumber) {
-    return `${checkinDate.monthNumber} ${checkinDate.day} - ${checkoutDate.day}`;
+    return `${checkinDate.monthNumber} ${checkinDate.day} - ${checkoutDate.day}`
   }
-  return `${checkinDate.monthNumber} ${checkinDate.day} - ${checkoutDate.monthNumber} ${checkoutDate.day}`;
+  return `${checkinDate.monthNumber} ${checkinDate.day} - ${checkoutDate.monthNumber} ${checkoutDate.day}`
 }
 
 function getDayAndMonthNumber(date) {
-  const dateObject = new Date(date);
-  const day = dateObject.getDate();
-  const monthNumber = dateObject.getMonth();
+  const dateObject = new Date(date)
+  const day = dateObject.getDate()
+  const monthNumber = dateObject.getMonth()
 
   const monthNames = [
     'Jan',
@@ -58,24 +58,24 @@ function getDayAndMonthNumber(date) {
     'Oct',
     'Nov',
     'Dec',
-  ];
+  ]
 
-  return { day, monthNumber: monthNames[monthNumber] };
+  return { day, monthNumber: monthNames[monthNumber] }
 }
 
 function getDateString(date) {
-  const dateDayAndMonth = getDayAndMonthNumber(date);
-  return `${dateDayAndMonth.monthNumber} ${dateDayAndMonth.day}`;
+  const dateDayAndMonth = getDayAndMonthNumber(date)
+  return `${dateDayAndMonth.monthNumber} ${dateDayAndMonth.day}`
 }
 function makeId(length = 6) {
-  var txt = '';
-  var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  var txt = ''
+  var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
 
   for (var i = 0; i < length; i++) {
-    txt += possible.charAt(Math.floor(Math.random() * possible.length));
+    txt += possible.charAt(Math.floor(Math.random() * possible.length))
   }
 
-  return txt;
+  return txt
 }
 
 function makeLorem(size = 100) {
@@ -112,53 +112,54 @@ function makeLorem(size = 100) {
     'a pleasure',
     'to',
     'burn',
-  ];
-  var txt = '';
+  ]
+  var txt = ''
   while (size > 0) {
-    size--;
-    txt += words[Math.floor(Math.random() * words.length)] + ' ';
+    size--
+    txt += words[Math.floor(Math.random() * words.length)] + ' '
   }
-  return txt;
+  return txt
 }
 
 function getRandomIntInclusive(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1)) + min; //The maximum is inclusive and the minimum is inclusive
+  min = Math.ceil(min)
+  max = Math.floor(max)
+  return Math.floor(Math.random() * (max - min + 1)) + min //The maximum is inclusive and the minimum is inclusive
 }
 
 function randomPastTime() {
-  const HOUR = 1000 * 60 * 60;
-  const DAY = 1000 * 60 * 60 * 24;
-  const WEEK = 1000 * 60 * 60 * 24 * 7;
+  const HOUR = 1000 * 60 * 60
+  const DAY = 1000 * 60 * 60 * 24
+  const WEEK = 1000 * 60 * 60 * 24 * 7
 
-  const pastTime = getRandomIntInclusive(HOUR, WEEK);
-  return Date.now() - pastTime;
+  const pastTime = getRandomIntInclusive(HOUR, WEEK)
+  return Date.now() - pastTime
 }
 
 function debounce(func, timeout = 300) {
-  let timer;
-  return (...args) => {
-    clearTimeout(timer);
+  let timer
+  return function (...args) {
+    const context = this
+    clearTimeout(timer)
     timer = setTimeout(() => {
-      func.apply(this, args);
-    }, timeout);
-  };
+      func.apply(context, args)
+    }, timeout)
+  }
 }
 
 function saveToStorage(key, value) {
-  localStorage.setItem(key, JSON.stringify(value));
+  localStorage.setItem(key, JSON.stringify(value))
 }
 
 function loadFromStorage(key) {
-  const data = localStorage.getItem(key);
-  return data ? JSON.parse(data) : undefined;
+  const data = localStorage.getItem(key)
+  return data ? JSON.parse(data) : undefined
 }
 
 // util function
 function getAssetSrc(name) {
-  const path = `/src/assets/${name}`;
-  const modules = import.meta.glob('/src/assets/*', { eager: true });
-  const mod = modules[path];
-  return mod.default;
+  const path = `/src/assets/${name}`
+  const modules = import.meta.glob('/src/assets/*', { eager: true })
+  const mod = modules[path]
+  return mod.default
 }

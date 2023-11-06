@@ -30,17 +30,7 @@ async function query(params) {
   const paramsObj = getParams(params)
   console.log('🚀 ~ file: stay.service.js:31 ~ query ~ params:', params)
 
-  // let capacity = +paramsObj?.adults + +paramsObj?.children
   const stays = await httpService.get(STORAGE_KEY, paramsObj)
-  // let staysToReturn = stays
-
-  // if (capacity) staysToReturn = staysToReturn.filter((stay) => stay.capacity >= capacity)
-  // if (paramsObj.region && paramsObj.region !== '') {
-  //   const regionRegex = new RegExp(paramsObj.region.split(',')[0], 'i')
-  //   staysToReturn = staysToReturn.filter((stay) => regionRegex.test(stay.loc.country))
-  // }
-  // if (paramsObj.label)
-  //   staysToReturn = staysToReturn.filter((stay) => stay.labels.includes(paramsObj.label))
 
   return stays
 }
