@@ -12,7 +12,13 @@ import { useSearchParams } from "react-router-dom";
 import { useRef } from "react";
 import { QUERY_KEYS } from "../../services/util.service";
 
-export function CheckoutForm({ onSubmit, price, reviews, capacity }) {
+export function CheckoutForm({
+  onSubmit,
+  price,
+  reviews,
+  capacity,
+  stayGalleryRef,
+}) {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const [searchParams] = useSearchParams();
   const [isStayPage, setIsStayPage] = useState(
@@ -36,7 +42,6 @@ export function CheckoutForm({ onSubmit, price, reviews, capacity }) {
     pets: +searchParams.get(QUERY_KEYS.pets) || 0,
   });
 
-  const [isCheckoutSum, setIsCheckoutSum] = useState(false);
   const dateDiff =
     selectedRange.to && selectedRange.from
       ? selectedRange.to.getTime() - selectedRange.from.getTime()
@@ -45,14 +50,14 @@ export function CheckoutForm({ onSubmit, price, reviews, capacity }) {
   const totalSum = price * dateDiffDays;
   const totalPlusFee = totalSum + totalSum * 0.125;
 
+  // Intersection observer
   const [galleryInViewport, setGalleryInViewport] = useState(true);
   const [asideInViewport, setAsideInViewport] = useState(true);
   const stayDetailsAsideRef = useRef(null);
-  const stayGalleryRef = useRef(null);
 
   useEffect(() => {
     if (!isMobile) {
-      const stayDetailsAsideElement = document.querySelector(".stay-details-aside");
+      const stayDetailsAsideElement = stayDetailsAsideRef.current;
       const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
@@ -62,18 +67,18 @@ export function CheckoutForm({ onSubmit, price, reviews, capacity }) {
           }
         });
       });
-  
+
       observer.observe(stayDetailsAsideElement);
-  
+
       return () => {
         observer.unobserve(stayDetailsAsideElement);
       };
     }
   }, [isMobile]);
-  
+
   useEffect(() => {
     if (!isMobile) {
-      const stayGalleryElement = document.querySelector(".images-editor-container");
+      const stayGalleryElement = stayGalleryRef.current;
       const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
@@ -83,19 +88,14 @@ export function CheckoutForm({ onSubmit, price, reviews, capacity }) {
           }
         });
       });
-  
+
       observer.observe(stayGalleryElement);
-  
+
       return () => {
         observer.unobserve(stayGalleryElement);
       };
     }
   }, [isMobile]);
-
-
-  useEffect(() => {
-    dateDiffDays ? setIsCheckoutSum(true) : setIsCheckoutSum(false);
-  }, [selectedRange]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -516,13 +516,18 @@ export function CheckoutForm({ onSubmit, price, reviews, capacity }) {
                   - {selectedRange.to ? format(selectedRange.to, "dd MMM") : ""}
                 </span>
               </div>
-                    <div className="stay-footer-btn-c"
-                    style={{width: "100px", height: "48px", alignSelf: "center"}}
-                    // width: 100px;
-                    // height: 48px;
-                    // align-self: center;
-                    >
-              <BrandedBtn txt="Reserve" className="stay-footer-btn" width={100} />
+              <div
+                className="stay-footer-btn-c"
+                style={{ width: "100px", height: "48px", alignSelf: "center" }}
+                // width: 100px;
+                // height: 48px;
+                // align-self: center;
+              >
+                <BrandedBtn
+                  txt="Reserve"
+                  className="stay-footer-btn"
+                  width={100}
+                />
               </div>
             </div>
           </footer>

@@ -57,6 +57,10 @@ background-image: radial-gradient(
 }
 
 .action-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
   padding: 0 0;
   margin: 0 0;
   width: 100%;

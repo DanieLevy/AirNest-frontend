@@ -14,8 +14,6 @@ import { FaCircleUser } from "react-icons/fa6";
 import { is } from "date-fns/locale";
 import { store } from "../store/store.js";
 
-import { HiOutlineSearch } from "react-icons/hi";
-
 export function AppHeader() {
   const user = useSelector((storeState) => storeState.userModule.user);
   const [userModal, setUserModal] = useState(false);
@@ -50,7 +48,7 @@ export function AppHeader() {
   async function onLogin(credentials) {
     try {
       const user = await login(credentials);
-      showSuccessMsg(`Welcome: ${user.fullname}`);
+      showSuccessMsg(`Welcome back ${user.fullname}`);
       closeModal();
     } catch (err) {
       showErrorMsg("Cannot login");
@@ -59,7 +57,7 @@ export function AppHeader() {
   async function onSignup(credentials) {
     try {
       const user = await signup(credentials);
-      showSuccessMsg(`Welcome new user: ${user.fullname}`);
+      showSuccessMsg(`Welcome ${user.fullname}`);
       closeModal();
     } catch (err) {
       showErrorMsg("Cannot signup");
@@ -68,7 +66,7 @@ export function AppHeader() {
   async function onLogout() {
     try {
       await logout();
-      showSuccessMsg(`Bye now`);
+      showSuccessMsg(`Goodbye ${user.fullname}`);
     } catch (err) {
       showErrorMsg("Cannot logout");
     }
@@ -245,11 +243,11 @@ export function AppHeader() {
         </React.Fragment>
       ) : (
         <React.Fragment>
-        {isMobile && path === "/" && (
-        <section className={`header-container main-layout`}>
+          {isMobile && path === "/" && (
+            <section className={`header-container main-layout`}>
               <ExploreBar />
-        </section>
-        )}
+            </section>
+          )}
         </React.Fragment>
       )}
 

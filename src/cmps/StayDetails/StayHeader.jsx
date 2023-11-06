@@ -1,7 +1,7 @@
 import ImageGallery from "react-image-gallery";
 import { DetailsImages } from "./DetailsImages";
 import { BiHeart } from "react-icons/bi";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useEffect } from "react";
 import React from "react";
 
@@ -14,7 +14,14 @@ import { store } from "../../store/store";
 
 import { AiFillStar } from "react-icons/ai";
 
-export function StayHeader({ name, imgUrls, reviews, loc, host }) {
+export function StayHeader({
+  name,
+  imgUrls,
+  reviews,
+  loc,
+  host,
+  stayGalleryRef,
+}) {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const navigate = useNavigate();
 
@@ -103,7 +110,7 @@ export function StayHeader({ name, imgUrls, reviews, loc, host }) {
               </div>
             </div>
           </div>
-          <DetailsImages urls={imgUrls} />
+          <DetailsImages urls={imgUrls} stayGalleryRef={stayGalleryRef} />
         </div>
       )}
       {isMobile && (

@@ -27,11 +27,12 @@ function imageHtml(url, className) {
     )
 }
 
-export function DetailsImages({ urls }) {
+export function DetailsImages({ urls, stayGalleryRef}) {
     const images = fillUpTo5(urls)
 
     return (
         <div className='images-editor-container'
+            ref={stayGalleryRef}
         >
             {imageHtml(urls[0], 'main')}
             <div className='rest'>
