@@ -4,13 +4,12 @@ import { useState, useEffect } from 'react'
 import ImageGallery from 'react-image-gallery'
 import 'react-image-gallery/styles/css/image-gallery.css'
 import { useSelector } from 'react-redux'
-import { Link, useSearchParams } from 'react-router-dom'
+import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { HiMiniChevronLeft, HiMiniChevronRight } from 'react-icons/hi2'
 import { userService } from '../services/user.service'
-import { useNavigate } from 'react-router-dom'
 
 import { store } from '../store/store'
-import { stayService } from '../services/stay.service.local'
+import { stayService } from '../services/stay.service'
 import { utilService } from '../services/util.service'
 import { StayLoader } from './StayLoader'
 import { showErrorMsg } from '../services/event-bus.service'
@@ -25,11 +24,17 @@ export function StayPreview({ stay }) {
   const [isLoading, setIsLoading] = useState(true)
   const navigate = useNavigate()
 
-  const randomDateRangeRef = useRef()
-
   const userLikedStays = user
     ? stays.filter((stay) => stay.likedByUsers.some((likedUser) => likedUser._id === user._id))
     : []
+  const isLiked = () => {
+    if (!user) return false
+    return userLikedStays.some((likedStay) => likedStay._id === stay._id)
+  }
+
+  const [liked, setLiked] = useState(isLiked())
+
+  const randomDateRangeRef = useRef()
 
   useEffect(() => {
     const handleResize = () => {
@@ -43,27 +48,31 @@ export function StayPreview({ stay }) {
     }
   }, [])
 
-  const isLiked = () => {
-    if (!user) return false
-    return userLikedStays.some((likedStay) => likedStay._id === stay._id)
-  }
-
   async function handleLike(ev) {
     ev.stopPropagation()
     if (!user) {
       showErrorMsg('Please login to add stay to wishlist')
       return
     }
-    if (isLiked()) {
-      const idx = stay.likedByUsers.findIndex(
-        (user) => user._id === userService.getLoggedinUser()._id
-      )
-      stay.likedByUsers.splice(idx, 1)
-    } else {
-      stay.likedByUsers.push(user)
+
+    const wasLiked = liked
+    setLiked(!liked)
+
+    try {
+      if (wasLiked) {
+        const idx = stay.likedByUsers.findIndex(
+          (user) => user._id === userService.getLoggedinUser()._id
+        )
+        stay.likedByUsers.splice(idx, 1)
+      } else {
+        stay.likedByUsers.push(user)
+      }
+      await stayService.save(stay)
+      store.dispatch({ type: 'UPDATE_STAY', stay })
+    } catch (error) {
+      setLiked(wasLiked)
+      showErrorMsg('Failed to update wishlist. Please try again.')
     }
-    await stayService.save(stay)
-    store.dispatch({ type: 'UPDATE_STAY', stay })
   }
 
   const reviewsAvg =
@@ -173,7 +182,7 @@ export function StayPreview({ stay }) {
         </div>
       )}
       <div className='preview-img'>
-        <div onClick={handleLike}>{isLiked() ? <HeartFillIcon /> : <HeartOutlineIcon />}</div>
+        <div onClick={handleLike}>{liked ? <HeartFillIcon /> : <HeartOutlineIcon />}</div>
         <ImageGallery
           items={images}
           showPlayButton={false}

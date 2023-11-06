@@ -1,8 +1,10 @@
-import { storageService } from './async-storage.service.js'
+// import { storageService } from './async-storage.service.js'
+
 import { utilService } from './util.service.js'
 import { userService } from './user.service.js'
-import { staysDemonData } from './stayDemoData.js'
-const STORAGE_KEY = 'stayDB'
+// import { staysDemonData } from './stayDemoData.js'
+import { httpService } from './http.service.js'
+const STORAGE_KEY = 'stay'
 
 export const stayService = {
   query,
@@ -10,14 +12,16 @@ export const stayService = {
   save,
   remove,
   getEmptyStay,
-  addStayMsg,
-  getLabels,
+  // addStayMsg,
+  // getLabels,
   getAmenities,
   getStaysByUserId,
   getResultLength,
-  getCarouselLabels,
+  getStayouselLabels,
   filterStays,
   getPropertyType,
+  getStayouselLabels,
+  getCarouselLabels,
 }
 
 window.cs = stayService
@@ -25,17 +29,7 @@ window.cs = stayService
 async function query(params) {
   const paramsObj = getParams(params)
 
-  // let capacity = +paramsObj?.adults + +paramsObj?.children
-  const stays = await storageService.query(STORAGE_KEY, paramsObj)
-  // let staysToReturn = stays
-
-  // if (capacity) staysToReturn = staysToReturn.filter((stay) => stay.capacity >= capacity)
-  // if (paramsObj.region && paramsObj.region !== '') {
-  //   const regionRegex = new RegExp(paramsObj.region.split(',')[0], 'i')
-  //   staysToReturn = staysToReturn.filter((stay) => regionRegex.test(stay.loc.country))
-  // }
-  // if (paramsObj.label)
-  //   staysToReturn = staysToReturn.filter((stay) => stay.labels.includes(paramsObj.label))
+  const stays = await httpService.get(STORAGE_KEY, paramsObj)
 
   return stays
 }
@@ -105,10 +99,12 @@ function getResultLength(filterBy, properties) {
 }
 
 function getById(stayId) {
-  return storageService.get(STORAGE_KEY, stayId)
+  console.log('🚀 ~ file: stay.service.js:110 ~ getById ~ stayId:', stayId)
+  return httpService.get(`stay/${stayId}`)
 }
+
 async function getStaysByUserId(userId) {
-  let stays = await storageService.query(STORAGE_KEY)
+  let stays = await httpService.get('stay')
 
   stays = stays.filter((stay) => stay.host._id === userId)
 
@@ -119,7 +115,7 @@ async function getStaysByUserId(userId) {
 }
 
 async function remove(stayId) {
-  await storageService.remove(STORAGE_KEY, stayId)
+  await httpService.remove(`stay/${stayId}`)
 }
 
 async function save(stay) {
@@ -129,54 +125,17 @@ async function save(stay) {
   stay.imgUrls = stay.imgUrls.filter((url) => url)
 
   if (stay._id) {
-    savedStay = await storageService.put(STORAGE_KEY, stay)
+    savedStay = await httpService.put(`stay/${stay._id}`, stay)
   } else {
-    stay._id = utilService.makeId()
     stay.host = {
       _id: _id || '',
       fullname: fullname || '',
       imgUrl: imgUrl || '',
     }
     stay.reviews = _reviewDemoData()
-    savedStay = await storageService.post(STORAGE_KEY, stay)
+    savedStay = await httpService.post('stay', stay)
   }
   return savedStay
-}
-
-async function addStayMsg(stayId, txt) {
-  // Later, this is all done by the backend
-  const stay = await getById(stayId)
-  if (!stay.msgs) stay.msgs = []
-
-  const msg = {
-    id: utilService.makeId(),
-    by: userService.getLoggedinUser(),
-    txt,
-  }
-  stay.msgs.push(msg)
-  await storageService.put(STORAGE_KEY, stay)
-
-  return msg
-}
-
-async function _getStayLatLang(address, city, countryCode) {
-  const response = await fetch(
-    `https://maps.googleapis.com/maps/api/geocode/json?address=${_joinString(
-      address
-    )},+${_joinString(city)},+${countryCode}&key=AIzaSyB0XrNIJmg5sZqYETs7D_1d2qfIIwy1fkY`
-  )
-  const { results } = await response.json()
-  return results[0].geometry.location
-}
-
-async function _getCountryCode(name) {
-  const response = await fetch(`https://restcountries.com/v3.1/name/${name}`)
-  const country = await response.json()
-  return country[0].cca2
-}
-
-function _joinString(string) {
-  return string.split(' ').join('+')
 }
 
 function getEmptyStay() {
@@ -217,17 +176,7 @@ function getEmptyStay() {
   }
 }
 
-function getLabels() {
-  return [
-    { value: 'Top of the world', label: 'Top of the world' },
-    { value: 'Trending', label: 'Trending' },
-    { value: 'Play', label: 'Play' },
-    { value: 'Tropical', label: 'Tropical' },
-  ]
-}
-
 function getAmenities() {
-  // return ['TV', 'Wifi', 'Kitchen', 'Smoking allowed', 'Pets allowed', 'Cooking basics', 'Chair']
   return [
     'firePlace',
     'seaView',
@@ -384,6 +333,110 @@ function _reviewDemoData() {
   ]
 }
 
+function getStayouselLabels() {
+  return [
+    {
+      img: 'https://a0.muscache.com/pictures/6ad4bd95-f086-437d-97e3-14d12155ddfe.jpg',
+      name: 'Countryside',
+    },
+    {
+      img: 'https://a0.muscache.com/pictures/c5a4f6fc-c92c-4ae8-87dd-57f1ff1b89a6.jpg',
+      name: 'OMG!',
+    },
+    {
+      img: 'https://a0.muscache.com/pictures/732edad8-3ae0-49a8-a451-29a8010dcc0c.jpg',
+      name: 'Cabins!',
+    },
+    {
+      img: 'https://a0.muscache.com/pictures/ee9e2a40-ffac-4db9-9080-b351efc3cfc4.jpg',
+      name: 'Tropical',
+    },
+    {
+      img: 'https://a0.muscache.com/pictures/248f85bf-e35e-4dc3-a9a1-e1dbff9a3db4.jpg',
+      name: 'Top of the world',
+    },
+    {
+      img: 'https://a0.muscache.com/pictures/3b1eb541-46d9-4bef-abc4-c37d77e3c21b.jpg',
+      name: 'Amazing views',
+    },
+    {
+      img: 'https://a0.muscache.com/pictures/c0a24c04-ce1f-490c-833f-987613930eca.jpg',
+      name: 'National parks',
+    },
+    {
+      img: 'https://a0.muscache.com/pictures/3fb523a0-b622-4368-8142-b5e03df7549b.jpg',
+      name: 'Amazing pools',
+    },
+    {
+      img: 'https://a0.muscache.com/pictures/3271df99-f071-4ecf-9128-eb2d2b1f50f0.jpg',
+      name: 'Tiny homes',
+    },
+    {
+      img: 'https://a0.muscache.com/pictures/7630c83f-96a8-4232-9a10-0398661e2e6f.jpg',
+      name: 'Rooms',
+    },
+    {
+      img: 'https://a0.muscache.com/pictures/10ce1091-c854-40f3-a2fb-defc2995bcaf.jpg',
+      name: 'Beach',
+    },
+    {
+      img: 'https://a0.muscache.com/pictures/aaa02c2d-9f0d-4c41-878a-68c12ec6c6bd.jpg',
+      name: 'Farms',
+    },
+    {
+      img: 'https://a0.muscache.com/pictures/bcd1adc0-5cee-4d7a-85ec-f6730b0f8d0c.jpg',
+      name: 'Beachfront',
+    },
+    {
+      img: 'https://a0.muscache.com/pictures/1b6a8b70-a3b6-48b5-88e1-2243d9172c06.jpg',
+      name: 'Castles',
+    },
+    {
+      img: 'https://a0.muscache.com/pictures/4d4a4eba-c7e4-43eb-9ce2-95e1d200d10e.jpg',
+      name: 'Treehouses',
+    },
+    {
+      img: 'https://a0.muscache.com/pictures/78ba8486-6ba6-4a43-a56d-f556189193da.jpg',
+      name: 'Mansions',
+    },
+    {
+      img: 'https://a0.muscache.com/pictures/50861fca-582c-4bcc-89d3-857fb7ca6528.jpg',
+      name: 'Design',
+    },
+    {
+      img: 'https://a0.muscache.com/pictures/677a041d-7264-4c45-bb72-52bff21eb6e8.jpg',
+      name: 'Lakefront',
+    },
+    {
+      img: 'https://a0.muscache.com/pictures/9a2ca4df-ee90-4063-b15d-0de7e4ce210a.jpg',
+      name: 'Off-the-grid',
+    },
+    {
+      img: 'https://a0.muscache.com/pictures/ed8b9e47-609b-44c2-9768-33e6a22eccb2.jpg',
+      name: 'Iconic cities',
+    },
+    {
+      img: 'https://a0.muscache.com/pictures/60ff02ae-d4a2-4d18-a120-0dd274a95925.jpg',
+      name: 'Vineyards',
+    },
+    {
+      img: 'https://a0.muscache.com/pictures/a4634ca6-1407-4864-ab97-6e141967d782.jpg',
+      name: 'Lakes',
+    },
+    {
+      img: 'https://a0.muscache.com/pictures/c8bba3ed-34c0-464a-8e6e-27574d20e4d2.jpg',
+      name: 'Skiing',
+    },
+    {
+      img: 'https://a0.muscache.com/pictures/8e507f16-4943-4be9-b707-59bd38d56309.jpg',
+      name: 'Islands',
+    },
+    {
+      img: 'https://a0.muscache.com/pictures/33dd714a-7b4a-4654-aaf0-f58ea887a688.jpg',
+      name: 'Historical homes',
+    },
+  ]
+}
 function getCarouselLabels() {
   return [
     {

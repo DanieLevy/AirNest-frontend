@@ -1,7 +1,6 @@
 import { useParams } from 'react-router'
 import { ListingList } from '../cmps/userStays/userStaysList'
-import { stayService } from '../services/stay.service.local'
-import { loadStays } from '../store/actions/stay.actions.js'
+import { stayService } from '../services/stay.service'
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 
