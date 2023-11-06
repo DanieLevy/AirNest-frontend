@@ -21,8 +21,8 @@
     flex-direction: row;
     z-index: 200;
     position: fixed;
-    top: 0;
-    bottom: -3px;
+    top: 40px;
+    bottom: 0px;
     left: 0;
     right: 0;
     // backdrop-filter: blur(10px);
@@ -30,6 +30,13 @@
     align-items: center;
     transition: transform 0.5s ease-in-out;
     transition: background-color 0.5s ease-in-out;
+
+    // mobile
+    @media (max-width: 768px) {
+        top: 40px;
+        bottom: 14px;
+        left: 0;
+    }
 
     & .filter-by-form {
 
@@ -48,8 +55,7 @@
             0 0 0 1px rgb(0 0 0 / 10%),
             0 2px 4px rgb(0 0 0 / 10%),
             0 8px 24px rgb(0 0 0 / 10%);
-        min-width: 780px;
-        max-height: 792px;
+        max-height: 768px;
 
         @media (max-width: 768px) {
             min-width: 100%;
@@ -62,7 +68,7 @@
 
             position: fixed;
             top: 0;
-            bottom: 0;
+            bottom: 15px;
             left: 0;
 
         }

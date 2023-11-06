@@ -4,6 +4,7 @@ import { StayLoader } from "./StayLoader";
 import PropagateLoader from "react-spinners/PropagateLoader";
 
 export function StayList({ stays, isLoading }) {
+  const isWishListPage = window.location.pathname.includes("wishlist");
   if (isLoading)
     return (
       <PropagateLoader
@@ -19,7 +20,11 @@ export function StayList({ stays, isLoading }) {
       <div className="no-stays">
         <img src="https://i.ibb.co/LvDMwQQ/ok.jpg" alt="no-stays" border="0" />
         <h1>No Stays Found..</h1>
-        <h3>Try to change your search</h3>
+        {isWishListPage ? (
+          <h3>Try to add some stays to your wishlist</h3>
+        ) : (
+          <h3>Try to change your search</h3>
+        )}
       </div>
     );
 
