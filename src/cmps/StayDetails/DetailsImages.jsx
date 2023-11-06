@@ -32,7 +32,7 @@ export function DetailsImages({ urls, stayGalleryRef }) {
   const images = fillUpTo5(urls)
 
   return (
-    <div ref={stayGalleryRef} className='images-editor-container'>
+    <div className='images-editor-container' ref={stayGalleryRef}>
       {imageHtml(urls[0], 'main')}
       <div className='rest'>
         {images.slice(1).map((url) => {

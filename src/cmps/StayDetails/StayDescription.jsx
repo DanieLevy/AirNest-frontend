@@ -24,9 +24,7 @@ export function StayDescription({
   name,
   amenities,
   onSubmit,
-  stayDetailsAsideElement,
-  isAsideInViewport,
-  isGalleryInViewport,
+  stayGalleryRef,
 }) {
   const isSuperhost = host.isSuperhost
 
@@ -72,23 +70,6 @@ export function StayDescription({
               )}
             </div>
           </div>
-
-          {/* <div className="stay-details-host">
-            <div className="host-info">
-              <div className="host-img">
-                {host.imgUrl ? (
-                  <img src={host.imgUrl} alt="" />
-                ) : (
-                  <img src="https://i.ibb.co/jDy9rL4/user.png" alt="userImg" />
-                )}
-              </div>
-              <div className="host-name">
-                <span>Hosted by {host.fullname}</span>
-                <span className="host-time">1 year hosting</span>
-              </div>
-            </div>
-          </div> */}
-
           <div className='stay-details-advantages'>
             <div className='advantages-list'>
               {host.superHost && (
@@ -146,16 +127,13 @@ export function StayDescription({
 
           <StayAmenities data={amenities} />
         </main>
-
         <aside className='stay-details-aside'>
           <CheckoutForm
             onSubmit={onSubmit}
             price={price}
             reviews={reviews}
             capacity={capacity}
-            stayDetailsAsideRef={stayDetailsAsideElement}
-            isAsideInViewport={isAsideInViewport}
-            isGalleryInViewport={isGalleryInViewport}
+            stayGalleryRef={stayGalleryRef}
           />
         </aside>
       </div>

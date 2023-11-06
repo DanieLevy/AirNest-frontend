@@ -19,7 +19,6 @@ export function CheckoutForm({
   capacity,
   isGalleryInViewport,
   isAsideInViewport,
-  stayDetailsAsideRef,
 }) {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768)
   const [searchParams] = useSearchParams()
@@ -44,7 +43,6 @@ export function CheckoutForm({
     pets: +searchParams.get(QUERY_KEYS.pets) || 0,
   })
 
-  const [isCheckoutSum, setIsCheckoutSum] = useState(false)
   const dateDiff =
     selectedRange.to && selectedRange.from
       ? selectedRange.to.getTime() - selectedRange.from.getTime()
@@ -53,9 +51,50 @@ export function CheckoutForm({
   const totalSum = price * dateDiffDays
   const totalPlusFee = totalSum + totalSum * 0.125
 
+  // Intersection observer
+  const [galleryInViewport, setGalleryInViewport] = useState(true)
+  const [asideInViewport, setAsideInViewport] = useState(true)
+  const stayDetailsAsideRef = useRef(null)
+
   useEffect(() => {
-    dateDiffDays ? setIsCheckoutSum(true) : setIsCheckoutSum(false)
-  }, [selectedRange])
+    if (!isMobile) {
+      const stayDetailsAsideElement = stayDetailsAsideRef.current
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.target === stayDetailsAsideElement) {
+            setAsideInViewport(entry.isIntersecting)
+          }
+        })
+      })
+
+      observer.observe(stayDetailsAsideElement)
+
+      return () => {
+        observer.unobserve(stayDetailsAsideElement)
+      }
+    }
+  }, [isMobile])
+
+  useEffect(() => {
+    if (!isMobile) {
+      const stayGalleryElement = stayGalleryRef.current
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setGalleryInViewport(true)
+          } else {
+            setGalleryInViewport(false)
+          }
+        })
+      })
+
+      observer.observe(stayGalleryElement)
+
+      return () => {
+        observer.unobserve(stayGalleryElement)
+      }
+    }
+  }, [isMobile])
 
   useEffect(() => {
     const handleResize = () => {
@@ -175,6 +214,7 @@ export function CheckoutForm({
               </div>
               <div className='form-header-reservation'>
                 <div
+                  ref={stayDetailsAsideRef}
                   className='reservation-dates-container'
                   onClick={(ev) => {
                     ev.stopPropagation()

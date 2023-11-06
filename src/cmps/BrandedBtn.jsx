@@ -116,12 +116,12 @@ export function BrandedBtn({
         className="content"
         style={{ borderRadius: borderRadius, width: width }}
       >
-        <button className="action-btn" type="submit">
+        <div className="action-btn" type="submit">
           <span className="branded-btn-txt">
             {icon}
             {txt}
           </span>
-        </button>
+        </div>
       </div>
     </button>
   );

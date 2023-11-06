@@ -1,19 +1,17 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
-import { stayService } from '../services/stay.service.js'
+import { stayService } from '../services/stay.service.local.js'
 import { StayDescription } from '../cmps/StayDetails/StayDescription.jsx'
 import { StayHeader } from '../cmps/StayDetails/StayHeader.jsx'
-import { StayAmenities } from '../cmps/StayDetails/StayAmenities.jsx'
 import { StayReviews } from '../cmps/StayDetails/StayReviews.jsx'
 import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service.js'
-import { CheckoutForm } from '../cmps/StayDetails/CheckoutForm.jsx'
 import { useDispatch, useSelector } from 'react-redux'
-import { userService } from '../services/user.service.js'
-import { getActionAddOrder, getActionStageOrder } from '../store/actions/order.actions.js'
+import { getActionStageOrder } from '../store/actions/order.actions.js'
 import { LOADING_DONE, LOADING_START } from '../store/reducer/system.reducer.js'
 import { StayMap } from '../cmps/StayDetails/StayMap.jsx'
-import { is } from 'date-fns/locale'
 import { StayLoader } from '../cmps/StayLoader.jsx'
+
+import { is } from 'date-fns/locale'
 
 export function StayDetails() {
   const { stayId } = useParams()
@@ -24,13 +22,8 @@ export function StayDetails() {
 
   const isLoading = useSelector((state) => state.systemModule.isLoading)
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768)
-  const [isAsideInViewport, setAsideInViewport] = useState(false)
-  const [isGalleryInViewport, setGalleryInViewport] = useState(false)
-
-  const stayDetailsAsideRef = useRef(null)
-  const stayGalleryRef = useRef(null)
-
   const [currStay, setCurrStay] = useState(null)
+  const stayGalleryRef = useRef(null)
 
   useEffect(() => {
     loadStay()
@@ -59,40 +52,6 @@ export function StayDetails() {
       dispatch({ type: LOADING_DONE })
     }
   }
-
-  useEffect(() => {
-    if (!isMobile) {
-      const stayDetailsAsideElement = stayDetailsAsideRef.current
-      const stayGalleryElement = stayGalleryRef.current
-
-      if (stayDetailsAsideElement && stayGalleryElement) {
-        const observer = new IntersectionObserver((entries) => {
-          entries.forEach((entry) => {
-            if (entry.target === stayDetailsAsideElement) {
-              setAsideInViewport(entry.isIntersecting)
-            }
-            if (entry.target === stayGalleryElement) {
-              setGalleryInViewport(entry.isIntersecting)
-            }
-          })
-        })
-
-        observer.observe(stayDetailsAsideElement)
-        observer.observe(stayGalleryElement)
-
-        return () => {
-          observer.unobserve(stayDetailsAsideElement)
-          observer.unobserve(stayGalleryElement)
-        }
-      } else {
-        console.log('One or both elements are not available for intersection observing')
-        console.log('One or both elements are not available:', {
-          asideElement: stayDetailsAsideElement,
-          galleryElement: stayGalleryElement,
-        })
-      }
-    }
-  }, [isMobile, stayDetailsAsideRef, stayGalleryRef])
 
   function handleCheckoutSubmit(formData) {
     const orderDetails = {
@@ -123,7 +82,7 @@ export function StayDetails() {
         <StayLoader />
       </div>
     )
-  if (!currStay) return <div className='main-layout'>no stay or user</div>
+  if (!currStay) return <div className='main-layout'>No stay found</div>
 
   const {
     name,
@@ -172,10 +131,7 @@ export function StayDetails() {
           name={name}
           amenities={amenities}
           onSubmit={handleCheckoutSubmit}
-          stayDetailsAsideElement={stayDetailsAsideRef}
-          isAsideInViewport={isAsideInViewport}
-          isGalleryInViewport={isGalleryInViewport}
-          // stayGalleryRef={stayGalleryRef}
+          stayGalleryRef={stayGalleryRef}
         />
       </div>
       <StayReviews data={currStay.reviews} />

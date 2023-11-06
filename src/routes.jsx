@@ -6,6 +6,8 @@ import { StayIndex } from './pages/StayIndex.jsx'
 import { UserDetails } from './pages/UserDetails.jsx'
 import { Wishlist } from './pages/WishList.jsx'
 import { Dashboard } from './pages/Dashboard.jsx'
+import { UserProfile } from './pages/UserProfile.jsx'
+import { UserInbox } from './pages/UserInbox.jsx'
 
 // Routes accesible from the main navigation (in AppHeader)
 const routes = [
@@ -58,6 +60,16 @@ const routes = [
     path: '/dashboard/:userId',
     component: <Dashboard />,
     label: 'order',
+  },
+  {
+    path: 'profile/:userId',
+    component: <UserProfile />,
+    label: 'profile', 
+  },
+  {
+    path: '/inbox/:userId',
+    component: <UserInbox />,
+    label: 'inbox',
   }
 ]
 

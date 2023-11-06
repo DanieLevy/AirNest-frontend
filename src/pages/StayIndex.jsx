@@ -61,43 +61,43 @@ export function StayIndex() {
     }
   }, [])
 
-  useEffect(() => {
-    const options = {
-      root: null,
-      rootMargin: '20px',
-      threshold: 1.0,
-    }
+  // useEffect(() => {
+  //   const options = {
+  //     root: null,
+  //     rootMargin: '20px',
+  //     threshold: 1.0,
+  //   }
 
-    const observer = new IntersectionObserver(handleObserver, options)
-    if (loader.current) {
-      observer.observe(loader.current)
-    }
+  //   const observer = new IntersectionObserver(handleObserver, options)
+  //   if (loader.current) {
+  //     observer.observe(loader.current)
+  //   }
 
-    return () => {
-      if (loader.current) {
-        observer.unobserve(loader.current)
-      }
-    }
-  }, [])
+  //   return () => {
+  //     if (loader.current) {
+  //       observer.unobserve(loader.current)
+  //     }
+  //   }
+  // }, [])
 
-  // Handle observer trigger
-  const handleObserver = (entities) => {
-    const target = entities[0]
-    if (target.isIntersecting) {
-      setPage((prev) => prev + 1)
-    }
-  }
+  // // Handle observer trigger
+  // const handleObserver = (entities) => {
+  //   const target = entities[0]
+  //   if (target.isIntersecting) {
+  //     setPage((prev) => prev + 1)
+  //   }
+  // }
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await httpService.get(`/api/stay?pageIdx=${page}`)
-      if (response.length) {
-        loadStays({ ...searchParams, pageIdx: page })
-      }
-    }
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const response = await httpService.get(`/api/stay?pageIdx=${page}`)
+  //     if (response.length) {
+  //       loadStays({ ...searchParams, pageIdx: page })
+  //     }
+  //   }
 
-    fetchData()
-  }, [page])
+  //   fetchData()
+  // }, [page])
 
   return (
     <React.Fragment>

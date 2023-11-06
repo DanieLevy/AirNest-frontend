@@ -750,7 +750,7 @@ export function FormEditor({
             Back
           </button>
           {pageIdx === pages.length - 1 ? (
-            <button
+            <div
               className='publish-btn'
               onClick={(ev) => {
                 handleSubmit(ev)
@@ -758,7 +758,7 @@ export function FormEditor({
               disabled={isNextBtnDisabled()}
             >
               <BrandedBtn width={150} txt={'Publish'} />
-            </button>
+            </div>
           ) : (
             <button
               className='next-btn'
