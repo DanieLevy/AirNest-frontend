@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 import { useSelector } from "react-redux";
 import { store } from "../store/store";
@@ -10,6 +10,7 @@ export function AppFooter() {
   const [selected, setSelected] = useState("explore");
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const [isVisible, setIsVisible] = useState(true);
+  const location = useLocation();
   const user = useSelector((storeState) => storeState.userModule.user);
   const isStayPage = location.pathname.startsWith("/stay");
   const stayId = location.pathname.split("/stay/")[1];
@@ -24,11 +25,13 @@ export function AppFooter() {
       setSelected("explore");
     } else if (location.pathname === "/order") {
       setSelected("trips");
-    } else if (location.pathname === `/order/${stayId}`) {
+    } else if (location.pathname === `/inbox/:${user._id}`) {
       setSelected("inbox");
-    } else if (location.pathname === "/profile") {
+    } else if (location.pathname === `/profile/${user._id}`) {
       setSelected("profile");
     }
+
+    console.log("location.pathname", location.pathname);
   }, [location.pathname]);
 
   useEffect(() => {

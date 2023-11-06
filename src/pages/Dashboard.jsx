@@ -11,13 +11,17 @@ export function Dashboard() {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
   useEffect(() => {
-    window.addEventListener("resize", () => {
-      setIsMobile(window.innerWidth < 768);
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768)
     }
-    );
-  }
-  , [window.innerWidth]);
-  
+
+    window.addEventListener('resize', handleResize)
+
+    return () => {
+      window.removeEventListener('resize', handleResize)
+    }
+  }, [])
+
 
   const data = [
     {
