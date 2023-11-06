@@ -2,12 +2,7 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-import { CgSearch } from "react-icons/cg";
-import { PiHeartThin } from "react-icons/pi";
-import { PiUserCircleLight } from "react-icons/pi";
-import { loadStay } from "../store/actions/stay.actions";
 import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
 import { store } from "../store/store";
 import { set } from "date-fns";
 
@@ -23,7 +18,21 @@ export function AppFooter() {
   );
 
   useEffect(() => {
-    // getStay();
+    if (location.pathname === "/wishlist") {
+      setSelected("wishlist");
+    } else if (location.pathname === "/") {
+      setSelected("explore");
+    } else if (location.pathname === "/order") {
+      setSelected("trips");
+    } else if (location.pathname === "/inbox") {
+      setSelected("inbox");
+    } else if (location.pathname === "/profile") {
+      setSelected("profile");
+    }
+  }, [location.pathname]);
+
+
+  useEffect(() => {
 
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768);
@@ -46,17 +55,18 @@ export function AppFooter() {
     };
   }, []);
 
-  // function getStay() {
-  //   loadStay(stayId).then((stay) => {
-  //     setStay(stay);
-  //   });
-  // }
-
   function handleLoginModal() {
     console.log("loginModal", loginModal);
     store.dispatch({
       type: "SET_LOGIN_MODAL",
       loginModal: true,
+    });
+  }
+
+  function scrollToTop() {
+    window.scrollTo({
+      top: 0,
+      behavior: "auto",
     });
   }
 
@@ -70,6 +80,7 @@ export function AppFooter() {
                 selected === "explore" ? "selected" : ""
               }`}
               onClick={() => {
+                scrollToTop();
                 setSelected("explore");
               }}
             >
@@ -95,6 +106,7 @@ export function AppFooter() {
                 selected === "wishlist" ? "selected" : ""
               }`}
               onClick={() => {
+                scrollToTop();
                 setSelected("wishlist");
               }}
             >
@@ -145,7 +157,6 @@ export function AppFooter() {
             )}
 
             {user && (
-              // trips
               <React.Fragment>
                 <div
                   className={`footer-trips ${
@@ -153,6 +164,7 @@ export function AppFooter() {
                   }`}
                   onClick={() => {
                     setSelected("trips");
+                    scrollToTop();
                   }}
                 >
                   <svg
@@ -179,6 +191,7 @@ export function AppFooter() {
                   }`}
                   onClick={() => {
                     setSelected("inbox");
+                    scrollToTop();
                   }}
                 >
                   <svg
@@ -205,6 +218,7 @@ export function AppFooter() {
                   }`}
                   onClick={() => {
                     setSelected("profile");
+                    scrollToTop();
                   }}
                 >
                   <svg
@@ -222,7 +236,7 @@ export function AppFooter() {
                       <path d="M14.02 19.66a6 6 0 1 1 3.96 0M17.35 19.67H18c3.69.61 6.8 2.91 8.54 6.08m-20.92-.27A12.01 12.01 0 0 1 14 19.67h.62"></path>
                     </g>
                   </svg>
-                  <Link to="/profile">Profile</Link>
+                  <Link to={`/profile/${user._id}`}>Profile</Link>
                 </div>
               </React.Fragment>
             )}

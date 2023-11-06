@@ -18,7 +18,6 @@ import { HiOutlineSearch } from "react-icons/hi";
 
 export function AppHeader() {
   const user = useSelector((storeState) => storeState.userModule.user);
-  const [a, setA] = useState(false);
   const [userModal, setUserModal] = useState(false);
   const loginModal = useSelector(
     (storeState) => storeState.userModule.loginModal
@@ -34,7 +33,7 @@ export function AppHeader() {
   const path = location.pathname;
   const isStayPage = location.pathname.startsWith("/stay");
   const isOrderPage = location.pathname.startsWith("/order");
-  const isWishlistPage = path === '/wishlist';
+  const isWishlistPage = path === "/wishlist";
 
   useEffect(() => {
     const handleResize = () => {
@@ -89,15 +88,14 @@ export function AppHeader() {
   }
   return (
     <React.Fragment>
-      {!(isMobile && isStayPage ) ? (
+      {!isMobile ? (
         <React.Fragment>
           <section
             className={`header-container main-layout ${
               isStayPage ? "stayDetails relative" : ""
             }
           ${isOrderPage ? "medium relative" : ""}
-          `
-        }
+          `}
           >
             {!isMobile && (
               <header className="main-header flex">
@@ -228,7 +226,6 @@ export function AppHeader() {
                     </ul>
                   </section>
                 )}
-
               </header>
             )}
             {loginModal && (
@@ -241,13 +238,20 @@ export function AppHeader() {
                 setSignupModal={setSignupModal}
               />
             )}
-            {isMobile && <ExploreBar />}
           </section>
           <div
             className={`white-space ${isExploreExpanded ? "expanded" : ""}`}
           ></div>
         </React.Fragment>
-      ) : null}
+      ) : (
+        <React.Fragment>
+        {isMobile && path === "/" && (
+        <section className={`header-container main-layout`}>
+              <ExploreBar />
+        </section>
+        )}
+        </React.Fragment>
+      )}
 
       {!isMobile && !isStayPage && !isOrderPage && !isExploreExpanded ? (
         <div
