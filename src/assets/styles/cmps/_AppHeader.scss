@@ -159,8 +159,8 @@
 .header-content {
   display: grid;
   grid-template-columns: 1fr 90px;
-  gap: 15px;
-  transition: all 50ms;
+  gap: 10px;
+  transition: all 100ms;
 
   button {
     font-family: cereal-medium;

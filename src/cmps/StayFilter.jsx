@@ -16,15 +16,15 @@ import { PropertyFilter } from "./PropertyFilter";
 import { store } from "../store/store";
 
 export function StayFilter() {
-  const [paddingTop, setPaddingTop] = useState(15);
-  const [paddingBottom, setPaddingBottom] = useState(15);
+  const [paddingTop, setPaddingTop] = useState(10);
+  // const [paddingBottom, setPaddingBottom] = useState(15);
   const [boxShadow, setBoxShadow] = useState("none");
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const filterModal = useSelector(
     (storeState) => storeState.userModule.filterModal
   );
   const [inputBoxShadow1, setInputBoxShadow1] = useState(
-    "inset 0 0 0 1px #b0b0b0"
+    "rgb(228, 228, 228) 0px 0.5px 1px 0px"
   );
   const [inputBoxShadow2, setInputBoxShadow2] = useState(
     "inset 0 0 0 1px #b0b0b0"
@@ -247,14 +247,19 @@ export function StayFilter() {
   ]);
 
   const handleScroll = () => {
-    if (window.scrollY > 0) {
-      setPaddingTop(8);
-      setPaddingBottom(10);
-      setBoxShadow("rgb(0 0 0 / 16%) 0 0 6px");
-    } else {
-      setPaddingTop(25);
+    console.log('window.scrollY', window.scrollY);
+    console.log('window.innerHeight', window.innerHeight);
+
+
+    if (window.scrollY > 78) {
+      setPaddingTop(0);
+      setBoxShadow("rgb(228, 228, 228) 0px 0.5px 1px 0px");
+    }
+    if (window.scrollY <= 0) {
+      setPaddingTop(10);
       setBoxShadow("none");
     }
+
   };
 
   function onLabelClick(label) {
@@ -345,14 +350,6 @@ export function StayFilter() {
         continue;
       }
 
-      // const barHeight = inRange
-      //   ? barHeightPerStay *
-      //     staysPrices.filter((price) => price >= min && price <= max).length
-      //   : (barHeightPerStay *
-      //       staysPrices.filter((price) => price >= min && price <= max)
-      //         .length) /
-      //     10;
-
       const height =
         barHeightPerStay *
         staysPrices.filter((price) => price >= min && price <= max).length;
@@ -378,7 +375,7 @@ export function StayFilter() {
           style={{
             paddingTop: `${paddingTop}px`,
             boxShadow: `${boxShadow}`,
-            paddingBottom: `${paddingBottom}px`,
+            // paddingBottom: `${paddingBottom}px`,
           }}
         >
           <LabelsCarousel onLabelClick={onLabelClick} />
