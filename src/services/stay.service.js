@@ -27,10 +27,8 @@ export const stayService = {
 window.cs = stayService
 
 async function query(params) {
-  if (!params) {
-    return await httpService.get(STORAGE_KEY)
-  }
   const paramsObj = getParams(params)
+  console.log('🚀 ~ file: stay.service.js:31 ~ query ~ params:', params)
 
   // let capacity = +paramsObj?.adults + +paramsObj?.children
   const stays = await httpService.get(STORAGE_KEY, paramsObj)

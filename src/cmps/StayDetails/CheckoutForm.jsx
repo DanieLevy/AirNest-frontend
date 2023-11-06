@@ -12,19 +12,10 @@ import { useSearchParams } from 'react-router-dom'
 import { useRef } from 'react'
 import { QUERY_KEYS } from '../../services/util.service'
 
-export function CheckoutForm({
-  onSubmit,
-  price,
-  reviews,
-  capacity,
-  isGalleryInViewport,
-  isAsideInViewport,
-}) {
+export function CheckoutForm({ onSubmit, price, reviews, capacity, stayGalleryRef }) {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768)
   const [searchParams] = useSearchParams()
   const [isStayPage, setIsStayPage] = useState(location.pathname.startsWith('/stay'))
-  const hey = 0
-
   const [selectedRange, setSelectedRange] = useState({
     from: searchParams.has(QUERY_KEYS.checkin)
       ? new Date(+searchParams.get(QUERY_KEYS.checkin))
@@ -268,7 +259,6 @@ export function CheckoutForm({
                 )}
 
                 <div
-                  ref={stayDetailsAsideRef}
                   className='reservation-guests'
                   onClick={(ev) => {
                     ev.stopPropagation()
@@ -510,7 +500,7 @@ export function CheckoutForm({
           className='main-layout stayDetails
         checkout-header'
           style={
-            !isGalleryInViewport
+            !galleryInViewport
               ? { position: 'fixed', top: '0' }
               : { position: 'fixed', top: '-90px' }
           }
@@ -553,7 +543,7 @@ export function CheckoutForm({
             <div
               className='order-details'
               style={
-                !isAsideInViewport
+                !asideInViewport
                   ? { opacity: '1', minWidth: '110px' }
                   : { opacity: '0', minWidth: '0px' }
               }
@@ -584,7 +574,7 @@ export function CheckoutForm({
             <div
               className='order-btn'
               style={
-                !isAsideInViewport
+                !asideInViewport
                   ? { opacity: '1', minWidth: '110px' }
                   : { opacity: '0', minWidth: '0px' }
               }

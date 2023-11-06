@@ -42,10 +42,10 @@ export async function loadStays(params) {
       type: SET_STAYS,
       stays,
     })
-    // store.dispatch({
-    //   type: SET_FILTERED_STAYS,
-    //   stays,
-    // })
+    store.dispatch({
+      type: SET_FILTERED_STAYS,
+      stays,
+    })
   } catch (err) {
     console.log('Cannot load stays', err)
     throw err
@@ -106,64 +106,56 @@ export async function updateStay(stay) {
   }
 }
 
-// export function filterStays(properties, params) {
-//   const stays = stayService.filterStays(properties, params)
-//   store.dispatch({
-//     type: SET_FILTERED_STAYS,
-//     stays,
-//   })
-// }
-export function filterStays(params) {
-  return (dispatch, getState) => {
-    const { allStays } = getState() // Assuming `allStays` holds the unfiltered list
-
-    // Convert the incoming parameters to a params object, similar to `getParams`
-    const paramsObj = getParams(params)
-
-    // Start with all stays and apply filters as needed
-    let staysToReturn = allStays
-
-    const minPrice = +paramsObj.minPrice
-    const maxPrice = +paramsObj.maxPrice
-    staysToReturn = stayService.filterStaysByPrice(staysToReturn, minPrice, maxPrice)
-
-    // Apply other filters based on the presence of parameters
-    if (paramsObj.bedrooms) {
-      staysToReturn = staysToReturn.filter((stay) => stay.bedrooms >= +paramsObj.bedrooms)
-    }
-    if (paramsObj.beds) {
-      staysToReturn = staysToReturn.filter((stay) => stay.beds >= +paramsObj.beds)
-    }
-    if (paramsObj.bathrooms) {
-      staysToReturn = staysToReturn.filter((stay) => stay.bathrooms >= +paramsObj.bathrooms)
-    }
-    if (paramsObj.amenities) {
-      staysToReturn = staysToReturn.filter((stay) =>
-        paramsObj.amenities
-          .split(',')
-          .every((amenity) => stay.amenities.some((item) => new RegExp(amenity, 'i').test(item)))
-      )
-    }
-
-    // Dispatch the action to set the filtered stays in the store
-    dispatch({
-      type: SET_FILTERED_STAYS,
-      payload: staysToReturn,
-    })
-  }
+export function filterStays(properties, params) {
+  const stays = stayService.filterStays(properties, params)
+  store.dispatch({
+    type: SET_FILTERED_STAYS,
+    stays,
+  })
 }
-
 export function getResultLength(filter, stays) {
   return stayService.getResultLength(filter, stays)
 }
 
-function getParams(params) {
-  const paramsObject = {}
-  for (const key of params.keys()) {
-    paramsObject[key] = params.get(key)
-  }
-  return paramsObject
-}
+// export function filterStays(params) {
+//   return (dispatch, getState) => {
+//     const { allStays } = getState() // Assuming `allStays` holds the unfiltered list
+
+//     // Convert the incoming parameters to a params object, similar to `getParams`
+//     const paramsObj = getParams(params)
+
+//     // Start with all stays and apply filters as needed
+//     let staysToReturn = allStays
+
+//     const minPrice = +paramsObj.minPrice
+//     const maxPrice = +paramsObj.maxPrice
+//     staysToReturn = stayService.filterStaysByPrice(staysToReturn, minPrice, maxPrice)
+
+//     // Apply other filters based on the presence of parameters
+//     if (paramsObj.bedrooms) {
+//       staysToReturn = staysToReturn.filter((stay) => stay.bedrooms >= +paramsObj.bedrooms)
+//     }
+//     if (paramsObj.beds) {
+//       staysToReturn = staysToReturn.filter((stay) => stay.beds >= +paramsObj.beds)
+//     }
+//     if (paramsObj.bathrooms) {
+//       staysToReturn = staysToReturn.filter((stay) => stay.bathrooms >= +paramsObj.bathrooms)
+//     }
+//     if (paramsObj.amenities) {
+//       staysToReturn = staysToReturn.filter((stay) =>
+//         paramsObj.amenities
+//           .split(',')
+//           .every((amenity) => stay.amenities.some((item) => new RegExp(amenity, 'i').test(item)))
+//       )
+//     }
+
+//     // Dispatch the action to set the filtered stays in the store
+//     dispatch({
+//       type: SET_FILTERED_STAYS,
+//       payload: staysToReturn,
+//     })
+//   }
+// }
 
 //was Cart
 // export function addToStay(stay) {

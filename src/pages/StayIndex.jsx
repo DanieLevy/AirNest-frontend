@@ -10,7 +10,6 @@ import { HiMiniListBullet } from 'react-icons/hi2'
 import { StayFilter } from '../cmps/StayFilter.jsx'
 import { useSearchParams } from 'react-router-dom'
 import { QUERY_KEYS } from '../services/util.service.js'
-import { stayService } from '../services/stay.service.js'
 import { httpService } from '../services/http.service.js'
 
 export function StayIndex() {
@@ -23,6 +22,7 @@ export function StayIndex() {
   const adults = searchParams.get(QUERY_KEYS.adults)
   const children = searchParams.get(QUERY_KEYS.children)
   const label = searchParams.get(QUERY_KEYS.label)
+  const beds = searchParams.get(QUERY_KEYS.beds)
 
   const [currentIndex, setCurrentIndex] = useState(0)
   const staysPerPage = 20
@@ -35,14 +35,44 @@ export function StayIndex() {
   const isLoading = useSelector((storeState) => storeState.systemModule.isLoading)
 
   useEffect(() => {
+    setCurrentIndex(0)
+
     loadStays(searchParams)
-  }, [region, adults, children, label])
+
+    setRenderedStays(removeDuplicates(filteredStays))
+    console.log('🚀 ~ file: StayIndex.jsx:39 ~ useEffect ~ filteredStays:', filteredStays)
+    console.log('🚀 ~ file: StayIndex.jsx:39 ~ useEffect ~ currentIndex:', currentIndex)
+
+    return () => {
+      setCurrentIndex(0)
+      setRenderedStays([])
+    }
+  }, [region, adults, children, label, beds])
+  // useEffect(() => {
+  //   loadStays(searchParams)
+  //   console.log('🚀 ~ file: loadStays.jsx:39 ~ useEffect ~ filteredStays:', filteredStays)
+  //   console.log('🚀 ~ file: loadStays.jsx:39 ~ useEffect ~ currentIndex:', currentIndex)
+  // }, [loadStays, region, adults, children, label])
+
+  // useEffect(() => {
+  //   setRenderedStays(removeDuplicates(filteredStays))
+  //   console.log('🚀 ~ file: setRenderedStays.jsx:39 ~ useEffect ~ filteredStays:', filteredStays)
+  //   console.log('🚀 ~ file: setRenderedStays.jsx:39 ~ useEffect ~ currentIndex:', currentIndex)
+  // }, [filteredStays])
+
+  const removeDuplicates = (array) => {
+    return [...new Set(array)]
+  }
 
   const loadMoreStays = () => {
     if (currentIndex < filteredStays.length) {
       const nextStays = filteredStays.slice(currentIndex, currentIndex + staysPerPage)
-      setRenderedStays((prevStays) => [...prevStays, ...nextStays])
-      setCurrentIndex((prevIndex) => prevIndex + staysPerPage)
+      console.log('🚀 ~ file: StayIndex.jsx:39 ~ useEffect ~ filteredStays:', filteredStays)
+      console.log('🚀 ~ file: StayIndex.jsx:39 ~ useEffect ~ currentIndex:', currentIndex)
+      if (nextStays) {
+        setRenderedStays((prevStays) => removeDuplicates([...prevStays, ...nextStays]))
+        setCurrentIndex((prevIndex) => prevIndex + staysPerPage)
+      }
     }
   }
 
@@ -56,7 +86,7 @@ export function StayIndex() {
       {
         root: null,
         rootMargin: '20px',
-        threshold: 0.1,
+        threshold: 0.2,
       }
     )
 
@@ -123,8 +153,8 @@ export function StayIndex() {
             </button>
           </div>
           {listMode ? <StayList stays={renderedStays} /> : <StayMapIndex stays={renderedStays} />}
-          <div ref={loader} style={{ height: '1px', width: '100%' }} />
         </section>
+        <div ref={loader} style={{ height: '1px', width: '100%' }} />
       </main>
     </React.Fragment>
   )

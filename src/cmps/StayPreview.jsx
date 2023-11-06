@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import ImageGallery from 'react-image-gallery'
 import 'react-image-gallery/styles/css/image-gallery.css'
 import { useSelector } from 'react-redux'
-import { Link, useSearchParams } from 'react-router-dom'
+import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { HiMiniChevronLeft, HiMiniChevronRight } from 'react-icons/hi2'
 import { userService } from '../services/user.service'
 
@@ -22,6 +22,7 @@ export function StayPreview({ stay }) {
   const user = useSelector((storeState) => storeState.userModule.user)
   const stays = useSelector((storeState) => storeState.stayModule.stays)
   const [isLoading, setIsLoading] = useState(true)
+  const navigate = useNavigate()
   const userLikedStays = user
     ? stays.filter((stay) => stay.likedByUsers.some((likedUser) => likedUser._id === user._id))
     : []
