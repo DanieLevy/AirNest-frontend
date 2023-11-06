@@ -3,6 +3,9 @@ import { StayPreview } from './StayPreview'
 import { StayLoader } from './StayLoader'
 
 export function StayList({ stays, isLoading }) {
+  
+  if (stays.length === 0) return (<div className="no-stays">No stays found</div>)
+  
   return (
     <section className='stay-list'>
       {stays.map((stay) =>

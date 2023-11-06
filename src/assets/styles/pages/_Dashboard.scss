@@ -11,9 +11,20 @@
     padding-bottom: 50px;
 
     & .dashboard-header {
+        // mobile
+        @media screen and (max-width: 768px) {
+            width: 100%;
+            padding: 10px;
+        }
         & .dashboard-header-content {
             padding: 48px 0;
             width: 1220px;
+
+            // mobile
+            @media screen and (max-width: 768px) {
+                width: 100%;
+                padding: 10px;
+            }
             p {
                 font-family: "cereal";
                 font-size: 1.25rem;
@@ -34,6 +45,13 @@
             align-items: center;
             width: 1220px;
 
+            // mobile
+            @media screen and (max-width: 768px) {
+                width: 100%;
+                justify-content: center;
+                // gap: 16px;
+            }
+
             & .content-card {
                 width: 295px;
                 background-color: #fff;
@@ -42,6 +60,15 @@
                 margin-bottom: 24px;
                 box-shadow: 0 0 14px 0px rgb(217 217 217 / 50%);
                 transition: all 0.3s ease-in-out;
+
+                // mobile
+                @media screen and (max-width: 768px) {
+                    width: 100%;
+                    padding: 16px;
+                    &:nth-child(3) {
+                        display: none;
+                    }
+                }
 
                 &:hover {
                     transform: scale(1.01);
@@ -52,6 +79,11 @@
                     justify-content: space-between;
                     align-items: center;
                     margin-bottom: 24px;
+
+                    // mobile
+                    @media screen and (max-width: 768px) {
+                        margin-bottom: 16px;
+                    }
 
                     span {
                         font-size: 1rem;
@@ -132,10 +164,24 @@
 
     & .dashboard-chart {
         width: 1220px;
+
+        // mobile
+        @media screen and (max-width: 768px) {
+            width: 100%;
+        }
+
         & .dashboard-chart-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
+
+            // mobile
+            @media screen and (max-width: 768px) {
+                width: 100%;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+            }
 
             & .line-chart-container {
                 background-color: #fff;
@@ -144,7 +190,12 @@
                 margin-bottom: 24px;
                 box-shadow: 0 0 14px 0px rgb(217 217 217 / 50%);
                 transition: all 0.3s ease-in-out;
-                // max-height: 250px;
+
+                // mobile
+                @media screen and (max-width: 768px) {
+                    width: 100%;
+                    padding: 16px;
+                }
             }
 
             & .line-chart-container {
@@ -153,6 +204,10 @@
                 justify-content: space-between;
 
                 width: 68% !important;
+
+                @media screen and (max-width: 768px) {
+                    width: 100%!important;
+                }
 
                 h2 {
                     font-family: cereal;
@@ -165,6 +220,10 @@
 
             #lineChart {
                 height: 248px !important;
+
+                @media screen and (max-width: 768px) {
+                    height: 200px !important;
+                }
             }
         }
 
@@ -189,7 +248,13 @@
             box-shadow: 0 0 14px 0px rgb(217 217 217 / 50%);
             transition: all 0.3s ease-in-out;
 
+            @media screen and (max-width: 768px) {
+                width: 100% !important;
+                padding: 16px;
+            }
+
             & .overview-content {
+
                 display: flex;
                 flex-direction: column;
                 justify-content: space-between;
@@ -226,6 +291,12 @@
         transition: all 0.3s ease-in-out;
         width: 1220px;
 
+        // mobile
+        @media screen and (max-width: 768px) {
+            width: 100%;
+            padding: 16px;
+        }
+
         & .table-header {
             h2 {
                 font-family: cereal;
@@ -241,12 +312,20 @@
             max-height: 250px;
             // handle overflow to scroll
             overflow: auto;
+
             table {
                 width: 100%;
                 border-collapse: collapse;
                 border-spacing: 0;
+
                 thead {
-                    tr {
+                    position: sticky;
+                    top: -1px;
+                    background-color: #fff;
+                    z-index: 1;
+                    
+
+                    tr {                        
                         th {
                             padding: 16px 0;
                             font-size: 0.875rem;
@@ -254,12 +333,31 @@
                             color: #222;
                             border-bottom: 1px solid #e6e6e6;
 
-                            &:last-child {
-                                width: 200px;
+                            // mobile
+                            @media screen and (max-width: 768px) {
+                                padding: 8px 0;
+                                font-size: 0.75rem;
+                                margin-inline-end: 16px;
                             }
 
-                            &:first-child {
-                                width: 100px;
+                            &:nth-child(1) {
+                                width: 20%;
+                            }
+
+                            &:nth-child(2) {
+                                width: 20%;
+                            }
+
+                            &:nth-child(3) {
+                                width: 20%;
+                            }
+
+                            &:nth-child(4) {
+                                width: 20%;
+                            }
+
+                            &:nth-child(5) {
+                                width: 20%;
                             }
                         }
                     }
@@ -273,8 +371,17 @@
                             color: #222;
                             border-bottom: 1px solid #e6e6e6;
 
-                            & .approve-btn, & .reject-btn {
-                                
+                            &.status {
+                                // mobile
+                                @media screen and (max-width: 768px) {
+                                    font-size: 0.75rem;
+                                    padding-inline-end: 16px;
+                                    font-weight: 400;
+                                }
+                            }
+
+                            & .approve-btn,
+                            & .reject-btn {
                                 &:hover {
                                     background-color: #f9fbff;
                                     cursor: pointer;
@@ -302,6 +409,15 @@
                                 font-size: 0.875rem;
                                 font-weight: 600;
                             }
+
+                            & .approve-btn, .reject-btn {
+                                // mobile
+                                @media screen and (max-width: 768px) {
+                                    padding: 2px 8px;
+                                    font-size: 0.75rem;
+                                }
+                            }
+
                         }
                     }
                 }
@@ -314,7 +430,6 @@
                         background-color: #f9fbff;
                     }
                 }
-
             }
         }
     }

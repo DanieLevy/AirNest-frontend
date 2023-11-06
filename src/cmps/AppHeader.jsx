@@ -14,11 +14,8 @@ import { FaCircleUser } from "react-icons/fa6";
 import { is } from "date-fns/locale";
 import { store } from "../store/store.js";
 
-import { HiOutlineSearch } from "react-icons/hi";
-
 export function AppHeader() {
   const user = useSelector((storeState) => storeState.userModule.user);
-  const [a, setA] = useState(false);
   const [userModal, setUserModal] = useState(false);
   const loginModal = useSelector(
     (storeState) => storeState.userModule.loginModal
@@ -34,6 +31,7 @@ export function AppHeader() {
   const path = location.pathname;
   const isStayPage = location.pathname.startsWith("/stay");
   const isOrderPage = location.pathname.startsWith("/order");
+  const isWishlistPage = path === "/wishlist";
 
   useEffect(() => {
     const handleResize = () => {
@@ -50,7 +48,7 @@ export function AppHeader() {
   async function onLogin(credentials) {
     try {
       const user = await login(credentials);
-      showSuccessMsg(`Welcome: ${user.fullname}`);
+      showSuccessMsg(`Welcome back ${user.fullname}`);
       closeModal();
     } catch (err) {
       showErrorMsg("Cannot login");
@@ -59,7 +57,7 @@ export function AppHeader() {
   async function onSignup(credentials) {
     try {
       const user = await signup(credentials);
-      showSuccessMsg(`Welcome new user: ${user.fullname}`);
+      showSuccessMsg(`Welcome ${user.fullname}`);
       closeModal();
     } catch (err) {
       showErrorMsg("Cannot signup");
@@ -68,7 +66,7 @@ export function AppHeader() {
   async function onLogout() {
     try {
       await logout();
-      showSuccessMsg(`Bye now`);
+      showSuccessMsg(`Goodbye ${user.fullname}`);
     } catch (err) {
       showErrorMsg("Cannot logout");
     }
@@ -88,7 +86,7 @@ export function AppHeader() {
   }
   return (
     <React.Fragment>
-      {!(isMobile && isStayPage) ? (
+      {!isMobile ? (
         <React.Fragment>
           <section
             className={`header-container main-layout ${
@@ -203,7 +201,7 @@ export function AppHeader() {
                             style={{ textDecorationLine: "none" }}
                             onClick={() => setUserModal(false)}
                           >
-                          <li>DashBoard</li>
+                            <li>Dashboard</li>
                           </Link>
                           <Link
                             to={`/user/${user._id}`}
@@ -226,40 +224,57 @@ export function AppHeader() {
                     </ul>
                   </section>
                 )}
-
-                {loginModal && (
-                  <LoginSignup
-                    login={onLogin}
-                    signup={onSignup}
-                    onToggleLogin={onToggleLogin}
-                    closeModal={closeModal}
-                    isSignup={signupModal}
-                    setSignupModal={setSignupModal}
-                  />
-                )}
               </header>
             )}
-            {isMobile && <ExploreBar />}
+            {loginModal && (
+              <LoginSignup
+                login={onLogin}
+                signup={onSignup}
+                onToggleLogin={onToggleLogin}
+                closeModal={closeModal}
+                isSignup={signupModal}
+                setSignupModal={setSignupModal}
+              />
+            )}
           </section>
           <div
             className={`white-space ${isExploreExpanded ? "expanded" : ""}`}
           ></div>
         </React.Fragment>
-      ) : null}
+      ) : (
+        <React.Fragment>
+          {isMobile && path === "/" && (
+            <section className={`header-container main-layout`}>
+              <ExploreBar />
+            </section>
+          )}
+                      {loginModal && (
+              <LoginSignup
+                login={onLogin}
+                signup={onSignup}
+                onToggleLogin={onToggleLogin}
+                closeModal={closeModal}
+                isSignup={signupModal}
+                setSignupModal={setSignupModal}
+              />
+            )}
+        </React.Fragment>
+      )}
 
       {!isMobile && !isStayPage && !isOrderPage && !isExploreExpanded ? (
-        // <div className={isStayPage ? "divider unset" : "divider"}></div>
-        // <div
-        //   className={`divider2 ${isStayPage ? "unset" : ""} ${
-        //     isExploreExpanded ? "expanded" : ""
-        //   }`}
-        //   // style={{ position: "block" }}
-        // ></div>
-        <div className="divider"
-        style={{ position: "sticky", top: "80px", opacity: "1", zIndex: "10" }}
+        <div
+          className="divider"
+          style={{
+            position: "sticky",
+            top: "80px",
+            opacity: "1",
+            zIndex: "10",
+          }}
         ></div>
       ) : (
-        <div className="divider"
+        <div
+          className="divider"
+          style={isMobile ? { display: "none" } : { display: "block" }}
         ></div>
       )}
     </React.Fragment>

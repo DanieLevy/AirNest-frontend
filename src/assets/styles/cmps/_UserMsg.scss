@@ -4,26 +4,33 @@ h3 {
 }
 
 .alert {
+    font-family: cereal-light;
+    font-size: 1em;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    max-width: 100%;
+    min-width: 80px;
     min-height: 50px;
     padding: 15px 10px;
     position: fixed;
-    top: 100px;
-    right: 15px;
+    bottom: 40px;
+    left: 15px;
     border-radius: 5px;
     z-index: 100;
-    background-color: #ffffff;
+    background-color: #f6f6f6;
     box-shadow: 0 0 10px 0 #0000001a;
-    animation: slideInj 0.3s ease-in-out;
-    animation-fill-mode: both;
+    border: 1px solid #e0e0e0;
+    animation: fadeIn 0.5s, fadeOut 0.5s 2.5s;
 
+    // mobile
+    @media (max-width: 768px) {
+        font-size: 14px;
+        height: 40px;
+        bottom: 65px;
+        left: 10px;
+    }
 
     & .alert-text {
-        font-size: 16px;
-        font-family: cereal-light;
         font-weight: 400;
         color: #222222a3;
     }
@@ -69,30 +76,33 @@ h3 {
             }
         }
     }
+
 }
 
-@keyframes slideInJ {
+@keyframes fadeOut {
     0% {
-        transform: translateY(250%);
+        opacity: 1;
     }
     100% {
-        transform: translateY(0);
+        opacity: 0;
+        visibility: hidden;
     }
 }
 
-@keyframes slideOutJ {
+@keyframes fadeIn {
     0% {
-        transform: translateX(0);
+        opacity: 0;
+        visibility: hidden;
     }
     100% {
-        transform: translateX(100%);
+        opacity: 1;
     }
 }
 
-.slideIn {
-    animation: slideInJ 0.3s ease-in-out;
+.fadeIn {
+    animation: fadeIn 0.5s;
 }
 
-.slideOut {
-    animation: slideOutJ 0.3s ease-in-out;
+.fadeOut {
+    animation: fadeOut 0.5s;
 }

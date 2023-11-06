@@ -22,6 +22,11 @@
       gap: 32px;
       align-items: center;
 
+      @media (max-width: 768px) {
+        padding-top: 32px;
+        padding-bottom: 32px;
+      }
+
       h2 {
         margin: 0;
       }
@@ -35,8 +40,13 @@
       border-radius: 12px;
       height: fit-content;
       min-height: 40%;
-      // min-width: 300px;
-      // grid-column: 3;
+
+      // mobile
+      @media (max-width: 768px) {
+        position: relative;
+        top: unset;
+        grid-row: 1;
+      }
 
       & .order-confirm-price {
         padding: 24px 0;
@@ -65,6 +75,7 @@
           flex-direction: column;
           justify-content: space-between;
           padding-left: 12px;
+
 
           .stay-details-title-body {
             font-family: cereal;
@@ -111,9 +122,15 @@
       gap: 50px;
       justify-content: space-between;
 
+      // mobile 
+
+      @media (max-width: 768px) {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
       & .order-confirm-summary {
-        //   background-color: blue;
-        // min-width: 40%;
+
 
         & .summary-header {
           flex-direction: column;
@@ -345,3 +362,4 @@
     text-decoration: underline;
   }
 }
+ 

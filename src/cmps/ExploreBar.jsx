@@ -59,7 +59,7 @@ export function ExploreBar({ onExpandChange }) {
   const location = useLocation();
   const path = location.pathname;
   const isStayPage = path === '/' || path.startsWith('/?');
-  const isDashboardPage = path === '/dashboard';
+  const isDashboardPage = path === path.startsWith('/dashboard');
 
   useEffect(() => {
     setSelectedGuests((prevState) => ({
@@ -112,9 +112,14 @@ export function ExploreBar({ onExpandChange }) {
     setIsMobile(window.innerWidth < 768);
   };
 
-  function handleDayClick(date) {
-    console.log('date', date);
+  function handleFilterModal(action = "close") {
+    store.dispatch({
+      type: "SET_FILTER_MODAL",
+      filterModal: action === "open" ? true : false,
+    });
+  }
 
+  function handleDayClick(date) {
     if (selectedRange.from && selectedRange.to) {
       setSelectedRange({
         from: date,
@@ -164,7 +169,6 @@ export function ExploreBar({ onExpandChange }) {
   }
 
   function handleDocumentClick(ev) {
-    console.log('clicked outside');
     ev.stopPropagation();
     if (expandedBarRef.current && !expandedBarRef.current.contains(ev.target)) {
       setIsExpanded(false);
@@ -226,6 +230,9 @@ export function ExploreBar({ onExpandChange }) {
     });
 
     handleExpandChange(false);
+    if (path !== '/' && !path.startsWith('/?')) {
+      window.location.href = '/';
+    }
   }
 
   // {!isExpanded && isStayPage && !isMobile && ( 1
@@ -274,7 +281,7 @@ export function ExploreBar({ onExpandChange }) {
       )}
 
       {/* 2 */}
-      {!isExpanded && !isStayPage && !isMobile && isDashboardPage && (
+      {!isExpanded && !isStayPage && !isMobile && !isDashboardPage && (
         <div className={`explore-bar-preview short`} onClick={isExpanded ? null : handleClick}>
           <div className='title'>Start your search</div>
           <button type='button' className='search-btn'>
@@ -283,7 +290,7 @@ export function ExploreBar({ onExpandChange }) {
         </div>
       )}
 
-      {!isExpanded && !isStayPage && !isMobile && !isDashboardPage && (
+      {!isExpanded && !isStayPage && !isMobile && isDashboardPage && (
         <div className='dashboard-header'>Dashboard</div>
       )}
 
@@ -708,7 +715,11 @@ export function ExploreBar({ onExpandChange }) {
                 </div>
               </div>
             </div>
-            <div className='ebm-filter-btn flex'>
+            <div className='ebm-filter-btn flex'
+              onClick={() => {
+                handleFilterModal("open");
+              }}
+            >
               <svg xmlns='http://www.w3.org/2000/svg'>
                 <path d='M5 8a3 3 0 0 1 2.83 2H14v2H7.83A3 3 0 1 1 5 8zm0 2a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm6-8a3 3 0 1 1-2.83 4H2V4h6.17A3 3 0 0 1 11 2zm0 2a1 1 0 1 0 0 2 1 1 0 0 0 0-2z'></path>
               </svg>

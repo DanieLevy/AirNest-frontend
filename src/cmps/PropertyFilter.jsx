@@ -35,7 +35,9 @@ export function PropertyFilter({ selectedProperty, onPropertyChange }) {
 
   if (!defaultProperties) return;
   return (
-    <section style={{ display: 'flex', gap: 10 }}>
+    <section
+    className='property-filter'
+     style={{ display: 'flex', gap: 10 }}>
       {defaultProperties.map((property, i) => {
         const isChecked = selectedProperty.includes(property.value);
         return (
