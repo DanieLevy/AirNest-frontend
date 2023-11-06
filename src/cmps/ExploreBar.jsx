@@ -237,6 +237,7 @@ export function ExploreBar({ onExpandChange }) {
   };
 
   function handleSubmit(ev) {
+    mobileExploreBar && setMobileExploreBar(false);
     ev.preventDefault();
 
     if (selectedRange.from && !selectedRange.to) {
@@ -1394,7 +1395,9 @@ export function ExploreBar({ onExpandChange }) {
                     >
                       Clear all
                     </button>
+                    <div onClick={handleSubmit}>
                     <BrandedBtn txt="Search" width={120} />
+                    </div>
                   </div>
                 </div>
               </React.Fragment>
