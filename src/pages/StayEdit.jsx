@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
-import { stayService } from "../services/stay.service.local";
-import { FormEditor } from "../cmps/StayEdit.jsx/FormEditor";
+import { stayService } from '../services/stay.service.local';
+import { FormEditor } from '../cmps/StayEdit.jsx/FormEditor';
+import { showSuccessMsg } from '../services/event-bus.service';
 
 export function StayEdit() {
   const [stay, setStay] = useState(stayService.getEmptyStay());
@@ -21,7 +22,7 @@ export function StayEdit() {
       const stay = await stayService.getById(stayId);
       setStay(stay);
     } catch (err) {
-      console.log("loadToy err:", err);
+      console.log('loadToy err:', err);
     }
   }
 
@@ -30,9 +31,10 @@ export function StayEdit() {
     console.log(stay);
     try {
       await stayService.save(stay);
-      navigate("/");
+      showSuccessMsg('Your listing has been successfully published!');
+      navigate('/');
     } catch (err) {
-      console.log("handleSubmit err:", err);
+      console.log('handleSubmit err:', err);
     }
   }
 
@@ -65,9 +67,9 @@ export function StayEdit() {
   }
 
   function setPropertyType(propertyType) {
-    console.log('ddd',propertyType.target);
-    const propName = propertyType.target.name
-    const propValue = propertyType.target.value
+    console.log('ddd', propertyType.target);
+    const propName = propertyType.target.name;
+    const propValue = propertyType.target.value;
     setStay((prev) => ({
       ...prev,
       [propName]: propValue,
@@ -78,17 +80,17 @@ export function StayEdit() {
     let { name, value } = e.target;
 
     if (
-      name === "price" ||
-      name === "capacity" ||
-      name === "bedrooms" ||
-      name === "beds" ||
-      name === "bathrooms"
+      name === 'price' ||
+      name === 'capacity' ||
+      name === 'bedrooms' ||
+      name === 'beds' ||
+      name === 'bathrooms'
     ) {
       setStay({ ...stay, [name]: parseFloat(value) });
       console.log(stay);
       return;
     }
-    if (name === "country" || name === "city" || name === "address") {
+    if (name === 'country' || name === 'city' || name === 'address') {
       setStay({ ...stay, loc: { ...stay.loc, [name]: value } });
       console.log(stay);
       return;
