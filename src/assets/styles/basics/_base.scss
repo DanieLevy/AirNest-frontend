@@ -59,3 +59,47 @@ a {
     text-decoration: underline;
   }
 }
+
+.loader {
+  // locate in the middle of the screen
+  position: fixed !important;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  // make sure it's on top of other elements
+  z-index: 999;
+}
+
+.no-stays {
+  // locate in the middle of the screen
+  position: fixed !important;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgb(232, 242, 242);
+  z-index: 0;
+  padding: 1200px;
+
+  font-family: "Cereal", sans-serif;
+  img {
+    width: 400px;
+    @media (max-width: 768px) {
+      width: 300px;
+    }
+  }
+
+  h1 {
+    font-family: 'cereal';
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #222;
+    margin: 4px 0;
+  }
+
+  h3 {
+    color: rgb(128, 128, 128);
+    font-size: 14px;
+    font-weight: 400;
+    
+  }
+}

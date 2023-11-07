@@ -9,7 +9,6 @@ $hoverOpacity: 100%;
     padding: 0 15px;
     max-width: max-content;
     width: 100% !important;
-    // margin: 10px;
   }
 
   .react-multiple-carousel__arrow--left {
@@ -50,8 +49,9 @@ $hoverOpacity: 100%;
     text-align: center;
     color: #717171;
     align-self: self-end;
-    border-bottom: 2px solid rgba($clr4, 0);
+    border-bottom: 2px solid rgba(113, 113, 113, 0);
     transition: scale 150ms;
+    padding-block: 20px 6px;
 
     img {
       box-sizing: border-box;

@@ -24,7 +24,7 @@ export function StayIndex() {
 
   const [displayCount, setDisplayCount] = useState(21);
   const displayStays = stays.slice(0, displayCount);
-  console.log('displayStays:', displayStays.length)
+  console.log('displayStays:', displayStays.length);
 
   useEffect(() => {
     setDisplayCount(21);

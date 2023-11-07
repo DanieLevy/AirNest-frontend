@@ -1,13 +1,30 @@
 import React, { useEffect, useState } from 'react';
 import { StayPreview } from './StayPreview';
 import { StayLoader } from './StayLoader';
+import PropagateLoader from 'react-spinners/PropagateLoader';
 
 export function StayList({ stays, isLoading }) {
+  const isWishListPage = window.location.pathname.includes('wishlist');
+  if (isLoading)
+    return (
+      <PropagateLoader
+        color={'#ff385c'}
+        //  size={150}
+        className='loader'
+        speedMultiplier={0.8}
+      />
+    );
+  //  loading={isLoading}
   if (stays.length === 0)
     return (
-      <div className='no-stays' style={{display:'flex' ,flexDirection:'column',gap:10 ,marginTop:20}}>
-        <h1 style={{fontSize:22}}>No exact matches</h1>
-        <p style={{fontSize:'1rem'}}>Try changing or removing some of your filters or adjusting your search area.</p>
+      <div className='no-stays'>
+        <img src='https://i.ibb.co/LvDMwQQ/ok.jpg' alt='no-stays' border='0' />
+        <h1>No Stays Found..</h1>
+        {isWishListPage ? (
+          <h3>Try to add some stays to your wishlist</h3>
+        ) : (
+          <h3>Try to change your search</h3>
+        )}
       </div>
     );
 

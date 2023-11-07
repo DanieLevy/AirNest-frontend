@@ -22,13 +22,12 @@ export function StayEdit() {
       const stay = await stayService.getById(stayId);
       setStay(stay);
     } catch (err) {
-      console.log('loadToy err:', err);
+      console.log('loadStay err:', err);
     }
   }
 
   async function handleSubmit(e) {
     e.preventDefault();
-    console.log(stay);
     try {
       await stayService.save(stay);
       showSuccessMsg('Your listing has been successfully published!');
