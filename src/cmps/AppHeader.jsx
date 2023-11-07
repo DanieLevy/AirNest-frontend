@@ -29,6 +29,8 @@ export function AppHeader() {
     (storeState) => storeState.userModule.isExploreExpanded
   );
 
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const [signupModal, setSignupModal] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
