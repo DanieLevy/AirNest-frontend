@@ -49,9 +49,19 @@
     font-weight: 600;
     letter-spacing: 0.1rem;
     cursor: pointer;
+    text-decoration: none;
+
+    h1 {
+      font-family: 'cereal-light';
+      margin: 0;
+      font-size: 22px;
+      font-weight: initial;
+      letter-spacing: -2px;
+      margin-inline-start: 3px;
+    }
 
     .logo-txt {
-      margin-inline-start: 5px;
+      margin-inline-start: 2px;
     }
   }
 
