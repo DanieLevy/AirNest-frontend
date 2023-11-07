@@ -4,7 +4,7 @@ import { PropagateLoader } from 'react-spinners';
 
 import { stayService } from '../services/stay.service';
 import { FormEditor } from '../cmps/StayEdit.jsx/FormEditor';
-import { showErrorMsg } from '../services/event-bus.service';
+import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service';
 
 export function StayEdit() {
   const [stay, setStay] = useState(stayService.getEmptyStay());
