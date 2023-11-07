@@ -79,7 +79,12 @@ function filterStays(stays, params) {
     staysToReturn = staysToReturn.filter((stay) =>
       paramsObj.properties.split(',').includes(stay.propertyType)
     );
-    
+
+  if (paramsObj.properties)
+    staysToReturn = staysToReturn.filter((stay) =>
+      paramsObj.properties.split(",").includes(stay.propertyType)
+    );
+
   return staysToReturn;
 }
 
@@ -100,6 +105,16 @@ function getResultLength(filterBy, properties) {
     );
   if (filterBy.properties.length)
     stays = stays.filter((stay) => filterBy.properties.includes(stay.propertyType));
+
+  if (filterBy.properties.length)
+    stays = stays.filter((stay) =>
+      filterBy.properties.includes(stay.propertyType)
+    );
+
+  if (filterBy.properties.length)
+    stays = stays.filter((stay) =>
+      filterBy.properties.includes(stay.propertyType)
+    );
 
   return stays.length;
 }
