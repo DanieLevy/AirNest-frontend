@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { PropagateLoader } from "react-spinners";
 
 import { stayService } from "../services/stay.service";
 import { FormEditor } from "../cmps/StayEdit.jsx/FormEditor";
@@ -106,7 +107,7 @@ export function StayEdit() {
         speedMultiplier={0.8}
       />
     );
-    
+
   return (
     <main>
       <FormEditor

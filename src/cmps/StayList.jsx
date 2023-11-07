@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { StayPreview } from "./StayPreview";
 import { StayLoader } from "./StayLoader";
-import PropagateLoader from "react-spinners/PropagateLoader";
+import { PropagateLoader } from "react-spinners";
 
 export function StayList({ stays, isLoading }) {
   const isWishListPage = window.location.pathname.includes("wishlist");

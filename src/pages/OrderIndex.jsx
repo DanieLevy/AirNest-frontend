@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { loadOrders } from '../store/actions/order.actions'
 import { OrderList } from '../cmps/Order/OrderList'
+import { PropagateLoader } from "react-spinners";
 
 export function OrderIndex() {
   const orders = useSelector((storeState) => storeState.orderModule.orders)
