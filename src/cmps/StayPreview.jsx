@@ -22,7 +22,6 @@ export function StayPreview({ stay }) {
   const user = useSelector((storeState) => storeState.userModule.user);
   const stays = useSelector((storeState) => storeState.stayModule.stays);
   const [isLoading, setIsLoading] = useState(false);
-  console.log("isLoading", isLoading);
   const navigate = useNavigate();
 
   const userLikedStays = user
@@ -222,7 +221,6 @@ export function StayPreview({ stay }) {
               renderRightNav={rightNav}
               onSlide={(currentIndex) => setCurrentSlideIndex(currentIndex)}
               onImageLoad={(ev) => {
-                console.log(`Image loaded: ${ev.target.src}`);
                 setIsLoading(false);
               }}
             />
