@@ -45,11 +45,11 @@ export function StayMapIndex({ stays }) {
         .then((res) => res.json())
         .then((res) => {
           console.log(res);
-          // const location = res.results[0].geometry.location;
-          // const center = {
-          //   lat: location.lat,
-          //   lng: location.lng,
-          // };
+          const location = res.results[0].geometry.location;
+          const center = {
+            lat: location.lat,
+            lng: location.lng,
+          };
         });
     }
   }
