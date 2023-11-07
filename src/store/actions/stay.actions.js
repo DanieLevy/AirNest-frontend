@@ -11,7 +11,6 @@ import {
   SET_FILTERED_STAYS,
 } from '../reducer/stay.reducer.js'
 import { LOADING_DONE, LOADING_START } from '../reducer/system.reducer'
-// import { SET_SCORE } from "../user.reducer.js";
 
 // Action Creators:
 export function getActionRemoveStay(stayId) {

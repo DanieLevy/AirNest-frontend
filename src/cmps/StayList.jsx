@@ -4,7 +4,9 @@ import { StayLoader } from "./StayLoader";
 import { PropagateLoader } from "react-spinners";
 
 export function StayList({ stays, isLoading }) {
+
   const isWishListPage = window.location.pathname.includes("wishlist");
+  
   if (isLoading)
     return (
       <PropagateLoader
