@@ -50,7 +50,7 @@ export function CheckoutForm({ onSubmit, price, reviews, capacity, stayGalleryRe
 
 
 
-  
+
 
   // =================== Intersection observer =================== //
 
