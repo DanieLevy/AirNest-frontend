@@ -56,8 +56,8 @@ export function StayMapIndex({ stays }) {
   , [urlParams]);
 
   const center = {
-    lat: 31.046051,
-    lng: 34.851612,
+    lat: 40.712776,
+    lng: -74.005974,
   };
 
   const zoom = 8;
