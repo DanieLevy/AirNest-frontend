@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { loadOrders } from '../store/actions/order.actions'
 import { OrderList } from '../cmps/Order/OrderList'
+import { PropagateLoader } from "react-spinners";
 
 export function OrderIndex() {
   const orders = useSelector((storeState) => storeState.orderModule.orders)
@@ -17,12 +18,23 @@ export function OrderIndex() {
     }
   }, [logginUser])
 
+  if (isLoading) {
+    return (
+      // <StayLoader />
+      <PropagateLoader
+        color={"#ff385c"}
+        //  size={150}
+        className="loader"
+        speedMultiplier={0.8}
+      />
+    );
+  }
+
+
   return (
     <main className='main-layout medium order-index'>
       <section>
-        {isLoading && <div>Loading...</div>}
-
-        {!isLoading && <OrderList orders={orders} />}
+        <OrderList orders={orders} />
       </section>
     </main>
   )

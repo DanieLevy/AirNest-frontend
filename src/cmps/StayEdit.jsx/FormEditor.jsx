@@ -9,8 +9,8 @@ import { BrandedBtn } from '../BrandedBtn';
 import { useEffect, useState } from 'react';
 import { AiFillStar, AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
 import { is } from 'date-fns/locale';
-import { showErrorMsg, showSuccessMsg } from '../../services/event-bus.service';
-import { useNavigate, useParams } from 'react-router-dom';
+import { showErrorMsg } from '../../services/event-bus.service';
+import { useNavigate } from 'react-router';
 
 export function FormEditor({
   stay,
@@ -22,6 +22,7 @@ export function FormEditor({
   setLocation,
   onPropertyChange,
 }) {
+  const navigate = useNavigate();
   const {
     name,
     propertyType,
@@ -38,7 +39,7 @@ export function FormEditor({
 
   const [pageIdx, setPageIdx] = useState(0);
   const [propertyTypeEle, setPropertyTypeEle] = useState(stay.roomType);
-  const navigate = useNavigate();
+  const stayId = stay._id;
 
   useEffect(() => {
     if (stay._id) {
@@ -122,12 +123,12 @@ export function FormEditor({
           <div className='header-btns'>
             <button
               className='header-btn'
-              onClick={() => {
-                navigate('/');
-                // handleSubmit();
+              onClick={(ev) => {
+                ev.preventDefault();
+                stayId === '' ? navigate('/') : handleSubmit(ev);
               }}
             >
-              Save & Exit
+              {stayId === '' ? 'Exit without saving' : 'Save & exit'}
             </button>
           </div>
         </div>
@@ -457,8 +458,6 @@ export function FormEditor({
             className={`step-7 ${pageIdx === 6 ? 'selected' : ''}`}
             onClick={(ev) => {
               ev.stopPropagation();
-              // ev.preventDefault();
-              // setPageIdx(pageIdx + 1);
             }}
           >
             <div className='text'>

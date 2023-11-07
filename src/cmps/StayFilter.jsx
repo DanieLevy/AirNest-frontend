@@ -247,9 +247,6 @@ export function StayFilter() {
   ]);
 
   const handleScroll = () => {
-    console.log("window.scrollY", window.scrollY);
-    console.log("window.innerHeight", window.innerHeight);
-
     if (window.scrollY > 78) {
       setPaddingTop(0);
       setBoxShadow("rgb(228, 228, 228) 0px 0.5px 1px 0px");

@@ -1,20 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { StayPreview } from './StayPreview';
 import { StayLoader } from './StayLoader';
-import PropagateLoader from 'react-spinners/PropagateLoader';
+import { PropagateLoader } from 'react-spinners';
 
 export function StayList({ stays, isLoading }) {
   const isWishListPage = window.location.pathname.includes('wishlist');
   if (isLoading)
-    return (
-      <PropagateLoader
-        color={'#ff385c'}
-        //  size={150}
-        className='loader'
-        speedMultiplier={0.8}
-      />
-    );
-  //  loading={isLoading}
+    return <PropagateLoader color={'#ff385c'} className='loader' speedMultiplier={0.8} />;
+
   if (stays.length === 0)
     return (
       <div className='no-stays'>

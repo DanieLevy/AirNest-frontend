@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { PropagateLoader } from 'react-spinners';
 
-import { stayService } from '../services/stay.service.local';
+import { stayService } from '../services/stay.service';
 import { FormEditor } from '../cmps/StayEdit.jsx/FormEditor';
-import { showSuccessMsg } from '../services/event-bus.service';
+import { showErrorMsg } from '../services/event-bus.service';
 
 export function StayEdit() {
   const [stay, setStay] = useState(stayService.getEmptyStay());
@@ -33,6 +34,7 @@ export function StayEdit() {
       showSuccessMsg('Your listing has been successfully published!');
       navigate('/');
     } catch (err) {
+      showErrorMsg('Cannot save stay');
       console.log('handleSubmit err:', err);
     }
   }
@@ -95,10 +97,10 @@ export function StayEdit() {
       return;
     }
     setStay({ ...stay, [name]: value });
-    console.log(stay);
   }
 
-  if (!stay) return <div>loading...</div>;
+  if (!stay) return <PropagateLoader color={'#ff385c'} className='loader' speedMultiplier={0.8} />;
+
   return (
     <main>
       <FormEditor

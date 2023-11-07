@@ -42,10 +42,10 @@
                     display: inline-flex;
                     cursor: pointer;
                     align-items: center;
-                    border: 1px solid $clr2;
+                    border: 2px solid $clr2;
                     background-color: transparent;
                     outline: none;
-                    color: #222222;
+                    color: #222222; 
                     padding-left: 16px;
                     padding-right: 16px;
                     height: 40px;
@@ -53,11 +53,14 @@
                     justify-content: center;
                     font-size: 0.875rem;
                     line-height: 1.125rem;
+                    font-family: cereal;
+                    font-weight: 600;
+                    transition: all 0.2s ease-in-out;
                     margin: 0;
 
                     &:hover {
-                        border: 1px solid $clr4;
                         transform: scale(1.01);
+                        background-color: #f5f5f5;
                         transition: all 0.2s ease-in-out;
                     }
                 }
