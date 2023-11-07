@@ -50,6 +50,15 @@
     letter-spacing: 0.1rem;
     cursor: pointer;
 
+    h1 {
+      font-family: 'cereal-light';
+      margin: 0;
+      font-size: 24px;
+      font-weight: initial;
+      letter-spacing: -2px;
+      margin-inline-start: 5px;
+    }
+
     .logo-txt {
       margin-inline-start: 5px;
     }
