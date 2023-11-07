@@ -1,8 +1,8 @@
-import { storageService } from './async-storage.service.js'
-import { utilService } from './util.service.js'
-import { userService } from './user.service.js'
-import { staysDemonData } from './stayDemoData.js'
-const STORAGE_KEY = 'stayDB'
+import { storageService } from './async-storage.service.js';
+import { utilService } from './util.service.js';
+import { userService } from './user.service.js';
+import { staysDemonData } from './stayDemoData.js';
+const STORAGE_KEY = 'stayDB';
 
 export const stayService = {
   query,
@@ -18,15 +18,15 @@ export const stayService = {
   getCarouselLabels,
   filterStays,
   getPropertyType,
-}
+};
 
-window.cs = stayService
+window.cs = stayService;
 
 async function query(params) {
-  const paramsObj = getParams(params)
+  const paramsObj = getParams(params);
 
   // let capacity = +paramsObj?.adults + +paramsObj?.children
-  const stays = await storageService.query(STORAGE_KEY, paramsObj)
+  const stays = await storageService.query(STORAGE_KEY, paramsObj);
   // let staysToReturn = stays
 
   // if (capacity) staysToReturn = staysToReturn.filter((stay) => stay.capacity >= capacity)
@@ -37,126 +37,132 @@ async function query(params) {
   // if (paramsObj.label)
   //   staysToReturn = staysToReturn.filter((stay) => stay.labels.includes(paramsObj.label))
 
-  return stays
+  return stays;
 }
 
 function getParams(params) {
-  const paramsObject = {}
+  const paramsObject = {};
   for (const key of params.keys()) {
-    paramsObject[key] = params.get(key)
+    paramsObject[key] = params.get(key);
   }
-  return paramsObject
+  return paramsObject;
 }
 
 function filterStaysByPrice(stays, minPrice, maxPrice) {
-  const hasNumberPrices = !isNaN(minPrice) && !isNaN(maxPrice)
-  const isNotDefaultPrices = hasNumberPrices && (minPrice > 0 || maxPrice < 1500)
+  const hasNumberPrices = !isNaN(minPrice) && !isNaN(maxPrice);
+  const isNotDefaultPrices = hasNumberPrices && (minPrice > 0 || maxPrice < 1500);
 
   if (isNotDefaultPrices)
     return stays.filter((stay) => {
-      const max = maxPrice >= 1500 ? Infinity : maxPrice
-      const min = minPrice || 0
-      return stay.price >= min && stay.price <= max
-    })
+      const max = maxPrice >= 1500 ? Infinity : maxPrice;
+      const min = minPrice || 0;
+      return stay.price >= min && stay.price <= max;
+    });
 
-  return stays
+  return stays;
 }
 
 function filterStays(stays, params) {
-  const paramsObj = getParams(params)
-  let staysToReturn = stays
+  const paramsObj = getParams(params);
+  let staysToReturn = stays;
 
-  const minPrice = +paramsObj.minPrice
-  const maxPrice = +paramsObj.maxPrice
-  staysToReturn = filterStaysByPrice(staysToReturn, minPrice, maxPrice)
+  const minPrice = +paramsObj.minPrice;
+  const maxPrice = +paramsObj.maxPrice;
+  staysToReturn = filterStaysByPrice(staysToReturn, minPrice, maxPrice);
 
   if (paramsObj.bedrooms)
-    staysToReturn = staysToReturn.filter((stay) => stay.bedrooms >= +paramsObj.bedrooms)
-  if (paramsObj.beds) staysToReturn = staysToReturn.filter((stay) => stay.beds >= +paramsObj.beds)
+    staysToReturn = staysToReturn.filter((stay) => stay.bedrooms >= +paramsObj.bedrooms);
+  if (paramsObj.beds) staysToReturn = staysToReturn.filter((stay) => stay.beds >= +paramsObj.beds);
   if (paramsObj.bathrooms)
-    staysToReturn = staysToReturn.filter((stay) => stay.bathrooms >= +paramsObj.bathrooms)
+    staysToReturn = staysToReturn.filter((stay) => stay.bathrooms >= +paramsObj.bathrooms);
   if (paramsObj.amenities)
     staysToReturn = staysToReturn.filter((stay) =>
       paramsObj.amenities
         .split(',')
         .every((amenity) => stay.amenities.some((item) => new RegExp(amenity, 'i').test(item)))
-    )
+    );
+  if (paramsObj.properties)
+    staysToReturn = staysToReturn.filter((stay) =>
+      paramsObj.properties.split(',').includes(stay.propertyType)
+    );
 
-  return staysToReturn
+  return staysToReturn;
 }
 
 function getResultLength(filterBy, properties) {
-  let stays = filterStaysByPrice(properties, filterBy.minPrice, filterBy.maxPrice)
+  let stays = filterStaysByPrice(properties, filterBy.minPrice, filterBy.maxPrice);
 
   if (filterBy.bedrooms && filterBy.bedrooms !== 'Any')
-    stays = stays.filter((stay) => stay.bedrooms >= filterBy.bedrooms)
+    stays = stays.filter((stay) => stay.bedrooms >= filterBy.bedrooms);
   if (filterBy.beds && filterBy.beds !== 'Any')
-    stays = stays.filter((stay) => stay.beds >= filterBy.beds)
+    stays = stays.filter((stay) => stay.beds >= filterBy.beds);
   if (filterBy.bathrooms && filterBy.bathrooms !== 'Any')
-    stays = stays.filter((stay) => stay.bathrooms >= filterBy.bathrooms)
+    stays = stays.filter((stay) => stay.bathrooms >= filterBy.bathrooms);
   if (filterBy.amenities.length)
     stays = stays.filter((stay) =>
       filterBy.amenities.every((amenity) =>
         stay.amenities.some((item) => new RegExp(amenity, 'i').test(item))
       )
-    )
+    );
+  if (filterBy.properties.length)
+    stays = stays.filter((stay) => filterBy.properties.includes(stay.propertyType));
 
-  return stays.length
+  return stays.length;
 }
 
 function getById(stayId) {
-  return storageService.get(STORAGE_KEY, stayId)
+  return storageService.get(STORAGE_KEY, stayId);
 }
 async function getStaysByUserId(userId) {
-  let stays = await storageService.query(STORAGE_KEY)
+  let stays = await storageService.query(STORAGE_KEY);
 
-  stays = stays.filter((stay) => stay.host._id === userId)
+  stays = stays.filter((stay) => stay.host._id === userId);
 
-  return stays
+  return stays;
   // if (filterBy.logginUser) {
   //   return stays.filter((stay) => stay.host._id === filterBy.logginUser._id)
   // }
 }
 
 async function remove(stayId) {
-  await storageService.remove(STORAGE_KEY, stayId)
+  await storageService.remove(STORAGE_KEY, stayId);
 }
 
 async function save(stay) {
-  console.log('stay:', stay)
-  let savedStay
-  const { _id, fullname, imgUrl } = await userService.getLoggedinUser()
-  stay.imgUrls = stay.imgUrls.filter((url) => url)
+  console.log('stay:', stay);
+  let savedStay;
+  const { _id, fullname, imgUrl } = await userService.getLoggedinUser();
+  stay.imgUrls = stay.imgUrls.filter((url) => url);
 
   if (stay._id) {
-    savedStay = await storageService.put(STORAGE_KEY, stay)
+    savedStay = await storageService.put(STORAGE_KEY, stay);
   } else {
-    stay._id = utilService.makeId()
+    stay._id = utilService.makeId();
     stay.host = {
       _id: _id || '',
       fullname: fullname || '',
       imgUrl: imgUrl || '',
-    }
-    stay.reviews = _reviewDemoData()
-    savedStay = await storageService.post(STORAGE_KEY, stay)
+    };
+    stay.reviews = _reviewDemoData();
+    savedStay = await storageService.post(STORAGE_KEY, stay);
   }
-  return savedStay
+  return savedStay;
 }
 
 async function addStayMsg(stayId, txt) {
   // Later, this is all done by the backend
-  const stay = await getById(stayId)
-  if (!stay.msgs) stay.msgs = []
+  const stay = await getById(stayId);
+  if (!stay.msgs) stay.msgs = [];
 
   const msg = {
     id: utilService.makeId(),
     by: userService.getLoggedinUser(),
     txt,
-  }
-  stay.msgs.push(msg)
-  await storageService.put(STORAGE_KEY, stay)
+  };
+  stay.msgs.push(msg);
+  await storageService.put(STORAGE_KEY, stay);
 
-  return msg
+  return msg;
 }
 
 async function _getStayLatLang(address, city, countryCode) {
@@ -164,19 +170,19 @@ async function _getStayLatLang(address, city, countryCode) {
     `https://maps.googleapis.com/maps/api/geocode/json?address=${_joinString(
       address
     )},+${_joinString(city)},+${countryCode}&key=AIzaSyB0XrNIJmg5sZqYETs7D_1d2qfIIwy1fkY`
-  )
-  const { results } = await response.json()
-  return results[0].geometry.location
+  );
+  const { results } = await response.json();
+  return results[0].geometry.location;
 }
 
 async function _getCountryCode(name) {
-  const response = await fetch(`https://restcountries.com/v3.1/name/${name}`)
-  const country = await response.json()
-  return country[0].cca2
+  const response = await fetch(`https://restcountries.com/v3.1/name/${name}`);
+  const country = await response.json();
+  return country[0].cca2;
 }
 
 function _joinString(string) {
-  return string.split(' ').join('+')
+  return string.split(' ').join('+');
 }
 
 function getEmptyStay() {
@@ -214,7 +220,7 @@ function getEmptyStay() {
       },
     ],
     likedByUsers: [''],
-  }
+  };
 }
 
 function getLabels() {
@@ -223,7 +229,7 @@ function getLabels() {
     { value: 'Trending', label: 'Trending' },
     { value: 'Play', label: 'Play' },
     { value: 'Tropical', label: 'Tropical' },
-  ]
+  ];
 }
 
 function getAmenities() {
@@ -290,11 +296,11 @@ function getAmenities() {
     'firstAidKit',
     'privateEntrance',
     'sharedPool',
-  ]
+  ];
 }
 
 function getPropertyType() {
-  return ['home', 'apartment', 'guesthouse', 'hotel']
+  return ['home', 'apartment', 'guesthouse', 'hotel'];
 }
 
 // async function _createDemoData() {
@@ -381,7 +387,7 @@ function _reviewDemoData() {
           'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/6.jpg',
       },
     },
-  ]
+  ];
 }
 
 function getCarouselLabels() {
@@ -486,5 +492,5 @@ function getCarouselLabels() {
       img: 'https://a0.muscache.com/pictures/33dd714a-7b4a-4654-aaf0-f58ea887a688.jpg',
       name: 'Historical homes',
     },
-  ]
+  ];
 }
