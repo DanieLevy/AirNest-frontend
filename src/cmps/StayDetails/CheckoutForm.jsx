@@ -41,30 +41,58 @@ export function CheckoutForm({ onSubmit, price, reviews, capacity, stayGalleryRe
   const dateDiffDays = dateDiff / (1000 * 60 * 60 * 24)
   const totalSum = price * dateDiffDays
   const totalPlusFee = totalSum + totalSum * 0.125
-
-  // Intersection observer
+  
   const [galleryInViewport, setGalleryInViewport] = useState(true)
+
+
+
+
+
+
+
+  
+
+  // =================== Intersection observer =================== //
+
   const [asideInViewport, setAsideInViewport] = useState(true)
   const stayDetailsAsideRef = useRef(null)
 
   useEffect(() => {
     if (!isMobile) {
-      const stayDetailsAsideElement = stayDetailsAsideRef.current
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.target === stayDetailsAsideElement) {
-            setAsideInViewport(entry.isIntersecting)
+      const stayDetailsAsideElement = stayDetailsAsideRef.current // stay-details-aside element
+
+      const observer = new IntersectionObserver((entries) => { // Create an intersection observer
+
+        entries.forEach((entry) => { // entries is an array of IntersectionObserverEntry objects
+
+          if (entry.target === stayDetailsAsideElement) { // Check if the target is the stay-details-aside element
+
+            setAsideInViewport(entry.isIntersecting) // Set asideInViewport to true if the element is in the viewport
           }
         })
       })
 
-      observer.observe(stayDetailsAsideElement)
+      observer.observe(stayDetailsAsideElement) // Start observing the stay-details-aside element
 
       return () => {
-        observer.unobserve(stayDetailsAsideElement)
+        observer.unobserve(stayDetailsAsideElement) // Stop observing the stay-details-aside element
       }
     }
   }, [isMobile])
+
+  // =================== Intersection observer =================== //
+
+
+
+
+
+
+
+
+
+
+
+
 
   useEffect(() => {
     if (!isMobile) {
