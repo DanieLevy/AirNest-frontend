@@ -85,7 +85,7 @@ export function FormEditor({
       case 2:
         return isValidPropertyType(propertyType);
       case 3:
-        return !stay.loc.country || !stay.loc.city || !stay.loc.street;
+        return !stay.loc.country || !stay.loc.city ;
       case 4:
         return !capacity || !beds;
       case 5:
