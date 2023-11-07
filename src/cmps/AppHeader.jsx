@@ -116,9 +116,26 @@ export function AppHeader() {
                 </Link>
                 {isOrderPage ? "" : <ExploreBar />}
 
-                <Link to="/edit" className="nav-text">
-                  <span>Airbnb your home</span>
-                </Link>
+                <div to="/edit" className="nav-text">
+                  <button
+                    // disabled={!user || user === null}
+                    onClick={() => {
+                      if (!user || user === null) {
+                        store.dispatch({
+                          type: "SET_LOGIN_MODAL",
+                          loginModal: true,
+                        });
+                        setSignupModal(false);
+                        showErrorMsg("Please login first");
+                        return;
+                      } else {
+                        window.location.href = "/edit";
+                      }
+                    }}
+                  >
+                    AirNest your home
+                  </button>
+                </div>
 
                 <div
                   className="user-nav flex"
@@ -248,16 +265,16 @@ export function AppHeader() {
               <ExploreBar />
             </section>
           )}
-                      {loginModal && (
-              <LoginSignup
-                login={onLogin}
-                signup={onSignup}
-                onToggleLogin={onToggleLogin}
-                closeModal={closeModal}
-                isSignup={signupModal}
-                setSignupModal={setSignupModal}
-              />
-            )}
+          {loginModal && (
+            <LoginSignup
+              login={onLogin}
+              signup={onSignup}
+              onToggleLogin={onToggleLogin}
+              closeModal={closeModal}
+              isSignup={signupModal}
+              setSignupModal={setSignupModal}
+            />
+          )}
         </React.Fragment>
       )}
 

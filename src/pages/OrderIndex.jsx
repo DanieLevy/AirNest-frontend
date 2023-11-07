@@ -17,12 +17,23 @@ export function OrderIndex() {
     }
   }, [logginUser])
 
+  if (isLoading) {
+    return (
+      // <StayLoader />
+      <PropagateLoader
+        color={"#ff385c"}
+        //  size={150}
+        className="loader"
+        speedMultiplier={0.8}
+      />
+    );
+  }
+
+
   return (
     <main className='main-layout medium order-index'>
       <section>
-        {isLoading && <div>Loading...</div>}
-
-        {!isLoading && <OrderList orders={orders} />}
+        <OrderList orders={orders} />
       </section>
     </main>
   )

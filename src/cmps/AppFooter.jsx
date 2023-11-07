@@ -14,7 +14,6 @@ export function AppFooter() {
   const user = useSelector((storeState) => storeState.userModule.user);
   const isStayPage = location.pathname.startsWith("/stay");
   const isIndexPage = location.pathname === "/";
-  const stayId = location.pathname.split("/stay/")[1];
   const loginModal = useSelector(
     (storeState) => storeState.userModule.loginModal
   );
@@ -26,12 +25,14 @@ export function AppFooter() {
       setSelected("explore");
     } else if (location.pathname === "/order") {
       setSelected("trips");
-    } else if (location.pathname === `/inbox/:${user._id}`) {
-      setSelected("inbox");
-    } else if (location.pathname === `/profile/${user._id}`) {
-      setSelected("profile");
     }
-
+    if (user) {
+      if (location.pathname === `/inbox/:${user._id}`) {
+        setSelected("inbox");
+      } else if (location.pathname === `/profile/${user._id}`) {
+        setSelected("profile");
+      }
+    }
   }, [location.pathname]);
 
   useEffect(() => {

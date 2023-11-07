@@ -56,21 +56,32 @@
   }
 
   .nav-text {
-    font-size: 0.875rem;
-    font-weight: 600;
     position: absolute;
     right: 100px;
     min-width: fit-content;
-    white-space: nowrap;
-    cursor: pointer;
-    text-decoration: none;
-    color: #222222;
-    transition: all 0.3s;
+
+    button {
+      font-family: cereal;
+      background-color: transparent;
+      font-size: 0.875rem;
+      font-weight: 600;
+      white-space: nowrap;
+      cursor: pointer;
+      text-decoration: none;
+      color: #222222;
+      transition: all 0.3s;
+
+      &:disabled {
+        cursor: not-allowed;
+        color: #777777;
+      }
+  
+    }
 
     &:hover {
       font-size: 0.9rem;
-      // transform: translateY(0);
     }
+
   }
 
   .user-nav {

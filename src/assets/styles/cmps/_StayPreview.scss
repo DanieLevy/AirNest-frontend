@@ -10,6 +10,11 @@
   font-size: 0.9375rem;
   margin: 0;
 
+  &.hidden {
+    opacity: 0;
+    display: none;
+  }
+
   .preview-img {
     position: relative;
 

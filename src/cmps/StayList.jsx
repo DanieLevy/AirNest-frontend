@@ -9,12 +9,11 @@ export function StayList({ stays, isLoading }) {
     return (
       <PropagateLoader
         color={"#ff385c"}
-        //  size={150}
         className="loader"
         speedMultiplier={0.8}
       />
     );
-  //  loading={isLoading}
+
   if (stays.length === 0)
     return (
       <div className="no-stays">
