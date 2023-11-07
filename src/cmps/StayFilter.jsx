@@ -24,7 +24,7 @@ export function StayFilter() {
     (storeState) => storeState.userModule.filterModal
   );
   const [inputBoxShadow1, setInputBoxShadow1] = useState(
-    "rgb(228, 228, 228) 0px 0.5px 1px 0px"
+    "inset 0 0 0 1px #b0b0b0"
   );
   const [inputBoxShadow2, setInputBoxShadow2] = useState(
     "inset 0 0 0 1px #b0b0b0"
@@ -422,7 +422,7 @@ export function StayFilter() {
                 bottom: `47px!important`
               }
             : {
-                transform: "translateY(100%)",
+                transform: "translateY(150%)",
                 backgroundColor: "rgba(0,0,0,0)",
                 bottom: `-100%!important`
               }

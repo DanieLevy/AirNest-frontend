@@ -86,6 +86,11 @@ function filterStays(stays, params) {
         )
     );
 
+  if (paramsObj.properties)
+    staysToReturn = staysToReturn.filter((stay) =>
+      paramsObj.properties.split(",").includes(stay.propertyType)
+    );
+
   return staysToReturn;
 }
 
@@ -107,6 +112,11 @@ function getResultLength(filterBy, properties) {
       filterBy.amenities.every((amenity) =>
         stay.amenities.some((item) => new RegExp(amenity, "i").test(item))
       )
+    );
+
+  if (filterBy.properties.length)
+    stays = stays.filter((stay) =>
+      filterBy.properties.includes(stay.propertyType)
     );
 
   return stays.length;
