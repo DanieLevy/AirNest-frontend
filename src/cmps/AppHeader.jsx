@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useSearchParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service';
 import { login, logout, signup } from '../store/actions/user.actions.js';
@@ -19,6 +19,8 @@ export function AppHeader() {
   const [userModal, setUserModal] = useState(false);
   const loginModal = useSelector((storeState) => storeState.userModule.loginModal);
   const isExploreExpanded = useSelector((storeState) => storeState.userModule.isExploreExpanded);
+
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const [signupModal, setSignupModal] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
@@ -82,7 +84,7 @@ export function AppHeader() {
   }
 
   function handleLogoClick() {
-    window.location.reload();
+    setSearchParams('');
     window.scrollTo({ top: 0 });
   }
 
