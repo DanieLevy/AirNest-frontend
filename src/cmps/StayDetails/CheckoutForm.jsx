@@ -16,14 +16,25 @@ export function CheckoutForm({ onSubmit, price, reviews, capacity, stayGalleryRe
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768)
   const [searchParams] = useSearchParams()
   const [isStayPage, setIsStayPage] = useState(location.pathname.startsWith('/stay'))
-  const [selectedRange, setSelectedRange] = useState({
-    from: searchParams.has(QUERY_KEYS.checkin)
-      ? new Date(+searchParams.get(QUERY_KEYS.checkin))
-      : new Date(),
-    to: searchParams.has(QUERY_KEYS.checkout)
-      ? new Date(+searchParams.get(QUERY_KEYS.checkout))
-      : addDays(new Date(), 7),
-  })
+  const [selectedRange, setSelectedRange] = useState(() => {
+    if (isMobile) {
+      const today = new Date();
+      const threeDaysForward = addDays(today, 3);
+      return {
+        from: today,
+        to: threeDaysForward,
+      };
+    } else {
+      return {
+        from: searchParams.has(QUERY_KEYS.checkin)
+          ? new Date(+searchParams.get(QUERY_KEYS.checkin))
+          : new Date(),
+        to: searchParams.has(QUERY_KEYS.checkout)
+          ? new Date(+searchParams.get(QUERY_KEYS.checkout))
+          : addDays(new Date(), 7),
+      };
+    }
+  });  
 
   const [isDatesModal, setIsDatesModal] = useState(false)
   const [isGuestsModal, setIsGuestsModal] = useState(false)
