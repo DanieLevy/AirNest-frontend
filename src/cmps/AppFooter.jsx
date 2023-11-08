@@ -33,7 +33,7 @@ export function AppFooter() {
         setSelected("profile");
       }
     }
-  }, [location.pathname]);
+  }, [location.pathname, selected, user]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -70,7 +70,7 @@ export function AppFooter() {
       behavior: "auto",
     });
   }
-
+  
   return (
     <React.Fragment>
       {isMobile && !isStayPage && (
