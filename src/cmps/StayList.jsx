@@ -5,8 +5,7 @@ import { PropagateLoader } from "react-spinners";
 
 export function StayList({ stays, isLoading }) {
   const isWishListPage = window.location.pathname.includes("wishlist");
-
-  if (isLoading)
+  if (isLoading) {
     return (
       <PropagateLoader
         color={"#ff385c"}
@@ -14,9 +13,16 @@ export function StayList({ stays, isLoading }) {
         speedMultiplier={0.8}
       />
     );
-    
-  if (!stays.length)
-    return (
+  }
+
+  if (!stays.length) {
+    isWishListPage ? (
+      <PropagateLoader
+        color={"#ff385c"}
+        className="loader"
+        speedMultiplier={0.8}
+      />
+    ) : (
       <div className="no-stays">
         <img src="https://i.ibb.co/LvDMwQQ/ok.jpg" alt="no-stays" border="0" />
         <h1>No Stays Found..</h1>
@@ -27,6 +33,7 @@ export function StayList({ stays, isLoading }) {
         )}
       </div>
     );
+  }
 
   return (
     <section className="stay-list">

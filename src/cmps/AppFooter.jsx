@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import { useSelector } from "react-redux";
 import { store } from "../store/store";
@@ -17,6 +17,8 @@ export function AppFooter() {
   const loginModal = useSelector(
     (storeState) => storeState.userModule.loginModal
   );
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (location.pathname === "/wishlist") {
@@ -70,7 +72,7 @@ export function AppFooter() {
       behavior: "auto",
     });
   }
-  
+
   return (
     <React.Fragment>
       {isMobile && !isStayPage && (
@@ -83,6 +85,7 @@ export function AppFooter() {
               onClick={() => {
                 scrollToTop();
                 setSelected("explore");
+                navigate("/");
                 handleLoginModal(false);
               }}
             >
@@ -110,6 +113,7 @@ export function AppFooter() {
               onClick={() => {
                 scrollToTop();
                 setSelected("wishlist");
+                navigate("/wishlist");
                 handleLoginModal(false);
               }}
             >
@@ -167,6 +171,7 @@ export function AppFooter() {
                   }`}
                   onClick={() => {
                     setSelected("trips");
+                    navigate("/order");
                     scrollToTop();
                   }}
                 >
@@ -194,6 +199,7 @@ export function AppFooter() {
                   }`}
                   onClick={() => {
                     setSelected("inbox");
+                    navigate(`/inbox/:${user._id}`);
                     scrollToTop();
                   }}
                 >
@@ -221,6 +227,7 @@ export function AppFooter() {
                   }`}
                   onClick={() => {
                     setSelected("profile");
+                    navigate(`/profile/${user._id}`);
                     scrollToTop();
                   }}
                 >

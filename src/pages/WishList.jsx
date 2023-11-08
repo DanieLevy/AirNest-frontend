@@ -7,11 +7,10 @@ import { StayList } from "../cmps/StayList";
 import { Link } from "react-router-dom";
 import { BrandedBtn } from "../cmps/BrandedBtn.jsx";
 
-
-
 export function Wishlist() {
   const [searchParams] = useSearchParams();
 
+  const isWishListPage = window.location.pathname.includes("wishlist");
   const stays = useSelector((storeState) => storeState.stayModule.stays);
   const user = useSelector((storeState) => storeState.userModule.user);
   const loginModal = useSelector(
@@ -33,6 +32,20 @@ export function Wishlist() {
     });
   }
 
+  if (!userLikedStays.length) {
+    return (
+      <div className="no-stays">
+        <img src="https://i.ibb.co/LvDMwQQ/ok.jpg" alt="no-stays" border="0" />
+        <h1>No Stays Found..</h1>
+        {isWishListPage ? (
+          <h3>Try to add some stays to your wishlist</h3>
+        ) : (
+          <h3>Try to change your search</h3>
+        )}
+      </div>
+    );
+  }
+
   return (
     <section className="main-layout wishlist-container">
       <div className="wishlist-header">
@@ -45,14 +58,16 @@ export function Wishlist() {
           <h2 className="wishlist-not-logged-in-header">
             Login to view your wishlist
           </h2>
-          <p className="wishlist-not-logged-in-subtitle"
-          onClick={handleLoginModal}
+          <p
+            className="wishlist-not-logged-in-subtitle"
+            onClick={handleLoginModal}
           >
             You can create, view, or edit wishlists once you are logged in.
           </p>
-          <div 
-          onClick={handleLoginModal}
-           className="wishlist-not-logged-in-button">
+          <div
+            onClick={handleLoginModal}
+            className="wishlist-not-logged-in-button"
+          >
             <BrandedBtn txt="Login" width={100} />
           </div>
         </div>
