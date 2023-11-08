@@ -65,7 +65,7 @@ export function StayMapIndex({ stays }) {
     lng: 34.7818,
   };
 
-  const zoom = locationFromUrl ? 12 : 11;
+  const zoom = locationFromUrl ? 6 : 6;
 
   const Marker = ({ id, price }) => {
     return (
