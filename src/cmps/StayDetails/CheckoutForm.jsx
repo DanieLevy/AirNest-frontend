@@ -55,7 +55,7 @@ export function CheckoutForm({ onSubmit, price, reviews, capacity, stayGalleryRe
   // =================== Intersection observer =================== //
 
   const [asideInViewport, setAsideInViewport] = useState(true)
-  const stayDetailsAsideRef = useRef(null)
+  const stayDetailsAsideRef = useRef(null) // Create a ref for the stay-details-aside element
 
   useEffect(() => {
     if (!isMobile) {
