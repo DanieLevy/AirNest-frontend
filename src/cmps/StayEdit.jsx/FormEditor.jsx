@@ -714,7 +714,8 @@ export function FormEditor({
             className='loader'
             style={{
               height: pageIdx === pages.length - 1 ? '2px' : '8px',
-              width: `${((pageIdx + 1) * 100 - 100) / pages.length}%`,
+              width: `${(((pageIdx + 1) / pages.length) * 100) * 2}%`,
+
             }}
           ></div>
         </div>
