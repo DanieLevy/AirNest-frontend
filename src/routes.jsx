@@ -1,7 +1,7 @@
 import { OrderConfirm } from './pages/OrderConfirm.jsx'
 import { OrderIndex } from './pages/OrderIndex.jsx'
 import { StayDetails } from './pages/StayDetails.jsx'
-import { StayEdit } from './pages/StayEdit.jsx'
+import { StayEdit } from './pages/StayEdit'
 import { StayIndex } from './pages/StayIndex.jsx'
 import { UserDetails } from './pages/UserDetails.jsx'
 import { Wishlist } from './pages/WishList.jsx'

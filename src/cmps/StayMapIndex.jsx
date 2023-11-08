@@ -1,21 +1,36 @@
 import React, { useEffect, useState } from "react";
 import GoogleMapReact from "google-map-react";
-
-import { FaMapMarkerAlt } from "react-icons/fa";
 import { id } from "date-fns/locale";
 import { useNavigate } from "react-router-dom";
-
+import { geocodeByAddress } from "react-google-places-autocomplete";
 
 export function StayMapIndex({ stays }) {
   const [tinyModal, setTinyModal] = useState(false);
   const [selectedStay, setSelectedStay] = useState(null);
+  const [locationFromUrl, setLocationFromUrl] = useState(null); // [lat, lng
   const navigate = useNavigate();
 
-  const queryString = window.location.search;
-  const urlParams = new URLSearchParams(queryString);
-
-  // Get the value of the "region" parameter
+  const urlParams = new URLSearchParams(window.location.search);
   const region = urlParams.get("region");
+
+  async function getPlaceDetails(placeAddress) {
+    try {
+      const location = await geocodeByAddress(placeAddress);
+      const lat = location[0].geometry.location.lat();
+      const lng = location[0].geometry.location.lng();
+      setLocationFromUrl([lat, lng]);
+      console.log('locationFromUrl', locationFromUrl);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  useEffect(() => {
+    if (region) {
+      const regionLocation = region.split(",");
+      getPlaceDetails(regionLocation[0]);
+    }
+  }, [region]);
 
   useEffect(() => {
     const closeModal = (ev) => {
@@ -36,31 +51,21 @@ export function StayMapIndex({ stays }) {
   }
 
   useEffect(() => {
-    const region = urlParams.get("region");
-
-    if (region) {
-      // If the "region" parameter is present, fetch its coordinates using the Google Places API.
-      const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${region}&key=AIzaSyCF6YSAF__0aiqIrTE2ZClywS74stbpWuE`;
-      fetch(url)
-        .then((res) => res.json())
-        .then((res) => {
-          console.log(res);
-          const location = res.results[0].geometry.location;
-          const center = {
-            lat: location.lat,
-            lng: location.lng,
-          };
-        });
+    if (locationFromUrl) {
+      const center = {
+        lat: locationFromUrl[0],
+        lng: locationFromUrl[1],
+      };
+      console.log('center', center);
     }
-  }
-  , [urlParams]);
+  }, [locationFromUrl]);
 
-  const center = {
-    lat: 40.712776,
-    lng: -74.005974,
+  const center = locationFromUrl || {
+    lat: 32.0853,
+    lng: 34.7818,
   };
 
-  const zoom = 8;
+  const zoom = locationFromUrl ? 12 : 11;
 
   const Marker = ({ id, price }) => {
     return (
@@ -90,7 +95,9 @@ export function StayMapIndex({ stays }) {
       <GoogleMapReact
         bootstrapURLKeys={{ key: "AIzaSyCF6YSAF__0aiqIrTE2ZClywS74stbpWuE" }}
         defaultCenter={center}
+        center={center}
         defaultZoom={zoom}
+        zoom={zoom}
       >
         {markers}
 

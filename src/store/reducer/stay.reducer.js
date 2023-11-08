@@ -4,11 +4,13 @@ export const ADD_STAY = 'ADD_STAY'
 export const UPDATE_STAY = 'UPDATE_STAY'
 export const UNDO_REMOVE_STAY = 'UNDO_REMOVE_STAY'
 export const SET_FILTERED_STAYS = 'SET_FILTERED_STAYS'
+export const SET_STAY_LOCATION = 'SET_STAY_LOCATION'
 
 const initialState = {
   stays: [],
   lastRemovedStay: null,
   filteredStays: [],
+  stayLocation: null,
 }
 
 export function stayReducer(state = initialState, action) {
@@ -30,6 +32,11 @@ export function stayReducer(state = initialState, action) {
       stays = state.stays.map((stay) => (stay._id === action.stay._id ? action.stay : stay))
       newState = { ...state, stays }
       break
+
+    case SET_STAY_LOCATION:
+      newState = { ...state, stayLocation: action.location }
+      break
+
     case UNDO_REMOVE_STAY:
       if (state.lastRemovedStay) {
         newState = {

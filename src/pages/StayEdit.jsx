@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { PropagateLoader } from 'react-spinners'
 
 import { stayService } from '../services/stay.service'
-import { FormEditor } from '../cmps/StayEdit.jsx/FormEditor'
+import { FormEditor } from '../cmps/StayEdit/FormEditor'
 import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
 
 export function StayEdit() {
