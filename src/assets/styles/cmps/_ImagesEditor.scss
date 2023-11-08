@@ -9,6 +9,10 @@
     margin-top: 24px;
     overflow: hidden;
 
+    &>* {
+        cursor: pointer;
+    }
+
     img {
         transition: all 100ms;
         cursor: pointer;
