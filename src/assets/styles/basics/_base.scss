@@ -6,6 +6,7 @@ html {
   font-family: cereal, sans-serif;
   line-height: 1.6;
   color: $clr5;
+  scroll-behavior: smooth;
 }
 
 .divider-both {
@@ -24,6 +25,9 @@ body {
   font-size: rem(18px);
   margin: 0;
   margin: auto;
+  touch-action: manipulation;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 h1,
