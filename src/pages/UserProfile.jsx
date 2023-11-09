@@ -30,7 +30,7 @@ export function UserProfile() {
               <img src={user.imgUrl} alt="" />
             </div>
             <div className="profile-info-container">
-              <div className="user-profile-info-name">{user.fullname}</div>
+              <div className="user-profile-info-name">Alexis Hernandez'</div>
               <div className="user-profile-info-lasttime">
                 Last visit: Today
               </div>
