@@ -53,17 +53,24 @@ export function FormEditor({
     // Do something with the files
     console.log(acceptedFiles);
     const newImgUrls = [...imgUrls];
-    acceptedFiles.forEach((file) => {
-      // for each image, go to upload.service EACH ONE and upload it
+  
+    // Upload each file and add its URL to the newImgUrls array
+    const uploadPromises = acceptedFiles.map((file) =>
       uploadService.uploadImg(file).then((url) => {
         newImgUrls.push(url);
+      })
+    );
+  
+    // Wait for all uploads to complete before updating the state
+    Promise.all(uploadPromises)
+      .then(() => {
         onUrlsChange(newImgUrls);
+      })
+      .catch((error) => {
+        console.error('Failed to upload images', error);
       });
-
-      // THEN, ADD THE URL TO THE IMGURLS ARRAY
-      
-    });
-  }, []);
+  }, [imgUrls, onUrlsChange]);
+  
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
