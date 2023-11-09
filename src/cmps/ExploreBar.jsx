@@ -998,15 +998,15 @@ export function ExploreBar({ onExpandChange }) {
                             )}
                           >
                             <img
-                              src="https://a0.muscache.com/im/pictures/66355b01-4695-4db9-b292-c149c46fb1ca.jpg?im_w=320"
+                              src="https://a0.muscache.com/im/pictures/4e762891-75a3-4fe1-b73a-cd7e673ba915.jpg?im_w=320"
                               className={`region-img ${
-                                formData.location === "Middle East"
+                                formData.location === "United States"
                                   ? "active"
                                   : ""
                               }`}
                             />
                             <span className="where-suggestions-region-text">
-                              Middle East
+                              United States
                             </span>
                           </button>
                           <button
@@ -1017,15 +1017,15 @@ export function ExploreBar({ onExpandChange }) {
                             )}
                           >
                             <img
-                              src="https://a0.muscache.com/im/pictures/4e762891-75a3-4fe1-b73a-cd7e673ba915.jpg?im_w=320"
+                              src="https://a0.muscache.com/im/pictures/66355b01-4695-4db9-b292-c149c46fb1ca.jpg?im_w=320"
                               className={`region-img ${
-                                formData.location === "United States"
+                                formData.location === "Middle East"
                                   ? "active"
                                   : ""
                               }`}
                             />
                             <span className="where-suggestions-region-text">
-                              United States
+                              Middle East
                             </span>
                           </button>
                           <button
