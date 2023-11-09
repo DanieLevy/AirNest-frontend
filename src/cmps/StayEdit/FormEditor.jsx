@@ -47,6 +47,7 @@ export function FormEditor({
     padding: "20px",
     textAlign: "center",
     cursor: "pointer",
+    marginTop: "20px",
   };
 
   const onDrop = useCallback((acceptedFiles) => {
@@ -529,18 +530,18 @@ export function FormEditor({
               </span>
             </div>
 
-            {/* <ImagesEditor urls={imgUrls} onUrlsChange={onUrlsChange} className='main' /> */}
             {/* // USE DROPZONE INSTEAD */}
             <div {...getRootProps()} style={dropzoneStyles}>
               <input {...getInputProps()} />
               {isDragActive ? (
                 <p>Drop the files here...</p>
-              ) : (
-                <p>Drag 'n' drop some files here, or click to select files</p>
-              )}
+                ) : (
+                  <p>Drag 'n' drop some files here, or click to select files</p>
+                  )}
             </div>
+                  <ImagesEditor urls={imgUrls} onUrlsChange={onUrlsChange} className='main' />
 
-            {imgUrls.length > 0 && (
+            {/* {imgUrls.length > 0 && (
               <div className="img-preview-container">
                 {imgUrls.map((url, idx) => (
                   <div className="img-preview" key={idx}>
@@ -559,7 +560,7 @@ export function FormEditor({
                   </div>
                 ))}
               </div>
-            )}
+            )} */}
           </section>
 
           <section className={`step-9 ${pageIdx === 8 ? "selected" : ""}`}>

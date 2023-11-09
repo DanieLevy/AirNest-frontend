@@ -544,7 +544,7 @@
                 flex-direction: column;
                 justify-content: center;
                 align-items: center;
-                gap: 40px;
+                gap: 20px;
                 width: 720px;
 
                 & .img-preview-container {
@@ -553,40 +553,6 @@
                     gap: 20px;
                     width: 100%;
                     height: 100%;
-
-                    & .img-preview {
-                        position: relative;
-
-                        & .delete-img-btn {
-                            position: absolute;
-                            right: 10px;
-                            top: 10px;
-                            background-color: #ffffff;
-                            border: none;
-                            outline: none;
-                            cursor: pointer;
-                            padding: 0;
-                            margin: 0;
-                            width: 24px;
-                            height: 24px;
-                            border-radius: 50%;
-                            display: flex;
-                            justify-content: center;
-                            align-items: center;
-                            opacity: 0.5;
-                            transition: all 0.2s ease-in-out;
-
-                            &:hover {
-                                opacity: 1;
-                            }
-
-                            svg {
-                                width: 16px;
-                                height: 16px;
-                                fill: #222222;
-                            }
-                        }
-                    }
 
                     img {
                         width: 150px;
@@ -616,7 +582,7 @@
 
                 & .images-editor-container {
                     max-height: 350px;
-                    padding: 20px 0;
+                    padding: 0;
 
                     & .main,
                     & .rest {
