@@ -21,7 +21,7 @@ export function OrderConfirm() {
   const isLoading = useSelector((state) => state.systemModule.isLoading);
   const loggedUser = useSelector((state) => state.userModule.user);
   const [isConfirmed, setIsConfirmed] = useState(false);
-
+  const [isLoginModal, setIsLoginModal] = useState(false);
   const navigate = useNavigate();
 
   const reviews = stagedOrder.stay.reviews;
